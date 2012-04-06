@@ -1,0 +1,9 @@
+How to create a private Janus network
+
+	Janus will try to connect to a universal network shared by all Janus platforms, 
+	known as "World of Janus" (WoJ).
+	
+	This provides an easy way to find other janus kernels and share organizations, applicaitons, 
+	ksf utilities, etc. However you may want to create a private network.
+	For instance, you may want to create a distributed simulation network for your organization.
+	

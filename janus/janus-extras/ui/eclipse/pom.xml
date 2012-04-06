@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+        <modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.janus-project.extras.ui</groupId>
+		<artifactId>ui</artifactId>
+		<version>0.5-SNAPSHOT</version>
+	</parent>
+
+
+        <groupId>org.janus-project.extras.ui</groupId>
+        <artifactId>eclipse</artifactId>
+        <version>0.5.0-SNAPSHOT</version>
+        <packaging>pom</packaging>
+
+        <properties>
+                <tycho.version>0.9.0</tycho.version>
+		<janus.version>${project.version}</janus.version>
+        </properties>
+
+
+
+        <modules>
+		<module>org.janusproject.extras.ui.eclipse.feature.core</module>
+		<module>org.janusproject.extras.ui.eclipse.updatesite</module>
+                <module>org.janusproject.extras.ui.eclipse.base</module>		
+                <module>org.janusproject.extras.ui.eclipse.kernelinformation</module>
+                <module>org.janusproject.extras.ui.eclipse.moduletools</module>
+        </modules>
+
+
+        <build>
+                <plugins>
+                        <plugin>
+                                <groupId>org.sonatype.tycho</groupId>
+                                <artifactId>tycho-maven-plugin</artifactId>
+                                <version>${tycho.version}</version>
+                                <extensions>true</extensions>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.sonatype.tycho</groupId>
+                                <artifactId>target-platform-configuration</artifactId>
+                                <version>${tycho.version}</version>
+                                <configuration>
+                                        <resolver>p2</resolver>
+                                        <pomDependencies>consider</pomDependencies>
+                                        <!---->
+                                        <environments>
+                                                <environment>
+                                                        <os>linux</os>
+                                                        <ws>gtk</ws>
+                                                        <arch>x86_64</arch>
+                                                </environment>
+                                                <environment>
+                                                        <os>win32</os>
+                                                        <ws>win32</ws>
+                                                        <arch>x86</arch>
+                                                </environment>
+                                                <environment>
+                                                        <os>macosx</os>
+                                                        <ws>carbon</ws>
+                                                        <arch>x86</arch>
+                                                </environment>
+                                        </environments>
+
+                                </configuration>
+                        </plugin>
+                </plugins>
+        </build>
+
+        <dependencies>
+		<dependency>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>kernel</artifactId>
+			 <version>${janus.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>osgi</artifactId>
+			 <version>${janus.version}</version>
+		</dependency>
+
+        </dependencies>
+
+</project>
+

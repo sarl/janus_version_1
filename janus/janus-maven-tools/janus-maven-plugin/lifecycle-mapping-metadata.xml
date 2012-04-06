@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ########################################################################
+     # See http://wiki.eclipse.org/M2E_compatible_maven_plugins for details #
+     ######################################################################## -->
+<lifecycleMappingMetadata>
+  <pluginExecutions>
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <groupId>org.janus-project.maven</groupId>
+        <artifactId>janus-maven-plugin</artifactId>
+        <versionRange>[1.0,)</versionRange>
+        <goals>
+          <goal>clean</goal>
+          <goal>preparedist</goal>
+          <goal>zip</goal>
+        </goals>
+      </pluginExecutionFilter>
+      <action>
+        <execute>
+        	<runOnIncremental>false</runOnIncremental>
+        </execute>
+      </action>
+    </pluginExecution>
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <groupId>org.janus-project.maven</groupId>
+        <artifactId>janus-maven-plugin</artifactId>
+        <versionRange>[1.0,)</versionRange>
+        <goals>
+          <goal>run</goal>
+          <goal>rundebug</goal>
+        </goals>
+      </pluginExecutionFilter>
+      <action>
+        <ignore />
+      </action>
+    </pluginExecution>
+  </pluginExecutions>
+</lifecycleMappingMetadata>

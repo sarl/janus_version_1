@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<name>Janus Simple CRIO based Application</name>
+	<version>${version}</version>
+	<packaging>bundle</packaging>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-Activator>${package}.Activator</Bundle-Activator>
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.janus-project.maven</groupId>
+				<artifactId>janus-maven-plugin</artifactId>
+				<version>${janus.verion}</version>
+				<configuration>
+					<layout>felix</layout>
+					<!-- The launcher will instantiate a OSGi Platform -->
+					<launcher>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>org.apache.felix.main</artifactId>
+						<version>${felix.main.version}</version>
+					</launcher>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>org.janus-project.maven</id>
+			<name>Janus Project Snapshots</name>
+			<url>http://www.janus-project.org/maven/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>org.janus-project.maven</id>
+			<name>Janus Project Snapshots</name>
+			<url>http://www.janus-project.org/maven/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>osgi</artifactId>
+			<version>${janus.verion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>network</artifactId>
+			<version>${janus.verion}</version>
+		</dependency>
+		<!-- Uncomment these dependencies if you what to use the osgi shell. Remember 
+			that if you include them they will be included in you final application distribution 
+			zip, then increasing your application footprint. -->
+		<!-- 
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.gogo.command</artifactId>
+			<version>${felix.gogo.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.gogo.shell</artifactId>
+			<version>${felix.gogo.version}</version>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.main</artifactId>
+			<version>${felix.main.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<properties>
+		<janus.verion>0.3-SNAPSHOT</janus.verion>
+		<felix.main.version>3.0.0</felix.main.version>
+		<felix.gogo.version>0.6.0</felix.gogo.version>
+	</properties>
+</project>

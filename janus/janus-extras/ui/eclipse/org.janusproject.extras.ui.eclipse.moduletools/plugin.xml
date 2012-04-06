@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.janusproject.extras.ui.eclipse.base.menu">
+         <command
+               commandId="org.janusproject.extras.ui.eclipse.moduletools.commands.startmodule"
+               icon="icons/run.gif"
+               label="Start Janus Module ..."
+               style="push"
+               tooltip="Select a Janus module to start">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.janusproject.extras.ui.eclipse.moduletools.commands.StartModuleHandler"
+            id="org.janusproject.extras.ui.eclipse.moduletools.commands.startmodule"
+            name="Start Janus Module">
+      </command>
+   </extension>
+
+</plugin>

@@ -1,0 +1,125 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.janus-project.demos.scriptedagent.jruby</groupId>
+		<artifactId>jruby-demos</artifactId>
+		<version>0.5-SNAPSHOT</version>
+	</parent>
+
+	<groupId>org.janus-project.demos</groupId>
+	<artifactId>jruby-shellagent</artifactId>
+	<version>0.5-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>JRuby Shell Agent Demo</name>
+	<inceptionYear>2011</inceptionYear>
+	<url>http://www.janus-project.org</url>
+
+	<properties>
+		<jrubyengine.version>${project.version}</jrubyengine.version>
+	</properties>
+
+
+	<build>
+		<plugins>
+			
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-Activator>org.janusproject.demo.jruby.jrubyshellagent.osgi.JRubyShellAgentActivator</Bundle-Activator>
+						<Include-Resource>
+							{maven-resources}, {maven-dependencies},
+							META-INF/license=target/classes/META-INF/license,
+							META-INF/AUTHORS.${project.artifactId}.txt=target/classes/META-INF/AUTHORS.janus.txt,
+							META-INF/NOTICE.${project.artifactId}.txt=target/classes/META-INF/NOTICE.janus.txt,
+						</Include-Resource>
+						<Import-Package>
+							org.janusproject.kernel*;version="${janus.version}",*
+						</Import-Package>
+					</instructions>
+					<supportedProjectTypes>
+						<supportedProjectType>jar</supportedProjectType>
+						<supportedProjectType>bundle</supportedProjectType>
+						<supportedProjectType>war</supportedProjectType>
+					</supportedProjectTypes>
+					<archive>
+						<manifestFile>${manifest.file}</manifestFile>
+						<manifest>
+							<mainClass>org.janusproject.demo.jruby.jrubyshellagent.Launcher</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>executionGenerateManifest</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>executionGenerateBundle</id>
+						<phase>package</phase>
+						<goals>
+							<goal>bundle</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.janus-project.maven</groupId>
+				<artifactId>janus-maven-plugin</artifactId>
+				<configuration>
+					<layout>felix</layout>
+					<!-- The launcher will instantiate a OSGi Platform -->
+					<launcher>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>org.apache.felix.main</artifactId>
+						<version>${felix.main.version}</version>
+					</launcher>
+					<excludes>
+						<exclude>jruby</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>executionCreateBundleDist</id>
+						<phase>package</phase>
+						<goals>
+							<goal>zip</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
+			<artifactId>jrubyengine</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
+			<artifactId>jrubyjanusextensions</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>osgi</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.main</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+</project>

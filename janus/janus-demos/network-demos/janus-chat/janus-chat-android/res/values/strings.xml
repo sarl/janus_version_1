@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Janus Chat</string>
+    <string name="MessageTextHint">Write chitchat here</string>
+    <string name="Send">Send</string>
+    <string name="ChatText">Discussion</string>
+    <string name="chatterIcon">chatterIcon</string>
+    <string name="CloseRoom">Close</string>
+    <string name="JoinChatRoom">Join chat room&#8230;</string>
+    <string name="ExitApplication">Exit all rooms</string>
+    <string name="ExitChatRoom">Exit current room</string>
+</resources>

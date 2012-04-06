@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>janus</artifactId>
+		<groupId>org.janus-project</groupId>
+		<version>0.5-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.janus-project.maven</groupId>
+	<artifactId>janus-maven-tools</artifactId>
+	<packaging>pom</packaging>
+	<version>0.5-SNAPSHOT</version>
+	<name>Janus Maven Tools</name>
+	<description>A set of Apache Maven tools to simplify the development of Janus Modules and Applications with maven.</description>
+
+	<modules>
+		<module>janus-maven-plugin</module>
+		<module>archetype</module>
+	</modules>
+
+</project>

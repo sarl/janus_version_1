@@ -1,0 +1,62 @@
+/* 
+ * $Id$
+ * 
+ * Janus platform is an open-source multiagent platform.
+ * More details on <http://www.janus-project.org>
+ * Copyright (C) 2010-2011 Janus Core Developers
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package org.janusproject.kernel.mailbox;
+
+import org.janusproject.kernel.message.AbstractContentMessage;
+import org.janusproject.kernel.message.MessageContext;
+
+/**
+ * Stub for message interface.
+ * 
+ * @author $Author: sgalland$
+ * @version $FullVersion$
+ * @mavengroupid $GroupId$
+ * @mavenartifactid $ArtifactId$
+ */
+class MessageStub extends AbstractContentMessage<Object> {
+
+	private static final long serialVersionUID = -1229004694837770242L;
+	
+	private final String name;
+	
+	/**
+	 * @param date
+	 * @param name
+	 */
+	public MessageStub(float date, String name) {
+		super(new MessageContext(null, null, date));
+		this.name = name;
+	}
+	
+	@Override
+	public String toString() {
+		return this.name+":"+Float.toString(getContext().getCreationDate()); //$NON-NLS-1$
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object getContent() {
+		return getContext().getCreationDate();
+	}
+	
+}

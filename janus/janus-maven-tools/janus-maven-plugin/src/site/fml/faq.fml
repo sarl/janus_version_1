@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs id="FAQ" title="Frequently Asked Questions">
+	<part id="osgi-implementations">
+	<title>OSGi Implementations</title>
+	<faq id="osgi-impl-use">
+	<question>Which OSGi implementations can I use?</question>
+	<answer>We tested it on Eclipse Equinox and Apache Felix. For the time being these are the only 
+	layouts available. But it should be simple to create other layouts
+	 </answer>
+	</faq>
+		<faq id="equinox">
+			<question>How do get my Application to run with Eclipse Equinox?
+			</question>
+			<answer>
+				<p>
+					Delete (or rename) the felix.japp.properties file.
+					This only because
+					Felix and Equinox use some configuration properties
+					differently.
+					So in order to avoid problems you shouldn't keep both configuration
+					files in the same directory.
+					But it is possible for them to 
+					<a href="#felix-and-equinox">co-exist</a>.
+				</p>
+				<p>Create an equinox.japp.properties file and with something like
+					this :</p>
+				<source>
+###########################################
+# Eclipse Equinox Framework config properties.
+###########################################
+
+#Required exta packages
+org.osgi.framework.system.packages=sun.net.www,sun.misc,sun.reflect
+
+#Equinox
+osgi.bundles=yourapp.jar,org.apache.felix.bundlerepository-1.4.0.jar@start,janus-kernel-0.2-SNAPSHOT.jar@start
+
+eclipse.ignoreApp=true
+
+					</source>
+				<p>Note there is no "@start" after yourapp.jar! The application will
+					be started by the kernel when it is ready.</p>
+			    <p>Change janus' plugin configuration to this:</p>
+			    <source>
+<project>
+...
+<build>
+<plugins>
+<plugin>
+	<groupId>org.janus-project</groupId>
+	<artifactId>janus-maven-plugin</artifactId>
+	<configuration>
+		<layout>equinox</layout>
+		<!-- The launcher will instaciate a OSGi Platform-->
+		<launcher>
+			<groupId>org.eclipse.equinox</groupId>
+			<artifactId>org.eclipse.osgi</artifactId>
+			<version>3.4.2</version>
+		</launcher>
+		<configDir>${basedir}/target/extra-resources</configDir>
+	</configuration>
+</plugin>
+</plugins>
+</build>
+...
+<repositories>
+	<repository>
+		<id>jboss</id>
+		<name>JBoss Repository</name>
+		<url>http://repository.jboss.com/maven2/
+		</url>
+	</repository>
+</repositories>
+...
+</project>
+			    </source>
+			</answer>
+		</faq>
+		<faq id="felix-and-equinox">
+			<question>Can an Equinox and a Felix configuration co-exit?
+			</question>
+			<answer>
+				<p>Sure. You have to use profiles and the resources plugin to make
+					it work.</p>
+					<p>If you have a file structure like the following:</p>
+					<source>
+.                                                                                                            
+|-- pom.xml                                                                                                  
+`-- src                                                                                                      
+    |-- main                                                                                                 
+    |   |-- janus                                                                                            
+    |   |   `-- application                                                                                  
+    |   |       |-- application.xml                                                                          
+    |   |       |-- conf  (common configuration files for both OSGi implementations)                                                                                   
+    |   |       |   |-- janus.japp.properties                                                                
+    |   |       |   `-- license.japp.properties                                                              
+    |   |       |-- equinox (a directory for Equinox's configurations)                                                                                 
+    |   |       |   `-- equinox.japp.properties                                                              
+    |   |       `-- felix  (a directory for Felix's configurations)                                                                                  
+    |   |           `-- felix.japp.properties
+    .....
+					</source>
+				<p>You will need something like this:</p>
+				<source>
+<project>
+	...
+	<profiles>
+		<profile>
+			<id>equinox</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.janus-project</groupId>
+						<artifactId>janus-maven-plugin</artifactId>
+						<configuration>
+							<layout>equinox</layout>
+							<!-- The launcher will instaciate a OSGi Platform-->
+							<launcher>
+								<groupId>org.eclipse.equinox</groupId>
+								<artifactId>org.eclipse.osgi</artifactId>
+								<version>3.4.2</version>
+							</launcher>
+							<configDir>${basedir}/target/extra-resources</configDir>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>2.4.1</version>
+						<executions>
+							<execution>
+								<id>copy-resources</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/target/extra-resources
+									</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/janus/application/conf</directory>
+										</resource>
+										<resource>
+											<directory>src/main/janus/application/equinox
+											</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+			<repositories>
+				<repository>
+					<id>jboss</id>
+					<name>JBoss Repository</name>
+					<url>http://repository.jboss.com/maven2/</url>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>felix</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.janus-project</groupId>
+						<artifactId>janus-maven-plugin</artifactId>
+						<configuration>
+							<layout>felix</layout>
+							<!-- The launcher will instaciate a OSGi Platform-->
+							<launcher>
+								<groupId>org.apache.felix</groupId>
+								<artifactId>org.apache.felix.main</artifactId>
+								<version>1.6.0</version>
+							</launcher>
+							<configDir>${basedir}/target/extra-resources</configDir>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>2.4.1</version>
+						<executions>
+							<execution>
+								<id>copy-resources</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/target/extra-resources
+									</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/main/janus/application/conf</directory>
+										</resource>
+										<resource>
+											<directory>src/main/janus/application/felix</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	....
+</project>
+				</source>
+				<p>Then activate the selected layout using "-Pequinox" or "-Pfelix"</p>
+			</answer>
+		</faq>
+		<faq id="filtering">
+		<question>Can I use filtering with my janus configuration files?</question>
+		<answer>You can do this with the resources plugin. Use something like in <a href="#felix-and-equinox">here</a></answer>
+		</faq>
+	</part>
+</faqs>

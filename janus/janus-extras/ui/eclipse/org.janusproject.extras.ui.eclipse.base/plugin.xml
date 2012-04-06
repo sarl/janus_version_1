@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               icon="icons/logo-janus-small.png"
+               id="org.janusproject.extras.ui.eclipse.base.menu"
+               label="Janus"
+               mnemonic="J">
+            <menu
+                  id="org.janusproject.extras.ui.eclipse.base.menu.views"
+                  label="Views">
+            </menu>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.janusproject.extras.ui.eclipse.base.JanusPerspective"
+            icon="icons/logo-janus.png"
+            id="org.janusproject.extras.ui.eclipse.base.perspective"
+            name="Janus">
+      </perspective>
+   </extension>
+
+</plugin>

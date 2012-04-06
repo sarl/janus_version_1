@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!--
+		CAUTION: this module has not the org.janus-project.kernel:janus-kernel
+		maven module as parent to avoid dependency on it. Indeed if this
+		modules has org.janus-project.kernel:janus-kernel as parent, assembly
+		in org.janus-project.kernel:janus-kernel is impossible due to the
+		Maven dependency specifications.
+	-->
+	<parent>
+		<artifactId>janus</artifactId>
+		<groupId>org.janus-project</groupId>
+		<version>0.5-SNAPSHOT</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+
+
+
+	<groupId>org.janus-project.kernel</groupId>
+	<artifactId>osgi</artifactId>
+	<version>0.5-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>OSGified Janus Kernel</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Export-Package>org.janusproject.kernel*;version="${project.version}"</Export-Package>
+						<Import-Package>org.janusproject.kernel*;version="${project.version}"</Import-Package>
+						<Private-Package>org.janusproject.kernel.mmf.impl</Private-Package>
+						<Bundle-Activator>org.janusproject.kernel.mmf.osgi.Activator</Bundle-Activator>
+						<Export-Service>org.janusproject.kernel.mmf.IKernelService</Export-Service>
+						<Include-Resource>
+							{maven-resources}, {maven-dependencies},
+							META-INF/license=target/classes/META-INF/license,
+							META-INF/AUTHORS.janus.txt=target/classes/META-INF/AUTHORS.janus.txt,
+							META-INF/NOTICE.janus.txt=target/classes/META-INF/NOTICE.janus.txt,
+						</Include-Resource>
+						<DynamicImport-Package>*</DynamicImport-Package>
+					</instructions>
+					<supportedProjectTypes>
+						<supportedProjectType>jar</supportedProjectType>
+						<supportedProjectType>bundle</supportedProjectType>
+						<supportedProjectType>war</supportedProjectType>
+					</supportedProjectTypes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>executionGenerateManifest</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>executionGenerateBundle</id>
+						<phase>package</phase>
+						<goals>
+							<goal>bundle</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.osgi.core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.bundlerepository</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>kernel</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+</project>

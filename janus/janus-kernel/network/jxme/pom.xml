@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+	<!-- CAUTION: this module has not the org.janus-project.kernel:janus-kernel 
+		maven module as parent to avoid dependency on it. Indeed if this modules 
+		has org.janus-project.kernel:janus-kernel as parent, assembly in org.janus-project.kernel:janus-kernel 
+		is impossible due to the Maven dependency specifications. -->
+	<parent>
+		<artifactId>janus</artifactId>
+		<groupId>org.janus-project</groupId>
+		<version>0.5-SNAPSHOT</version>
+		<relativePath>../../../pom.xml</relativePath>
+	</parent>
+
+
+
+	<groupId>org.janus-project.kernel.network</groupId>
+	<artifactId>jxme</artifactId>
+	<version>0.5-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>JXTA-JXME Janus Kernel</name>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.arakhne.afc</groupId>
+				<artifactId>license-installer</artifactId>
+				<configuration>
+					<thirdPartyLicenses>
+						<param>apachev2:/org/janusproject/kernel/network/jxta/impl/PipeUtil.java</param>
+						<param>apachev2:/org/janusproject/kernel/network/jxta/impl/PeerGroupUtil.java</param>
+					</thirdPartyLicenses>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.jxta</groupId>
+			<artifactId>jxta-jxme</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>kernel</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

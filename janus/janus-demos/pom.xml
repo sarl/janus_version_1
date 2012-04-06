@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>janus</artifactId>
+		<groupId>org.janus-project</groupId>
+		<version>0.5-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+	<groupId>org.janus-project.demos</groupId>
+	<artifactId>janus-demos</artifactId>
+	<version>0.5-SNAPSHOT</version>
+	<name>Demos for the Janus Kernel</name>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>base-demos</module>
+		<module>simulation-demos</module>
+		<module>network-demos</module>
+		<module>ecoresolution-demos</module>
+		<module>bdi-demos</module>
+		<module>scriptedagent-demos</module>
+	</modules>
+</project>

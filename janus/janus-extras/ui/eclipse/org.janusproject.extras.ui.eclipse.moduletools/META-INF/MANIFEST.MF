@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Janus Module Tools
+Bundle-SymbolicName: org.janusproject.extras.ui.eclipse.moduletools;singleton:=true
+Bundle-Version: 0.3.0.qualifier
+Bundle-Activator: org.janusproject.extras.ui.eclipse.moduletools.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.janus-project.kernel.osgi;bundle-version="0.3.0",
+ org.janus-project.kernel;bundle-version="0.3.0",
+ org.janusproject.extras.ui.eclipse.base;bundle-version="0.3.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

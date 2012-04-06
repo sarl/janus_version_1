@@ -1,0 +1,107 @@
+ -----
+ Create a Janus Module
+ -----
+ Author
+ -----
+ Date
+ -----
+
+~~ http://maven.apache.org/doxia/references/apt-format.html
+
+Janus modules
+ 
+ Janus modules are actually OSGi bundles. They are able to launch holons using the IKernelService available in the
+ BundleContext.
+
+Pom.xml
+
+ As a module is an OSGi bundle you will have to make you maven project compitible with OSGi. In order to do so
+ you can use the {{{http://felix.apache.org/site/apache-felix-maven-bundle-plugin-bnd.html}Apache Felix Bundle Plugin}}.
+ 
+ Here is a typical Janus module pom.xml
+ 
++------------------------------------------------+
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>your-group-id</groupId>
+	<artifactId>your-artifact-id</artifactId>
+	<name>Your Module name</name>
+	
+	<packaging>bundle</packaging>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-Activator>
+							org.example.mmf.Activator
+						</Bundle-Activator>
+						<!--Add other OSGi instructions here-->
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.janus-project</groupId>
+			<artifactId>janus-kernel</artifactId>
+			<version>${janus.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>1.2.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+ </project>
++------------------------------------------------+
+ 
+BundleActivator
+
+ The bundle Activator should look something like this:
+ 
++------------------------------------------------+
+public class Activator implements BundleActivator{
+
+	/* (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	 */
+	@Override
+	public void start(BundleContext context) throws Exception {
+	    //Set up a logger using Janus Logging System
+		LoggingSystem.getLogger().setLogLevel(LogLevel.DEBUG);
+		Logger logger = LoggingSystem.getLogger(getClass());
+		logger.info("Module XXX Starting");
+		
+		//Get the IKernelService
+		ServiceReference ref = context.getServiceReference(IKernelService.class.getName());
+		IKernelService kernel = (IKernelService) context.getService(ref);
+		
+		//Instantiate your holons
+		MyHolon h1 = new MyHolon();
+		MyHolon h2 = new MyHolon();
+		
+		//Launch your holons
+		kernel.launchHolon(h1, "MyHolon1");
+		kernel.launchHolon(h2, "MyHolon2");
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 */
+	@Override
+	public void stop(BundleContext context) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
++------------------------------------------------+

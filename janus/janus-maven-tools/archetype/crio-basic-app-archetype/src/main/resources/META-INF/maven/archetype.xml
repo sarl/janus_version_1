@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><archetype>
+  <id>crio-basic-app-archetype</id>
+  <sources>
+    <source>src/main/java/Activator.java</source>
+    <source>src/main/java/Application.java</source>
+    <source>src/main/java/organization/DateProviderRole.java</source>
+    <source>src/main/java/organization/DateMessage.java</source>
+    <source>src/main/java/organization/RequesterRole.java</source>
+    <source>src/main/java/organization/DateProviderOrganization.java</source>
+    <source>src/main/java/agent/RequestingAgent.java</source>
+    <source>src/main/java/agent/ProviderAgent.java</source>
+  </sources>
+  <resources>
+    <resource>src/main/janus/application/conf/felix.japp.properties</resource>
+    <resource>src/main/janus/application/conf/janus.japp.properties</resource>
+    <resource>.classpath</resource>
+    <resource>.settings/org.maven.ide.eclipse.prefs</resource>
+    <resource>.project</resource>
+  </resources>
+</archetype>

@@ -1,0 +1,127 @@
+ -----
+ Create Janus Applications
+ -----
+ -----
+ -----
+
+~~ http://maven.apache.org/doxia/references/apt-format.html
+
+Janus Applications
+ 
+ Janus applications are set of modules that colaborate to achieve a specific purpose. 
+ Tecnically they are modules as well, but they can control de life of the kernel where they are running.
+ 
+ In Janus, only one application is allowed by kernel. However several kernel can run on each host (machine). 
+ If these applications want to communicate they need to setup a network module. 
+ 
+ This decision is so that application can be launched remotely without compromising the security of the host
+ and they respect the contract for their execution. The Kernel Spawning Framework is in charge these operations.
+
+ The main distintion of applications and modules is that applications provide a IKernelAuthority which is used to
+ authorize Kernel Operations (e.g. KernelOperation.KERNEL_STOP which will stop the kernel and all agents running
+ on top of it)  
+
+Setting up an Application Using Maven Janus Plugin
+
+ Prepare you application as it was a regular module, check everything is working fine.
+ Then add the following to you pom.xml
+ 
++--------------------------------------------+
+<project>
+....
+<build>
+....
+	<plugins>
+		<plugin>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>maven-bundle-plugin</artifactId>
+			<extensions>true</extensions>
+			<configuration>
+				<instructions>
+					<Bundle-Activator>
+						org.example.mmf.Activator
+					</Bundle-Activator>
+					<!--Add other OSGi instructions here-->
+					<Janus-Kernel-Authority>org.example.mmf.KernelAuthority</Janus-Kernel-Authority>
+				</instructions>
+			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.janus-project</groupId>
+			<artifactId>janus-maven-plugin</artifactId>
+			<configuration>
+				<layout>felix</layout>
+				<!-- The launcher will instantiate a OSGi Platform-->
+				<launcher>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>org.apache.felix.main</artifactId>
+					<version>1.6.0</version>
+				</launcher>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+....
+</project>
++--------------------------------------------+
+
+ The Janus plugin is able now to generate a janus application. In this case it will run on top of
+ the Apache Felix OSGi RC4 implementation. See the Janus Plugin to use other implementations.
+ 
+ The IKernelAuthority is NOT mandatory but if you do not provide one, all Kernel operations will be 
+ authorized. This means that any module can control your application's kernel lifecycle (e.g. stop the
+ kernel by calling IKernelService.requestKerenlStop(..).
+ 
+IKernelAuthority
+
+ The IKernelAuthority interface is used to authorize Kernel Operations. It will look something like the
+ following:
+ 
++--------------------------------------------------+
+public class KernelAuthority implements IKernelAuthority {
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.utbm.set.janus.kernel.mmf.IKernelAuthority#authorizeKernelOperation
+	 * (fr.utbm.set.janus.kernel.mmf.KernelOperation,
+	 * fr.utbm.set.janus.kernel.Credentials, java.lang.Object)
+	 */
+	@Override
+	public IStatus authorizeKernelOperation(KernelOperation operation,
+			Credentials credentials, Object param) {
+		
+		if (KernelOperation.KERNEL_STOP == operation) {
+			//Check the operation can be authorized using the credentials 
+		}
+		//Check other operations.
+		
+		return Status.OK_STATUS;
+	}
+
+}
++---------------------------------------------------+
+
+ You can provide your own IStatus implementation so that the calling modules understand why a request
+ is being rejected and recover if needed. 
+
+Running your application 
+ 
+ You can now run your application using maven :
+ 
++--------------------------------------------------+
+ $ mvn clean install janus:run
++--------------------------------------------------+
+
+ Or
+ 
++-----------------------------------------------+
+ $ mvn clean install janus:preparedist
+ $ cd target/janus-dist
+ $ java -jar bin/org.apache.felix.main-1.6.0.jar
++-----------------------------------------------+
+ 
+
+
+

@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Janus Base Eclipse support
+Bundle-SymbolicName: org.janusproject.extras.ui.eclipse.base;singleton:=true
+Bundle-Version: 0.3.0.qualifier
+Bundle-Activator: org.janusproject.extras.ui.eclipse.base.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.console;bundle-version="3.5.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.janusproject.extras.ui.eclipse.base.images,
+ org.janusproject.extras.ui.eclipse.base.utils

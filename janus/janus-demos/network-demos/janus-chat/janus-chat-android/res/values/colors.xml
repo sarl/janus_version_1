@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="standardColor">#FFFFFF</color>
+    <color name="errorColor">#FF0000</color>
+    <color name="notificationColor">#BBBBBB</color>
+    <color name="backgroundColor">#333333</color>
+</resources>
