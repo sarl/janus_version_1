@@ -17,5 +17,7 @@
 	
 	<modules>
 		<module>ecoresolution</module>
+		<module>bdiengine</module>
+		<module>scriptedagent</module>
 	</modules>
 </project>
