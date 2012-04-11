@@ -20,6 +20,10 @@
  */
 package org.janusproject.kernel;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
+
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Agent;
 import org.janusproject.kernel.agent.AgentActivator;
@@ -32,7 +36,12 @@ import org.janusproject.kernel.channels.ChannelInteractable;
 import org.janusproject.kernel.channels.ChannelInteractableListener;
 import org.janusproject.kernel.configuration.JanusProperty;
 import org.janusproject.kernel.crio.core.CRIOContext;
+import org.janusproject.kernel.crio.core.GroupAddress;
+import org.janusproject.kernel.crio.core.Organization;
+import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.GroupListener;
+import org.janusproject.kernel.crio.organization.MembershipService;
+import org.janusproject.kernel.crio.organization.OrganizationFactory;
 import org.janusproject.kernel.logger.LoggerProvider;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
@@ -464,4 +473,242 @@ public interface Kernel extends LoggerProvider {
 	 */
 	public void resume();
 
+	/**
+	 * Creates a new group implementing the specified organization with its
+	 * associated GroupManager
+	 * 
+	 * @param organization
+	 *            is the organization that must be instanced
+	 * @param obtainConditions
+	 *            is the list of conditions to respect to enter in the group
+	 * @param leaveConditions
+	 *            is the list of conditions to respect to leave out of the group
+	 * @return The address of the group freshly created
+	 * @since 0.5
+	 */
+	public GroupAddress createGroup(
+			Class<? extends Organization> organization,
+			Collection<? extends GroupCondition> obtainConditions,
+			Collection<? extends GroupCondition> leaveConditions);
+
+	/**
+	 * Creates a new group implementing the specified organization with its
+	 * associated GroupManager
+	 * 
+	 * @param organization
+	 *            is the organization that must be instanced
+	 * @param obtainConditions
+	 *            is the list of conditions to respect to enter in the group
+	 * @param leaveConditions
+	 *            is the list of conditions to respect to leave out of the group
+	 * @param groupName is the name of the group.
+	 * @return The address of the group freshly created
+	 * @since 0.5
+	 */
+	public GroupAddress createGroup(
+			Class<? extends Organization> organization,
+			Collection<? extends GroupCondition> obtainConditions,
+			Collection<? extends GroupCondition> leaveConditions,
+			String groupName);
+
+	/**
+	 * Creates a new group implementing the specified organization with its
+	 * associated GroupManager
+	 * 
+	 * @param factory
+	 *            is the organization factory which may be used to instance
+	 *            organization.
+	 * @param obtainConditions
+	 *            is the list of conditions to respect to enter in the group
+	 * @param leaveConditions
+	 *            is the list of conditions to respect to leave out of the group
+	 * @return The address of the group freshly created
+	 * @since 0.5
+	 */
+	public GroupAddress createGroup(
+			OrganizationFactory<? extends Organization> factory,
+			Collection<? extends GroupCondition> obtainConditions,
+			Collection<? extends GroupCondition> leaveConditions);
+
+	/**
+	 * Creates a new group implementing the specified organization with its
+	 * associated GroupManager
+	 * 
+	 * @param factory
+	 *            is the organization factory which may be used to instance
+	 *            organization.
+	 * @param obtainConditions
+	 *            is the list of conditions to respect to enter in the group
+	 * @param leaveConditions
+	 *            is the list of conditions to respect to leave out of the group
+	 * @param groupName is the name of the group.
+	 * @return The address of the group freshly created
+	 * @since 0.5
+	 */
+	public GroupAddress createGroup(
+			OrganizationFactory<? extends Organization> factory,
+			Collection<? extends GroupCondition> obtainConditions,
+			Collection<? extends GroupCondition> leaveConditions,
+			String groupName);
+
+	/**
+	 * Creates a new group implementing the specified organization with its
+	 * associated GroupManager
+	 * 
+	 * @param organization
+	 *            is the organization that must be instanced
+	 * @return The address of the group freshly created
+	 * @since 0.5
+	 */
+	public GroupAddress createGroup(Class<? extends Organization> organization);
+
+	/**
+	 * Creates a new group implementing the specified organization with its
+	 * associated GroupManager
+	 * 
+	 * @param organization
+	 *            is the organization that must be instanced
+	 * @param groupName is the name of the group.
+	 * @return The address of the group freshly created
+	 * @since 0.5
+	 */
+	public GroupAddress createGroup(Class<? extends Organization> organization, String groupName);
+
+	/**
+	 * Creates a new group implementing the specified organization with its
+	 * associated GroupManager
+	 * 
+	 * @param factory
+	 *            is the organization factory which may be used to create the
+	 *            organization instance.
+	 * @return The address of the group freshly created
+	 * @since 0.5
+	 */
+	public GroupAddress createGroup(OrganizationFactory<?> factory);
+
+	/**
+	 * Get the address of an already existing group implementing the specified
+	 * organization if any, do not create a new one.
+	 * 
+	 * @param organization
+	 *            - the organization that the group have to implement
+	 * @return the address of the group, or <code>null</code>
+	 * @since 0.5
+	 */
+	public GroupAddress getExistingGroup(Class<? extends Organization> organization);
+
+	/**
+	 * Return all known groups of an organization.
+	 * 
+	 * @param organization
+	 *            the organization that the group have to implement
+	 * @return all known groups
+	 * @since 0.5
+	 */
+	public List<GroupAddress> getExistingGroups(Class<? extends Organization> organization);
+
+	/**
+	 * Get the address of an already existing group implementing the specified
+	 * organization if any, do not create a new one.
+	 * 
+	 * @param factory
+	 *            is the organization factory which may be used to instance
+	 *            organization.
+	 * @return the address of the group, or <code>null</code>
+	 * @since 0.5
+	 */
+	public GroupAddress getExistingGroup(OrganizationFactory<? extends Organization> factory);
+
+	/**
+	 * Get the address of an already existing group implementing the specified
+	 * organization if any, or create a new one
+	 * 
+	 * @param organization
+	 *            - the organization that the group have to implement
+	 * @return the address of the group
+	 * @since 0.5
+	 */
+	public GroupAddress getOrCreateGroup(Class<? extends Organization> organization);
+
+	/**
+	 * Get the address of an already existing group implementing the specified
+	 * organization if any, or create a new one
+	 * 
+	 * @param organization
+	 *            - the organization that the group have to implement
+	 * @param groupName is the name of the group, used only when creating a new group.
+	 * @return the address of the group
+	 * @since 0.5
+	 */
+	public GroupAddress getOrCreateGroup(
+			Class<? extends Organization> organization,
+			String groupName);
+
+	/**
+	 * Get the address of an already existing group implementing the specified
+	 * organization if any, or create a new one
+	 * 
+	 * @param factory
+	 *            is the organization factory which may be used to instance
+	 *            organization.
+	 * @return the address of the group
+	 * @since 0.5
+	 */
+	public GroupAddress getOrCreateGroup(
+			OrganizationFactory<? extends Organization> factory);
+
+	/**
+	 * Get the address of an already existing group implementing the specified
+	 * organization if any, or create a new one
+	 * 
+	 * @param factory
+	 *            is the organization factory which may be used to instance
+	 *            organization.
+	 * @param groupName is the name of the group, used only when creating a new group.
+	 * @return the address of the group
+	 * @since 0.5
+	 */
+	public GroupAddress getOrCreateGroup(
+			OrganizationFactory<? extends Organization> factory,
+			String groupName);
+
+	/**
+	 * Get the address of an already existing group implementing the specified
+	 * organization with the specified ID if any, or create a new one with the specified id.
+	 * 
+	 * @param id is the desired ID for the group.
+	 * @param organization is the organization implemented by the group.
+	 * @param obtainConditions are the obtain conditions to pass to the newly created group.
+	 * @param leaveConditions are the leave conditions to pass to the newly created group.
+	 * @param membership is the membership descriptor to pass to the newly created group.
+	 * @param distributed indicates if the newly created group is marked as distributed or not. 
+	 * @param persistent indicates if the newly created group is marked as persistent or not. 
+	 * @param groupName is the name associated to the newly created group. 
+	 * @return the address of the group, never <code>null</code>.
+	 * @since 0.5
+	 */
+	public GroupAddress getOrCreateGroup(UUID id,
+			Class<? extends Organization> organization,
+			Collection<? extends GroupCondition> obtainConditions,
+			Collection<? extends GroupCondition> leaveConditions,
+			MembershipService membership,
+			boolean distributed,
+			boolean persistent,
+			String groupName);
+
+	/**
+	 * Get the address of an already existing group implementing the specified
+	 * organization with the specified ID if any, or create a new one
+	 * 
+	 * @param id
+	 *            The desired ID for the group
+	 * @param organization
+	 *            - the organization that the group have to implement
+	 * @param groupName is the name of the group, used only when creating a new group.
+	 * @return the address of the group
+	 * @since 0.5
+	 */
+	public GroupAddress getOrCreateGroup(UUID id,
+			Class<? extends Organization> organization,
+			String groupName);
 }

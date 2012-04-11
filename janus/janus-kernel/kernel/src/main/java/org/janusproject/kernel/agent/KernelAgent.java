@@ -28,6 +28,8 @@ import java.util.Collection;
 import java.util.EventListener;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
@@ -51,8 +53,13 @@ import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
 import org.janusproject.kernel.crio.core.CRIOContext;
 import org.janusproject.kernel.crio.core.CRIOMessageContext;
+import org.janusproject.kernel.crio.core.GroupAddress;
+import org.janusproject.kernel.crio.core.Organization;
 import org.janusproject.kernel.crio.interaction.PrivilegedMessageTransportService;
+import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.GroupListener;
+import org.janusproject.kernel.crio.organization.MembershipService;
+import org.janusproject.kernel.crio.organization.OrganizationFactory;
 import org.janusproject.kernel.crio.organization.PrivilegedPersistentGroupCleanerService;
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.message.Message;
@@ -1877,6 +1884,172 @@ extends ActivatorAgent<AgentActivator> {
 		@Override
 		public void removeGroupListener(GroupListener listener) {
 			KernelAgent.this.removeGroupListener(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress createGroup(
+				Class<? extends Organization> organization,
+				Collection<? extends GroupCondition> obtainConditions,
+				Collection<? extends GroupCondition> leaveConditions) {
+			return KernelAgent.this.createGroup(organization, obtainConditions, leaveConditions);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress createGroup(
+				Class<? extends Organization> organization,
+				Collection<? extends GroupCondition> obtainConditions,
+				Collection<? extends GroupCondition> leaveConditions,
+				String groupName) {
+			return KernelAgent.this.createGroup(organization, obtainConditions, leaveConditions);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress createGroup(
+				OrganizationFactory<? extends Organization> factory,
+				Collection<? extends GroupCondition> obtainConditions,
+				Collection<? extends GroupCondition> leaveConditions) {
+			return KernelAgent.this.createGroup(factory, obtainConditions, leaveConditions);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress createGroup(
+				OrganizationFactory<? extends Organization> factory,
+				Collection<? extends GroupCondition> obtainConditions,
+				Collection<? extends GroupCondition> leaveConditions,
+				String groupName) {
+			return KernelAgent.this.createGroup(factory, obtainConditions, leaveConditions, groupName);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress createGroup(Class<? extends Organization> organization) {
+			return KernelAgent.this.createGroup(organization);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress createGroup(Class<? extends Organization> organization, String groupName) {
+			return KernelAgent.this.createGroup(organization, groupName);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress createGroup(OrganizationFactory<?> factory) {
+			return KernelAgent.this.createGroup(factory);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress getExistingGroup(Class<? extends Organization> organization) {
+			return KernelAgent.this.getExistingGroup(organization);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public List<GroupAddress> getExistingGroups(Class<? extends Organization> organization) {
+			return KernelAgent.this.getExistingGroups(organization);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress getExistingGroup(OrganizationFactory<? extends Organization> factory) {
+			return KernelAgent.this.getExistingGroup(factory);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress getOrCreateGroup(Class<? extends Organization> organization) {
+			return KernelAgent.this.getOrCreateGroup(organization);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress getOrCreateGroup(Class<? extends Organization> organization, String groupName) {
+			return KernelAgent.this.getOrCreateGroup(organization, groupName);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress getOrCreateGroup(OrganizationFactory<? extends Organization> factory) {
+			return KernelAgent.this.getOrCreateGroup(factory);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress getOrCreateGroup(
+				OrganizationFactory<? extends Organization> factory,
+				String groupName) {
+			return KernelAgent.this.getOrCreateGroup(factory, groupName);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress getOrCreateGroup(UUID id,
+				Class<? extends Organization> organization,
+				Collection<? extends GroupCondition> obtainConditions,
+				Collection<? extends GroupCondition> leaveConditions,
+				MembershipService membership, boolean distributed,
+				boolean persistent, String groupName) {
+			return KernelAgent.this.getOrCreateGroup(
+					id, organization, obtainConditions,
+					leaveConditions, membership, distributed, persistent,
+					groupName);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public GroupAddress getOrCreateGroup(UUID id,
+				Class<? extends Organization> organization, String groupName) {
+			return KernelAgent.this.getOrCreateGroup(id, organization, groupName);
 		}
 
 	}

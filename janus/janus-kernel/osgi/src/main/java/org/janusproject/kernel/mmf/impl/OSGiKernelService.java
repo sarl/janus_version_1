@@ -20,6 +20,9 @@
  */
 package org.janusproject.kernel.mmf.impl;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.arakhne.vmutil.locale.Locale;
@@ -39,7 +42,12 @@ import org.janusproject.kernel.channels.ChannelInteractable;
 import org.janusproject.kernel.channels.ChannelInteractableListener;
 import org.janusproject.kernel.credential.Credentials;
 import org.janusproject.kernel.crio.core.CRIOContext;
+import org.janusproject.kernel.crio.core.GroupAddress;
+import org.janusproject.kernel.crio.core.Organization;
+import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.GroupListener;
+import org.janusproject.kernel.crio.organization.MembershipService;
+import org.janusproject.kernel.crio.organization.OrganizationFactory;
 import org.janusproject.kernel.mmf.KernelAuthority;
 import org.janusproject.kernel.mmf.KernelService;
 import org.janusproject.kernel.mmf.KernelServiceListener;
@@ -805,6 +813,156 @@ public class OSGiKernelService implements KernelService, KernelListener,
 	@Override
 	public void removeGroupListener(GroupListener listener) {
 		this.kernel.removeGroupListener(listener);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress createGroup(Class<? extends Organization> organization,
+			Collection<? extends GroupCondition> obtainConditions,
+			Collection<? extends GroupCondition> leaveConditions) {
+		return this.kernel.createGroup(organization, obtainConditions, leaveConditions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress createGroup(Class<? extends Organization> organization,
+			Collection<? extends GroupCondition> obtainConditions,
+			Collection<? extends GroupCondition> leaveConditions,
+			String groupName) {
+		return this.kernel.createGroup(organization, obtainConditions, leaveConditions, groupName);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress createGroup(
+			OrganizationFactory<? extends Organization> factory,
+			Collection<? extends GroupCondition> obtainConditions,
+			Collection<? extends GroupCondition> leaveConditions) {
+		return this.kernel.createGroup(factory, obtainConditions, leaveConditions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress createGroup(
+			OrganizationFactory<? extends Organization> factory,
+			Collection<? extends GroupCondition> obtainConditions,
+			Collection<? extends GroupCondition> leaveConditions,
+			String groupName) {
+		return this.kernel.createGroup(factory, obtainConditions, leaveConditions, groupName);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress createGroup(Class<? extends Organization> organization) {
+		return this.kernel.createGroup(organization);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress createGroup(Class<? extends Organization> organization,
+			String groupName) {
+		return this.kernel.createGroup(organization, groupName);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress createGroup(OrganizationFactory<?> factory) {
+		return this.kernel.createGroup(factory);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress getExistingGroup(Class<? extends Organization> organization) {
+		return this.kernel.getExistingGroup(organization);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<GroupAddress> getExistingGroups(Class<? extends Organization> organization) {
+		return this.kernel.getExistingGroups(organization);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress getExistingGroup(OrganizationFactory<? extends Organization> factory) {
+		return this.kernel.getExistingGroup(factory);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress getOrCreateGroup(Class<? extends Organization> organization) {
+		return this.kernel.getOrCreateGroup(organization);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress getOrCreateGroup(Class<? extends Organization> organization, String groupName) {
+		return this.kernel.getOrCreateGroup(organization, groupName);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress getOrCreateGroup(OrganizationFactory<? extends Organization> factory) {
+		return this.kernel.getOrCreateGroup(factory);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress getOrCreateGroup(
+			OrganizationFactory<? extends Organization> factory,
+			String groupName) {
+		return this.kernel.getOrCreateGroup(factory, groupName);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress getOrCreateGroup(UUID id,
+			Class<? extends Organization> organization,
+			Collection<? extends GroupCondition> obtainConditions,
+			Collection<? extends GroupCondition> leaveConditions,
+			MembershipService membership, boolean distributed,
+			boolean persistent, String groupName) {
+		return this.kernel.getOrCreateGroup(id, organization, obtainConditions,
+				leaveConditions, membership, distributed, persistent, groupName);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GroupAddress getOrCreateGroup(UUID id,
+			Class<? extends Organization> organization, String groupName) {
+		return this.kernel.getOrCreateGroup(id, organization, groupName);
 	}
 
 }

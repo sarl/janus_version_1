@@ -21,6 +21,9 @@
 package org.janusproject.kernel.agent;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +37,12 @@ import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.channels.ChannelInteractable;
 import org.janusproject.kernel.channels.ChannelInteractableListener;
 import org.janusproject.kernel.crio.core.CRIOContext;
+import org.janusproject.kernel.crio.core.GroupAddress;
+import org.janusproject.kernel.crio.core.Organization;
+import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.GroupListener;
+import org.janusproject.kernel.crio.organization.MembershipService;
+import org.janusproject.kernel.crio.organization.OrganizationFactory;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.util.sizediterator.EmptyIterator;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
@@ -464,6 +472,164 @@ public class KernelEventTest extends TestCase {
 		@Override
 		public void removeGroupListener(GroupListener listener) {
 			//
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress createGroup(
+				Class<? extends Organization> organization,
+				Collection<? extends GroupCondition> obtainConditions,
+				Collection<? extends GroupCondition> leaveConditions) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress createGroup(
+				Class<? extends Organization> organization,
+				Collection<? extends GroupCondition> obtainConditions,
+				Collection<? extends GroupCondition> leaveConditions,
+				String groupName) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress createGroup(
+				OrganizationFactory<? extends Organization> factory,
+				Collection<? extends GroupCondition> obtainConditions,
+				Collection<? extends GroupCondition> leaveConditions) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress createGroup(
+				OrganizationFactory<? extends Organization> factory,
+				Collection<? extends GroupCondition> obtainConditions,
+				Collection<? extends GroupCondition> leaveConditions,
+				String groupName) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress createGroup(
+				Class<? extends Organization> organization) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress createGroup(
+				Class<? extends Organization> organization, String groupName) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress createGroup(OrganizationFactory<?> factory) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress getExistingGroup(
+				Class<? extends Organization> organization) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public List<GroupAddress> getExistingGroups(
+				Class<? extends Organization> organization) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress getExistingGroup(
+				OrganizationFactory<? extends Organization> factory) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress getOrCreateGroup(
+				Class<? extends Organization> organization) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress getOrCreateGroup(
+				Class<? extends Organization> organization, String groupName) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress getOrCreateGroup(
+				OrganizationFactory<? extends Organization> factory) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress getOrCreateGroup(
+				OrganizationFactory<? extends Organization> factory,
+				String groupName) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress getOrCreateGroup(UUID id,
+				Class<? extends Organization> organization,
+				Collection<? extends GroupCondition> obtainConditions,
+				Collection<? extends GroupCondition> leaveConditions,
+				MembershipService membership, boolean distributed,
+				boolean persistent, String groupName) {
+			throw new UnsupportedOperationException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public GroupAddress getOrCreateGroup(UUID id,
+				Class<? extends Organization> organization, String groupName) {
+			throw new UnsupportedOperationException();
 		}
 
 	}
