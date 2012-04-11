@@ -91,4 +91,49 @@ public class Signal extends EventObject {
 		return this.values;
 	}
 
+	/** Replies the value at the given position in this signal.
+	 * 
+	 * @param <T> type is the type of the expected value.
+	 * @param index is the position of the value.
+	 * @param type is the type of the expected value.
+	 * @return the value, or <code>null</code> if the index is invalid
+	 * or the type does not corresponds to the value.
+	 * @since 0.5
+	 */
+	public <T> T getValueAt(int index, Class<T> type) {
+		if (this.values!=null
+			&& index>=0
+			&& index<this.values.length) {
+			Object v = this.values[index];
+			if (v==null || type.isInstance(v)) {
+				return type.cast(v);
+			}
+		}
+		return null;
+	}
+
+	/** Replies the value at the given position in this signal.
+	 * 
+	 * @param index is the position of the value.
+	 * @return the value, or <code>null</code> if the index is invalid.
+	 * @since 0.5
+	 */
+	public Object getValueAt(int index) {
+		if (this.values!=null
+			&& index>=0
+			&& index<this.values.length) {
+			return this.values[index];
+		}
+		return null;
+	}
+	
+	/** Replies the number of values stored in this signal.
+	 * 
+	 * @return the number of values stored in this signal.
+	 * @since 0.5
+	 */
+	public int getValueCount() {
+		return this.values==null ? 0 : this.values.length;
+	}
+
 }
