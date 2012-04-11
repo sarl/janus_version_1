@@ -275,9 +275,10 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 				String message = Locale.getString(
 						PrototypeValidator.class,
 						"NOT_ENOUGH_MANDATORY_PARAMETER", //$NON-NLS-1$
-						this.annotatedType.getCanonicalName(),
+						mandatoryCount,
+						internalValues.length,
 						scope.toLocalizedString(),
-						mandatoryCount);
+						this.annotatedType.getCanonicalName());
 				getLogger().severe(message);
 				throw new PrototypeException(scope, this.annotatedType, internalValues, message);
 			}
@@ -307,9 +308,10 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 				String message = Locale.getString(
 						PrototypeValidator.class,
 						"TOO_MANY_MANDATORY_PARAMETER", //$NON-NLS-1$
-						this.annotatedType.getCanonicalName(),
+						specifiedParameters.length,
+						internalValues.length,
 						scope.toLocalizedString(),
-						specifiedParameters.length);
+						this.annotatedType.getCanonicalName());
 				getLogger().severe(message);
 				throw new PrototypeException(scope, this.annotatedType, internalValues, message);
 			}
@@ -320,9 +322,10 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 				String message = Locale.getString(
 						PrototypeValidator.class,
 						"NOT_ENOUGH_MANDATORY_PARAMETER", //$NON-NLS-1$
-						this.annotatedType.getCanonicalName(),
+						mandatoryCount,
+						internalValues.length,
 						scope.toLocalizedString(),
-						mandatoryCount);
+						this.annotatedType.getCanonicalName());
 				getLogger().severe(message);
 				throw new PrototypeException(scope, this.annotatedType, internalValues, message);
 			}
