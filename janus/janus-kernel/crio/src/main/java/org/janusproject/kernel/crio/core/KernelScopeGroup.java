@@ -862,14 +862,16 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 								getLogger().warning(
 										Locale.getString(KernelScopeGroup.class,
 												"MAILBOX_NOT_FOUND", //$NON-NLS-1$
-												context.getReceiver().toString()));
+												context.getSendingRoleAddress().toString(),
+												context.getReceivingRoleAddress().toString()));
 							}
 						}
 						else {
 							getLogger().warning(
 									Locale.getString(KernelScopeGroup.class,
 											"RECEIVER_NOT_FOUND", //$NON-NLS-1$
-											context.getReceiver().toString()));
+											context.getSendingRoleAddress().toString(),
+											context.getReceivingRoleAddress().toString()));
 						}
 
 					}					
@@ -889,7 +891,8 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 			getLogger().warning(
 					Locale.getString(KernelScopeGroup.class,
 							"NO_RECEIVER_FOUND", //$NON-NLS-1$
-							message
+							message,
+							context.getSendingRoleAddress().toString()
 					));
 			
 			return null;
