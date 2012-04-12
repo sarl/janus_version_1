@@ -24,7 +24,9 @@ import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
@@ -32,6 +34,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.arakhne.vmutil.locale.Locale;
+import org.janusproject.kernel.condition.Condition;
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
 import org.janusproject.kernel.crio.organization.GroupCondition;
@@ -53,6 +56,15 @@ import org.janusproject.kernel.logger.LoggerUtil;
 public abstract class Organization
 implements Iterable<Class<? extends Role>> {
 
+	/**
+	 * the set of conditions to satisfy before accessing/assuming/acquiring a group
+	 */
+	private Collection<GroupCondition> groupObtainConditions = null;
+
+	/**
+	 * the set of conditions to satisfy before leaving/liberating a group
+	 */
+	private Collection<GroupCondition> groupLeaveConditions = null;
 	/**
 	 * The set of role classes defined on this organization
 	 */
@@ -405,11 +417,19 @@ implements Iterable<Class<? extends Role>> {
 			boolean persistent,
 			String groupName) {
 		checkSingleton();
+		Collection<? extends GroupCondition> oc = obtainConditions;
+		if (oc==null || oc.isEmpty()) {
+			oc = getObtainConditions();
+		}
+		Collection<? extends GroupCondition> lc = leaveConditions;
+		if (lc==null || lc.isEmpty()) {
+			lc = getLeaveConditions();
+		}
 		GroupAddress ga = this.crioContext.get().getGroupRepository().newGroup(
 					id,
 					this,
-					obtainConditions,
-					leaveConditions,
+					oc,
+					lc,
 					membership,
 					distributed,
 					persistent,
@@ -516,6 +536,133 @@ implements Iterable<Class<? extends Role>> {
 	public synchronized final Iterator<GroupAddress> getGroupAddresses() {
 		checkSingleton();
 		return new ArrayList<GroupAddress>(this.groups).iterator();
+	}
+
+	/**
+	 * ****************** Conditions
+	 * *****************************************
+	 */
+
+	/**
+	 * Appends the specified condition to the end of the initial obtain conditions
+	 * for a group.
+	 * 
+	 * @param c - the condition to add to the obtain conditions
+	 * @return <tt>true</tt> if the obtain conditions changed as a result of the
+	 *         call
+	 * @since 0.5
+	 */
+	protected boolean addObtainCondition(GroupCondition c) {
+		if (c==null) return false;
+		if (this.groupObtainConditions==null)
+			this.groupObtainConditions = new LinkedList<GroupCondition>();
+		return this.groupObtainConditions.add(c);
+	}
+
+
+	/**
+	 * Appends the specified condition to the end of the initial leave conditions
+	 * for a group.
+	 * @param c - the condition to add to the leave conditions
+	 * @return <tt>true</tt> if the leave conditions changed as a result of the
+	 *         call
+	 * @since 0.5
+	 */
+	protected boolean addLeaveCondition(GroupCondition c) {
+		if (c==null) return false;
+		if (this.groupLeaveConditions==null)
+			this.groupLeaveConditions = new LinkedList<GroupCondition>();
+		return this.groupLeaveConditions.add(c);
+	}
+
+	/**
+	 * Set the initial leave conditions for a group. 
+	 * @param c - leave conditions
+	 * @since 0.5
+	 */
+	protected void setLeaveCondition(Collection<? extends GroupCondition> c) {
+		if (c==null || c.isEmpty()) {
+			this.groupLeaveConditions = null;		
+		}
+		else {
+			if (this.groupLeaveConditions==null)
+				this.groupLeaveConditions = new LinkedList<GroupCondition>();
+			this.groupLeaveConditions.addAll(c);
+		}
+	}
+
+	/**
+	 * Set the initial obtains conditions for a group.
+	 * @param c - obtain conditions
+	 * @since 0.5
+	 */
+	protected void setObtainCondition(Collection<? extends GroupCondition> c) {
+		if (c==null || c.isEmpty()) {
+			this.groupObtainConditions = null;		
+		}
+		else {
+			if (this.groupObtainConditions==null)
+				this.groupObtainConditions = new LinkedList<GroupCondition>();
+			this.groupObtainConditions.addAll(c);
+		}
+	}
+
+	/**
+	 * Remove the specified condition from the initial obtain conditions for a group.
+	 * 
+	 * @param c - the condition to remove from the obtain conditions.
+	 * @return <tt>true</tt> if the obtain conditions changed as a result of the
+	 *         call
+	 * @since 0.5
+	 */
+	protected boolean removeObtainCondition(Condition<?> c) {
+		if (c!=null && this.groupObtainConditions!=null) {
+			if (this.groupObtainConditions.remove(c)) {
+				if (this.groupObtainConditions.isEmpty())
+					this.groupObtainConditions = null;
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	/**
+	 * Remove the specified condition from the initial leave conditions for a group.
+	 * @param c - the condition to remove from the leave conditions
+	 * @return <tt>true</tt> if the leave conditions changed as a result of the
+	 *         call
+	 * @since 0.5
+	 */
+	protected boolean removeLeaveCondition(Condition<?> c) {
+		if (c!=null && this.groupLeaveConditions!=null) {
+			if (this.groupLeaveConditions.remove(c)) {
+				if (this.groupLeaveConditions.isEmpty())
+					this.groupLeaveConditions = null;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/** Replies the initial obtain conditions for a group.
+	 * 
+	 * @return the initial obtain conditions for a group.
+	 * @since 0.5
+	 */
+	public Collection<GroupCondition> getObtainConditions() {
+		if (this.groupObtainConditions==null) return Collections.emptyList();
+		return Collections.unmodifiableCollection(this.groupObtainConditions);
+	}
+	
+	/** Replies the initial leave conditions for a group.
+	 * 
+	 * @return the initial leave conditions for a group.
+	 * @since 0.5
+	 */
+	public Collection<GroupCondition> getLeaveConditions() {
+		if (this.groupLeaveConditions==null) return Collections.emptyList();
+		return Collections.unmodifiableCollection(this.groupLeaveConditions);
 	}
 
 	/**
