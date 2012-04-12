@@ -419,11 +419,11 @@ implements Iterable<Class<? extends Role>> {
 		checkSingleton();
 		Collection<? extends GroupCondition> oc = obtainConditions;
 		if (oc==null || oc.isEmpty()) {
-			oc = getObtainConditions();
+			oc = new ArrayList<GroupCondition>(getObtainConditions());
 		}
 		Collection<? extends GroupCondition> lc = leaveConditions;
 		if (lc==null || lc.isEmpty()) {
-			lc = getLeaveConditions();
+			lc = new ArrayList<GroupCondition>(getLeaveConditions());
 		}
 		GroupAddress ga = this.crioContext.get().getGroupRepository().newGroup(
 					id,
