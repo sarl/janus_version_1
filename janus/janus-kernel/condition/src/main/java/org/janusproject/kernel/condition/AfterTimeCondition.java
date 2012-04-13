@@ -39,7 +39,7 @@ public class AfterTimeCondition extends AbstractCondition<TimeConditionParameter
 	 * @param limitTime is the time after which the condition is satified.
 	 */
 	public AfterTimeCondition(float limitTime) {
-		super(TimeConditionParameterProvider.PARAMETER_COUNT);
+		super();
 		this.time = limitTime;
 	}
 
@@ -48,8 +48,7 @@ public class AfterTimeCondition extends AbstractCondition<TimeConditionParameter
 	 */
 	@Override
 	public boolean evaluate(TimeConditionParameterProvider object) {
-		return ((Float)object.getConditionParameterAt(TimeConditionParameterProvider.TIME_INDEX)).floatValue()
-				> this.time;
+		return (object.getCurrentTime() > this.time);
 	}
 
 	/**
@@ -57,8 +56,7 @@ public class AfterTimeCondition extends AbstractCondition<TimeConditionParameter
 	 */
 	@Override
 	public ConditionFailure evaluateFailure(TimeConditionParameterProvider object) {
-		if (((Float)object.getConditionParameterAt(TimeConditionParameterProvider.TIME_INDEX)).floatValue()
-				> this.time) return null;
+		if (object.getCurrentTime() > this.time) return null;
 		return this;
 	}
 	

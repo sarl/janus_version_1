@@ -22,7 +22,7 @@ package org.janusproject.kernel.condition;
 
 /** Represents an abstract condition. 
  * 
- * @param <O> is the type of parameter provider
+ * @param <O> is the type of the object to evaluate.
  * @author $Author: ngaud$
  * @author $Author: srodriguez$
  * @author $Author: sgalland$
@@ -30,24 +30,23 @@ package org.janusproject.kernel.condition;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public abstract class AbstractCondition<O extends ConditionParameterProvider> implements Condition<O> {
+public abstract class AbstractCondition<O> implements Condition<O> {
 
-	private static final long serialVersionUID = 820007805427160941L;
-	
-	private final int parametersCount;
+	private static final long serialVersionUID = 8105244639552393469L;
 
 	/**
-	 * @param parameterCount is the count of parameters required to evaluate this condition.
 	 */
-	public AbstractCondition(int parameterCount) {
-		this.parametersCount = parameterCount;
+	public AbstractCondition() {
+		//
 	}
 
 	/** {@inheritDoc}
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public final int getConditionParameterCount() {
-		return this.parametersCount;
+		return 0;
 	}
 
 }

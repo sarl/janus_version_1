@@ -27,7 +27,7 @@ package org.janusproject.kernel.condition;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public final class TrueCondition implements Condition<ConditionParameterProvider> {
+public final class TrueCondition implements Condition<Object> {
 
 	private static final long serialVersionUID = -8421012955685916980L;
 
@@ -36,7 +36,7 @@ public final class TrueCondition implements Condition<ConditionParameterProvider
 	 * @return <tt>true</tt>
 	 */
 	@Override
-	public boolean evaluate(ConditionParameterProvider object) {
+	public boolean evaluate(Object object) {
 		return true;
 	}
 
@@ -45,7 +45,7 @@ public final class TrueCondition implements Condition<ConditionParameterProvider
 	 * @return <tt>null</tt>
 	 */
 	@Override
-	public ConditionFailure evaluateFailure(ConditionParameterProvider object) {
+	public ConditionFailure evaluateFailure(Object object) {
 		return null;
 	}
 

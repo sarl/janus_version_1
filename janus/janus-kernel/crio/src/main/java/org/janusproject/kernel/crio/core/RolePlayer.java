@@ -29,7 +29,6 @@ import java.util.Collections;
 import java.util.EventListener;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -41,7 +40,6 @@ import org.janusproject.kernel.agentsignal.InstantSignalManager;
 import org.janusproject.kernel.agentsignal.Signal;
 import org.janusproject.kernel.agentsignal.SignalListener;
 import org.janusproject.kernel.agentsignal.SignalManager;
-import org.janusproject.kernel.condition.ConditionParameterProvider;
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
 import org.janusproject.kernel.credential.Credentials;
@@ -76,7 +74,6 @@ import org.janusproject.kernel.util.multicollection.MultiCollection;
 import org.janusproject.kernel.util.random.RandomNumber;
 import org.janusproject.kernel.util.sizediterator.EmptyIterator;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
-import org.janusproject.kernel.util.sizediterator.UnmodifiableIterator;
 
 /**
  * This class must be implemented by all the objects playing a <code>Role</code>.
@@ -86,15 +83,12 @@ import org.janusproject.kernel.util.sizediterator.UnmodifiableIterator;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public abstract class RolePlayer implements ConditionParameterProvider,
-		CapacityCaller, LoggerProvider {
+public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 
 	private final PlayerAddress address;
 
 	private Memory memory = null;
 	private SignalManager signalManager = null;
-
-	private Map<String, Object> parameters;
 
 	private CapacityContainer capacities = null;
 
@@ -829,71 +823,6 @@ public abstract class RolePlayer implements ConditionParameterProvider,
 				return true;
 		}
 		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @CONDITONNEDOBJECTAPI
-	 */
-	@Override
-	public Object getConditionParameter(String parameterName) {
-		if (this.parameters == null)
-			return null;
-		return this.parameters.get(parameterName);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @CONDITONNEDOBJECTAPI
-	 */
-	@Override
-	public Object getConditionParameterAt(int index) {
-		String key = getConditionParameterNameAt(index);
-		assert (key != null);
-		assert (this.parameters != null);
-		return this.parameters.get(key);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @CONDITONNEDOBJECTAPI
-	 */
-	@Override
-	public int getConditionParameterCount() {
-		return (this.parameters == null) ? 0 : this.parameters.size();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @CONDITONNEDOBJECTAPI
-	 */
-	@Override
-	public String getConditionParameterNameAt(int index) {
-		if (this.parameters == null)
-			throw new IndexOutOfBoundsException();
-		Iterator<String> iterator = this.parameters.keySet().iterator();
-		for (int i = 0; iterator.hasNext() && i < index; i++) {
-			iterator.next();
-		}
-		if (iterator.hasNext())
-			return iterator.next();
-		throw new IndexOutOfBoundsException();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @CONDITONNEDOBJECTAPI
-	 */
-	@Override
-	public Iterator<Object> getConditionParameters() {
-		if (this.parameters == null)
-			return EmptyIterator.singleton();
-		return new UnmodifiableIterator<Object>(this.parameters.values());
 	}
 
 	//

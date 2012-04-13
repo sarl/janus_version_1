@@ -31,14 +31,14 @@ import java.util.Collection;
  * </ul>
  * Each condition are considered with the same importance, and they have to be all satisfied to access or leave this object.
  *
- * @param <O> is the type of condition parameter provider for all the conditions.
+ * @param <O> is the type of object to test in the condition.
  * @param <C> is the type of all the conditions.
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public interface Conditionnable<O extends ConditionParameterProvider, C extends Condition<? super O>> {
+public interface Conditionnable<O, C extends Condition<? super O>> {
 
 	/**
 	 * Verify if all the obtain conditions are satisfied by the specified agent

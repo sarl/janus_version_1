@@ -34,7 +34,7 @@ import java.util.LinkedList;
  * </ul>
  * Each condition are considered with the same importance, and they have to be all satisfied to access or leave this object.
  *
- * @param <O> is the type of condition parameter provider for all the conditions.
+ * @param <O> is the type of the objects tested in the condition.
  * @param <C> is the type of all the conditions.
  * @author $Author: ngaud$
  * @author $Author: srodriguez$
@@ -43,7 +43,7 @@ import java.util.LinkedList;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public class ConditionnedObject<O extends ConditionParameterProvider, C extends Condition<? super O>>
+public class ConditionnedObject<O, C extends Condition<? super O>>
 implements Conditionnable<O,C> {
 
 	/**

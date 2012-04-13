@@ -24,7 +24,7 @@ import java.io.Serializable;
 
 /** Represents a generic condition. 
  *
- * @param <O> is the type of parameter provider
+ * @param <O> is the type of object to evaluate.
  * @author $Author: ngaud$
  * @author $Author: srodriguez$
  * @author $Author: sgalland$
@@ -32,7 +32,7 @@ import java.io.Serializable;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public interface Condition<O extends ConditionParameterProvider> extends Serializable {
+public interface Condition<O> extends Serializable {
 	
 	/**
 	 * Verify if the specified agent satisfy this condition
@@ -55,7 +55,9 @@ public interface Condition<O extends ConditionParameterProvider> extends Seriali
 	 * Returns the number of parameters required to evaluated this condition.
 	 * 
 	 * @return the number of parameters required to evaluated this condition.
+	 * @deprecated
 	 */
+	@Deprecated
 	public int getConditionParameterCount();
 
 }

@@ -984,6 +984,43 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 	}
 
 	/**
+	 * Returns the number of players for the given role in the group.
+	 * 
+	 * @param role
+	 * @return the number of players for the given role in the group.
+	 * @since 0.5
+	 */
+	public int getPlayerCount(Class<? extends Role> role) {
+		this.internalStructureLock.lock();
+		try {
+			RoleDescriptor roleDescriptor = this.playersPerRole.get(role);
+			if (roleDescriptor != null) {
+				return roleDescriptor.getAddressCollection().size();
+			}
+			return 0;
+		}
+		finally {
+			this.internalStructureLock.unlock();
+		}
+	}
+
+	/**
+	 * Returns the number of players in the group.
+	 * 
+	 * @return the number of players in the group.
+	 * @since 0.5
+	 */
+	public int getPlayerCount() {
+		this.internalStructureLock.lock();
+		try {
+			return this.rolesPerPlayer.size();
+		}
+		finally {
+			this.internalStructureLock.unlock();
+		}
+	}
+
+	/**
 	 * Returns the list of the addresses of the role players currently playing
 	 * the specified role.
 	 * 
@@ -1646,6 +1683,30 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		@Override
 		public void removeRolePlayingListener(RolePlayingListener listener) {
 			KernelScopeGroup.this.removeRolePlayingListener(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getPlayerCount(Class<? extends Role> role) {
+			return KernelScopeGroup.this.getPlayerCount(role);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean isPlayedRole(Class<? extends Role> role) {
+			return KernelScopeGroup.this.isPlayedRole(role);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int getPlayerCount() {
+			return KernelScopeGroup.this.getPlayerCount();
 		}
 
 	} // class Description

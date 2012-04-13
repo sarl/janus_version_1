@@ -30,7 +30,9 @@ import java.util.Iterator;
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
+ * @deprecated no replacement
  */
+@Deprecated
 public interface ConditionParameterProvider {
 	
 	/** Replies the count of parameters.

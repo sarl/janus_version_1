@@ -21,6 +21,8 @@
 package org.janusproject.kernel.crio.organization;
 
 import org.janusproject.kernel.condition.Condition;
+import org.janusproject.kernel.condition.ConditionFailure;
+import org.janusproject.kernel.crio.core.Role;
 import org.janusproject.kernel.crio.core.RolePlayer;
 
 /**
@@ -33,6 +35,25 @@ import org.janusproject.kernel.crio.core.RolePlayer;
  */
 public interface GroupCondition extends Condition<RolePlayer> {
 
-	//
+	/**
+	 * Verify if the specified agent satisfy this condition
+	 * 
+	 * @param object - the object to test
+	 * @param roleToTake is the role that may be taken.
+	 * @param group is the group to test.
+	 * @return <tt>true</tt> if this condition is satisfied
+	 */
+	public boolean evaluateOnGroup(RolePlayer object, Class<? extends Role> roleToTake,Group group);	
+
+	/**
+	 * Verify if the specified agent satisfy this condition.
+	 * 
+	 * @param object - the object to test
+	 * @param roleToTake is the role that may be taken.
+	 * @param group is the group to test.
+	 * @return <code>null</code> if condition is satisfied,
+	 * otherwise the failure condition (this condition or a sub-condition).
+	 */
+	public ConditionFailure evaluateFailureOnGroup(RolePlayer object, Class<? extends Role> roleToTake, Group group);	
 	
 }

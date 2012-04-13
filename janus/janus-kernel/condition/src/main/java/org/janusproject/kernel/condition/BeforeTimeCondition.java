@@ -39,7 +39,7 @@ public class BeforeTimeCondition extends AbstractCondition<TimeConditionParamete
 	 * @param limitTime is the time before which the condition is satified.
 	 */
 	public BeforeTimeCondition(float limitTime) {
-		super(TimeConditionParameterProvider.PARAMETER_COUNT);
+		super();
 		this.time = limitTime;
 	}
 
@@ -48,8 +48,7 @@ public class BeforeTimeCondition extends AbstractCondition<TimeConditionParamete
 	 */
 	@Override
 	public boolean evaluate(TimeConditionParameterProvider object) {
-		return ((Float)object.getConditionParameterAt(TimeConditionParameterProvider.TIME_INDEX)).floatValue()
-				< this.time;
+		return (object.getCurrentTime() < this.time);
 	}
 
 	/**
@@ -57,8 +56,7 @@ public class BeforeTimeCondition extends AbstractCondition<TimeConditionParamete
 	 */
 	@Override
 	public ConditionFailure evaluateFailure(TimeConditionParameterProvider object) {
-		if (((Float)object.getConditionParameterAt(TimeConditionParameterProvider.TIME_INDEX)).floatValue()
-				< this.time) return null;
+		if (object.getCurrentTime() < this.time) return null;
 		return this;
 	}
 	

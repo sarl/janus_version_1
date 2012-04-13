@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2004-2011 Janus Core Developers
+ * Copyright (C) 2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,54 +18,48 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.janusproject.kernel.condition;
+package org.janusproject.kernel.crio.core;
 
-/** Represents a generic condition which is always <code>false</code>. 
+import org.janusproject.kernel.condition.AbstractCondition;
+import org.janusproject.kernel.condition.ConditionFailure;
+import org.janusproject.kernel.crio.core.RolePlayer;
+import org.janusproject.kernel.crio.organization.GroupCondition;
+
+/**
+ * Abstract implementation of a GroupCondition that is able to access
+ * to some information of the group.
  * 
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
+ * @since 0.5
  */
-public final class FalseCondition
-implements Condition<Object>, ConditionFailure {
-	
-	private static final long serialVersionUID = 3461790059330204677L;
+public abstract class AbstractGroupCondition extends AbstractCondition<RolePlayer> implements GroupCondition {
+
+	private static final long serialVersionUID = 4427697274827670220L;
 
 	/**
-	 * {@inheritDoc}
-	 * @return <tt>false</tt>
+	 * 
 	 */
-	@Override
-	public boolean evaluate(Object object) {
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @return <tt>this</tt>
-	 */
-	@Override
-	public ConditionFailure evaluateFailure(Object object) {
-		return this;
+	public AbstractGroupCondition() {
+		//
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * @return {@code 0}
 	 */
 	@Override
-	public int getConditionParameterCount() {
-		return 0;
+	public final boolean evaluate(RolePlayer object) {
+		return evaluateOnGroup(object, null, null);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
-	 * @return {@code "false"}
 	 */
 	@Override
-	public String toString() {
-		return Boolean.FALSE.toString();
-	}
+	public final ConditionFailure evaluateFailure(RolePlayer object) {
+		return evaluateFailureOnGroup(object, null, null);
+	}	
 
 }

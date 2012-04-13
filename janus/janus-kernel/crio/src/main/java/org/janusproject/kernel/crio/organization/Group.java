@@ -24,6 +24,7 @@ import java.util.Collection;
 
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.core.Organization;
+import org.janusproject.kernel.crio.core.Role;
 import org.janusproject.kernel.crio.role.RolePlayingListener;
 
 /**
@@ -125,4 +126,30 @@ public interface Group {
 	 */
 	public void removeRolePlayingListener(RolePlayingListener listener);
 
+	/**
+	 * Returns the number of players for the given role in the group.
+	 * 
+	 * @param role
+	 * @return the number of players for the given role in the group.
+	 * @since 0.5
+	 */
+	public int getPlayerCount(Class<? extends Role> role);
+
+	/**
+	 * Rpelies if the given role is currently played.
+	 * 
+	 * @param role
+	 * @return <code>true</code> if the role is played; <code>false</code> otherwise.
+	 * @since 0.5
+	 */
+	public boolean isPlayedRole(Class<? extends Role> role);
+
+	/**
+	 * Returns the number of players in the group.
+	 * 
+	 * @return the number of players in the group.
+	 * @since 0.5
+	 */
+	public int getPlayerCount();
+	
 }

@@ -27,6 +27,7 @@ import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.kernel.condition.AbstractCondition;
 import org.janusproject.kernel.condition.ConditionFailure;
 import org.janusproject.kernel.crio.capacity.Capacity;
+import org.janusproject.kernel.crio.organization.Group;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.role.RoleCondition;
 
@@ -55,7 +56,6 @@ implements RoleCondition, GroupCondition {
 	 * @param required is the list of required capacities.
 	 */
 	public HasAllRequiredCapacitiesCondition(Collection<Class<? extends Capacity>> required) {
-		super(1); // parameterNumber
 		this.requiredCapacities = required;
 	}
 
@@ -63,7 +63,6 @@ implements RoleCondition, GroupCondition {
 	 * @param required is the capacities.
 	 */
 	public HasAllRequiredCapacitiesCondition(Class<? extends Capacity> required) {
-		super(1); // parameterNumber
 		this.requiredCapacities = new ArrayList<Class<? extends Capacity>>();
 		this.requiredCapacities.add(required);
 	}
@@ -155,6 +154,22 @@ implements RoleCondition, GroupCondition {
 					this.capacity.getCanonicalName());
 		}
 		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final boolean evaluateOnGroup(RolePlayer object, Class<? extends Role> roleToTake, Group group) {
+		return evaluate(object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final ConditionFailure evaluateFailureOnGroup(RolePlayer object, Class<? extends Role> roleToTake, Group group) {
+		return evaluateFailure(object);
 	}
 	
 }

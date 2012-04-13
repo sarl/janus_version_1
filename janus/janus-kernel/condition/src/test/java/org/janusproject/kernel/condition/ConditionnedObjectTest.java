@@ -37,7 +37,7 @@ import junit.framework.TestCase;
  */
 public class ConditionnedObjectTest extends TestCase {
 
-	private ConditionnedObject<OwnerStub,Condition<ConditionParameterProvider>> cond;
+	private ConditionnedObject<Object,Condition<Object>> cond;
 	
 	/**
 	 * @throws Exception
@@ -45,7 +45,7 @@ public class ConditionnedObjectTest extends TestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		this.cond = new ConditionnedObject<OwnerStub,Condition<ConditionParameterProvider>>();
+		this.cond = new ConditionnedObject<Object,Condition<Object>>();
 	}
 	
 	/**
@@ -60,14 +60,14 @@ public class ConditionnedObjectTest extends TestCase {
 	/**
 	 */
 	public void testAddObtainConditionCondition() {
-		Condition<ConditionParameterProvider> c1 = new TrueCondition();
-		Condition<ConditionParameterProvider> c2 = new FalseCondition();
+		Condition<Object> c1 = new TrueCondition();
+		Condition<Object> c2 = new FalseCondition();
 
 		assertEquals(0, this.cond.getObtainConditions().size());
 		
 		assertTrue(this.cond.addObtainCondition(c1));
 		assertEquals(1, this.cond.getObtainConditions().size());
-		Iterator<Condition<ConditionParameterProvider>> iterator = this.cond.getObtainConditions().iterator();
+		Iterator<Condition<Object>> iterator = this.cond.getObtainConditions().iterator();
 		assertTrue(iterator.hasNext());
 		assertSame(c1, iterator.next());
 		assertFalse(iterator.hasNext());
@@ -86,14 +86,14 @@ public class ConditionnedObjectTest extends TestCase {
 	/**
 	 */
 	public void testAddLeaveConditionCondition() {
-		Condition<ConditionParameterProvider> c1 = new TrueCondition();
-		Condition<ConditionParameterProvider> c2 = new FalseCondition();
+		Condition<Object> c1 = new TrueCondition();
+		Condition<Object> c2 = new FalseCondition();
 
 		assertEquals(0, this.cond.getObtainConditions().size());
 		
 		assertTrue(this.cond.addLeaveCondition(c1));
 		assertEquals(1, this.cond.getLeaveConditions().size());
-		Iterator<Condition<ConditionParameterProvider>> iterator = this.cond.getLeaveConditions().iterator();
+		Iterator<Condition<Object>> iterator = this.cond.getLeaveConditions().iterator();
 		assertTrue(iterator.hasNext());
 		assertSame(c1, iterator.next());
 		assertFalse(iterator.hasNext());
@@ -111,9 +111,9 @@ public class ConditionnedObjectTest extends TestCase {
 	/**
 	 */
 	public void testRemoveObtainConditionCondition() {
-		Condition<ConditionParameterProvider> c1 = new TrueCondition();
-		Condition<ConditionParameterProvider> c2 = new FalseCondition();
-		Condition<ConditionParameterProvider> c3 = new FalseCondition();
+		Condition<Object> c1 = new TrueCondition();
+		Condition<Object> c2 = new FalseCondition();
+		Condition<Object> c3 = new FalseCondition();
 		this.cond.addObtainCondition(c1);
 		this.cond.addObtainCondition(c2);
 		
@@ -122,7 +122,7 @@ public class ConditionnedObjectTest extends TestCase {
 		assertFalse(this.cond.removeObtainCondition(c3));
 
 		assertEquals(1, this.cond.getObtainConditions().size());
-		Iterator<Condition<ConditionParameterProvider>> iterator = this.cond.getObtainConditions().iterator();
+		Iterator<Condition<Object>> iterator = this.cond.getObtainConditions().iterator();
 		assertTrue(iterator.hasNext());
 		assertSame(c2, iterator.next());
 		assertFalse(iterator.hasNext());
@@ -132,9 +132,9 @@ public class ConditionnedObjectTest extends TestCase {
 	/**
 	 */
 	public void testRemoveLeaveConditionCondition() {
-		Condition<ConditionParameterProvider> c1 = new TrueCondition();
-		Condition<ConditionParameterProvider> c2 = new FalseCondition();
-		Condition<ConditionParameterProvider> c3 = new FalseCondition();
+		Condition<Object> c1 = new TrueCondition();
+		Condition<Object> c2 = new FalseCondition();
+		Condition<Object> c3 = new FalseCondition();
 		this.cond.addLeaveCondition(c1);
 		this.cond.addLeaveCondition(c2);
 		
@@ -143,7 +143,7 @@ public class ConditionnedObjectTest extends TestCase {
 		assertFalse(this.cond.removeLeaveCondition(c3));
 
 		assertEquals(1, this.cond.getLeaveConditions().size());
-		Iterator<Condition<ConditionParameterProvider>> iterator = this.cond.getLeaveConditions().iterator();
+		Iterator<Condition<Object>> iterator = this.cond.getLeaveConditions().iterator();
 		assertTrue(iterator.hasNext());
 		assertSame(c2, iterator.next());
 		assertFalse(iterator.hasNext());
@@ -152,85 +152,85 @@ public class ConditionnedObjectTest extends TestCase {
 	/**
 	 */
 	public void testIsObtainableConditionParameterOwner() {
-		assertTrue(this.cond.isObtainable(new OwnerStub()));
+		assertTrue(this.cond.isObtainable(new Object()));
 
-		Condition<ConditionParameterProvider> c1 = new TrueCondition();
+		Condition<Object> c1 = new TrueCondition();
 		this.cond.addObtainCondition(c1);
 		
-		assertTrue(this.cond.isObtainable(new OwnerStub()));
+		assertTrue(this.cond.isObtainable(new Object()));
 
-		Condition<ConditionParameterProvider> c2 = new FalseCondition();
+		Condition<Object> c2 = new FalseCondition();
 		this.cond.addObtainCondition(c2);
 		
-		assertFalse(this.cond.isObtainable(new OwnerStub()));
+		assertFalse(this.cond.isObtainable(new Object()));
 
-		Condition<ConditionParameterProvider> c3 = new TrueCondition();
+		Condition<Object> c3 = new TrueCondition();
 		this.cond.addObtainCondition(c3);
 		
-		assertFalse(this.cond.isObtainable(new OwnerStub()));
+		assertFalse(this.cond.isObtainable(new Object()));
 	}
 
 	/**
 	 */
 	public void testIsLeavableConditionParameterOwner() {
-		assertTrue(this.cond.isLeavable(new OwnerStub()));
+		assertTrue(this.cond.isLeavable(new Object()));
 
-		Condition<ConditionParameterProvider> c1 = new TrueCondition();
+		Condition<Object> c1 = new TrueCondition();
 		this.cond.addLeaveCondition(c1);
 		
-		assertTrue(this.cond.isLeavable(new OwnerStub()));
+		assertTrue(this.cond.isLeavable(new Object()));
 
-		Condition<ConditionParameterProvider> c2 = new FalseCondition();
+		Condition<Object> c2 = new FalseCondition();
 		this.cond.addLeaveCondition(c2);
 		
-		assertFalse(this.cond.isLeavable(new OwnerStub()));
+		assertFalse(this.cond.isLeavable(new Object()));
 
-		Condition<ConditionParameterProvider> c3 = new TrueCondition();
+		Condition<Object> c3 = new TrueCondition();
 		this.cond.addLeaveCondition(c3);
 		
-		assertFalse(this.cond.isLeavable(new OwnerStub()));
+		assertFalse(this.cond.isLeavable(new Object()));
 	}
 		
 	/**
 	 */
 	public void testGetObtainFailureConditionParameterOwner() {
-		assertNull(this.cond.getObtainFailure(new OwnerStub()));
+		assertNull(this.cond.getObtainFailure(new Object()));
 
-		Condition<ConditionParameterProvider> c1 = new TrueCondition();
+		Condition<Object> c1 = new TrueCondition();
 		this.cond.addObtainCondition(c1);
 		
-		assertNull(this.cond.getObtainFailure(new OwnerStub()));
+		assertNull(this.cond.getObtainFailure(new Object()));
 
-		Condition<ConditionParameterProvider> c2 = new FalseCondition();
+		Condition<Object> c2 = new FalseCondition();
 		this.cond.addObtainCondition(c2);
 		
-		assertNotNull(this.cond.getObtainFailure(new OwnerStub()));
+		assertNotNull(this.cond.getObtainFailure(new Object()));
 
-		Condition<ConditionParameterProvider> c3 = new TrueCondition();
+		Condition<Object> c3 = new TrueCondition();
 		this.cond.addObtainCondition(c3);
 		
-		assertNotNull(this.cond.getObtainFailure(new OwnerStub()));
+		assertNotNull(this.cond.getObtainFailure(new Object()));
 	}
 
 	/**
 	 */
 	public void testGetLeaveFailureConditionParameterOwner() {
-		assertNull(this.cond.getLeaveFailure(new OwnerStub()));
+		assertNull(this.cond.getLeaveFailure(new Object()));
 
-		Condition<ConditionParameterProvider> c1 = new TrueCondition();
+		Condition<Object> c1 = new TrueCondition();
 		this.cond.addLeaveCondition(c1);
 		
-		assertNull(this.cond.getLeaveFailure(new OwnerStub()));
+		assertNull(this.cond.getLeaveFailure(new Object()));
 
-		Condition<ConditionParameterProvider> c2 = new FalseCondition();
+		Condition<Object> c2 = new FalseCondition();
 		this.cond.addLeaveCondition(c2);
 		
-		assertNotNull(this.cond.getLeaveFailure(new OwnerStub()));
+		assertNotNull(this.cond.getLeaveFailure(new Object()));
 
-		Condition<ConditionParameterProvider> c3 = new TrueCondition();
+		Condition<Object> c3 = new TrueCondition();
 		this.cond.addLeaveCondition(c3);
 		
-		assertNotNull(this.cond.getLeaveFailure(new OwnerStub()));
+		assertNotNull(this.cond.getLeaveFailure(new Object()));
 	}
 
 }
