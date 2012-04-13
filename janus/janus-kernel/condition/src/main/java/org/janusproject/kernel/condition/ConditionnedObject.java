@@ -121,6 +121,8 @@ implements Conditionnable<O,C> {
 		}
 		return null;
 	}
+	
+	
 
 	/**
 	 * Verify if all the leave conditions are satisfied by the specified agent

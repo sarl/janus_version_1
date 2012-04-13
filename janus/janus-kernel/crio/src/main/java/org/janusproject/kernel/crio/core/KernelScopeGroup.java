@@ -474,11 +474,12 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 	 * @return <code>null</code> if all conditions are matching, otherwise the
 	 *         first failed condition.
 	 */
-	protected ConditionFailure verifiesObtainConditions(RolePlayer player,
-			Role role) {
+	protected ConditionFailure verifiesObtainConditions(RolePlayer player, Role role) {
 		assert (player != null);
 		assert (role != null);
 		ConditionFailure cf = null;
+		
+		// Test the membership
 		if (this.membership != null) {
 			Status s = this.membership.validateRoleTaker(player.getAddress(),
 					role.getClass(), player.getCredentials());
@@ -486,9 +487,19 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 				return new StatusConditionFailure(s);
 			}
 		}
-		cf = getObtainFailure(player);
-		if (cf != null)
-			return cf;
+
+		// Test the obtain conditions from the group
+		Collection<GroupCondition> conditions = getObtainConditions();
+		if (!conditions.isEmpty()) {
+			Group grp = toGroup(false);
+			Class<? extends Role> roleType = role.getClass();
+			for (GroupCondition c : conditions) {
+				cf = c.evaluateFailureOnGroup(player, roleType, grp);
+				if (cf!=null) return cf;
+			}
+		}
+
+		// Test the obtain conditions from the role itself
 		return role.getObtainFailure(player);
 	}
 
@@ -508,9 +519,19 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		assert (player != null);
 		assert (role != null);
 		ConditionFailure cf;
-		cf = getLeaveFailure(player);
-		if (cf != null)
-			return cf;
+
+		// Test the leave conditions of the group.
+		Collection<GroupCondition> conditions = getLeaveConditions();
+		if (!conditions.isEmpty()) {
+			Group grp = toGroup(false);
+			Class<? extends Role> roleType = role.getClass();
+			for (GroupCondition c : conditions) {
+				cf = c.evaluateFailureOnGroup(player, roleType, grp);
+				if (cf!=null) return cf;
+			}
+		}
+
+		// Test the leave conditions of the role itself.
 		return role.getLeaveFailure(player);
 	}
 
