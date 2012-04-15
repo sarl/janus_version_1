@@ -34,6 +34,7 @@ import java.util.EventListener;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -68,6 +69,8 @@ import org.janusproject.kernel.util.directaccess.UnmodifiableDirectAccessSetSet;
 import org.janusproject.kernel.util.event.ListenerCollection;
 import org.janusproject.kernel.util.multicollection.DoubleSizedIterator;
 import org.janusproject.kernel.util.sizediterator.EmptyIterator;
+import org.janusproject.kernel.util.sizediterator.ModifiableCollectionSizedIterator;
+import org.janusproject.kernel.util.sizediterator.MultiSizedIterator;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
 import org.janusproject.kernel.util.sizediterator.UnmodifiableCollectionSizedIterator;
 import org.janusproject.kernel.util.sizediterator.UnmodifiableMapKeySizedIterator;
@@ -981,6 +984,47 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		}
 	}
 
+	/** Replies the addresses of the specified role in
+	 * the current group.
+	 *  
+	 * @param role is the played role.
+	 * @return the address, never <code>null</code>.
+	 * @since 0.5
+	 */
+	public SizedIterator<RoleAddress> getRoleAddresses(Class<? extends Role> role) {
+		this.internalStructureLock.lock();
+		try {
+			RoleDescriptor roleDescriptor = this.playersPerRole.get(role);
+			if (roleDescriptor != null) {
+				return roleDescriptor.getRoleAddresses();
+			}
+			return EmptyIterator.singleton();
+		}
+		finally {
+			this.internalStructureLock.unlock();
+		}
+	}
+
+	/** Replies the role addresses in
+	 * the current group.
+	 *  
+	 * @return the addresses, never <code>null</code>.
+	 * @since 0.5
+	 */
+	public SizedIterator<RoleAddress> getRoleAddresses() {
+		this.internalStructureLock.lock();
+		try {
+			MultiSizedIterator<RoleAddress> iterators = new MultiSizedIterator<RoleAddress>();
+			for(RoleDescriptor desc : this.playersPerRole.values()) {
+				iterators.addIterator(desc.getRoleAddresses());
+			}
+			return iterators;
+		}
+		finally {
+			this.internalStructureLock.unlock();
+		}
+	}
+
 	/**
 	 * Returns the list of the addresses of the role players currently playing
 	 * the specified role.
@@ -1120,6 +1164,36 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		finally {
 			this.internalStructureLock.unlock();
 		}
+	}
+
+	/**
+	 * Returns the list of the roles currently played by the given agent.
+	 * 
+	 * @param player
+	 * @return the played roles.
+	 */
+	SizedIterator<Role> getRoles(AgentAddress player) {
+		this.internalStructureLock.lock();
+		try {
+			Collection<Class<? extends Role>> roles = this.rolesPerPlayer.get(player);
+			if (roles!=null) {
+				return new RoleIterator(player, new ArrayList<Class<? extends Role>>(roles));
+			}
+			return EmptyIterator.singleton();
+		}
+		finally {
+			this.internalStructureLock.unlock();
+		}
+	}
+
+	/**
+	 * Returns the list of the roles currently played by the given agent.
+	 * 
+	 * @param player
+	 * @return the played roles.
+	 */
+	SizedIterator<RoleAddress> getRoleAddresses(AgentAddress player) {
+		return new RoleAddressIterator(getRoles(player));
 	}
 
 	/**
@@ -1331,6 +1405,22 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 							this.remoteEntities);
 				return new DoubleSizedIterator<AgentAddress>(
 						this.localEntities.keySet(), this.remoteEntities);
+			}
+			finally {
+				KernelScopeGroup.this.internalStructureLock.unlock();
+			}
+		}
+
+		/** Replies the address of the specified role in
+		 * the current group.
+		 *  
+		 * @return the address or <code>null</code>.
+		 * @since 0.5
+		 */
+		public SizedIterator<RoleAddress> getRoleAddresses() {
+			KernelScopeGroup.this.internalStructureLock.lock();
+			try {
+				return new RoleAddressIterator(this.localEntities.values());
 			}
 			finally {
 				KernelScopeGroup.this.internalStructureLock.unlock();
@@ -1732,4 +1822,155 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 
 	} // class Description
 	
+	/**
+	 * @author $Author: ngaud$
+	 * @author $Author: srodriguez$
+	 * @author $Author: sgalland$
+	 * @version $FullVersion$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 * @since 0.4
+	 */
+	private static class RoleAddressIterator implements SizedIterator<RoleAddress> {
+
+		private final SizedIterator<Role> roles;
+		
+		public RoleAddressIterator(Collection<Role> roles) {
+			this.roles = new UnmodifiableCollectionSizedIterator<Role>(roles);
+		}
+
+		public RoleAddressIterator(SizedIterator<Role> roles) {
+			this.roles = roles;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean hasNext() {
+			return this.roles.hasNext();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public RoleAddress next() {
+			Role r = this.roles.next();
+			return r.getAddress();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void remove() {
+			this.roles.remove();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int totalSize() {
+			return this.roles.totalSize();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int rest() {
+			return this.roles.rest();
+		}
+		
+	} // class RoleAddressIterator
+	
+	/**
+	 * @author $Author: ngaud$
+	 * @author $Author: srodriguez$
+	 * @author $Author: sgalland$
+	 * @version $FullVersion$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 * @since 0.4
+	 */
+	private class RoleIterator implements SizedIterator<Role> {
+
+		private final AgentAddress adr;
+		private final SizedIterator<Class<? extends Role>> roleTypes;
+		private Role next;
+		private int rest;
+		
+		public RoleIterator(AgentAddress adr, Collection<Class<? extends Role>> roles) {
+			this.adr = adr;
+			this.roleTypes = new ModifiableCollectionSizedIterator<Class<? extends Role>>(roles);
+			this.rest = this.roleTypes.totalSize();
+			searchNext();
+		}
+		
+		@SuppressWarnings("synthetic-access")
+		private void searchNext() {
+			KernelScopeGroup.this.internalStructureLock.lock();
+			try {
+				this.next = null;
+				while (this.next==null && this.roleTypes.hasNext()) {
+					Class<? extends Role> r  = this.roleTypes.next();
+					assert(r!=null);
+					RoleDescriptor rd = KernelScopeGroup.this.playersPerRole.get(r);
+					assert(rd!=null);
+					this.next = rd.getLocalRole(this.adr);
+				}
+			}
+			finally {
+				KernelScopeGroup.this.internalStructureLock.unlock();
+			}
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean hasNext() {
+			return this.next!=null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Role next() {
+			Role r = this.next;
+			if (r==null) throw new NoSuchElementException();
+			--this.rest;
+			searchNext();
+			return r;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void remove() {
+			this.roleTypes.remove();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int totalSize() {
+			return this.roleTypes.totalSize();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int rest() {
+			return this.rest;
+		}
+		
+	} // class RoleIterator
+
 }

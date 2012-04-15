@@ -73,6 +73,7 @@ import org.janusproject.kernel.util.event.ListenerCollection;
 import org.janusproject.kernel.util.multicollection.MultiCollection;
 import org.janusproject.kernel.util.random.RandomNumber;
 import org.janusproject.kernel.util.sizediterator.EmptyIterator;
+import org.janusproject.kernel.util.sizediterator.MultiSizedIterator;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
 
 /**
@@ -652,6 +653,41 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	protected final RoleAddress getRoleAddress(GroupAddress group, Class<? extends Role> role, AgentAddress player) {
 		KernelScopeGroup grp = getCRIOContext().getGroupRepository().get(group);
 		return grp.getRoleAddress(role, player);
+	}
+
+	/** Replies the role addresses of this player.
+	 *  
+	 * @return the role address, never <code>null</code>.
+	 * @since 0.5
+	 */
+	protected final SizedIterator<RoleAddress> getRoleAddresses() {
+		MultiSizedIterator<RoleAddress> iterators = new MultiSizedIterator<RoleAddress>();
+		GroupRepository repo = getCRIOContext().getGroupRepository();
+		assert (repo != null);
+		AgentAddress adr = getAddress();
+		assert (adr != null);
+		for (KernelScopeGroup grp : repo.values()) {
+			iterators.addIterator(grp.getRoleAddresses(getAddress()));
+		}
+		return iterators;
+	}
+
+	/** Replies the role addresses of this player in the group.
+	 *  
+	 * @param group
+	 * @return the role address, never <code>null</code>.
+	 * @since 0.5
+	 */
+	protected final SizedIterator<RoleAddress> getRoleAddressesInGroup(GroupAddress group) {
+		GroupRepository repo = getCRIOContext().getGroupRepository();
+		assert (repo != null);
+		AgentAddress adr = getAddress();
+		assert (adr != null);
+		KernelScopeGroup grp = repo.get(group);
+		if (grp!=null) {
+			return grp.getRoleAddresses();
+		}
+		return EmptyIterator.singleton();
 	}
 
 	/**

@@ -341,6 +341,121 @@ public class RoleTest extends TestCase {
 
 	/**
 	 */
+	public void testGetRoleAddresses() {
+		SizedIterator<RoleAddress> iterator;
+		RoleAddress ra;
+		
+		iterator = this.role.getRoleAddresses();
+		assertNotNull(iterator);
+		assertEquals(1, iterator.totalSize());
+		assertEquals(1, iterator.rest());
+		assertTrue(iterator.hasNext());
+		ra = iterator.next();
+		assertEquals(this.group.getAddress(), ra.getGroup());
+		assertEquals(RoleStub.class, ra.getRole());
+		assertEquals(this.player1.getAddress(), ra.getPlayer());
+
+		assertEquals(1, iterator.totalSize());
+		assertEquals(0, iterator.rest());
+		assertFalse(iterator.hasNext());
+	}
+	
+	/**
+	 */
+	public void testGetRoleAddressesInGroupAddress() {
+		SizedIterator<RoleAddress> iterator;
+		RoleAddress ra;
+		
+		iterator = this.role.getRoleAddressesIn(this.group.getAddress());
+		assertNotNull(iterator);
+		assertEquals(2, iterator.totalSize());
+		assertEquals(2, iterator.rest());
+		assertTrue(iterator.hasNext());
+		ra = iterator.next();
+		
+		boolean a = (ra.getPlayer().equals(this.player1.getAddress()));
+		
+		assertEquals(this.group.getAddress(), ra.getGroup());
+		
+		if (a) {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player1.getAddress(), ra.getPlayer());
+		}
+		else {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player2.getAddress(), ra.getPlayer());
+		}
+
+		assertEquals(2, iterator.totalSize());
+		assertEquals(1, iterator.rest());
+		assertTrue(iterator.hasNext());
+
+		ra = iterator.next();
+		assertEquals(this.group.getAddress(), ra.getGroup());
+		
+		if (a) {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player2.getAddress(), ra.getPlayer());
+		}
+		else {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player1.getAddress(), ra.getPlayer());
+		}
+
+		assertEquals(2, iterator.totalSize());
+		assertEquals(0, iterator.rest());
+		assertFalse(iterator.hasNext());
+	}
+
+	/**
+	 */
+	public void testGetRoleAddressesInGroup() {
+		SizedIterator<RoleAddress> iterator;
+		RoleAddress ra;
+		
+		iterator = this.role.getRoleAddressesInGroup();
+		assertNotNull(iterator);
+		assertEquals(2, iterator.totalSize());
+		assertEquals(2, iterator.rest());
+		assertTrue(iterator.hasNext());
+		ra = iterator.next();
+		
+		boolean a = (ra.getPlayer().equals(this.player1.getAddress()));
+		
+		assertEquals(this.group.getAddress(), ra.getGroup());
+		
+		if (a) {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player1.getAddress(), ra.getPlayer());
+		}
+		else {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player2.getAddress(), ra.getPlayer());
+		}
+
+		assertEquals(2, iterator.totalSize());
+		assertEquals(1, iterator.rest());
+		assertTrue(iterator.hasNext());
+
+		ra = iterator.next();
+		assertEquals(this.group.getAddress(), ra.getGroup());
+		
+		if (a) {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player2.getAddress(), ra.getPlayer());
+		}
+		else {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player1.getAddress(), ra.getPlayer());
+		}
+
+		assertEquals(2, iterator.totalSize());
+		assertEquals(0, iterator.rest());
+		assertFalse(iterator.hasNext());
+	}
+
+	/**
+	 */
 	public void testGetPlayerGroups() {
 		Collection<GroupAddress> grps;
 

@@ -230,6 +230,142 @@ public class KernelScopeGroupTest extends TestCase {
 
 	/**
 	 */
+	public void testGetRoleAddressesClass() {
+		SizedIterator<RoleAddress> roleAddresses;
+		RoleAddress roleAddress;
+
+		roleAddresses = this.group.getRoleAddresses(RoleStub.class);
+		assertNotNull(roleAddresses);
+		assertEquals(0, roleAddresses.totalSize());
+		assertEquals(0, roleAddresses.rest());
+		assertFalse(roleAddresses.hasNext());
+		
+		RolePlayer player1 = new RolePlayerStub(this.context);
+		RoleAddress r1 = this.group.requestRole(player1, RoleStub.class, null, null);
+		assertNotNull(r1);
+		
+		RolePlayer player2 = new RolePlayerStub(this.context);
+		RoleAddress r2 = this.group.requestRole(player2, Role3Stub.class, null, null);
+		assertNotNull(r2);
+
+		roleAddresses = this.group.getRoleAddresses(RoleStub.class);
+		assertNotNull(roleAddresses);
+		assertEquals(1, roleAddresses.totalSize());
+		assertEquals(1, roleAddresses.rest());
+		assertTrue(roleAddresses.hasNext());
+		roleAddress = roleAddresses.next();
+		assertNotNull(roleAddress);
+		assertEquals(r1, roleAddress);
+		assertEquals(this.group.getAddress(), roleAddress.getGroup());
+		assertEquals(player1.getAddress(), roleAddress.getPlayer());
+		assertEquals(RoleStub.class, roleAddress.getRole());
+		assertEquals(1, roleAddresses.totalSize());
+		assertEquals(0, roleAddresses.rest());
+		assertFalse(roleAddresses.hasNext());
+	}
+
+	/**
+	 */
+	public void testGetRoleAddresses() {
+		SizedIterator<RoleAddress> roleAddresses;
+		RoleAddress roleAddress;
+
+		roleAddresses = this.group.getRoleAddresses();
+		assertNotNull(roleAddresses);
+		assertEquals(0, roleAddresses.totalSize());
+		assertEquals(0, roleAddresses.rest());
+		assertFalse(roleAddresses.hasNext());
+		
+		RolePlayer player1 = new RolePlayerStub(this.context);
+		RoleAddress r1 = this.group.requestRole(player1, RoleStub.class, null, null);
+		assertNotNull(r1);
+		
+		RolePlayer player2 = new RolePlayerStub(this.context);
+		RoleAddress r2 = this.group.requestRole(player2, Role3Stub.class, null, null);
+		assertNotNull(r2);
+
+		roleAddresses = this.group.getRoleAddresses();
+		assertNotNull(roleAddresses);
+		assertEquals(2, roleAddresses.totalSize());
+		assertEquals(2, roleAddresses.rest());
+		assertTrue(roleAddresses.hasNext());
+		roleAddress = roleAddresses.next();
+		if (r1.equals(roleAddress)) {
+			assertNotNull(roleAddress);
+			assertEquals(r1, roleAddress);
+			assertEquals(this.group.getAddress(), roleAddress.getGroup());
+			assertEquals(player1.getAddress(), roleAddress.getPlayer());
+			assertEquals(RoleStub.class, roleAddress.getRole());
+			assertEquals(2, roleAddresses.totalSize());
+			assertEquals(1, roleAddresses.rest());
+			assertTrue(roleAddresses.hasNext());
+			roleAddress = roleAddresses.next();
+			assertNotNull(roleAddress);
+			assertEquals(r2, roleAddress);
+			assertEquals(this.group.getAddress(), roleAddress.getGroup());
+			assertEquals(player2.getAddress(), roleAddress.getPlayer());
+			assertEquals(Role3Stub.class, roleAddress.getRole());
+		}
+		else {
+			assertNotNull(roleAddress);
+			assertEquals(r2, roleAddress);
+			assertEquals(this.group.getAddress(), roleAddress.getGroup());
+			assertEquals(player2.getAddress(), roleAddress.getPlayer());
+			assertEquals(Role3Stub.class, roleAddress.getRole());
+			assertEquals(2, roleAddresses.totalSize());
+			assertEquals(1, roleAddresses.rest());
+			assertTrue(roleAddresses.hasNext());
+			roleAddress = roleAddresses.next();
+			assertNotNull(roleAddress);
+			assertEquals(r1, roleAddress);
+			assertEquals(this.group.getAddress(), roleAddress.getGroup());
+			assertEquals(player1.getAddress(), roleAddress.getPlayer());
+			assertEquals(RoleStub.class, roleAddress.getRole());
+		}
+		assertEquals(2, roleAddresses.totalSize());
+		assertEquals(0, roleAddresses.rest());
+		assertFalse(roleAddresses.hasNext());
+	}
+
+	/**
+	 */
+	public void testGetRoleAddressesAgentAddress() {
+		SizedIterator<RoleAddress> roleAddresses;
+		RoleAddress roleAddress;
+
+		RolePlayer player1 = new RolePlayerStub(this.context);
+		RolePlayer player2 = new RolePlayerStub(this.context);
+
+		roleAddresses = this.group.getRoleAddresses(player1.getAddress());
+		assertNotNull(roleAddresses);
+		assertEquals(0, roleAddresses.totalSize());
+		assertEquals(0, roleAddresses.rest());
+		assertFalse(roleAddresses.hasNext());
+		
+		RoleAddress r1 = this.group.requestRole(player1, RoleStub.class, null, null);
+		assertNotNull(r1);
+		
+		RoleAddress r2 = this.group.requestRole(player2, Role3Stub.class, null, null);
+		assertNotNull(r2);
+
+		roleAddresses = this.group.getRoleAddresses(player1.getAddress());
+		assertNotNull(roleAddresses);
+		assertEquals(1, roleAddresses.totalSize());
+		assertEquals(1, roleAddresses.rest());
+		assertTrue(roleAddresses.hasNext());
+		roleAddress = roleAddresses.next();
+		assertNotNull(roleAddress);
+		assertEquals(r1, roleAddress);
+		assertEquals(this.group.getAddress(), roleAddress.getGroup());
+		assertEquals(player1.getAddress(), roleAddress.getPlayer());
+		assertEquals(RoleStub.class, roleAddress.getRole());
+		assertEquals(1, roleAddresses.totalSize());
+		assertEquals(0, roleAddresses.rest());
+		assertFalse(roleAddresses.hasNext());
+	}
+
+	/**
+	 */
 	public void testIsPlayedRoleClass() {
 		assertFalse(this.group.isPlayedRole(RoleStub.class));
 		assertFalse(this.group.isPlayedRole(Role2Stub.class));

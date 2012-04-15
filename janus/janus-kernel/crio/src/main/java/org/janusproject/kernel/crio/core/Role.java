@@ -201,6 +201,46 @@ public abstract class Role extends
 	}
 
 	/**
+	 * Replies all the roles played by the player of this role.
+	 * 
+	 * @return played roles.
+	 * @GROUPAPI
+	 * @since 0.5
+	 */
+	protected final SizedIterator<RoleAddress> getRoleAddresses() {
+		return this.getPlayerInstance().getRoleAddresses();
+	}
+
+	/**
+	 * Replies all the roles played in the current group.
+	 * 
+	 * @return played roles.
+	 * @GROUPAPI
+	 * @since 0.5
+	 */
+	protected final SizedIterator<RoleAddress> getRoleAddressesInGroup() {
+		KernelScopeGroup grp = this.group.get();
+		assert(grp!=null);
+		return grp.getRoleAddresses();
+	}
+
+	/**
+	 * Replies all played roles in the given group.
+	 * 
+	 * @param group
+	 *            is the address of the group from which played roles may be
+	 *            replied.
+	 * @return played roles in the given group.
+	 * @GROUPAPI
+	 * @since 0.5
+	 */
+	protected final SizedIterator<RoleAddress> getRoleAddressesIn(GroupAddress group) {
+		KernelScopeGroup grp = this.crioContext.get().getGroupRepository().get(group);
+		assert(grp!=null);
+		return grp.getRoleAddresses();
+	}
+
+	/**
 	 * Add listener on creation or disappearing
 	 * of a group from the system.
 	 * 

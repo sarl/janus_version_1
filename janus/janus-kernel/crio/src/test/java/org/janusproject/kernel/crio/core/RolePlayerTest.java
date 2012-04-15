@@ -1482,6 +1482,48 @@ public class RolePlayerTest extends TestCase {
 	}
 
 	/**
+	 */
+	public void testGetRoleAddresses() {
+		SizedIterator<RoleAddress> iterator;
+		RoleAddress ra;
+		
+		iterator = this.player1.getRoleAddresses();
+		assertNotNull(iterator);
+		assertEquals(1, iterator.totalSize());
+		assertEquals(1, iterator.rest());
+		assertTrue(iterator.hasNext());
+		ra = iterator.next();
+		assertNotNull(ra);
+		assertEquals(this.group1.getAddress(), ra.getGroup());
+		assertEquals(RoleStub.class, ra.getRole());
+		assertEquals(this.player1.getAddress(), ra.getPlayer());
+		assertEquals(1, iterator.totalSize());
+		assertEquals(0, iterator.rest());
+		assertFalse(iterator.hasNext());
+	}
+
+	/** 
+	 */
+	public void testGetRoleAddressesInGroupGroupAddress() {
+		SizedIterator<RoleAddress> iterator;
+		RoleAddress ra;
+		
+		iterator = this.player1.getRoleAddressesInGroup(this.group1.getAddress());
+		assertNotNull(iterator);
+		assertEquals(1, iterator.totalSize());
+		assertEquals(1, iterator.rest());
+		assertTrue(iterator.hasNext());
+		ra = iterator.next();
+		assertNotNull(ra);
+		assertEquals(this.group1.getAddress(), ra.getGroup());
+		assertEquals(RoleStub.class, ra.getRole());
+		assertEquals(this.player1.getAddress(), ra.getPlayer());
+		assertEquals(1, iterator.totalSize());
+		assertEquals(0, iterator.rest());
+		assertFalse(iterator.hasNext());
+	}
+	
+	/**
 	 * @author $Author: sgalland$
 	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
