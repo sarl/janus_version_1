@@ -214,7 +214,7 @@ public class JanusProperties extends Properties {
 	 * 
 	 * @see JanusProperty#JANUS_AGENT_MAILBOX_TYPE
 	 */
-	public static final String DEFAULT_AGENT_MAILBOX_TYPE = "org.janusproject.kernel.mailbox.ThreadSafeMailbox"; //$NON-NLS-1$
+	public static final String DEFAULT_AGENT_MAILBOX_TYPE = "org.janusproject.kernel.mailbox.BufferedTreeSetMailbox"; //$NON-NLS-1$
 
 	/** Indicates the default type of mailbox for the roles.
 	 * When the type of the role mailbox is <code>null</code>, the
