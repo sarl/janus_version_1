@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -14,12 +15,11 @@
 	<artifactId>janus-kernel</artifactId>
 	<version>0.5-SNAPSHOT</version>
 	<name>Janus Kernel</name>
-	
-	<!-- CAUTION: theses modules have not the org.janus-project.kernel:janus-kernel
-	     maven module as parent to avoid dependency on it form the child modules.
-	     Indeed if the child modules has org.janus-project.kernel:janus-kernel
-	     as parent, assembly is impossible due to the Maven dependency specifications.
-	-->
+
+	<!-- CAUTION: theses modules have not the org.janus-project.kernel:janus-kernel 
+		maven module as parent to avoid dependency on it form the child modules. 
+		Indeed if the child modules has org.janus-project.kernel:janus-kernel as 
+		parent, assembly is impossible due to the Maven dependency specifications. -->
 	<modules>
 		<module>locale</module>
 		<module>util</module>
@@ -36,18 +36,28 @@
 		<module>message</module>
 		<module>mailbox</module>
 		<module>credential</module>
+		<module>channels</module>
+		<module>configuration</module>
 		<module>crio</module>
 		<module>kernel</module>
 		<module>osgi</module>
-		<module>network</module>
-		<module>channels</module>
-		<module>configuration</module>
 	</modules>
+	<profiles>
+		<profile>
+			<id>default-profile</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>network</module>
+			</modules>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>
 			<plugin>
-				<!--  to create a jar with all dependencies -->
+				<!-- to create a jar with all dependencies -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
@@ -69,5 +79,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>

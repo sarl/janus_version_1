@@ -24,12 +24,22 @@
 
 	<modules>
 		<module>janus-kernel</module>
-		<module>janus-maven-tools</module>
-		<!-- <module>janus-site</module> -->
-		<module>janus-benchs</module>
 		<module>janus-extras</module>
-		<module>janus-demos</module>
 	</modules>
+	<profiles>
+		<profile>
+			<id>default-profile</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>janus-maven-tools</module>
+				<!-- <module>janus-site</module> -->
+				<module>janus-benchs</module>
+				<module>janus-demos</module>
+			</modules>
+		</profile>
+	</profiles>
 
 	<organization>
 		<name>Janus Platform Consortium</name>
