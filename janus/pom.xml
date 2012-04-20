@@ -34,7 +34,6 @@
 			</activation>
 			<modules>
 				<module>janus-maven-tools</module>
-				<!-- <module>janus-site</module> -->
 				<module>janus-benchs</module>
 				<module>janus-demos</module>
 			</modules>
