@@ -33,7 +33,7 @@ import org.janusproject.kernel.util.directaccess.ListUtil;
  * <p>
  * The list of mails is sorted according to the creation date of the mails.
  * <p>
- * This implementation is thread-safe.
+ * This implementation is thread-safe when it is used from a role or an agent exclusively.
  * 
  * @author $Author: ngaud$
  * @author $Author: sgalland$

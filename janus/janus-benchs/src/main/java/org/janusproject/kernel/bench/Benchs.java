@@ -76,8 +76,6 @@ import org.janusproject.kernel.bench.mailbox.BlackHoleMailboxInsertionBench;
 import org.janusproject.kernel.bench.mailbox.BlackHoleMailboxReadingBench;
 import org.janusproject.kernel.bench.mailbox.LinkedListMailboxInsertionBench;
 import org.janusproject.kernel.bench.mailbox.LinkedListMailboxReadingBench;
-import org.janusproject.kernel.bench.mailbox.ThreadSafeMailboxInsertionBench;
-import org.janusproject.kernel.bench.mailbox.ThreadSafeMailboxReadingBench;
 import org.janusproject.kernel.bench.mailbox.TreeSetMailboxInsertionBench;
 import org.janusproject.kernel.bench.mailbox.TreeSetMailboxReadingBench;
 import org.janusproject.kernel.bench.memory.HeavyAgentMemoryUsageBench;
@@ -126,12 +124,10 @@ public class Benchs {
 				// Mailboxes
 				//
 				TreeSetMailboxInsertionBench.class,
-				ThreadSafeMailboxInsertionBench.class,
 				LinkedListMailboxInsertionBench.class,
 				ArrayListMailboxInsertionBench.class,
 				BlackHoleMailboxInsertionBench.class,
 				TreeSetMailboxReadingBench.class,
-				ThreadSafeMailboxReadingBench.class,
 				LinkedListMailboxReadingBench.class,
 				ArrayListMailboxReadingBench.class,
 				BlackHoleMailboxReadingBench.class,

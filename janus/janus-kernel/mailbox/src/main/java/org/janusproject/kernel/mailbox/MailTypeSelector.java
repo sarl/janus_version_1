@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 package org.janusproject.kernel.mailbox;
 
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.util.selector.Selector;
+import org.janusproject.kernel.util.selector.TypeSelector;
 
 /**
  * This class selects mails according to their types.
@@ -34,25 +34,13 @@ import org.janusproject.kernel.util.selector.Selector;
  * @mavenartifactid $ArtifactId$
  * @mavenartifactid mailbox
  */
-public class MailTypeSelector
-implements Selector<Message> {
+public class MailTypeSelector extends TypeSelector<Message> {
 
-	private final Class<? extends Message> type;
-	
 	/**
 	 * @param type is the type of the mails to select.
 	 */
 	public MailTypeSelector(Class<? extends Message> type) {
-		assert(type!=null);
-		this.type = type;
+		super(type);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isSelected(Message msg) {
-		return msg!=null && this.type.isInstance(msg);
-	}
-
 }

@@ -632,6 +632,14 @@ public class KernelEventTest extends TestCase {
 			throw new UnsupportedOperationException();
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public synchronized void waitUntilTermination() throws InterruptedException {
+			wait();
+		}
+
 	}
 	
 }

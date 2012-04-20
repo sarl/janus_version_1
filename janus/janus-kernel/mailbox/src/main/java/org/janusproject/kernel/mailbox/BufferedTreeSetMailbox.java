@@ -31,7 +31,7 @@ import org.janusproject.kernel.message.Message;
  * <p>
  * The list of mails is sorted according to the creation date of the mails.
  * <p>
- * This implementation is thread-safe.
+ * This implementation is thread-safe when it is used from a role or an agent exclusively.
  * 
  * @author $Author: ngaud$
  * @author $Author: sgalland$
@@ -61,7 +61,9 @@ public class BufferedTreeSetMailbox extends TreeSetMailbox implements BufferedMa
 	@Override
 	public boolean add(Message msg) {
 		assert(msg!=null);
-		return this.buffer.add(msg);
+		synchronized(this.buffer) {
+			return this.buffer.add(msg);
+		}
 	}
 
 	/**
@@ -69,7 +71,9 @@ public class BufferedTreeSetMailbox extends TreeSetMailbox implements BufferedMa
 	 */
 	@Override
 	public void clearBuffer() {
-		this.buffer.clear();
+		synchronized(this.buffer) {
+			this.buffer.clear();
+		}
 	}
 
 	/**
@@ -77,7 +81,9 @@ public class BufferedTreeSetMailbox extends TreeSetMailbox implements BufferedMa
 	 */
 	@Override
 	public int getBufferSize() {
-		return this.buffer.size();
+		synchronized(this.buffer) {
+			return this.buffer.size();
+		}
 	}
 
 	/**
@@ -85,7 +91,9 @@ public class BufferedTreeSetMailbox extends TreeSetMailbox implements BufferedMa
 	 */
 	@Override
 	public boolean isBufferEmpty() {
-		return this.buffer.isEmpty();
+		synchronized(this.buffer) {
+			return this.buffer.isEmpty();
+		}
 	}
 
 	/**
@@ -93,10 +101,12 @@ public class BufferedTreeSetMailbox extends TreeSetMailbox implements BufferedMa
 	 */
 	@Override
 	public void synchronizeMessages() {
-		for(Message msg : this.buffer) {
-			this.inbox.add(msg);
+		synchronized(this.buffer) {
+			for(Message msg : this.buffer) {
+				this.inbox.add(msg);
+			}
+			this.buffer.clear();
 		}
-		this.buffer.clear();
 	}
 
 }

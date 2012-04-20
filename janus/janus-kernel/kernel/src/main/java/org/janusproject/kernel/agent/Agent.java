@@ -266,6 +266,26 @@ implements Activable, Holon, Serializable {
 		this(address, capacityContainer, (Boolean)null);
 	}
 
+	/**
+     * Causes the current thread to wait until the kernel has terminated
+     * its execution or a thread has invoked {@link Object#notify()}
+     * or {@link Object#notifyAll()} on the instance of this object.
+     * In other words, this function extends the behavior of 
+     * {@link Object#wait()} by adding the termination of the kernel
+     * as a critera to wake up.
+     * <p>
+     * In opposite to {@link Object#wait()}, this function does not
+     * requires to explicitly get ownership of this ovject's monitor. 
+	 * 
+	 * @throws InterruptedException
+	 * @since 0.5
+	 */
+	public synchronized void waitUntilTermination() throws InterruptedException {
+		if (!getState().isMortuary()) {
+			wait();
+		}
+	}
+
 	/** Replies the agents which are currently running on the same kernel.
 	 * This agent itself is replied in the collection of local agents.
 	 * The kernel agent is not included in the replied collection.

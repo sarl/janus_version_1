@@ -479,9 +479,6 @@ extends ActivatorAgent<AgentActivator> {
 		
 		fireAgentKilling(agent, isKernel);
 
-		// Remove all memory foot print for the agent.
-		agent.dispose();
-
 		// Allow to wait on agent termination.
 		// Notify waiters about termination.
 		synchronized(agent) {
@@ -494,6 +491,9 @@ extends ActivatorAgent<AgentActivator> {
 			}
 		}
 		
+		// Remove all memory foot print for the agent.
+		agent.dispose();
+
 		getLogger().fine(Locale.getString(
 				KernelAgent.class,
 				"AGENT_KILLED", //$NON-NLS-1$
@@ -1447,6 +1447,14 @@ extends ActivatorAgent<AgentActivator> {
 		public String getName() {
 			return Thread.currentThread().getName();
 		}
+		
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String toString() {
+			return getName();
+		}
 
 	}
 
@@ -1487,6 +1495,16 @@ extends ActivatorAgent<AgentActivator> {
 		@Override
 		public int hashCode() {
 			return KernelAgent.this.getAddress().hashCode();
+		}
+		
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public synchronized void waitUntilTermination() throws InterruptedException {
+			if (!KernelAgent.this.getState().isMortuary()) {
+				wait();
+			}
 		}
 
 		/**

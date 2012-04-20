@@ -27,8 +27,8 @@ import javax.management.relation.Role;
 
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
+import org.janusproject.kernel.mailbox.BufferedTreeSetMailbox;
 import org.janusproject.kernel.mailbox.Mailbox;
-import org.janusproject.kernel.mailbox.ThreadSafeMailbox;
 
 /**
  * Utilities on mailboxes.
@@ -67,7 +67,7 @@ public class MailboxUtil {
 					logger.log(Level.SEVERE, e.toString(), e);
 			}
 		}
-		return new ThreadSafeMailbox();
+		return new BufferedTreeSetMailbox();
 	}
 
 }

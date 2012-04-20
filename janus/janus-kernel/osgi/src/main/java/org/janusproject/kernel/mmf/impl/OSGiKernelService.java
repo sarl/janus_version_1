@@ -965,4 +965,13 @@ public class OSGiKernelService implements KernelService, KernelListener,
 		return this.kernel.getOrCreateGroup(id, organization, groupName);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public synchronized void waitUntilTermination() throws InterruptedException {
+		this.kernel.waitUntilTermination();
+		notifyAll(); // Force the waiter on this object to wake up.
+	}
+
 }
