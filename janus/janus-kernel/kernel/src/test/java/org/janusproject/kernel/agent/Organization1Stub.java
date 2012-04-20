@@ -29,7 +29,7 @@ import org.janusproject.kernel.crio.core.Organization;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-class Organization1Stub extends Organization {
+public class Organization1Stub extends Organization {
 
 	/**
 	 * @param context

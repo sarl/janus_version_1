@@ -1511,6 +1511,16 @@ extends ActivatorAgent<AgentActivator> {
 		 * {@inheritDoc}
 		 */
 		@Override
+		public synchronized void waitUntilTermination(long timeout) throws InterruptedException {
+			if (!KernelAgent.this.getState().isMortuary()) {
+				wait(timeout);
+			}
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
 		public CRIOContext getCRIOContext() {
 			return KernelAgent.this.getCRIOContext();
 		}

@@ -20,26 +20,20 @@
  */
 package org.janusproject.kernel.agent;
 
-import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.KernelAdapter;
-import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Agent;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.logger.LoggerUtil;
-import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.message.StringMessage;
 
 import junit.framework.TestCase;
 
-/** This set of test is dedicated to heavy agents only.
+/** This set of test is dedicated to light agents only.
  * 
  * @author $Author: sgalland$
  * @version $FullVersion$
@@ -47,14 +41,10 @@ import junit.framework.TestCase;
  * @mavenartifactid $ArtifactId$
  * @since 0.5
  */
-public class HeavyAgentTest extends TestCase {
+public class LightAgentTest extends TestCase {
 
-	/** Sleeping duration to wait for test.
-	 */
-	private static final int SLEEP_DURATION = 2000;
-	
 	private static final long TIMEOUT = 5000;
-
+	
 	/**
 	 * @throws Exception
 	 */
@@ -74,38 +64,6 @@ public class HeavyAgentTest extends TestCase {
 		super.tearDown();
 	}
 	
-	/**
-	 * @throws Throwable
-	 */
-	public void testMessageSending() throws Throwable {
-		SendingAgent sAgent = new SendingAgent();
-		ReceivingAgent rAgent = new ReceivingAgent();
-		
-		sAgent.getAddress().setName("Sending Agent"); //$NON-NLS-1$
-		rAgent.getAddress().setName("Receiving Agent"); //$NON-NLS-1$
-		
-		Kernel k = Kernels.get();
-		
-		KernelEventListener listener = new KernelEventListener();
-		k.addKernelListener(listener);
-		
-		k.launchHeavyAgent(rAgent);
-		k.launchHeavyAgent(sAgent, rAgent.getAddress());
-		
-		Thread.sleep(SLEEP_DURATION);
-		
-		sAgent.stopTest();
-		rAgent.stopTest();
-		
-		k.waitUntilTermination();
-		
-		listener.throwsErrors();
-		
-		assertTrue(listener.errors.isEmpty());
-		
-		assertEquals(sAgent.getSentMessages(), rAgent.getReceivedMessages());
-	}
-
 	/**
 	 * @throws Throwable
 	 */
@@ -176,124 +134,6 @@ public class HeavyAgentTest extends TestCase {
 			return null;
 		}
 		
-	}
-
-	/**
-	 * @author $Author: sgalland$
-	 * @version $FullVersion$
-	 * @mavengroupid $GroupId$
-	 * @mavenartifactid $ArtifactId$
-	 */
-	@AgentActivationPrototype(
-			fixedParameters = {AgentAddress.class}
-	)
-	private static class SendingAgent extends Agent {
-		
-		private static final long serialVersionUID = 8604814095333750322L;
-		
-		private final AtomicBoolean stop = new AtomicBoolean(false);
-		private final AtomicInteger nbMessages = new AtomicInteger(0);
-		private AgentAddress receiver = null;
-		
-		/**
-		 */
-		public SendingAgent() {
-			//
-		}
-		
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Status activate(Object... parameters) {
-			this.receiver = (AgentAddress)parameters[0];
-			return null;
-		}
-		
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Status live() {
-			if (this.stop.get()) {
-				killMe();
-			}
-			else {
-				sendMessage(new StringMessage("Message #"+this.nbMessages), this.receiver); //$NON-NLS-1$
-				this.nbMessages.incrementAndGet();
-			}
-			return null;
-		}
-		
-		/**
-		 */
-		public void stopTest() {
-			this.stop.set(true);
-		}
-		
-		/**
-		 * @return the number of messages that has been sent.
-		 */
-		public int getSentMessages() {
-			return this.nbMessages.get();
-		}
-		
-	}
-	
-	/**
-	 * @author $Author: sgalland$
-	 * @version $FullVersion$
-	 * @mavengroupid $GroupId$
-	 * @mavenartifactid $ArtifactId$
-	 */
-	private static class ReceivingAgent extends Agent {
-
-		private static final long serialVersionUID = -3413468714219936152L;
-		
-		private final AtomicBoolean stop = new AtomicBoolean(false);
-		private final AtomicInteger nbMessages = new AtomicInteger(0);
-		
-		/**
-		 */
-		public ReceivingAgent() {
-			//
-		}
-		
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Status live() {
-			Message m;
-			try {
-				m = getMessage();
-			}
-			catch(ConcurrentModificationException e) {
-				getMessage();
-				throw e;
-			}
-			if (m!=null) {
-				this.nbMessages.incrementAndGet();
-			}
-			if (this.stop.get() && m==null) {
-				killMe();
-			}
-			return null;
-		}
-		
-		/**
-		 */
-		public void stopTest() {
-			this.stop.set(true);
-		}
-		
-		/**
-		 * @return the number of messages that has been received.
-		 */
-		public int getReceivedMessages() {
-			return this.nbMessages.get();
-		}
-
 	}
 	
 	/**

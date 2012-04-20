@@ -56,7 +56,7 @@ import org.janusproject.kernel.crio.role.RoleFactory;
 import org.janusproject.kernel.crio.role.RoleNotInitializedException;
 import org.janusproject.kernel.crio.role.RolePlayingEvent;
 import org.janusproject.kernel.crio.role.RolePlayingListener;
-import org.janusproject.kernel.crio.role.UndefinedRoleError;
+import org.janusproject.kernel.crio.role.UndefinedRoleException;
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
@@ -758,7 +758,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 			assert(roles!=null);
 
 			if (!roles.hasNext())
-				throw new UndefinedRoleError(orga.getClass(), receiverRole);
+				throw new UndefinedRoleException(orga.getClass(), receiverRole);
 			
 			Class<? extends Role> realReceiverRole;
 			
@@ -858,7 +858,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 				Iterator<Class<? extends Role>> roles = orga.iterator(context.getReceiverRole());
 				assert(roles!=null);
 				if (!roles.hasNext())
-					throw new UndefinedRoleError(orga.getClass(), context.getReceiverRole());
+					throw new UndefinedRoleException(orga.getClass(), context.getReceiverRole());
 
 				Class<? extends Role> candidateRole;
 				

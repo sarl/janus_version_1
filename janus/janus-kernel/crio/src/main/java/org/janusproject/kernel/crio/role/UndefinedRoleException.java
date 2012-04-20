@@ -20,6 +20,8 @@
  */
 package org.janusproject.kernel.crio.role;
 
+import org.arakhne.vmutil.locale.Locale;
+
 /**
  * Role is not defined in organization.
  * 
@@ -27,19 +29,20 @@ package org.janusproject.kernel.crio.role;
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @deprecated see {@link UndefinedRoleException}
  */
-@Deprecated
-public class UndefinedRoleError extends UndefinedRoleException {
+public class UndefinedRoleException extends RuntimeException {
 
-	private static final long serialVersionUID = 7249604299858901082L;
+	private static final long serialVersionUID = -5214092188537463973L;
 
 	/**
 	 * @param organization
 	 * @param role
 	 */
-	public UndefinedRoleError(Class<?> organization, Class<?> role) {
-		super(organization, role);
+	public UndefinedRoleException(Class<?> organization, Class<?> role) {
+		super( Locale.getString(UndefinedRoleException.class,
+				"ORGANIZATION_ROLE", //$NON-NLS-1$
+				organization.getCanonicalName(),
+				role.getCanonicalName()));
 	}
 
 }

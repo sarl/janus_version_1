@@ -974,4 +974,13 @@ public class OSGiKernelService implements KernelService, KernelListener,
 		notifyAll(); // Force the waiter on this object to wake up.
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public synchronized void waitUntilTermination(long timeout) throws InterruptedException {
+		this.kernel.waitUntilTermination(timeout);
+		notifyAll(); // Force the waiter on this object to wake up.
+	}
+
 }

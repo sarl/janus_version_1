@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2012 Janus Core Developers
+ * Copyright (C) 2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,26 +20,31 @@
  */
 package org.janusproject.kernel.crio.role;
 
+import org.arakhne.vmutil.locale.Locale;
+import org.janusproject.kernel.crio.core.RoleAddress;
+
 /**
- * Role is not defined in organization.
+ * This exception is thrown when the platform is trying to run a role owned
+ * by an agent that has migrated to an other kernel.
+ * This exception should never occurs, except in extrem cases or platform bugs.
  * 
- * @author $Author: sgalland$
+ * @author $Author: ngaud$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
- * @deprecated see {@link UndefinedRoleException}
+ * @since 0.5
  */
-@Deprecated
-public class UndefinedRoleError extends UndefinedRoleException {
+public class RoleMigratedException extends RuntimeException {
 
-	private static final long serialVersionUID = 7249604299858901082L;
+	private static final long serialVersionUID = 5713237314227941798L;
 
 	/**
-	 * @param organization
-	 * @param role
-	 */
-	public UndefinedRoleError(Class<?> organization, Class<?> role) {
-		super(organization, role);
-	}
-
+     * Default constructor, no message put in exception.
+     * 
+     * @param roleAddress
+     */
+    public RoleMigratedException(RoleAddress roleAddress) {
+    	super(Locale.getString(RoleMigratedException.class, "MESSAGE", roleAddress)); //$NON-NLS-1$
+    }
+    
 }

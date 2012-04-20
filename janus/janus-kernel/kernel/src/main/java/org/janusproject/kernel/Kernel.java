@@ -65,12 +65,30 @@ public interface Kernel extends LoggerProvider {
      * as a critera to wake up.
      * <p>
      * In opposite to {@link Object#wait()}, this function does not
-     * requires to explicitly get ownership of this ovject's monitor. 
+     * requires to explicitly get ownership of this object's monitor. 
 	 * 
 	 * @throws InterruptedException
 	 * @since 0.5
 	 */
 	public void waitUntilTermination() throws InterruptedException;
+
+	/**
+     * Causes the current thread to wait until the kernel has terminated
+     * its execution, or a thread has invoked {@link Object#notify()}
+     * or {@link Object#notifyAll()} on the instance of this object,
+     * or the given time out is reached.
+     * In other words, this function extends the behavior of 
+     * {@link Object#wait(long)} by adding the termination of the kernel
+     * as a critera to wake up.
+     * <p>
+     * In opposite to {@link Object#wait(long)}, this function does not
+     * requires to explicitly get ownership of this object's monitor. 
+	 * 
+	 * @param timeout is the time out in milliseconds.
+	 * @throws InterruptedException
+	 * @since 0.5
+	 */
+	public void waitUntilTermination(long timeout) throws InterruptedException;
 
 	/**
 	 * Replies the address of the kernel agent.

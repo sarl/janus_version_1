@@ -58,6 +58,8 @@ import org.janusproject.kernel.crio.organization.OrganizationFactory;
 import org.janusproject.kernel.crio.role.RoleActivationPrototypeValidator;
 import org.janusproject.kernel.crio.role.RoleCondition;
 import org.janusproject.kernel.crio.role.RoleFactory;
+import org.janusproject.kernel.crio.role.RoleMigratedException;
+import org.janusproject.kernel.crio.role.RoleReleasedException;
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.mailbox.BufferedMailbox;
 import org.janusproject.kernel.mailbox.Mailbox;
@@ -688,34 +690,37 @@ public abstract class Role extends
 	 * @return the status of the live stage.
 	 */
 	synchronized final Status proceedPrivateBehaviour() {
-		if (!isReleased() && !hasMigrated()) {
-									
-			if(this.mailbox instanceof BufferedMailbox) {
-				((BufferedMailbox)this.mailbox).synchronizeMessages();
-			}
-			
-			if (this.memory != null)
-				this.memory.fireEvents();
-
-			if (this.signalManager != null)
-				this.signalManager.sync();
-
-			MultipleStatus ms = new MultipleStatus(live());
-			
-			if (this.leaveMe) {
-				if (releaseRole(getClass(), getGroupAddress())) {
-					ms.addStatus(StatusFactory.ok(this));
-				}
-				else {
-					ms.addStatus(StatusFactory.error(this, Locale.getString(
-							Role.class, "CANNOT_RELEASE_ROLE", //$NON-NLS-1$
-							getClass().getCanonicalName(), getPlayer()
-									.toString())));
-				}
-			}
-			return ms.pack(this);
+		if (isReleased()) {
+			return StatusFactory.cancel(this, new RoleReleasedException(getAddress()));
 		}
-		return StatusFactory.cancel(this);
+		if (hasMigrated()) {
+			return StatusFactory.cancel(this, new RoleMigratedException(getAddress()));
+		}
+		
+		if(this.mailbox instanceof BufferedMailbox) {
+			((BufferedMailbox)this.mailbox).synchronizeMessages();
+		}
+		
+		if (this.memory != null)
+			this.memory.fireEvents();
+
+		if (this.signalManager != null)
+			this.signalManager.sync();
+
+		MultipleStatus ms = new MultipleStatus(live());
+		
+		if (this.leaveMe) {
+			if (releaseRole(getClass(), getGroupAddress())) {
+				ms.addStatus(StatusFactory.ok(this));
+			}
+			else {
+				ms.addStatus(StatusFactory.error(this, Locale.getString(
+						Role.class, "CANNOT_RELEASE_ROLE", //$NON-NLS-1$
+						getClass().getCanonicalName(), getPlayer()
+								.toString())));
+			}
+		}
+		return ms.pack(this);
 	}
 
 	/**

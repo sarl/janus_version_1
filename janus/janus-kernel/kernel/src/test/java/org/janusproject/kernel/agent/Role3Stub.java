@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ import org.janusproject.kernel.status.StatusFactory;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-class Role3Stub extends Role {
+public class Role3Stub extends Role {
 
 	/**
 	 */

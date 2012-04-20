@@ -640,6 +640,14 @@ public class KernelEventTest extends TestCase {
 			wait();
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public synchronized void waitUntilTermination(long timeout) throws InterruptedException {
+			wait(timeout);
+		}
+
 	}
 	
 }
