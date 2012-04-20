@@ -209,9 +209,11 @@ public class KernelTest extends TestCase {
 	 * @throws Exception
 	 */
 	public void testChannelInteractableListener() throws Exception {
+		KernelListenerStub kListener = new KernelListenerStub();
 		ChannelListenerStub listener = new ChannelListenerStub();
 		Kernel k = Kernels.create();
 		k.getChannelManager().addChannelIteractableListener(listener);
+		k.addKernelListener(kListener);
 		listener.reset();
 		
 		AgentStub a1 = new AgentStub();
@@ -219,16 +221,32 @@ public class KernelTest extends TestCase {
 		AgentStub2 a3 = new AgentStub2();
 		AgentStub2 a4 = new AgentStub2();
 		
-		k.submitLightAgent(a1);
-		k.submitLightAgent(a2);
-		k.submitLightAgent(a3);
-		k.submitLightAgent(a4);
+		List<Agent> tab = new ArrayList<Agent>();
+		tab.add(a1);
+		tab.add(a2);
+		tab.add(a3);
+		tab.add(a4);
+		
+		for(Agent a : tab) {
+			k.submitLightAgent(a);
+		}
 		
 		listener.assertNull();
 		
 		k.launchDifferedExecutionAgents();
 		
-		Thread.sleep(1000);
+		long endTime = System.currentTimeMillis() + 5000;
+
+		while (!tab.isEmpty() && System.currentTimeMillis()<=endTime) {
+			Iterator<Agent> iterator = tab.iterator();
+			while (iterator.hasNext()) {
+				Agent a = iterator.next();
+				if (kListener.isAgentLaunched(a.getAddress()))
+					iterator.remove();
+			}
+		}
+		
+		Thread.sleep(1000); // to be sure that the ChannelInteractable is invoked
 		
 		listener.assertLaunched(a3);
 		listener.assertLaunched(a4);
@@ -238,7 +256,7 @@ public class KernelTest extends TestCase {
 		
 		a3.stop.set(true);
 		
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 
 		listener.assertKilled(a3);
 		listener.assertNull();		
@@ -430,14 +448,14 @@ public class KernelTest extends TestCase {
 		
 		/** Reset the stub.
 		 */
-		public void reset() {
+		public synchronized void reset() {
 			this.launched.clear();
 			this.killed.clear();
 		}
 		
 		/**
 		 */
-		public void assertNull() {
+		public synchronized void assertNull() {
 			if (!this.launched.isEmpty()) {
 				Assert.fail("unexpecting launched ChannelInteractable"); //$NON-NLS-1$
 			}
@@ -449,7 +467,7 @@ public class KernelTest extends TestCase {
 		/**
 		 * @param launched
 		 */
-		public void assertLaunched(ChannelInteractable launched) {
+		public synchronized void assertLaunched(ChannelInteractable launched) {
 			Iterator<ChannelInteractable> iterator = this.launched.iterator();
 			ChannelInteractable c;
 			while (iterator.hasNext()) {
@@ -465,7 +483,7 @@ public class KernelTest extends TestCase {
 		/**
 		 * @param killed
 		 */
-		public void assertKilled(ChannelInteractable killed) {
+		public synchronized void assertKilled(ChannelInteractable killed) {
 			Iterator<ChannelInteractable> iterator = this.killed.iterator();
 			ChannelInteractable c;
 			while (iterator.hasNext()) {
@@ -482,7 +500,7 @@ public class KernelTest extends TestCase {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void channelIteractableLaunched(ChannelInteractable agent) {
+		public synchronized void channelIteractableLaunched(ChannelInteractable agent) {
 			this.launched.add(agent);
 		}
 
@@ -490,7 +508,7 @@ public class KernelTest extends TestCase {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void channelIteractableKilled(ChannelInteractable agent) {
+		public synchronized void channelIteractableKilled(ChannelInteractable agent) {
 			this.killed.add(agent);
 		}
 		
@@ -515,9 +533,18 @@ public class KernelTest extends TestCase {
 			//
 		}
 		
+		public synchronized boolean isAgentLaunched(AgentAddress adr) {
+			for(KernelEvent evt : this.launchedAgents) {
+				if (evt.getAgent().equals(adr)) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
 		/**
 		 */
-		public void assertNull() {
+		public synchronized void assertNull() {
 			if (!this.launchedAgents.isEmpty()) {
 				Assert.fail("unexpecting launched agent"); //$NON-NLS-1$
 			}
@@ -552,7 +579,7 @@ public class KernelTest extends TestCase {
 		 * @param k
 		 * @param agent
 		 */
-		public void assertKilledAgent(Kernel k, AgentAddress agent) {
+		public synchronized void assertKilledAgent(Kernel k, AgentAddress agent) {
 			assertKernelEvent(this.killedAgents,
 					k,
 					KernelEventType.AGENT_KILLING,
@@ -563,7 +590,7 @@ public class KernelTest extends TestCase {
 		 * @param k
 		 * @param agent
 		 */
-		public void assertLaunchedAgent(Kernel k, AgentAddress agent) {
+		public synchronized void assertLaunchedAgent(Kernel k, AgentAddress agent) {
 			assertKernelEvent(this.launchedAgents,
 					k,
 					KernelEventType.AGENT_LAUNCHING,
@@ -574,7 +601,7 @@ public class KernelTest extends TestCase {
 		 * @param k
 		 * @param agent
 		 */
-		public void assertKilledKernel(Kernel k, AgentAddress agent) {
+		public synchronized void assertKilledKernel(Kernel k, AgentAddress agent) {
 			assertKernelEvent(this.killedKernels,
 					k,
 					KernelEventType.AGENT_KILLING,
@@ -585,7 +612,7 @@ public class KernelTest extends TestCase {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void agentLaunched(KernelEvent event) {
+		public synchronized void agentLaunched(KernelEvent event) {
 			this.launchedAgents.add(event);
 		}
 
@@ -593,7 +620,7 @@ public class KernelTest extends TestCase {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void agentKilled(KernelEvent event) {
+		public synchronized void agentKilled(KernelEvent event) {
 			this.killedAgents.add(event);
 		}
 
@@ -601,7 +628,7 @@ public class KernelTest extends TestCase {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public boolean exceptionUncatched(Throwable error) {
+		public synchronized boolean exceptionUncatched(Throwable error) {
 			return false;
 		}
 
@@ -609,7 +636,7 @@ public class KernelTest extends TestCase {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void kernelAgentLaunched(KernelEvent event) {
+		public synchronized void kernelAgentLaunched(KernelEvent event) {
 			this.launchedKernels.add(event);
 		}
 
@@ -617,7 +644,7 @@ public class KernelTest extends TestCase {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void kernelAgentKilled(KernelEvent event) {
+		public synchronized void kernelAgentKilled(KernelEvent event) {
 			this.killedKernels.add(event);
 		}
 		

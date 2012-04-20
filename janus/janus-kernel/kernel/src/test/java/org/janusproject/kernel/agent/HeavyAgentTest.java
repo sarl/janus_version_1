@@ -20,7 +20,6 @@
  */
 package org.janusproject.kernel.agent;
 
-import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -264,14 +263,7 @@ public class HeavyAgentTest extends TestCase {
 		 */
 		@Override
 		public Status live() {
-			Message m;
-			try {
-				m = getMessage();
-			}
-			catch(ConcurrentModificationException e) {
-				getMessage();
-				throw e;
-			}
+			Message m = getMessage();
 			if (m!=null) {
 				this.nbMessages.incrementAndGet();
 			}
