@@ -147,7 +147,7 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 			int optionalIndex = getFirstOptionalValueIndex(PrototypeScope.INPUT, prototype);
 			Class<?> allInput = getVariableSizePartValueType(PrototypeScope.INPUT, prototype);
 			Class<?>[] input = getFixedSizeValueList(PrototypeScope.INPUT, prototype);
-			check(PrototypeScope.INPUT, input, allInput, optionalIndex, parameters);
+			check(objectToTest, PrototypeScope.INPUT, input, allInput, optionalIndex, parameters);
 		}
 		else if (!this.notAnnotatedWarningDisplayed) {
 			this.notAnnotatedWarningDisplayed = true;
@@ -180,7 +180,7 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 			int optionalIndex = getFirstOptionalValueIndex(PrototypeScope.OUTPUT, prototype);
 			Class<?> allOutput = getVariableSizePartValueType(PrototypeScope.OUTPUT, prototype);
 			Class<?>[] output = getFixedSizeValueList(PrototypeScope.OUTPUT, prototype);
-			check(PrototypeScope.OUTPUT, output, allOutput, optionalIndex, values);
+			check(objectToTest, PrototypeScope.OUTPUT, output, allOutput, optionalIndex, values);
 		}
 		else if (!this.notAnnotatedWarningDisplayed) {
 			this.notAnnotatedWarningDisplayed = true;
@@ -242,6 +242,7 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 	}
 	
 	private void check(
+			Class<? extends MT> objectToTest,
 			PrototypeScope scope,
 			Class<?>[] specifiedParameters,
 			Class<?> restParameters,
@@ -259,10 +260,10 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 				String message = Locale.getString(
 						PrototypeValidator.class,
 						"VOID_INPUT_REQUIRED", //$NON-NLS-1$
-						this.annotatedType.getCanonicalName(),
+						objectToTest.getCanonicalName(),
 						scope.toLocalizedString());
 				getLogger().severe(message);
-				throw new PrototypeException(scope, this.annotatedType, internalValues, message);
+				throw new PrototypeException(scope, objectToTest, internalValues, message);
 			}
 		}
 		else if (specifiedParameters==null) {
@@ -278,9 +279,9 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 						mandatoryCount,
 						internalValues.length,
 						scope.toLocalizedString(),
-						this.annotatedType.getCanonicalName());
+						objectToTest.getCanonicalName());
 				getLogger().severe(message);
-				throw new PrototypeException(scope, this.annotatedType, internalValues, message);
+				throw new PrototypeException(scope, objectToTest, internalValues, message);
 			}
 			
 			for(int i=0; i<internalValues.length; ++i) {
@@ -289,13 +290,13 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 					String message = Locale.getString(
 							PrototypeValidator.class,
 							"INVALID_PARAMETER_TYPE", //$NON-NLS-1$
-							this.annotatedType.getCanonicalName(),
+							objectToTest.getCanonicalName(),
 							scope.toLocalizedString(),
 							i,
 							restParameters.getCanonicalName(),
 							internalValues[i].getClass().getCanonicalName());
 					getLogger().severe(message);
-					throw new PrototypeException(scope, this.annotatedType, internalValues, message);
+					throw new PrototypeException(scope, objectToTest, internalValues, message);
 				}
 			}
 		}
@@ -311,9 +312,9 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 						specifiedParameters.length,
 						internalValues.length,
 						scope.toLocalizedString(),
-						this.annotatedType.getCanonicalName());
+						objectToTest.getCanonicalName());
 				getLogger().severe(message);
-				throw new PrototypeException(scope, this.annotatedType, internalValues, message);
+				throw new PrototypeException(scope, objectToTest, internalValues, message);
 			}
 
 			int mandatoryCount = (optionalIndex<0) ? specifiedParameters.length : optionalIndex;
@@ -325,9 +326,9 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 						mandatoryCount,
 						internalValues.length,
 						scope.toLocalizedString(),
-						this.annotatedType.getCanonicalName());
+						objectToTest.getCanonicalName());
 				getLogger().severe(message);
-				throw new PrototypeException(scope, this.annotatedType, internalValues, message);
+				throw new PrototypeException(scope, objectToTest, internalValues, message);
 			}
 			
 			// mandatory parameters
@@ -338,13 +339,13 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 						String message = Locale.getString(
 								PrototypeValidator.class,
 								"INVALID_PARAMETER_TYPE", //$NON-NLS-1$
-								this.annotatedType.getCanonicalName(),
+								objectToTest.getCanonicalName(),
 								scope.toLocalizedString(),
 								i,
 								specifiedParameters[i].getCanonicalName(),
 								internalValues[i].getClass().getCanonicalName());
 						getLogger().severe(message);
-						throw new PrototypeException(scope, this.annotatedType, internalValues, message);
+						throw new PrototypeException(scope, objectToTest, internalValues, message);
 				}
 			}
 			
@@ -363,11 +364,11 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 			if (j<internalValues.length) {				String message = Locale.getString(
 						PrototypeValidator.class,
 						"OPTIONAL_PARAMETER_NOT_FOUND", //$NON-NLS-1$
-						this.annotatedType.getCanonicalName(),
+						objectToTest.getCanonicalName(),
 						scope.toLocalizedString(),
 						j);
 				getLogger().severe(message);
-				throw new PrototypeException(scope, this.annotatedType, internalValues, message);
+				throw new PrototypeException(scope, objectToTest, internalValues, message);
 			}
 
 		}
@@ -385,11 +386,12 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 				String message = Locale.getString(
 						PrototypeValidator.class,
 						"NOT_ENOUGH_MANDATORY_PARAMETER", //$NON-NLS-1$
-						this.annotatedType.getCanonicalName(),
+						mandatoryCount,
+						internalValues.length,
 						scope.toLocalizedString(),
-						mandatoryCount);
+						objectToTest.getCanonicalName());
 				getLogger().severe(message);
-				throw new PrototypeException(scope, this.annotatedType, internalValues, message);
+				throw new PrototypeException(scope, objectToTest, internalValues, message);
 			}
 			
 			int idxValue = 0;
@@ -410,7 +412,7 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 						String message = Locale.getString(
 								PrototypeValidator.class,
 								"INVALID_PARAMETER_TYPE", //$NON-NLS-1$
-								this.annotatedType.getCanonicalName(),
+								objectToTest.getCanonicalName(),
 								scope.toLocalizedString(),
 								idxValue,
 								specifiedParameters[idxType].getCanonicalName(),
@@ -418,7 +420,7 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 						getLogger().severe(message);
 						throw new PrototypeException(
 								scope, 
-								this.annotatedType, 
+								objectToTest, 
 								internalValues, 
 								message);
 					}
@@ -434,7 +436,7 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 						String message = Locale.getString(
 								PrototypeValidator.class,
 								"INVALID_PARAMETER_TYPE", //$NON-NLS-1$
-								this.annotatedType.getCanonicalName(),
+								objectToTest.getCanonicalName(),
 								scope.toLocalizedString(),
 								idxValue,
 								restParameters.getCanonicalName(),
@@ -442,7 +444,7 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 						getLogger().severe(message);
 						throw new PrototypeException(
 								scope, 
-								this.annotatedType, 
+								objectToTest, 
 								internalValues, 
 								message);
 					}
@@ -452,13 +454,13 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 				String message = Locale.getString(
 						PrototypeValidator.class,
 						"TOO_MANY_PARAMETERS", //$NON-NLS-1$
-						this.annotatedType.getCanonicalName(),
+						objectToTest.getCanonicalName(),
 						scope.toLocalizedString(),
 						idxValue);
 				getLogger().severe(message);
 				throw new PrototypeException(
 						scope, 
-						this.annotatedType, 
+						objectToTest, 
 						internalValues, 
 						message);
 			}
