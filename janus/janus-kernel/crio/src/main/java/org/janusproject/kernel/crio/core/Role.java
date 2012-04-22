@@ -761,7 +761,6 @@ public abstract class Role extends
 		this.owner = null;
 		this.group = null;
 		this.address.unbind();
-		this.address = null;
 		return s;
 	}
 
