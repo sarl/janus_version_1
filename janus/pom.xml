@@ -245,6 +245,12 @@
 					<artifactId>maven-assembly-plugin</artifactId>
 					<version>2.3</version>
 				</plugin>
+				<plugin>
+					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+					<artifactId>android-maven-plugin</artifactId>
+					<version>3.2.0</version>
+				</plugin>
+
 				<!-- This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. This plugin configuration 
 					may be removed if all the developpers are using m2e 1.1 or higher. -->
@@ -276,6 +282,20 @@
 										<versionRange>[1.1-SNAPSHOT,)</versionRange>
 										<goals>
 											<goal>installlicense</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+										<artifactId>android-maven-plugin</artifactId>
+										<versionRange>[1.1-SNAPSHOT,)</versionRange>
+										<goals>
+											<goal>generate-sources</goal>											
+											<goal>proguard</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
