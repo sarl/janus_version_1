@@ -35,8 +35,7 @@ import org.janusproject.kernel.util.sizediterator.SizedIterator;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public interface Repository<ID,TARGET>
-extends OverlookedRepository, Iterable<ID> {
+public interface Repository<ID,TARGET> extends Iterable<ID> {
 
 	/** Replies the size of this repository
 	 * 
@@ -83,5 +82,24 @@ extends OverlookedRepository, Iterable<ID> {
 	 * @return the list of the values.
 	 */
 	public Collection<TARGET> values();
+
+	/** Add a listener on repository changes.
+	 * 
+	 * @param listener is the listener on repository changes. 
+	 */
+	public void addRepositoryChangeListener(RepositoryChangeListener listener);
+
+	/** Remove a listener on repository changes.
+	 * 
+	 * @param listener is the listener on repository changes. 
+	 */
+	public void removeRepositoryChangeListener(RepositoryChangeListener listener);
+	
+	/** Replies the overlooker on this repository.
+	 * 
+	 * @return overlooker on this repository.
+	 * @since 0.5
+	 */
+	public RepositoryOverlooker getOverlooker();
 
 }

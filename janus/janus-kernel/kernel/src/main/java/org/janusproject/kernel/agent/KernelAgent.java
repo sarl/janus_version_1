@@ -64,7 +64,7 @@ import org.janusproject.kernel.crio.organization.PrivilegedPersistentGroupCleane
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.message.MessageContext;
-import org.janusproject.kernel.repository.OverlookedRepository;
+import org.janusproject.kernel.repository.RepositoryOverlooker;
 import org.janusproject.kernel.schedule.Activable;
 import org.janusproject.kernel.status.ExceptionStatus;
 import org.janusproject.kernel.status.KernelStatusConstants;
@@ -217,6 +217,14 @@ extends ActivatorAgent<AgentActivator> {
 		}
 	}
 	
+	/** Replies the overlooker on the agent repository.
+	 * 
+	 * @return the overlooker on the agent repository.
+	 */
+	protected final RepositoryOverlooker getAgentRepository() {
+		return getKernelContext().getAgentRepository().getOverlooker();
+	}
+
 	/** Set the name of the application and the kernel agent.
 	 * This function  changes the property {@link JanusProperty#JANUS_APPLICATION_NAME}
 	 * and the name of the kernel agent.
@@ -410,14 +418,6 @@ extends ActivatorAgent<AgentActivator> {
 		else {
 			forwardBroadcastMessage(message, new AgentAddress[0]);
 		}
-	}
-
-	/** Replies the agent repository.
-	 * 
-	 * @return the agent repository.
-	 */
-	protected final OverlookedRepository getAgentRepository() {
-		return getKernelContext().getAgentRepository();
 	}
 
 	/** Replies the Kernel wrapper for this agent.

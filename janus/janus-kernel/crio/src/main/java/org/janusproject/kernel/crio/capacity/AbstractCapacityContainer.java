@@ -25,6 +25,7 @@ import java.util.Collection;
 
 import org.janusproject.kernel.repository.RepositoryChangeEvent;
 import org.janusproject.kernel.repository.RepositoryChangeListener;
+import org.janusproject.kernel.repository.RepositoryOverlooker;
 import org.janusproject.kernel.repository.RepositoryChangeEvent.ChangeType;
 
 /**
@@ -55,6 +56,14 @@ implements CapacityContainer {
 			if (this.listeners.isEmpty())
 				this.listeners = null;
 		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final RepositoryOverlooker getOverlooker() {
+		return new Overlooker();
 	}
 
 	/**
@@ -138,5 +147,44 @@ implements CapacityContainer {
 		if (policy==null) policy = FirstCapacityImplementationSelectionPolicy.DEFAULT;
 		return capacity.cast(policy.selectImplementation(implementations));
 	}
+
+	/**
+	 * Stores the capacities of a given entity and their associated implementation.
+	 * <p>
+	 * The default capacity implementation selection policy is an instance of
+	 * {@link FirstCapacityImplementationSelectionPolicy}.
+	 * 
+	 * @author $Author: sgalland$
+	 * @version $FullVersion$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 * @see Capacity
+	 */
+	private class Overlooker implements RepositoryOverlooker {
+		
+		/**
+		 */
+		public Overlooker() {
+			//
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void addRepositoryChangeListener(RepositoryChangeListener listener) {
+			AbstractCapacityContainer.this.addRepositoryChangeListener(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void removeRepositoryChangeListener(RepositoryChangeListener listener) {
+			AbstractCapacityContainer.this.removeRepositoryChangeListener(listener);
+		}
+		
+	}
+
 
 }

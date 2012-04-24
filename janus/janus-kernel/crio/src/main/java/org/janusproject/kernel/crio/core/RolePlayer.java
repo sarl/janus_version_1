@@ -66,7 +66,7 @@ import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.mailbox.Mailbox;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
-import org.janusproject.kernel.repository.OverlookedRepository;
+import org.janusproject.kernel.repository.RepositoryOverlooker;
 import org.janusproject.kernel.time.KernelTimeManager;
 import org.janusproject.kernel.util.directaccess.DirectAccessCollection;
 import org.janusproject.kernel.util.event.ListenerCollection;
@@ -151,23 +151,21 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	protected void dispose() {
 		this.address.unbind();
 	}
-
-	/**
-	 * Replies the group repository.
+	
+	/** Replies the overlooker on the group repository.
 	 * 
-	 * @return the group repository.
+	 * @return the overlooker on the group repository.
 	 */
-	protected final OverlookedRepository getGroupRepository() {
-		return getCRIOContext().getGroupRepository();
+	protected final RepositoryOverlooker getGroupRepository() {
+		return getCRIOContext().getGroupRepository().getOverlooker();
 	}
 
-	/**
-	 * Replies the organization repository.
+	/** Replies the overlooker on the organization repository.
 	 * 
-	 * @return the organization repository.
+	 * @return the overlooker on the organization repository.
 	 */
-	protected final OverlookedRepository getOrganizationRepository() {
-		return getCRIOContext().getOrganizationRepository();
+	protected final RepositoryOverlooker getOrganizationRepository() {
+		return getCRIOContext().getOrganizationRepository().getOverlooker();
 	}
 
 	/**

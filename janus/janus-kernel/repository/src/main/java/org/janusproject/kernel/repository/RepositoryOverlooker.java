@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2004-2011 Janus Core Developers
+ * Copyright (C) 2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +20,18 @@
  */
 package org.janusproject.kernel.repository;
 
-/** A object that permits to map an identifier to a set (eventually of size 1) of
- * data.
+/** This interface describes an object that permits to add
+ * listeners on an repository. This interface
+ * was introduced to ease the overlooking on the repositories
+ * without access to the repository itself.
  *  
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
+ * @since 0.5
  */
-public interface OverlookedRepository {
+public interface RepositoryOverlooker {
 
 	/** Add a listener on repository changes.
 	 * 
