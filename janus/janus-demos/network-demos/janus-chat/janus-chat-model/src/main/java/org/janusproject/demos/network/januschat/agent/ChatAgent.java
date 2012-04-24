@@ -36,7 +36,9 @@ import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Agent;
 import org.janusproject.kernel.agent.AgentActivationPrototype;
-import org.janusproject.kernel.agentsignal.QueuedSignalAdapter;
+import org.janusproject.kernel.agentsignal.Signal;
+import org.janusproject.kernel.agentsignal.SignalListener;
+import org.janusproject.kernel.agentsignal.SignalPolicy;
 import org.janusproject.kernel.channels.Channel;
 import org.janusproject.kernel.channels.ChannelInteractable;
 import org.janusproject.kernel.crio.capacity.CapacityContext;
@@ -64,12 +66,6 @@ public class ChatAgent extends Agent implements ChannelInteractable, RolePlaying
 	private static final long serialVersionUID = -6588578672342619892L;
 
 	private final ChatChannelImpl channelImpl = new ChatChannelImpl();
-	private final QueuedSignalAdapter<ErrorSignal> errorSignals = new QueuedSignalAdapter<ErrorSignal>(ErrorSignal.class);
-
-	/**
-	 * Create a local listener on the signals coming from the agent itself or the other roles played by the agent.
-	 */
-	private QueuedSignalAdapter<SendPrivateTextSignal> privateTextSignals = new QueuedSignalAdapter<SendPrivateTextSignal>(SendPrivateTextSignal.class);
 
 	/**
 	 * 
@@ -83,7 +79,8 @@ public class ChatAgent extends Agent implements ChannelInteractable, RolePlaying
 	 */
 	@Override
 	public Status activate(Object... parameters) {
-		addSignalListener(this.privateTextSignals);
+		getSignalManager().setPolicy(SignalPolicy.FIRE_SIGNAL);
+		addSignalListener(new SigListener());
 		Status s = super.activate(parameters);
 		if (s.isSuccess()) {
 			String n = getName();
@@ -100,36 +97,16 @@ public class ChatAgent extends Agent implements ChannelInteractable, RolePlaying
 	public Status live() {
 		Status s = super.live();
 		if (s.isSuccess()) {
-			{// Process Error signals
-				ErrorSignal sig;
-				IncomingChatListener[] list = getEventListeners(IncomingChatListener.class);
-				sig = this.errorSignals.getFirstAvailableSignal();
-				while (sig != null) {
-					for (IncomingChatListener listener : list) {
-						listener.chatroomError(sig.getChatRoom(), sig.getError());
-					}
-					sig = this.errorSignals.getFirstAvailableSignal();
-				}
-			}
-
-			{// Process incmoing and outgoing Private messages and signals
-				SendPrivateTextSignal sig;
-				IncomingPrivateMessageListener[] list = getEventListeners(IncomingPrivateMessageListener.class);
-				sig = this.privateTextSignals.getFirstAvailableSignal();
-				while (sig != null) {
-					this.sendMessage(new StringMessage(sig.getText()), sig.getAgent());
-					sig = this.privateTextSignals.getFirstAvailableSignal();
-				}
-
+			if (hasMessage()) {
+				IncomingPrivateMessageListener[] pmlist = getEventListeners(IncomingPrivateMessageListener.class);
 				for (Message m : getMailbox()) {
 					if (m instanceof StringMessage) {
-						for (IncomingPrivateMessageListener listener : list) {
+						for (IncomingPrivateMessageListener listener : pmlist) {
 							listener.incomingPrivateMessage(m.getSender(), ((StringMessage) m).getContent());
 						}
 					}
 				}
 			}
-
 		}
 		return s;
 	}
@@ -395,4 +372,44 @@ public class ChatAgent extends Agent implements ChannelInteractable, RolePlaying
 
 	} // class ChatChannelImpl
 
+	/**
+	 * Implementation of the listener on signals.
+	 * 
+	 * @author $Author: srodriguez$
+	 * @author $Author: sgalland$
+	 * @author $Author: ngaud$
+	 * @version $FullVersion$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 */
+	private class SigListener implements SignalListener {
+
+		/**
+		 */
+		public SigListener() {
+			//
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public void onSignal(Signal signal) {
+			if (signal instanceof SendPrivateTextSignal) { // Process incmoing and outgoing Private messages and signals
+				SendPrivateTextSignal psig = (SendPrivateTextSignal)signal;
+				sendMessage(new StringMessage(psig.getText()), psig.getAgent());
+			}
+			else if (signal instanceof ErrorSignal) {// Process Error signals
+				ErrorSignal esig = (ErrorSignal)signal;
+				IncomingChatListener[] list = getEventListeners(IncomingChatListener.class);
+				for (IncomingChatListener listener : list) {
+					listener.chatroomError(esig.getChatRoom(), esig.getError());
+				}
+			}
+
+		}
+		
+	}
+	
 }
