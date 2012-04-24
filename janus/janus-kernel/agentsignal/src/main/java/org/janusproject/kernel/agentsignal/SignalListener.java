@@ -33,24 +33,6 @@ import java.util.EventListener;
 public interface SignalListener extends EventListener {
 
 	/**
-	 * Replies if the given type of signal is
-	 * supported by this listener.
-	 * 
-	 * @param type is the type to test.
-	 * @return <code>true</code> if this listener is able
-	 * to receive an signal of the given type,
-	 * otherwise <code>false</code>.
-	 */
-	public boolean isSupportedSignalType(Class<? extends Signal> type);
-
-	/**
-	 * Replies the supported signal type.
-	 * 
-	 * @return the supported type of signal. 
-	 */
-	public Class<? extends Signal> getSupportedSignalType();
-
-	/**
 	 * Invoked when a signal was received.
 	 * 
 	 * @param signal is the signal.

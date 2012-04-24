@@ -23,7 +23,6 @@ package org.janusproject.kernel.agentsignal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.arakhne.vmutil.ReflectionUtil;
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
 
@@ -52,10 +51,6 @@ public abstract class AbstractSignalManager implements SignalManager, SignalList
 	 * Enqueued Signals.
 	 */
 	protected QueuedSignalAdapter<Signal> events = null;
-
-	/** Top class of the signals.
-	 */
-	protected Class<? extends Signal> topClass = null;
 
 	/**
 	 * @param properties
@@ -88,6 +83,9 @@ public abstract class AbstractSignalManager implements SignalManager, SignalList
 			
 		}
 		this.policy = pol==null ? SignalPolicy.FIRE_SIGNAL : pol;
+		if (this.parentManager!=null) {
+			this.parentManager.addSignalListener(this);
+		}
 	}
 	
 	/** {@inheritDoc}
@@ -145,64 +143,27 @@ public abstract class AbstractSignalManager implements SignalManager, SignalList
 		if (this.parentManager!=null)
 			this.parentManager.removeSignalListener(this);
 		this.parentManager = null;
-		this.topClass = null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void addSignalListener(SignalListener listener) {
-		if (this.listeners == null)
+		if (this.listeners == null) {
 			this.listeners = new ArrayList<SignalListener>();
+		}
 		this.listeners.add(listener);
-		if (this.topClass == null) {
-			if (this.parentManager!=null)
-				this.parentManager.addSignalListener(this);
-			this.topClass = listener.getSupportedSignalType();
-		}
-		else {
-			Class<? extends Signal> t = listener.getSupportedSignalType();
-			Class<?> newTop = ReflectionUtil.getCommonType(this.topClass, t);
-			if (newTop!=null && Signal.class.isAssignableFrom(newTop)) {
-				this.topClass = (Class<? extends Signal>)newTop;
-			}
-			else {
-				this.topClass = null;
-			}
-		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void removeSignalListener(SignalListener listener) {
 		if (this.listeners != null) {
 			this.listeners.remove(listener);
 			if (this.listeners.isEmpty()) {
-				if (this.topClass != null) {
-					if (this.parentManager!=null)
-						this.parentManager.removeSignalListener(this);
-					this.topClass = null;
-					Class<?> t = null;
-					for(SignalListener oldListener : this.listeners) {
-						if (t==null) {
-							t = oldListener.getSupportedSignalType();
-						}
-						else {
-							t = ReflectionUtil.getCommonType(t, oldListener.getSupportedSignalType());
-						}
-					}
-					if (t!=null && Signal.class.isAssignableFrom(t)) {
-						this.topClass = (Class<? extends Signal>)t;
-					}
-					else {
-						this.topClass = null;
-					}
-				}
 				this.listeners = null;
 			}
 		}
@@ -219,24 +180,6 @@ public abstract class AbstractSignalManager implements SignalManager, SignalList
 		else {
 			onSignal(signal);
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isSupportedSignalType(Class<? extends Signal> type) {
-		assert (type != null);
-		return this.topClass == null
-				|| this.topClass.isAssignableFrom(type);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Class<? extends Signal> getSupportedSignalType() {
-		return this.topClass == null ? Signal.class : this.topClass;
 	}
 
 	/**
