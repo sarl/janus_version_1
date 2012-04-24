@@ -171,11 +171,16 @@ public class RoomFragment extends Fragment {
 	 */
 	@Override
 	public void onDestroy() {
-		if (this.listener!=null && this.chatter!=null) {
-			ChatChannel channel = ChatUtil.getChannelFor(this.chatter);
-			if (channel!=null) {
-				channel.removeIncomingChatListener(this.listener);
+		try {
+			if (this.listener!=null && this.chatter!=null) {
+				ChatChannel channel = ChatUtil.getChannelFor(this.chatter);
+				if (channel!=null) {
+					channel.removeIncomingChatListener(this.listener);
+				}
 			}
+		}
+		catch(Throwable _) {
+			//
 		}
 		
 		this.listener = null;
