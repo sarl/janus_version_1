@@ -24,16 +24,16 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.UUID;
+import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.kernel.address.AgentAddress;
@@ -54,28 +54,21 @@ public class PrivateMessageDialog extends JDialog implements ActionListener {
 	private static final String CANCEL_ACTION = "cancelAction"; //$NON-NLS-1$
 
 	/**
-	 * UID of the user to send the message
+	 * Receiver of the message.
 	 */
-	private JTextField receiverUID;
+	private JComboBox receiver;
 
-	/**
-	 * Name of the user to send the message
-	 */
-	private JTextField receiverName;
-	
 	/**
 	 * The content of the message to send
 	 */
 	private JTextArea message;
 
+	private AgentAddress selected = null;
+	
 	/**
-	 * Adress of the agent to send the message
+	 * @param participants
 	 */
-	private AgentAddress receiverAddress = null;
-
-	/**
-	 */
-	public PrivateMessageDialog() {
+	public PrivateMessageDialog(Collection<AgentAddress> participants) {
 		getContentPane().setLayout(new BorderLayout());
 		setModal(true);
 		setTitle(Locale.getString(PrivateMessageDialog.class, "TITLE")); //$NON-NLS-1$
@@ -91,18 +84,15 @@ public class PrivateMessageDialog extends JDialog implements ActionListener {
 			receiverNameLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 			topPane.add(receiverNameLabel);
 			
-			this.receiverName = new JTextField();
-			this.receiverName.setPreferredSize(new Dimension(100,20));
-			topPane.add(this.receiverName);
+			this.receiver = new JComboBox();
+			this.receiver.setEditable(false);
+			topPane.add(this.receiver);
+						
+			for(AgentAddress a : participants) {
+				this.receiver.addItem(a);
+			}
 			
-			JLabel receiver = new JLabel(Locale.getString(PrivateMessageDialog.class, 
-					"RECEIVERUID")); //$NON-NLS-1$
-			receiver.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
-			topPane.add(receiver);
-			
-			this.receiverUID = new JTextField();
-			this.receiverUID.setPreferredSize(new Dimension(100,20));
-			topPane.add(this.receiverUID);
+			this.receiver.setSelectedIndex(0);
 		}
 		{
 			JPanel middlePane = new JPanel();
@@ -138,7 +128,7 @@ public class PrivateMessageDialog extends JDialog implements ActionListener {
 	 * @return the address of the receiver.
 	 */
 	public AgentAddress getReceiverAddress() {
-		return this.receiverAddress;
+		return this.selected;
 	}
 	
 	
@@ -157,37 +147,11 @@ public class PrivateMessageDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		if (SEND_ACTION.equals(cmd)) {
-			if ((this.receiverUID.getText() != "") //$NON-NLS-1$
-					&& (this.receiverName.getText() != "") //$NON-NLS-1$
-					&& (this.message.getText() != "")) { //$NON-NLS-1$
-				this.receiverAddress = new ReceiverAddress(UUID.fromString(this.receiverUID.getText()), this.receiverName.getText());
-			} else {
-				this.receiverAddress = null;
-			}
+			this.selected = (AgentAddress)this.receiver.getSelectedItem();
 			setVisible(false);
 		} else if (CANCEL_ACTION.equals(cmd)) {
 			setVisible(false);
 		}
 	}
 
-	/**
-	 * @author $Author: sgalland$
-	 * @version $FullVersion$
-	 * @mavengroupid $GroupId$
-	 * @mavenartifactid $ArtifactId$
-	 */
-	private static class ReceiverAddress extends AgentAddress {
-
-		private static final long serialVersionUID = 3381427973629158229L;
-
-		/**
-		 * @param id
-		 * @param name
-		 */
-		public ReceiverAddress(UUID id, String name) {
-			super(id, name);
-		}
-		
-	}
-	
 }
