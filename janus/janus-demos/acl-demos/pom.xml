@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.janus-project.demos</groupId>
+		<artifactId>janus-demos</artifactId>
+		<version>0.5-SNAPSHOT</version>
+	</parent>
+
+	<packaging>pom</packaging>
+	<groupId>org.janus-project.demos.acl-demos</groupId>
+	<artifactId>acl-demos</artifactId>
+	<name>Janus ACL Demos</name>
+	<version>0.5-SNAPSHOT</version>
+
+	<modules>
+		<module>base</module>
+		<module>contract-net-protocol</module>
+		<module>request-protocol</module>
+	</modules>
+
+</project>

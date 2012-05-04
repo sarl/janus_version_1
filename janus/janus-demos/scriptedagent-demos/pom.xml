@@ -17,6 +17,7 @@
 	
 	<modules>
 		<module>jruby-demos</module>
+		<module>groovy-demos</module>
 	</modules>
 
 </project>

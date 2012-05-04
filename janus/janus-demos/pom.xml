@@ -21,6 +21,7 @@
 		<module>network-demos</module>
 		<module>ecoresolution-demos</module>
 		<module>bdi-demos</module>
+		<module>acl-demos</module>
 		<module>scriptedagent-demos</module>
 	</modules>
 </project>

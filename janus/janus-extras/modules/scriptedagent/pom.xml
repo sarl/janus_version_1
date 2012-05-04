@@ -18,6 +18,7 @@
 	<modules>
 		<module>jrubyengine</module>
 		<module>jrubyjanusextensions</module>
+		<module>groovyengine</module>
 	</modules>
 
 </project>

@@ -18,6 +18,7 @@
 	<modules>
 		<module>ecoresolution</module>
 		<module>bdiengine</module>
+		<module>aclengine</module>
 		<module>scriptedagent</module>
 	</modules>
 </project>

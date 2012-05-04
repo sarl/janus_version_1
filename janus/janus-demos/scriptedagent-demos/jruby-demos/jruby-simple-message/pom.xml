@@ -30,7 +30,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-Activator>org.janusproject.demo.jruby.jrubysimplemessage.osgi.JRubySimpleMessageActivator</Bundle-Activator>
+						<Bundle-Activator>org.janusproject.demo.jruby.simplemessage.osgi.JRubySimpleMessageActivator</Bundle-Activator>
 						<Include-Resource>
 							{maven-resources}, {maven-dependencies},
 							META-INF/license=target/classes/META-INF/license,
@@ -49,7 +49,7 @@
 					<archive>
 						<manifestFile>${manifest.file}</manifestFile>
 						<manifest>
-							<mainClass>org.janusproject.demo.jruby.jrubysimplemessage.Launcher</mainClass>
+							<mainClass>org.janusproject.demo.jruby.simplemessage.Launcher</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

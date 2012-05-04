@@ -36,7 +36,7 @@ import org.janusproject.jrubyengine.RubyExecutionScriptContext;
 public class Launcher {
 	
 	
-	private static final String RubyScriptPath = Launcher.class.getClassLoader().getResource("org/janusproject/demo/jruby/selectivemarket").getPath(); //$NON-NLS-1$
+	private static final String RubyScriptPath = Launcher.class.getClassLoader().getResource("org/janusproject/demo/jruby/market/selective/").getPath(); //$NON-NLS-1$
 	
 	/**
 	 * Execute a script which is the Launcher.java

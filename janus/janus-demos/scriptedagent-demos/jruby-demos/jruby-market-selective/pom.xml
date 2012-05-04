@@ -22,7 +22,7 @@
 
 
 	<build>
-		<plugins>			
+		<plugins>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
@@ -113,6 +113,11 @@
 		<dependency>
 			<groupId>org.janus-project.demos</groupId>
 			<artifactId>market-selective</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>kernel</artifactId>
 		</dependency>
 
 		<dependency>
