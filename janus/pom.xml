@@ -460,6 +460,16 @@
 				<artifactId>jrubyengine</artifactId>
 				<version>0.5-SNAPSHOT</version>
 			</dependency>
+			<dependency>
+				<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
+				<artifactId>groovyengine</artifactId>
+				<version>0.5-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.janus-project.extras.modules.aclengine</groupId>
+				<artifactId>aclengine</artifactId>
+				<version>0.5-SNAPSHOT</version>
+			</dependency>
 
 			<!-- ********** ** JANUS DEMOS ** ********** -->
 			<dependency>
@@ -497,7 +507,7 @@
 			<dependency>
 				<groupId>org.jruby</groupId>
 				<artifactId>jruby</artifactId>
-				<version>1.6.7</version>
+				<version>1.6.7.1</version>
 			</dependency>
 
 			<!-- ********** ** AETHER ** ********** -->

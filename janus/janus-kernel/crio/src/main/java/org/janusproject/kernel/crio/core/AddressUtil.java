@@ -20,7 +20,6 @@
  */
 package org.janusproject.kernel.crio.core;
 
-import java.net.UnknownHostException;
 import java.util.StringTokenizer;
 import java.util.UUID;
 
@@ -64,11 +63,10 @@ public class AddressUtil {
 	 * 
 	 * @param address is the name of the address 
 	 * @return the address or <code>null</code> if it could be created.
-	 * @throws UnknownHostException if the host name in the given address is unknown (from DNS point of view).
 	 * @throws IllegalArgumentException if the given address has invalid format or value.
 	 */
 	public static AgentAddress createAgentAddress(String address)
-	throws UnknownHostException, IllegalArgumentException {
+	throws IllegalArgumentException {
 		if (address==null)
 			throw new IllegalArgumentException(
 					Locale.getString(

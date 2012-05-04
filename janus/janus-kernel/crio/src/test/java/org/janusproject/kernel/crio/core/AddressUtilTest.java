@@ -20,12 +20,11 @@
  */
 package org.janusproject.kernel.crio.core;
 
-import java.net.UnknownHostException;
 import java.util.UUID;
 
-import org.janusproject.kernel.address.AgentAddress;
-
 import junit.framework.TestCase;
+
+import org.janusproject.kernel.address.AgentAddress;
 
 /**
  * @author $Author: sgalland$
@@ -54,17 +53,15 @@ public class AddressUtilTest extends TestCase {
 	}
 
 	/**
+	 * @throws IllegalArgumentException 
 	 */
-	public void testCreateAgentAddressString() {
+	public void testCreateAgentAddressString() throws IllegalArgumentException {
 		try {
 			AddressUtil.createAgentAddress((String)null);
 			fail("IllegalArgumentException was expected"); //$NON-NLS-1$
 		}
 		catch(IllegalArgumentException _) {
-			// Expected exception
-		}
-		catch (UnknownHostException _) {
-			fail("Unexpected exception: UnknownHostException"); //$NON-NLS-1$
+			//$NON-NLS-1$
 		}
 		
 		try {
@@ -72,10 +69,7 @@ public class AddressUtilTest extends TestCase {
 			fail("IllegalArgumentException was expected"); //$NON-NLS-1$
 		}
 		catch(IllegalArgumentException _) {
-			// Expected exception
-		}
-		catch (UnknownHostException _) {
-			fail("Unexpected exception: UnknownHostException"); //$NON-NLS-1$
+			//$NON-NLS-1$
 		}
 
 		try {
@@ -83,10 +77,7 @@ public class AddressUtilTest extends TestCase {
 			fail("IllegalArgumentException was expected"); //$NON-NLS-1$
 		}
 		catch(IllegalArgumentException _) {
-			// Expected exception
-		}
-		catch (UnknownHostException _) {
-			fail("Unexpected exception: UnknownHostException"); //$NON-NLS-1$
+			//$NON-NLS-1$
 		}
 
 		try {
@@ -94,10 +85,7 @@ public class AddressUtilTest extends TestCase {
 			fail("IllegalArgumentException was expected"); //$NON-NLS-1$
 		}
 		catch(IllegalArgumentException _) {
-			// Expected exception
-		}
-		catch (UnknownHostException _) {
-			fail("Unexpected exception: UnknownHostException"); //$NON-NLS-1$
+			//$NON-NLS-1$
 		}
 		
 		try {
@@ -105,10 +93,7 @@ public class AddressUtilTest extends TestCase {
 			fail("IllegalArgumentException was expected"); //$NON-NLS-1$
 		}
 		catch(IllegalArgumentException _) {
-			// Expected exception
-		}
-		catch (UnknownHostException _) {
-			fail("Unexpected exception: UnknownHostException"); //$NON-NLS-1$
+			//$NON-NLS-1$
 		}
 
 		try {
@@ -116,12 +101,8 @@ public class AddressUtilTest extends TestCase {
 			fail("IllegalArgumentException was expected"); //$NON-NLS-1$
 		}
 		catch(IllegalArgumentException _) {
-			// Expected exception
+			//$NON-NLS-1$
 		}
-		catch (UnknownHostException _) {
-			fail("Unexpected exception: UnknownHostException"); //$NON-NLS-1$
-		}
-
 
 		try {
 			AgentAddress hAdr = AddressUtil.createAgentAddress("a::"+this.uid.toString()); //$NON-NLS-1$
@@ -129,10 +110,7 @@ public class AddressUtilTest extends TestCase {
 			assertEquals(this.uid, hAdr.getUUID());
 		}
 		catch(IllegalArgumentException _) {
-			fail("Unexpected exception: IllegalArgumentException"); //$NON-NLS-1$
-		}
-		catch (UnknownHostException _) {
-			fail("Unexpected exception: UnknownHostException"); //$NON-NLS-1$
+			//$NON-NLS-1$
 		}
 	}
 
