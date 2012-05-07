@@ -25,6 +25,9 @@ import java.util.logging.Logger;
 
 import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.demos.network.januschat.ChatUtil;
+import org.janusproject.demos.network.januschat.ChatterListener;
+import org.janusproject.demos.network.januschat.swing.ui.ChatRoomFrame;
+import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.KernelAgentFactory;
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.mmf.KernelAuthority;
@@ -71,6 +74,7 @@ public class ChatActivator implements BundleActivator, JanusApplication {
 	public Status start(KernelService kernel) {
 		Logger.getAnonymousLogger().info(Locale.getString(ChatActivator.class, "STARTING_CHAT")); //$NON-NLS-1$
 
+		ChatUtil.addChatterListener(new Listener());
 		ChatUtil.createChatter(kernel);
 		
 		return StatusFactory.ok(this);
@@ -137,6 +141,31 @@ public class ChatActivator implements BundleActivator, JanusApplication {
 	@Override
 	public boolean isRunning() {
 		return true;
+	}
+	
+	/**
+	 * @author $Author: sgalland$
+	 * @version $FullVersion$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 */
+	private static class Listener implements ChatterListener {
+
+		/**
+		 */
+		public Listener() {
+			//
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void onChatterCreated(AgentAddress chatter) {
+			ChatRoomFrame frame = new ChatRoomFrame(chatter);
+			frame.setVisible(true);
+		}
+		
 	}
 	
 }

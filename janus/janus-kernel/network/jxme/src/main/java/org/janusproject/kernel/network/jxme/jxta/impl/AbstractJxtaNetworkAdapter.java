@@ -101,7 +101,7 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 	 */
 	protected Logger getLogger() {
 		if (this.logger==null) {
-			this.logger = Logger.getLogger(getKernelAddress().toString());
+			this.logger = Logger.getLogger(getClass().getCanonicalName());
 		}
 		return this.logger;
 	}

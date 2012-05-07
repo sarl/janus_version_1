@@ -93,31 +93,15 @@ implements SignalListener, Iterable<T> {
 	 */
 	@Override
 	public void onSignal(Signal signal) {
-		assert(signal!=null && this.type.isInstance(signal));
-		this.signals.add(this.type.cast(signal));
+		if (signal!=null && this.type.isInstance(signal)) {
+			this.signals.add(this.type.cast(signal));
+		}
 	}
 
 	/** Clear any reference to the last received signal.
 	 */
 	public void clear() {
 		this.signals.clear();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isSupportedSignalType(Class<? extends Signal> type) {
-		assert(type!=null);
-		return this.type==null || this.type.isAssignableFrom(type);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Class<? extends Signal> getSupportedSignalType() {
-		return this.type==null ? Signal.class : this.type;
 	}
 
 	/**

@@ -64,10 +64,8 @@ implements SignalEmitter {
 	public void fireSignal(Signal signal) {
 		assert(signal!=null);
 		if (this.listeners!=null) {
-			Class<? extends Signal> type = signal.getClass();
 			for(SignalListener listener : this.listeners.getListeners(SignalListener.class)) {
-				if (listener.isSupportedSignalType(type))
-					listener.onSignal(signal);
+				listener.onSignal(signal);
 			}
 		}
 	}

@@ -28,7 +28,9 @@ import java.awt.event.WindowEvent;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.TreeSet;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -41,7 +43,6 @@ import org.janusproject.demos.network.januschat.ChatUtil;
 import org.janusproject.demos.network.januschat.agent.ChatChannel;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
-import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.crio.core.GroupAddress;
 
@@ -64,15 +65,6 @@ public class ChatRoomFrame extends JFrame implements ActionListener {
 	private static final String NEW_CHATTER_ACTION = "newChatterAction"; //$NON-NLS-1$	
 	private static final String SEND_PRIVATE_MESSAGE_ACTION = "privateMessageAction"; //$NON-NLS-1$
 	
-	private static ChatChannel getChannelFor(AgentAddress chatAgent) {
-		Kernel kernel = Kernels.get();
-		if (kernel!=null) {
-			ChatChannel channel = kernel.getChannelManager().getChannel(chatAgent, ChatChannel.class);
-			if (channel!=null) return channel;
-		}
-		throw new IllegalStateException();
-	}
-	
 	private final MultiChatRoomPanel chatrooms;
 	private final WeakReference<ChatChannel> chatChannel;
 	
@@ -80,7 +72,7 @@ public class ChatRoomFrame extends JFrame implements ActionListener {
 	 * @param chatAgent is the address of the chat agent. 
 	 */
 	public ChatRoomFrame(AgentAddress chatAgent) {
-		this(getChannelFor(chatAgent));
+		this(ChatUtil.getChannelFor(chatAgent));
 	}
 
 	/**
@@ -206,11 +198,23 @@ public class ChatRoomFrame extends JFrame implements ActionListener {
 			}
 			System.exit(0);
 		} else if (SEND_PRIVATE_MESSAGE_ACTION.equals(cmd)) {
-			PrivateMessageDialog privateMessageDialog = new PrivateMessageDialog();
-			privateMessageDialog.setVisible(true);
 			ChatChannel channel = this.chatChannel.get();
-			if (channel != null && privateMessageDialog.getReceiverAddress() != null) {
-				channel.postPrivateMessage(privateMessageDialog.getReceiverAddress(), privateMessageDialog.getMessage());
+			if (channel!=null) {
+				Collection<AgentAddress> participants = new TreeSet<AgentAddress>();
+				for(GroupAddress room : channel.getParticipatingChatrooms()) {
+					Iterator<AgentAddress> iterator = channel.getChatroomParticipants(room);
+					while (iterator.hasNext()) {
+						AgentAddress a = iterator.next();
+						if (!a.equals(channel.getChannelOwner())) {
+							participants.add(a);
+						}
+					}
+				}
+				PrivateMessageDialog privateMessageDialog = new PrivateMessageDialog(participants);
+				privateMessageDialog.setVisible(true);
+				if (privateMessageDialog.getReceiverAddress() != null) {
+					channel.postPrivateMessage(privateMessageDialog.getReceiverAddress(), privateMessageDialog.getMessage());
+				}
 			}
 		}
 	}

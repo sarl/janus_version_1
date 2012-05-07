@@ -42,22 +42,6 @@ class SignalListenerStub implements SignalListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isSupportedSignalType(Class<? extends Signal> type) {
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Class<? extends Signal> getSupportedSignalType() {
-		return Signal.class;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public void onSignal(Signal signal) {
 		this.signals.add(signal);
 	}

@@ -173,22 +173,6 @@ public class Super extends Role {
 			return ls;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public boolean isSupportedSignalType(Class<? extends Signal> type) {
-			return true;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Class<? extends Signal> getSupportedSignalType() {
-			return Signal.class;
-		}
-		
 	}
 
 }

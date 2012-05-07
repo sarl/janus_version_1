@@ -23,10 +23,9 @@ package org.janusproject.kernel.crio.interaction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.management.relation.Role;
-
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
+import org.janusproject.kernel.crio.core.Role;
 import org.janusproject.kernel.mailbox.BufferedTreeSetMailbox;
 import org.janusproject.kernel.mailbox.Mailbox;
 
@@ -51,20 +50,22 @@ public class MailboxUtil {
 	 */
 	public static Mailbox createDefaultMailbox(Class<?> callerType, JanusProperties configuration, Logger logger) {
 		if (configuration!=null) {
-			String className;
+			String className = null;
 			if (Role.class.isAssignableFrom(callerType)) {
 				className = configuration.getProperty(JanusProperty.JANUS_ROLE_MAILBOX_TYPE);
 			}
-			else {
+			if (className==null) {
 				className = configuration.getProperty(JanusProperty.JANUS_AGENT_MAILBOX_TYPE);
 			}
-			try {
-				Class<?> type = Class.forName(className);
-				return (Mailbox)type.newInstance();
-			}
-			catch(Throwable e) {
-				if (logger!=null)
-					logger.log(Level.SEVERE, e.toString(), e);
+			if (className!=null) {
+				try {
+					Class<?> type = Class.forName(className);
+					return (Mailbox)type.newInstance();
+				}
+				catch(Throwable e) {
+					if (logger!=null)
+						logger.log(Level.SEVERE, e.toString(), e);
+				}
 			}
 		}
 		return new BufferedTreeSetMailbox();

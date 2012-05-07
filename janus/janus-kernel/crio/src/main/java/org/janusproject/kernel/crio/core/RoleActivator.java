@@ -101,7 +101,7 @@ extends AbstractActivator<Role> {
 		while (roles.hasNext()) {
 			r = roles.next();
 			try {
-				ms.addStatus(r.proceedPrivateBehaviour());
+				ms.addStatus(r.proceedPrivateDestruction());
 			}
 			catch(AssertionError e) {
 				throw e;

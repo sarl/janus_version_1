@@ -45,6 +45,14 @@ implements Repository<ID,DATA>, ModifiableCollectionSizedIteratorOwner<Entry<ID,
 
 	private ListenerCollection<RepositoryChangeListener> listeners = null;
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final RepositoryOverlooker getOverlooker() {
+		return new Overlooker();
+	}
+	
 	/** {@inheritDoc}
 	 */
 	@Override
@@ -239,5 +247,37 @@ implements Repository<ID,DATA>, ModifiableCollectionSizedIteratorOwner<Entry<ID,
 		}
 
 	} /* class RepositoryIterator */
+	
+	/** 
+	 * @author $Author: sgalland$
+	 * @version $FullVersion$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 */
+	private class Overlooker implements RepositoryOverlooker {
+
+		/**
+		 */
+		public Overlooker() {
+			//
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void addRepositoryChangeListener(RepositoryChangeListener listener) {
+			AbstractRepository.this.addRepositoryChangeListener(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void removeRepositoryChangeListener(RepositoryChangeListener listener) {
+			AbstractRepository.this.removeRepositoryChangeListener(listener);
+		}
+		
+	}
 	
 }

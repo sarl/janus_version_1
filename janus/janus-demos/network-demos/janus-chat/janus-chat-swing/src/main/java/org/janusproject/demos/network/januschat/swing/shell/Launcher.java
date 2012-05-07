@@ -23,6 +23,9 @@ package org.janusproject.demos.network.januschat.swing.shell;
 import java.util.logging.Level;
 
 import org.janusproject.demos.network.januschat.ChatUtil;
+import org.janusproject.demos.network.januschat.ChatterListener;
+import org.janusproject.demos.network.januschat.swing.ui.ChatRoomFrame;
+import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.logger.LoggerUtil;
 
 /** 
@@ -41,7 +44,34 @@ public class Launcher {
 	 * @throws Exception
 	 */	
 	public static void main(String[] argv) throws Exception {
-		LoggerUtil.setGlobalLevel(Level.INFO);
+		LoggerUtil.setGlobalLevel(Level.SEVERE);
+		ChatUtil.addChatterListener(new Listener());
 		ChatUtil.createChatter();
 	}
+	
+	/** 
+	 * @author $Author: sgalland$
+	 * @version $FullVersion$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 */
+	private static class Listener implements ChatterListener {
+	
+		/**
+		 */
+		public Listener() {
+			//
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void onChatterCreated(AgentAddress chatter) {
+			ChatRoomFrame frame = new ChatRoomFrame(chatter);
+			frame.setVisible(true);
+		}
+		
+	}
+	
 }

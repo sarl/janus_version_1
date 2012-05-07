@@ -62,12 +62,9 @@ public class BufferedSignalManager extends AbstractSignalManager {
 		case FIRE_SIGNAL:
 			if (this.events!=null) {
 				if (this.listeners != null) {
-					Class<? extends Signal> signalType;
 					for (Signal signal : this.events) {
-						signalType = signal.getClass();
 						for (SignalListener listener : this.listeners) {
-							if (listener.isSupportedSignalType(signalType))
-								listener.onSignal(signal);
+							listener.onSignal(signal);
 						}
 					}
 				}
@@ -99,10 +96,8 @@ public class BufferedSignalManager extends AbstractSignalManager {
 			
 			// notifies the SignalManager children
 			if (this.listeners!=null) {
-				Class<? extends Signal> signalType = signal.getClass();
 				for (SignalListener listener : this.listeners) {
-					if (listener instanceof SignalManager
-						&& listener.isSupportedSignalType(signalType))
+					if (listener instanceof SignalManager)
 						listener.onSignal(signal);
 				}
 			}

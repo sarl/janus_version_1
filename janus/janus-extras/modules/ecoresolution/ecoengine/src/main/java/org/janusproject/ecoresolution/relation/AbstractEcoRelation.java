@@ -35,7 +35,7 @@ import org.janusproject.ecoresolution.identity.EcoIdentity;
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
-public abstract class AbstractEcoRelation<ME extends AbstractEcoRelation<ME,INVERT>, INVERT extends AbstractEcoRelation<INVERT,ME>> implements EcoRelation {
+public abstract class AbstractEcoRelation<ME extends AbstractEcoRelation<? extends ME,? extends INVERT>, INVERT extends AbstractEcoRelation<? extends INVERT,? extends ME>> implements EcoRelation {
 	
 	private static final long serialVersionUID = -8597750346507511113L;
 	

@@ -52,10 +52,8 @@ public class InstantSignalManager extends AbstractSignalManager {
 	
 	private void notifies(Signal signal) {
 		if (this.listeners!=null) {
-			Class<? extends Signal> signalType = signal.getClass();
 			for (SignalListener listener : this.listeners) {
-				if (listener.isSupportedSignalType(signalType))
-					listener.onSignal(signal);
+				listener.onSignal(signal);
 			}
 		}
 	}
@@ -83,10 +81,8 @@ public class InstantSignalManager extends AbstractSignalManager {
 
 			// notifies the SignalManager children
 			if (this.listeners!=null) {
-				Class<? extends Signal> signalType = signal.getClass();
 				for (SignalListener listener : this.listeners) {
-					if (listener instanceof SignalManager
-						&& listener.isSupportedSignalType(signalType))
+					if (listener instanceof SignalManager)
 						listener.onSignal(signal);
 				}
 			}

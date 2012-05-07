@@ -20,7 +20,8 @@
  */
 package org.janusproject.demos.network.januschat.organization;
 
-import org.janusproject.kernel.agentsignal.QueuedSignalAdapter;
+import org.janusproject.kernel.agentsignal.Signal;
+import org.janusproject.kernel.agentsignal.SignalPolicy;
 import org.janusproject.kernel.crio.core.Role;
 import org.janusproject.kernel.crio.role.RoleActivationPrototype;
 import org.janusproject.kernel.message.AbstractContentMessage;
@@ -44,20 +45,12 @@ import org.janusproject.kernel.status.StatusFactory;
 )
 public class ChatterRole extends Role {
 
-	/** Create a local listener on the signals coming from the agent itself
-	 * or the other roles played by the agent.
-	 */
-	private QueuedSignalAdapter<SendTextSignal> signals = new QueuedSignalAdapter<SendTextSignal>(
-			SendTextSignal.class);
-
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Status activate(Object... params) {
-		// Add the local listener on signals
-		addSignalListener(this.signals);
-		
+		getSignalManager().setPolicy(SignalPolicy.STORE_IN_QUEUE);
 		return super.activate(params);
 	}
 	
@@ -66,8 +59,6 @@ public class ChatterRole extends Role {
 	 */
 	@Override
 	public Status live() {
-		SendTextSignal s;
-
 		// Receive the messages fro mthe other chatters
 		for(Message m : getMailbox()) {
 			if (m instanceof AbstractContentMessage<?>) {
@@ -87,15 +78,18 @@ public class ChatterRole extends Role {
 		}
 
 		// Send my messages
-		s = this.signals.getFirstAvailableSignal();
-		while (s!=null) {
-			if (s.getChatRoom().equals(getGroupAddress())) {
-				broadcastMessage(
-						ChatterRole.class,
-						new StringMessage(s.getText()));
+		Signal sig;
+		while ((sig = getSignal())!=null) {
+			if (sig instanceof SendTextSignal) {
+				SendTextSignal s = (SendTextSignal)sig;
+				if (s.getChatRoom().equals(getGroupAddress())) {
+					broadcastMessage(
+							ChatterRole.class,
+							new StringMessage(s.getText()));
+				}
 			}
-			s = this.signals.getFirstAvailableSignal();
 		}
+		
 		return StatusFactory.ok(this);
 	}
 
