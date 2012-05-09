@@ -27,8 +27,8 @@
 				<artifactId>license-installer</artifactId>
 				<configuration>
 					<thirdPartyLicenses>
-						<param>apachev2:/org/janusproject/kernel/network/jxta/impl/PipeUtil.java</param>
-						<param>apachev2:/org/janusproject/kernel/network/jxta/impl/PeerGroupUtil.java</param>
+						<param>apachev2:/org/janusproject/kernel/network/jxse/jxta/impl/PipeUtil.java</param>
+						<param>apachev2:/org/janusproject/kernel/network/jxse/jxta/impl/PeerGroupUtil.java</param>
 					</thirdPartyLicenses>
 				</configuration>
 			</plugin>
@@ -38,7 +38,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Export-Package>org.janusproject.kernel.network*;version="${project.version}"</Export-Package>
+						<Export-Package>org.janusproject.kernel.network.jxse*;version="${project.version}"</Export-Package>
 						<Embed-Dependency>
 							*;scope=compile|runtime;inline=false;artifactId=!osgi|netty
 							<!-- Do not excluse JXSE, since the orginal bundle of JXSE doesn't embed bouncy castle and when osgi try to load him it fails, so our bundle is loaded first and it is thus consider as the main provider of jxse and bouncy castle classes and it works -->
@@ -122,13 +122,11 @@
 		<dependency>
 			<groupId>bouncycastle</groupId>
 			<artifactId>bcprov-jdk15</artifactId>
-			<version>140</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.netty</groupId>
 			<artifactId>netty</artifactId>
-			<version>3.2.2.Final</version>
 		</dependency>
 
 	</dependencies>

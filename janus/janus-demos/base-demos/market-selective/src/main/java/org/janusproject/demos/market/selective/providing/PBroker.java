@@ -78,7 +78,6 @@ public class PBroker extends Role {
 
 	/**
 	 */
-	@SuppressWarnings("unchecked")
 	public PBroker() {
 		addObtainCondition(new HasAllRequiredCapacitiesCondition(Arrays.asList(FindLowestCostProposalCapacity.class, FindShortestTimeProposalCapacity.class)));
 	}

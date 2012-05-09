@@ -116,7 +116,6 @@ public class Benchs {
 	 * @param args
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws Exception {
 		VMCommandLine.saveVMParametersIfNotSet(BenchLauncher.class, args);
 		run(
@@ -196,6 +195,7 @@ public class Benchs {
 		System.exit(0);
 	}
 
+	@SafeVarargs
 	private static List<Class<? extends Bench<?>>> selectBenchs(Class<? extends Bench<?>>... benchs) {
 		List<Class<? extends Bench<?>>> benchsToRun = new ArrayList<Class<? extends Bench<?>>>();
 		SelectionGUI gui = new SelectionGUI(benchs);
@@ -210,6 +210,7 @@ public class Benchs {
 		return benchsToRun;
 	}
 
+	@SafeVarargs
 	private static void run(Class<? extends Bench<?>>... benchs) throws Exception {
 		List<Class<? extends Bench<?>>> benchsToRun = selectBenchs(benchs);
 
@@ -352,21 +353,22 @@ public class Benchs {
 
 		private static final long serialVersionUID = 5475408361451706102L;
 
-		private DefaultListModel model;
-		private JList list;
+		private DefaultListModel<Class<? extends Bench<?>>> model;
+		private JList<Class<? extends Bench<?>>> list;
 		private boolean isBench = false;
 		private boolean isJei = false;
 
 		/**
 		 * @param benchs
 		 */
+		@SafeVarargs
 		public SelectionGUI(Class<? extends Bench<?>>... benchs) {
 			super((Window)null, Locale.getString(Benchs.class, "SELECT_BENCHS")); //$NON-NLS-1$
 			setPreferredSize(new Dimension(600, 600));
 			setLayout(new BorderLayout());
 			setModal(true);
-			this.model = new DefaultListModel();
-			this.list = new JList(this.model);
+			this.model = new DefaultListModel<Class<? extends Bench<?>>>();
+			this.list = new JList<Class<? extends Bench<?>>>(this.model);
 			add(BorderLayout.CENTER, new JScrollPane(this.list));
 			this.list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			this.list.setCellRenderer(new SelectionRenderer());
@@ -411,11 +413,10 @@ public class Benchs {
 		 * @param list
 		 * @return the number of added benchs.
 		 */
-		@SuppressWarnings("unchecked")
 		public int getSelectionBenchs(List<Class<? extends Bench<?>>> list) {
 			int nb = 0;
 			for(int i : this.list.getSelectedIndices()) {
-				list.add((Class<? extends Bench<?>>)this.model.get(i));
+				list.add(this.model.get(i));
 				++nb;
 			}
 			return nb;
@@ -447,16 +448,16 @@ public class Benchs {
 			}
 		}
 
-		private void addInModel(Class<?> data) {
+		private void addInModel(Class<? extends Bench<?>> data) {
 			assert(data!=null);
 			int f = 0;
 			int l = this.model.size()-1;
 			int c;
-			Class<?> d;
+			Class<? extends Bench<?>> d;
 			int cmpR;
 			while (l>=f) {
 				c = (f+l)/2;
-				d = (Class<?>)this.model.get(c);
+				d = this.model.get(c);
 				cmpR = compare(data, d);
 				if (cmpR==0) return;
 				if (cmpR<0) {

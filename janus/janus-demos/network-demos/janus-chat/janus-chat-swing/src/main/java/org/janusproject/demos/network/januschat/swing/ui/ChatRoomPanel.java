@@ -72,8 +72,8 @@ public class ChatRoomPanel extends JPanel implements ActionListener, MouseListen
 
 	private final JEditorPane messagePane;
 	private final JTextField inputMessage;
-	private final DefaultListModel participants;
-	private final JList participantList;
+	private final DefaultListModel<AgentAddress> participants;
+	private final JList<AgentAddress> participantList;
 	
 	private final WeakReference<ChatChannel> chatChannel;
 
@@ -111,8 +111,8 @@ public class ChatRoomPanel extends JPanel implements ActionListener, MouseListen
 		sendBt.addActionListener(this);
 		sendToolPane.add(sendBt);
 		
-		this.participants = new DefaultListModel();
-		this.participantList = new JList(this.participants);
+		this.participants = new DefaultListModel<AgentAddress>();
+		this.participantList = new JList<AgentAddress>(this.participants);
 		this.participantList.setCellRenderer(new ParticipantRenderer());
 		this.participantList.addMouseListener(this);
 		scrollPane = new JScrollPane(this.participantList);
@@ -252,7 +252,7 @@ public class ChatRoomPanel extends JPanel implements ActionListener, MouseListen
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource()==this.participantList && e.getClickCount()==2) {
-			AgentAddress adr = (AgentAddress)this.participantList.getSelectedValue();
+			AgentAddress adr = this.participantList.getSelectedValue();
 			if (adr!=null) {
 				String n = adr.getName();
 				if (n==null || "".equals(n)) //$NON-NLS-1$

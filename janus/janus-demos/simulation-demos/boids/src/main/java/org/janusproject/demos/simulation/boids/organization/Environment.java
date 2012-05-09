@@ -70,7 +70,6 @@ public class Environment extends Role {
 
 	/**
 	 */
-	@SuppressWarnings("unchecked")
 	public Environment() {
 		addObtainCondition(new HasAllRequiredCapacitiesCondition(
 				Arrays.asList(
