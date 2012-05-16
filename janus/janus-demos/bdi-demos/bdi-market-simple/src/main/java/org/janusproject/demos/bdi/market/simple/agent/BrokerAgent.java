@@ -58,7 +58,7 @@ public class BrokerAgent extends BDIAgent {
 	private AgentAddress client;
 	private TravelDestination travelDestination;
 	private TravelSelectionCritera critera;
-	private final List<Proposal> proposals = new ArrayList<Proposal>();
+	private final List<Proposal> proposals = new ArrayList<>();
 	private Integer providerCount;
 
 	/**

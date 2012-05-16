@@ -40,7 +40,7 @@ import org.janusproject.kernel.agent.Kernels;
  */
 public abstract class AgentBasedEcoProblem extends EcoProblem {
 
-	private final Set<EcoAgent> agents = new TreeSet<EcoAgent>(new Comparator<EcoAgent>() {
+	private final Set<EcoAgent> agents = new TreeSet<>(new Comparator<EcoAgent>() {
 		@Override
 		public int compare(EcoAgent o1, EcoAgent o2) {
 			return System.identityHashCode(o1) - System.identityHashCode(o2);

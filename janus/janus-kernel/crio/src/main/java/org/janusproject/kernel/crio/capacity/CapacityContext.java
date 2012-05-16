@@ -119,7 +119,7 @@ public abstract class CapacityContext {
 		this.identifier = UUID.randomUUID();
 		this.invokedCapacity = invokedCapacity;
 		this.type = type;
-		this.caller = new SoftReference<CapacityCaller>(caller);
+		this.caller = new SoftReference<>(caller);
 		this.inputValues = input;
 		this.outputValues = null;
 		this.failure = false;

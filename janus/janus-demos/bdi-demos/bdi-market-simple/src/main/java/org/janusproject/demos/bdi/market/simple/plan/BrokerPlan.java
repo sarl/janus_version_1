@@ -50,7 +50,7 @@ public class BrokerPlan extends BDIPlan{
 	 * Wait TravelContractGroupMessage from Provider
 	 * Send TravelContractGroupMessage to Client
 	 */
-	private static List<Class<? extends BDIAction>> actionList = new ArrayList<Class<? extends BDIAction>>();
+	private static List<Class<? extends BDIAction>> actionList = new ArrayList<>();
 	static {
 		//actionList.add(WaitEventAction.class);
 		actionList.add(SendMessageAction.class);
@@ -68,8 +68,8 @@ public class BrokerPlan extends BDIPlan{
 	private TravelSelectionCritera critera = null;
 	private TravelDestination travelDestination = null;
 	private AgentAddress client;
-	private List<AgentAddress> providersReady = new ArrayList<AgentAddress>();
-	private List<Proposal> proposals = new ArrayList<Proposal>();
+	private List<AgentAddress> providersReady = new ArrayList<>();
+	private List<Proposal> proposals = new ArrayList<>();
 	private State state = State.WAIT_CLIENT;
 	private AgentAddress contractProvider = null;
 	
@@ -108,7 +108,7 @@ public class BrokerPlan extends BDIPlan{
 			return new BDIPlanStatus(BDIPlanStatusType.PAUSED);
 		case RESPOND_TO_CLIENT:
 			this.message = new ReadyToStartMessage();
-			this.receivers = new ArrayList<AgentAddress>();
+			this.receivers = new ArrayList<>();
 			this.receivers.add(this.client);
 			System.out.println("Broker: Send ReadyToStartMessage to Client"); //$NON-NLS-1$
 			break;

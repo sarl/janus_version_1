@@ -117,7 +117,7 @@ public class CubeAgent extends AbstractCubeProblemAgent {
 		EcoRelation conflictingRelation = upwardRelation(AnyIdentity.SINGLETON);
 		EcoRelation onTop = getAcquaintance(conflictingRelation);
 		if (onTop!=null) {
-			Set<EcoAttack> s = new HashSet<EcoAttack>();
+			Set<EcoAttack> s = new HashSet<>();
 			s.add(attack(onTop.getOtherParticipant(getEcoIdentity())));
 			return s;
 		}

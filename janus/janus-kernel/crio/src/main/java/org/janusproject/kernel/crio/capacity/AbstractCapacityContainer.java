@@ -72,7 +72,7 @@ implements CapacityContainer {
 	@Override
 	public void addRepositoryChangeListener(RepositoryChangeListener listener) {
 		if (this.listeners==null)
-			this.listeners = new ArrayList<RepositoryChangeListener>();
+			this.listeners = new ArrayList<>();
 		this.listeners.add(listener);
 	}
 	

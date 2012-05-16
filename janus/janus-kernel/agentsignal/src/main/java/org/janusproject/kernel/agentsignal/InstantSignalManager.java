@@ -75,7 +75,7 @@ public class InstantSignalManager extends AbstractSignalManager {
 			break;
 		case STORE_IN_QUEUE:
 			if (this.events == null) {
-				this.events = new QueuedSignalAdapter<Signal>(Signal.class);
+				this.events = new QueuedSignalAdapter<>(Signal.class);
 			}
 			this.events.onSignal(signal);
 

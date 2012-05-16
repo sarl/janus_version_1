@@ -60,7 +60,7 @@ import org.janusproject.kernel.status.StatusFactory;
 )
 public class Environment extends Role {
 	
-	private Set<AgentAddress> waitingBoids = new TreeSet<AgentAddress>();
+	private Set<AgentAddress> waitingBoids = new TreeSet<>();
 	
 	/**
 	 * The current state of the environment behavior

@@ -44,7 +44,7 @@ implements SignalListener, Iterable<T> {
 
 	/** Reference to the last received signal.
 	 */
-	private final Queue<T> signals = new ConcurrentLinkedQueue<T>();
+	private final Queue<T> signals = new ConcurrentLinkedQueue<>();
 
 	private final Class<T> type;
 
@@ -113,7 +113,7 @@ implements SignalListener, Iterable<T> {
 	 */
 	@Override
 	public Iterator<T> iterator() {
-		return new AutoremoveIterator<T>(this.signals.iterator());
+		return new AutoremoveIterator<>(this.signals.iterator());
 	}
 	
 	/**

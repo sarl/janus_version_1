@@ -259,7 +259,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 		Logger logger = (this.logger != null) ? this.logger.get() : null;
 		if (logger == null) {
 			logger = createLoggerInstance();
-			this.logger = new SoftReference<Logger>(logger);
+			this.logger = new SoftReference<>(logger);
 		}
 		return logger;
 	}
@@ -659,7 +659,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 * @since 0.5
 	 */
 	protected final SizedIterator<RoleAddress> getRoleAddresses() {
-		MultiSizedIterator<RoleAddress> iterators = new MultiSizedIterator<RoleAddress>();
+		MultiSizedIterator<RoleAddress> iterators = new MultiSizedIterator<>();
 		GroupRepository repo = getCRIOContext().getGroupRepository();
 		assert (repo != null);
 		AgentAddress adr = getAddress();
@@ -695,7 +695,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 * @GROUPAPI
 	 */
 	public final Collection<Class<? extends Role>> getRoles() {
-		MultiCollection<Class<? extends Role>> roles = new MultiCollection<Class<? extends Role>>();
+		MultiCollection<Class<? extends Role>> roles = new MultiCollection<>();
 		GroupRepository repo = getCRIOContext().getGroupRepository();
 		assert (repo != null);
 		AgentAddress adr = getAddress();
@@ -811,7 +811,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 * @GROUPAPI
 	 */
 	public final Collection<Class<? extends Role>> getExistingRoles() {
-		MultiCollection<Class<? extends Role>> multiCollection = new MultiCollection<Class<? extends Role>>();
+		MultiCollection<Class<? extends Role>> multiCollection = new MultiCollection<>();
 		GroupRepository repo = getCRIOContext().getGroupRepository();
 		assert (repo != null);
 		for (KernelScopeGroup grp : repo.values()) {
@@ -1158,7 +1158,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 * @GROUPAPI
 	 */
 	public final Collection<GroupAddress> getGroups() {
-		Collection<GroupAddress> myGroups = new ArrayList<GroupAddress>();
+		Collection<GroupAddress> myGroups = new ArrayList<>();
 		GroupRepository repo = getCRIOContext().getGroupRepository();
 		assert (repo != null);
 		AgentAddress adr = getAddress();
@@ -2177,7 +2177,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 */
 	protected synchronized final <L extends EventListener> void addEventListener(Class<L> type, L listener) {
 		if (this.listeners==null) {
-			this.listeners = new ListenerCollection<EventListener>();
+			this.listeners = new ListenerCollection<>();
 		}
 		this.listeners.add(type, listener);
 	}

@@ -57,8 +57,8 @@ public class Launcher {
 		// initialization of places
 		EcoPlace[] places = new EcoPlace[placeNumber];
 		EcoPlace[][] placesGrid = new EcoPlace[gridsize][gridsize];
-		List<Integer> hostingPlaceIds = new LinkedList<Integer>();
-		List<Integer> goalPlaceIds = new LinkedList<Integer>();
+		List<Integer> hostingPlaceIds = new LinkedList<>();
+		List<Integer> goalPlaceIds = new LinkedList<>();
 		{
 			int x, y;
 			for (int i = 0; i < placeNumber; i++) {

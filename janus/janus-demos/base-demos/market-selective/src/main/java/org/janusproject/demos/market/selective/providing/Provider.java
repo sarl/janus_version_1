@@ -60,7 +60,7 @@ public class Provider extends Role {
 	private TravelDestination destination;
 	private Proposal proposal;
 
-	private final LastSignalAdapter<ContractTerminationInfluence> signalListener = new LastSignalAdapter<ContractTerminationInfluence>(ContractTerminationInfluence.class);
+	private final LastSignalAdapter<ContractTerminationInfluence> signalListener = new LastSignalAdapter<>(ContractTerminationInfluence.class);
 
 	/**
 	 * {@inheritDoc}

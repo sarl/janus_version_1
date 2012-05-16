@@ -59,10 +59,10 @@ public class Grid extends Agent {
 	private final int width;
 	private final int height;
 	private final Cell[][] grid;
-	private final Map<AgentAddress,Cell> agents = new TreeMap<AgentAddress,Cell>();
+	private final Map<AgentAddress,Cell> agents = new TreeMap<>();
 	private final int[] bases;
 
-	private final Collection<GridListener> listeners = new LinkedList<GridListener>();
+	private final Collection<GridListener> listeners = new LinkedList<>();
 
 
 	/**
@@ -310,7 +310,7 @@ public class Grid extends Agent {
 		 * @return the list of neightbours.
 		 */
 		public List<Direction> getNeightbours() {
-			List<Direction> set = new ArrayList<Direction>(4);
+			List<Direction> set = new ArrayList<>(4);
 			if (this.y>0) set.add(Direction.NORTH);
 			if (this.y<getWorldHeight()-1) set.add(Direction.SOUTH);
 			if (this.x>0) set.add(Direction.WEST);

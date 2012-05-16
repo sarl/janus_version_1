@@ -106,10 +106,10 @@ public class CubeWorldPanel extends JPanel implements ChannelInteractableListene
 	private final JButton endButton;
 	private final JLabel stateLabel;
 	
-	private final Collection<CubeEcoChannel> channels = new ArrayList<CubeEcoChannel>();
+	private final Collection<CubeEcoChannel> channels = new ArrayList<>();
 	private final int cubeCount;
 	private final EcoIdentity planeEntity;
-	private final List<State> worldStates = new ArrayList<State>();
+	private final List<State> worldStates = new ArrayList<>();
 	private int currentStateIndex = -1;
 
 	/**
@@ -476,15 +476,15 @@ public class CubeWorldPanel extends JPanel implements ChannelInteractableListene
 
 		/** Hierarchy of cubes.
 		 */
-		public final Map<EcoIdentity,EcoIdentity> map = new TreeMap<EcoIdentity, EcoIdentity>(EcoIdentityComparator.SINGLETON);
+		public final Map<EcoIdentity,EcoIdentity> map = new TreeMap<>(EcoIdentityComparator.SINGLETON);
 
 		/** Satisfaction statuses.
 		 */
-		public final Map<EcoIdentity,EcoState> ecoStates = new TreeMap<EcoIdentity,EcoState>(EcoIdentityComparator.SINGLETON);
+		public final Map<EcoIdentity,EcoState> ecoStates = new TreeMap<>(EcoIdentityComparator.SINGLETON);
 
 		/** Cubes on ground.
 		 */
-		public final SortedSet<EcoIdentity> onGround = new TreeSet<EcoIdentity>(EcoIdentityComparator.SINGLETON);
+		public final SortedSet<EcoIdentity> onGround = new TreeSet<>(EcoIdentityComparator.SINGLETON);
 		
 		
 		/** Indicates if this state is inconsistent.

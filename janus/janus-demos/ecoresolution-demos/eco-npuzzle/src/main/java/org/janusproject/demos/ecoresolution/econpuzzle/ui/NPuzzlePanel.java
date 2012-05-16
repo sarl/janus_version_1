@@ -101,10 +101,10 @@ public class NPuzzlePanel extends JPanel implements ChannelInteractableListener,
 		return s1.equals(s2);
 	}
 
-	private final Collection<NPuzzleChannel> channels = new ArrayList<NPuzzleChannel>();
+	private final Collection<NPuzzleChannel> channels = new ArrayList<>();
 
 	private final int gridSize;
-	private final List<NPuzzleState> worldStates = new ArrayList<NPuzzleState>();
+	private final List<NPuzzleState> worldStates = new ArrayList<>();
 	private int currentStateIndex = -1;
 
 	private final NPuzzleDisplayer displayer = new NPuzzleDisplayer();
@@ -485,17 +485,17 @@ public class NPuzzlePanel extends JPanel implements ChannelInteractableListener,
 		/**
 		 * Tiles of the NPuzzle: classical and blank
 		 */
-		public final Map<Couple,EcoIdentity> gridTiles = new TreeMap<Couple,EcoIdentity>();
+		public final Map<Couple,EcoIdentity> gridTiles = new TreeMap<>();
 
 		/**
 		 * Places of the NPuzzle: fixed along a game
 		 */
-		public final Map<Couple,EcoIdentity> gridPlaces = new TreeMap<Couple,EcoIdentity>();
+		public final Map<Couple,EcoIdentity> gridPlaces = new TreeMap<>();
 
 		/**
 		 * Satisfaction statuses.
 		 */
-		public final Map<EcoIdentity, EcoState> ecoStates = new TreeMap<EcoIdentity, EcoState>(EcoIdentityComparator.SINGLETON);
+		public final Map<EcoIdentity, EcoState> ecoStates = new TreeMap<>(EcoIdentityComparator.SINGLETON);
 
 		/**
 		 * Indicates if this state is inconsistent.

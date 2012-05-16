@@ -67,7 +67,7 @@ public class EcoStateMachine {
 	public void addEcoStateMachineListener(EcoStateMachineListener listener) {
 		if (listener != null) {
 			if (this.listeners == null)
-				this.listeners = new ArrayList<EcoStateMachineListener>(1);
+				this.listeners = new ArrayList<>(1);
 			this.listeners.add(listener);
 		}
 	}

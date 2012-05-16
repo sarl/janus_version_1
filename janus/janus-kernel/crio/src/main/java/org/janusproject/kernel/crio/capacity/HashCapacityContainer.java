@@ -48,14 +48,14 @@ extends AbstractCapacityContainer {
 	/**
 	 */
 	public HashCapacityContainer() {
-		this.content = new HashMap<Class<? extends Capacity>,Collection<CapacityImplementation>>();
+		this.content = new HashMap<>();
 	}
 	
 	/**
 	 * @param initialCapacity is the initial capacity of the HashMap.
 	 */
 	public HashCapacityContainer(int initialCapacity) {
-		this.content = new HashMap<Class<? extends Capacity>,Collection<CapacityImplementation>>(initialCapacity);
+		this.content = new HashMap<>(initialCapacity);
 	}
 
 	/**
@@ -95,7 +95,7 @@ extends AbstractCapacityContainer {
 		for(Class<? extends Capacity> type : capacity.getCapacities()) {
 			implementations = this.content.get(type);
 			if (implementations==null) {
-				implementations = new TreeSet<CapacityImplementation>(CapacityImplementationComparator.SINGLETON);
+				implementations = new TreeSet<>(CapacityImplementationComparator.SINGLETON);
 				this.content.put(type, implementations);
 			}
 			implementations.add(capacity);
@@ -112,7 +112,7 @@ extends AbstractCapacityContainer {
 		for(Class<? extends Capacity> capacity : container) {
 			implementations = this.content.get(capacity);
 			if (implementations==null) {
-				implementations = new TreeSet<CapacityImplementation>(CapacityImplementationComparator.SINGLETON);
+				implementations = new TreeSet<>(CapacityImplementationComparator.SINGLETON);
 				this.content.put(capacity, implementations);
 			}
 			implementations.addAll(container.get(capacity));
@@ -158,7 +158,7 @@ extends AbstractCapacityContainer {
 	 */
 	@Override
 	public Iterator<Class<? extends Capacity>> iterator() {
-		return new UnmodifiableIterator<Class<? extends Capacity>>(this.content.keySet());
+		return new UnmodifiableIterator<>(this.content.keySet());
 	}
 
 	/**
@@ -166,7 +166,7 @@ extends AbstractCapacityContainer {
 	 */
 	@Override
 	public SizedIterator<Class<? extends Capacity>> sizedIterator() {
-		return new UnmodifiableMapKeySizedIterator<Class<? extends Capacity>>(this.content);
+		return new UnmodifiableMapKeySizedIterator<>(this.content);
 	}
 
 	/**

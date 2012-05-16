@@ -69,7 +69,7 @@ public class CapacityContextTest extends TestCase {
 		if (expected==actual) return;
 		if (expected!=null && actual!=null && expected.size()==actual.size()) {
 			try {
-				ArrayList<Object> obj = new ArrayList<Object>(actual);
+				ArrayList<Object> obj = new ArrayList<>(actual);
 				Iterator<?> iterator = expected.iterator();
 				boolean failure = false;
 				Object o1;

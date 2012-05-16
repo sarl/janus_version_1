@@ -252,7 +252,7 @@ public abstract class EcoAgent extends Agent implements ChannelInteractable {
 	protected final <T extends EcoRelation> Set<T> getAcquaintances(Class<? extends T> pattern) {
 		assert(pattern!=null);
 		
-		Set<T> searchedAcq = new HashSet<T>();
+		Set<T> searchedAcq = new HashSet<>();
 		for(EcoRelation relation :this.ecoEntity.getAcquaintances()) {
 			if (pattern.isAssignableFrom(relation.getClass())) {
 				searchedAcq.add(pattern.cast(relation));
@@ -271,7 +271,7 @@ public abstract class EcoAgent extends Agent implements ChannelInteractable {
 	protected final <T extends EcoRelation> Map<Class<? extends T>,T> getAcquaintances(Set<Class<? extends T>> patterns) {
 		assert(patterns!=null&&patterns.size()>0);
 		
-		Map<Class<? extends T>,T> searchedAcq = new HashMap<Class<? extends T>,T>();
+		Map<Class<? extends T>,T> searchedAcq = new HashMap<>();
 		for(EcoRelation relation :this.ecoEntity.getAcquaintances()) {
 			for (Class<? extends T> pattern : patterns) {
 				if (pattern.isAssignableFrom(relation.getClass())) {
@@ -333,7 +333,7 @@ public abstract class EcoAgent extends Agent implements ChannelInteractable {
 	 */
 	protected class EcoAgentChannel implements EcoChannel {
 		
-		private final Collection<EcoChannelListener> channelListeners = new ArrayList<EcoChannelListener>();
+		private final Collection<EcoChannelListener> channelListeners = new ArrayList<>();
 		
 		/**
 		 */

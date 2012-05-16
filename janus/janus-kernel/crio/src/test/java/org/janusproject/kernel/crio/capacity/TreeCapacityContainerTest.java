@@ -65,7 +65,7 @@ public class TreeCapacityContainerTest extends TestCase {
 	}
 	
 	private void assertContains(Iterator<?> iterator, Object... objects) {
-		ArrayList<Object> objs = new ArrayList<Object>(Arrays.asList(objects));
+		ArrayList<Object> objs = new ArrayList<>(Arrays.asList(objects));
 		assertNotNull(iterator);
 		while(iterator.hasNext()) {
 			Object obj = iterator.next();
@@ -78,7 +78,7 @@ public class TreeCapacityContainerTest extends TestCase {
 		if (expected==actual) return;
 		if (expected!=null && actual!=null && expected.size()==actual.size()) {
 			try {
-				ArrayList<Object> obj = new ArrayList<Object>(actual);
+				ArrayList<Object> obj = new ArrayList<>(actual);
 				Iterator<?> iterator = expected.iterator();
 				boolean failure = false;
 				Object o1;

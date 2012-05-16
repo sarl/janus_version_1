@@ -71,10 +71,10 @@ public class PBroker extends Role {
 	private State state;
 	private AgentAddress provider;
 	private GroupAddress contractGroup;
-	private final LastSignalAdapter<TravelRequestInfluence> signalListener = new LastSignalAdapter<TravelRequestInfluence>(TravelRequestInfluence.class);
-	private final List<Proposal> proposals = new ArrayList<Proposal>();
+	private final LastSignalAdapter<TravelRequestInfluence> signalListener = new LastSignalAdapter<>(TravelRequestInfluence.class);
+	private final List<Proposal> proposals = new ArrayList<>();
 
-	private Set<AgentAddress> providersReady = new HashSet<AgentAddress>();
+	private Set<AgentAddress> providersReady = new HashSet<>();
 
 	/**
 	 */

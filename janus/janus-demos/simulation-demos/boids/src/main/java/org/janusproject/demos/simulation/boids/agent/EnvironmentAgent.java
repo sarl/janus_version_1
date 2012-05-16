@@ -77,7 +77,7 @@ implements BodyStateProvider {
 	/**
 	 * Contains all existing populations.
 	 */
-	protected final Set<Population> expectedPopulations = new HashSet<Population>();
+	protected final Set<Population> expectedPopulations = new HashSet<>();
 
 	/** GUI.
 	 */
@@ -91,7 +91,7 @@ implements BodyStateProvider {
 	 */
 	public EnvironmentAgent(Population... expectedPopulations) {
 		super(true);
-		this.boids = new ConcurrentHashMap<AgentAddress,PerceivedBoidBody>();
+		this.boids = new ConcurrentHashMap<>();
 		this.expectedPopulations.addAll(Arrays.asList(expectedPopulations));
 		
 		this.myGUI = new EnvironmentGUI(
@@ -176,7 +176,7 @@ implements BodyStateProvider {
 	 */
 	@Override
 	public synchronized Iterator<PerceivedBoidBody> iterator() {
-		Collection<PerceivedBoidBody> bodies = new ArrayList<PerceivedBoidBody>(this.boids.values());
+		Collection<PerceivedBoidBody> bodies = new ArrayList<>(this.boids.values());
 		return bodies.iterator();
 	}
 

@@ -43,7 +43,7 @@ public class LastSignalAdapterTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.adapter = new LastSignalAdapter<Signal>(Signal.class);
+		this.adapter = new LastSignalAdapter<>(Signal.class);
 	}
 	
 	/**

@@ -242,7 +242,7 @@ public class JanusProperties extends Properties {
 	
 	
 	
-	private final List<JanusPropertyProvider> providers = new ArrayList<JanusPropertyProvider>();
+	private final List<JanusPropertyProvider> providers = new ArrayList<>();
 
 	private final AtomicBoolean systemPropertySynchronization = new AtomicBoolean(true);
 

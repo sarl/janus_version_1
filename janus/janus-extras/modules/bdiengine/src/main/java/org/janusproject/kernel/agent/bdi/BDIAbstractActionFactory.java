@@ -42,7 +42,7 @@ public abstract class BDIAbstractActionFactory implements BDIActionFactory{
 	 * Store the instanciated actions
 	 */
 	protected Map<Class<? extends BDIAction>, SoftReference<BDIAction>> actions = 
-		new HashMap<Class<? extends BDIAction>, SoftReference<BDIAction>>();
+		new HashMap<>();
 
 	/** {@inheritDoc}
 	 * If the action is in the map, return it.
@@ -51,7 +51,7 @@ public abstract class BDIAbstractActionFactory implements BDIActionFactory{
 	@Override
 	public final BDIAction getAction(BDIAgent agent, Class<? extends BDIAction> a) {
 		if (!this.actions.containsKey(a) || this.actions.get(a) == null)
-			this.actions.put(a, new SoftReference<BDIAction>(createAction(agent, a)));
+			this.actions.put(a, new SoftReference<>(createAction(agent, a)));
 		
 		return this.actions.get(a).get();
 	}
@@ -62,7 +62,7 @@ public abstract class BDIAbstractActionFactory implements BDIActionFactory{
 	@Override
 	public final Collection<BDIAction> getActions() {
 		Collection<SoftReference<BDIAction>> actionReferenceList = this.actions.values();
-		Collection<BDIAction> actionList = new LinkedList<BDIAction>();
+		Collection<BDIAction> actionList = new LinkedList<>();
 		
 		for (SoftReference<BDIAction> a : actionReferenceList) {
 			if (a.get() != null)

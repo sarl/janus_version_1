@@ -223,7 +223,7 @@ public class ACLAgent extends Agent {
 	 */
 	protected final Iterator<ACLMessage> getACLMessages() {
 
-		LinkedList<ACLMessage> resultList = new LinkedList<ACLMessage>();
+		LinkedList<ACLMessage> resultList = new LinkedList<>();
 
 		Iterator<Message> messagesIterator = peekMessages();
 
@@ -261,7 +261,7 @@ public class ACLAgent extends Agent {
 	 */
 	protected final Iterator<ACLMessage> getACLMessages(Performative performative) {
 
-		LinkedList<ACLMessage> resultList = new LinkedList<ACLMessage>();
+		LinkedList<ACLMessage> resultList = new LinkedList<>();
 
 		Iterator<Message> messagesIterator = peekMessages();
 
@@ -334,7 +334,7 @@ public class ACLAgent extends Agent {
 	 */
 	protected final Iterator<ACLMessage> peekACLMessages() {
 
-		LinkedList<ACLMessage> resultList = new LinkedList<ACLMessage>();
+		LinkedList<ACLMessage> resultList = new LinkedList<>();
 		
 		Iterator<Message> messagesIterator = peekMessages();
 		

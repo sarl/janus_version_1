@@ -42,7 +42,7 @@ implements SignalEmitter {
 	 */
 	@Override
 	public void addSignalListener(SignalListener listener) {
-		if (this.listeners==null) this.listeners = new ListenerCollection<SignalListener>();
+		if (this.listeners==null) this.listeners = new ListenerCollection<>();
 		this.listeners.add(SignalListener.class, listener);
 	}
 	

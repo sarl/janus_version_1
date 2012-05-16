@@ -80,7 +80,7 @@ class PlayerAddress extends AgentAddress {
 		if (player==null)
 			this.player = null;
 		else
-			this.player = new WeakReference<RolePlayer>(player);
+			this.player = new WeakReference<>(player);
 	}
 
 	/** Replies the role player associated to this address.

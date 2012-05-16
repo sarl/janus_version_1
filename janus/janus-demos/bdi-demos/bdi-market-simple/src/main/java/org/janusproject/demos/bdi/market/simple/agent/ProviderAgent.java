@@ -68,7 +68,7 @@ public class ProviderAgent extends BDIAgent {
 	
 	@Override
 	public Status activate(Object... parameters) {
-		this.environment = new WeakReference<Environment>((Environment)parameters[0]);
+		this.environment = new WeakReference<>((Environment)parameters[0]);
 		++providerCount;
 		fireSignal(new BDIBeliefEvent(new BDIBelief(
 				this.getAddress(), 

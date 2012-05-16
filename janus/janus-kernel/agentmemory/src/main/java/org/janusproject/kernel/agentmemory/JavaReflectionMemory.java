@@ -63,7 +63,7 @@ public class JavaReflectionMemory<OBJ> extends AbstractMemory {
 	 * @param referent is the object to access to.
 	 */
 	public JavaReflectionMemory(OBJ referent) {
-		this.referee = new WeakReference<OBJ>(referent);
+		this.referee = new WeakReference<>(referent);
 	}
 	
 	/** Replies the getter function that permits to access to

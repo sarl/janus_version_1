@@ -71,10 +71,10 @@ implements Conditionnable<O,C> {
 	 */
 	public ConditionnedObject(Collection<? extends C> obtainConditions, Collection<? extends C> leaveConditions) {
 		if (obtainConditions!=null && !obtainConditions.isEmpty()) {
-			this.obtainConditions = new ArrayList<C>(obtainConditions);
+			this.obtainConditions = new ArrayList<>(obtainConditions);
 		}
 		if (leaveConditions!=null && !leaveConditions.isEmpty()) {
-			this.leaveConditions = new ArrayList<C>(leaveConditions);
+			this.leaveConditions = new ArrayList<>(leaveConditions);
 		}
 	}
 
@@ -150,7 +150,7 @@ implements Conditionnable<O,C> {
 	protected boolean addObtainCondition(C c) {
 		if (c==null) return false;
 		if (this.obtainConditions==null)
-			this.obtainConditions = new LinkedList<C>();
+			this.obtainConditions = new LinkedList<>();
 		return this.obtainConditions.add(c);
 	}
 
@@ -164,7 +164,7 @@ implements Conditionnable<O,C> {
 	protected boolean addLeaveCondition(C c) {
 		if (c==null) return false;
 		if (this.leaveConditions==null)
-			this.leaveConditions = new LinkedList<C>();
+			this.leaveConditions = new LinkedList<>();
 		return this.leaveConditions.add(c);
 	}
 
@@ -178,7 +178,7 @@ implements Conditionnable<O,C> {
 		}
 		else {
 			if (this.leaveConditions==null)
-				this.leaveConditions = new LinkedList<C>();
+				this.leaveConditions = new LinkedList<>();
 			this.leaveConditions.addAll(c);
 		}
 	}
@@ -193,7 +193,7 @@ implements Conditionnable<O,C> {
 		}
 		else {
 			if (this.obtainConditions==null)
-				this.obtainConditions = new LinkedList<C>();
+				this.obtainConditions = new LinkedList<>();
 			this.obtainConditions.addAll(c);
 		}
 	}

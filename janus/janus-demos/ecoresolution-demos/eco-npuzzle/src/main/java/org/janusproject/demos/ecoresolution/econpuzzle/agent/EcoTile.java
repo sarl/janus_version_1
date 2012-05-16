@@ -59,7 +59,7 @@ public class EcoTile extends AbstractNPuzzleAgent {
 	/**
 	 * Double map storing all distance information received through the manhattan attack field process Associate the initial source of an attack, with distance to this source and the list of neighbor located at this distance from the source <Source of attack, distance from source, list of neighbor having the same distance>
 	 */
-	protected Map<EcoIdentity, TreeMap<Integer, List<EcoIdentity>>> sourceDistAndNeighbors = new TreeMap<EcoIdentity, TreeMap<Integer, List<EcoIdentity>>>();
+	protected Map<EcoIdentity, TreeMap<Integer, List<EcoIdentity>>> sourceDistAndNeighbors = new TreeMap<>();
 
 	private boolean isWaitingMoveAttackReturn = false;
 
@@ -112,7 +112,7 @@ public class EcoTile extends AbstractNPuzzleAgent {
 	protected Set<EcoAttack> selectEscapingIntruder(Set<EcoAttack> attacks) {
 		// attack celui qui empeche la fuite, mes acquaintances ont changé
 
-		Set<EcoAttack> attackToForward = new HashSet<EcoAttack>();
+		Set<EcoAttack> attackToForward = new HashSet<>();
 
 		Map<Class<? extends EcoAttack>, Set<EcoAttack>> attackClassification = classifyAttack(attacks);
 
@@ -273,12 +273,12 @@ public class EcoTile extends AbstractNPuzzleAgent {
 	 * @return the attack clasification.
 	 */
 	protected Map<Class<? extends EcoAttack>, Set<EcoAttack>> classifyAttack(Set<EcoAttack> attacks) {
-		Map<Class<? extends EcoAttack>, Set<EcoAttack>> classif = new TreeMap<Class<? extends EcoAttack>, Set<EcoAttack>>();
+		Map<Class<? extends EcoAttack>, Set<EcoAttack>> classif = new TreeMap<>();
 		Set<EcoAttack> currentInstances;
 		for (EcoAttack attack : attacks) {
 			currentInstances = classif.get(attack.getClass());
 			if (currentInstances == null) {
-				currentInstances = new HashSet<EcoAttack>();
+				currentInstances = new HashSet<>();
 			}
 			currentInstances.add(attack);
 			classif.put(attack.getClass(), currentInstances);
@@ -322,13 +322,13 @@ public class EcoTile extends AbstractNPuzzleAgent {
 	 */
 	private final Set<ManhattanDistanceAttack> manageManhattanAttack(Set<EcoAttack> attacks) throws BadAcquaintancesException {
 
-		Set<ManhattanDistanceAttack> manhattanAttacks = new HashSet<ManhattanDistanceAttack>();
+		Set<ManhattanDistanceAttack> manhattanAttacks = new HashSet<>();
 
 		// Source of attack, distance from source, list of neighbor having the same distance
-		this.sourceDistAndNeighbors = new TreeMap<EcoIdentity, TreeMap<Integer, List<EcoIdentity>>>();
+		this.sourceDistAndNeighbors = new TreeMap<>();
 
 		// Manage the list of my neighbors that haven't sent the attack from the corresponding source, map<attack source, where to forward it>
-		Map<EcoIdentity, List<EcoIdentity>> sourcePlaceAndAttackForwarders = new HashMap<EcoIdentity, List<EcoIdentity>>();
+		Map<EcoIdentity, List<EcoIdentity>> sourcePlaceAndAttackForwarders = new HashMap<>();
 
 		List<EcoIdentity> neighboors = getNeighboorsAsList();
 
@@ -350,8 +350,8 @@ public class EcoTile extends AbstractNPuzzleAgent {
 
 				distAndNeighbors = this.sourceDistAndNeighbors.get(currentOrigin);
 				if (distAndNeighbors == null) {
-					distAndNeighbors = new TreeMap<Integer, List<EcoIdentity>>();
-					currentListOfNeighborHavingTheSameDist = new LinkedList<EcoIdentity>();
+					distAndNeighbors = new TreeMap<>();
+					currentListOfNeighborHavingTheSameDist = new LinkedList<>();
 				} else {
 					currentListOfNeighborHavingTheSameDist = distAndNeighbors.get(attackDist);
 
@@ -366,7 +366,7 @@ public class EcoTile extends AbstractNPuzzleAgent {
 					attackForwarders.remove(neighboor);
 					sourcePlaceAndAttackForwarders.put(currentOrigin, attackForwarders);
 				} else {
-					attackForwarders = new LinkedList<EcoIdentity>(neighboors);
+					attackForwarders = new LinkedList<>(neighboors);
 					attackForwarders.remove(neighboor);
 					sourcePlaceAndAttackForwarders.put(currentOrigin, attackForwarders);
 				}
@@ -464,7 +464,7 @@ public class EcoTile extends AbstractNPuzzleAgent {
 		}
 		defenderHosted = new Hosted(target, getPlace());
 
-		Collection<EcoRelation> newTargetAcquaintances = new LinkedList<EcoRelation>();
+		Collection<EcoRelation> newTargetAcquaintances = new LinkedList<>();
 		newTargetAcquaintances.add(defenderUp);
 		newTargetAcquaintances.add(defenderDown);
 		newTargetAcquaintances.add(defenderRight);
@@ -521,7 +521,7 @@ public class EcoTile extends AbstractNPuzzleAgent {
 	protected final EcoIdentity[] getNeighboors() throws BadAcquaintancesException {
 		EcoIdentity[] neighboors = { null, null, null, null };
 
-		Set<Class<? extends EcoRelation>> searchAcq = new HashSet<Class<? extends EcoRelation>>();
+		Set<Class<? extends EcoRelation>> searchAcq = new HashSet<>();
 		searchAcq.add(Left.class);
 		searchAcq.add(Right.class);
 		searchAcq.add(Up.class);

@@ -38,8 +38,8 @@ import org.janusproject.kernel.crio.role.RolePlayingListener;
  */
 class RolePlayingListenerStub implements RolePlayingListener {
 
-	private final List<RolePlayingEvent> takes = new ArrayList<RolePlayingEvent>();
-	private final List<RolePlayingEvent> releases = new ArrayList<RolePlayingEvent>();
+	private final List<RolePlayingEvent> takes = new ArrayList<>();
+	private final List<RolePlayingEvent> releases = new ArrayList<>();
 	
 	/**
 	 */

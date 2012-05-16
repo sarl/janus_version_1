@@ -65,7 +65,7 @@ public class Client extends Role {
 	 * The 
 	 */
 	private Object contractDescription;
-	private LastSignalAdapter<ContractTerminationSignal> signalListener = new LastSignalAdapter<ContractTerminationSignal>(ContractTerminationSignal.class);
+	private LastSignalAdapter<ContractTerminationSignal> signalListener = new LastSignalAdapter<>(ContractTerminationSignal.class);
 	
 	@Override
 	public Status activate(Object... parameters) {

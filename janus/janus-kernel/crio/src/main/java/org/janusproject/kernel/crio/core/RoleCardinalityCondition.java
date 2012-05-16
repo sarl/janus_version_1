@@ -50,7 +50,7 @@ extends AbstractGroupCondition {
 	/**
 	 */
 	public RoleCardinalityCondition() {
-		this.restrictions = new TreeMap<Class<? extends Role>,Integer>(ClassComparator.SINGLETON);
+		this.restrictions = new TreeMap<>(ClassComparator.SINGLETON);
 	}
 
 	/**

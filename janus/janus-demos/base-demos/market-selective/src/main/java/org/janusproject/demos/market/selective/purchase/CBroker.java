@@ -56,7 +56,7 @@ public class CBroker extends Role {
 	private TravelSelectionCritera critera;
 	private GroupAddress contractGroup;
 	private AgentAddress contractProvider;
-	private LastSignalAdapter<TransfertInfluence> signalListener = new LastSignalAdapter<TransfertInfluence>(TransfertInfluence.class);
+	private LastSignalAdapter<TransfertInfluence> signalListener = new LastSignalAdapter<>(TransfertInfluence.class);
 
 	@Override
 	public Status activate(Object... parameters) {

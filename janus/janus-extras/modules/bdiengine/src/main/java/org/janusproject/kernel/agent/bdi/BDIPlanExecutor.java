@@ -64,8 +64,8 @@ public final class BDIPlanExecutor{
 	 * @param agent is the creator
 	 */
 	public BDIPlanExecutor(BDIAgent agent) {
-		this.agent = new WeakReference<BDIAgent>(agent);
-		this.eventListener = new LastSignalAdapter<BDIEvent>(BDIEvent.class);
+		this.agent = new WeakReference<>(agent);
+		this.eventListener = new LastSignalAdapter<>(BDIEvent.class);
 		
 		init();
 	}

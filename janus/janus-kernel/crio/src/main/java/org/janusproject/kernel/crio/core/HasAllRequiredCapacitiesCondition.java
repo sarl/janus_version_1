@@ -63,7 +63,7 @@ implements RoleCondition, GroupCondition {
 	 * @param required is the capacities.
 	 */
 	public HasAllRequiredCapacitiesCondition(Class<? extends Capacity> required) {
-		this.requiredCapacities = new ArrayList<Class<? extends Capacity>>();
+		this.requiredCapacities = new ArrayList<>();
 		this.requiredCapacities.add(required);
 	}
 

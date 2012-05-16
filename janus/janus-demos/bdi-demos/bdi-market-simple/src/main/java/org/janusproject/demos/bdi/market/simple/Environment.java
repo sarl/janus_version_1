@@ -27,7 +27,7 @@ public class Environment {
 	/**
 	 */
 	public Environment() {
-		this.agents = new HashMap<AgentAddress, BDIAgent>();
+		this.agents = new HashMap<>();
 	}
 
 	/**
@@ -41,14 +41,14 @@ public class Environment {
 	 * @return the agents
 	 */
 	public List<AgentAddress> getAgents() {
-		return new ArrayList<AgentAddress>(this.agents.keySet());
+		return new ArrayList<>(this.agents.keySet());
 	}
 
 	/**
 	 * @return the brokers
 	 */
 	public List<AgentAddress> getBrokerAgents() {
-		List<AgentAddress> list = new ArrayList<AgentAddress>();
+		List<AgentAddress> list = new ArrayList<>();
 		
 		for (Iterator<AgentAddress> it = this.agents.keySet().iterator(); it.hasNext();) {
 			AgentAddress address = it.next();
@@ -63,7 +63,7 @@ public class Environment {
 	 * @return the providers
 	 */
 	public List<AgentAddress> getProviderAgents() {
-		List<AgentAddress> list = new ArrayList<AgentAddress>();
+		List<AgentAddress> list = new ArrayList<>();
 		
 		for (Iterator<AgentAddress> it = this.agents.keySet().iterator(); it.hasNext();) {
 			AgentAddress address = it.next();
@@ -78,7 +78,7 @@ public class Environment {
 	 * @return the clients
 	 */
 	public List<AgentAddress> getClientAgents() {
-		List<AgentAddress> list = new ArrayList<AgentAddress>();
+		List<AgentAddress> list = new ArrayList<>();
 		
 		for (Iterator<AgentAddress> it = this.agents.keySet().iterator(); it.hasNext();) {
 			AgentAddress address = it.next();

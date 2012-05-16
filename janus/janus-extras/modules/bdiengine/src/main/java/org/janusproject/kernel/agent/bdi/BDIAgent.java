@@ -104,17 +104,17 @@ public abstract class BDIAgent extends Agent implements BDIGoalSelector, BDIPlan
 	/**
 	 * Agent signal's listener.
 	 */
-	private QueuedSignalAdapter<Signal> signalListener = new QueuedSignalAdapter<Signal>(Signal.class);
+	private QueuedSignalAdapter<Signal> signalListener = new QueuedSignalAdapter<>(Signal.class);
 
 	/**
 	 * Create a new BDI Agent.
 	 */
 	public BDIAgent() {
 		super();
-		this.beliefs = new ArrayList<BDIBelief>();
-		this.newBeliefs = new LinkedList<BDIBelief>();
+		this.beliefs = new ArrayList<>();
+		this.newBeliefs = new LinkedList<>();
 		this.planExecutor = new BDIPlanExecutor(this);
-		this.waitingGoals = new HashSet<BDIGoal>();
+		this.waitingGoals = new HashSet<>();
 		initActionFactory();
 		addSignalListener(this.signalListener);
 		addSignalListener(this.planExecutor.getEventListener());
@@ -184,9 +184,9 @@ public abstract class BDIAgent extends Agent implements BDIGoalSelector, BDIPlan
 	@SuppressWarnings("unchecked")
 	private List<BDIPlan> getApplicablePlansList(BDIAgent agent, BDIGoal goal, List<Class<? extends BDIPlan>> plans, List<BDIBelief> beliefs) {
 
-		List<BDIPlan> handledByAgentPlans = new LinkedList<BDIPlan>();
-		List<BDIPlan> relevantPlans = new LinkedList<BDIPlan>();
-		List<BDIPlan> applicablePlans = new LinkedList<BDIPlan>();
+		List<BDIPlan> handledByAgentPlans = new LinkedList<>();
+		List<BDIPlan> relevantPlans = new LinkedList<>();
+		List<BDIPlan> applicablePlans = new LinkedList<>();
 
 		for (Class<? extends BDIPlan> p : plans) {
 			BDIPlan plan = null;
@@ -259,7 +259,7 @@ public abstract class BDIAgent extends Agent implements BDIGoalSelector, BDIPlan
 			}
 
 			if (agentHasRequiredActions) {
-				List<BDIAction> actions = new ArrayList<BDIAction>();
+				List<BDIAction> actions = new ArrayList<>();
 
 				if (actionList!=null) {
 					for (Class<? extends BDIAction> action : actionList) {
@@ -476,7 +476,7 @@ public abstract class BDIAgent extends Agent implements BDIGoalSelector, BDIPlan
 	 * @return a list of actions handled by a basic BDIAgent
 	 */
 	protected static List<Class<? extends BDIAction>> getBDIHandledActions() {
-		List<Class<? extends BDIAction>> actions = new ArrayList<Class<? extends BDIAction>>();
+		List<Class<? extends BDIAction>> actions = new ArrayList<>();
 		actions.add(SendMessageAction.class);
 		actions.add(WaitEventAction.class);
 		actions.add(BroadcastMessageAction.class);

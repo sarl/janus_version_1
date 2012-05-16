@@ -277,6 +277,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public Collection<AgentAddress> getTo() {
 			return this.to;
 		}
@@ -284,6 +285,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setTo(Collection<AgentAddress> addresses) {
 			this.to = addresses;
 		}
@@ -291,6 +293,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public AgentAddress getFrom() {
 			return this.from;
 		}
@@ -298,6 +301,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setFrom(AgentAddress address) {
 			this.from = address;
 		}
@@ -305,6 +309,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public String getAclRepresentation() {
 			return this.aclRepresentation;
 		}
@@ -312,6 +317,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setAclRepresentation(String aclRepresentation) {
 			this.aclRepresentation = aclRepresentation;
 		}
@@ -319,6 +325,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public Date getDate() {
 			return this.date;
 		}
@@ -326,6 +333,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setDate(Date date) {
 			this.date = date;
 		}
@@ -333,6 +341,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public String getComments() {
 			return this.comments;
 		}
@@ -340,6 +349,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setComments(String comments) {
 			this.comments = comments;
 		}
@@ -347,6 +357,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public Long getPayloadLength() {
 			return this.payloadLength;
 		}
@@ -354,6 +365,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setPayloadLength(Long payloadLength) {
 			this.payloadLength = payloadLength;
 		}
@@ -361,6 +373,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public String getPayloadEncoding() {
 			return this.payloadEncoding;
 		}
@@ -368,6 +381,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setPayloadEncoding(String payloadEncoding) {
 			this.payloadEncoding = payloadEncoding;
 		}
@@ -375,6 +389,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public ArrayList<AgentAddress> getIntendedReceiver() {
 			return this.intendedReceiver;
 		}
@@ -382,6 +397,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setIntendedReceiver(ArrayList<AgentAddress> intendedReceivers) {
 			this.intendedReceiver = intendedReceivers;
 		}
@@ -389,6 +405,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public Properties getTransportBehaviour() {
 			return this.transportBehaviour;
 		}
@@ -396,6 +413,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setTransportBehaviour(Properties transportBehaviour) {
 			this.transportBehaviour = transportBehaviour;
 		}
@@ -426,6 +444,7 @@ public class ACLMessage
     	/**
     	 * {@inheritDoc}
     	 */
+		@Override
     	public int getPerformative() {
 			return this.performative;
 		}
@@ -433,6 +452,7 @@ public class ACLMessage
     	/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setPerformative(int performative) {
 			this.performative = performative;
 		}
@@ -440,6 +460,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public AgentAddress getSender() {
 			return this.sender;
 		}
@@ -447,6 +468,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setSender(AgentAddress address) {
 			this.sender = address;
 		}
@@ -454,6 +476,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public Collection<AgentAddress> getReceiver() {
 			return this.receiver;
 		}
@@ -461,6 +484,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setReceiver(Collection<AgentAddress> receivers) {
 			this.receiver = receivers;
 		}
@@ -468,6 +492,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public Collection<AgentAddress> getReplyTo() {
 			return this.replyTo;
 		}
@@ -475,6 +500,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setReplyTo(Collection<AgentAddress> replyTo) {
 			this.replyTo = replyTo;
 		}
@@ -482,6 +508,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public StringBuffer getContent() {
 			return this.content;
 		}
@@ -489,6 +516,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setContent(StringBuffer content) {
 			this.content = content;
 		}
@@ -496,6 +524,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public String getLanguage() {
 			return this.language;
 		}
@@ -503,6 +532,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setLanguage(String language) {
 			this.language = language;
 		}
@@ -510,6 +540,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public String getEncoding() {
 			return this.encoding;
 		}
@@ -517,6 +548,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setEncoding(String encoding) {
 			this.encoding = encoding;
 		}
@@ -524,6 +556,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public String getOntology() {
 			return this.ontology;
 		}
@@ -531,6 +564,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setOntology(String ontology) {
 			this.ontology = ontology;
 		}
@@ -538,6 +572,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public String getProtocol() {
 			return this.protocol;
 		}
@@ -545,6 +580,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setProtocol(String protocol) {
 			this.protocol = protocol;
 		}
@@ -552,6 +588,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public UUID getConversationId() {
 			return this.conversationId;
 		}
@@ -559,6 +596,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setConversationId(UUID conversationId) {
 			this.conversationId = conversationId;
 		}
@@ -566,6 +604,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public String getReplyWith() {
 			return this.replyWith;
 		}
@@ -573,6 +612,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setReplyWith(String replyWith) {
 			this.replyWith = replyWith;
 		}
@@ -580,6 +620,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public String getInReplyTo() {
 			return this.inReplyTo;
 		}
@@ -587,6 +628,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setInReplyTo(String inReplyTo) {
 			this.inReplyTo = inReplyTo;
 		}
@@ -594,6 +636,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public String getReplyBy() {
 			return this.replyBy;
 		}
@@ -601,6 +644,7 @@ public class ACLMessage
 		/**
     	 * {@inheritDoc}
     	 */
+		@Override
 		public void setReplyBy(String replyBy) {
 			this.replyBy = replyBy;
 		}

@@ -55,7 +55,7 @@ class EcoMonitorAgent extends Agent implements KernelListener {
 	
 	private final int ecoAgentCount;
 	private State state;
-	private final Set<AgentAddress> addresses = new TreeSet<AgentAddress>();
+	private final Set<AgentAddress> addresses = new TreeSet<>();
 	
 	/**
 	 * @param ecoAgentCount is the number of agents awaited to solve the problem.

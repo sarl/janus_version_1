@@ -66,11 +66,11 @@ extends JFrame {
 	private final EventHandler eventHandler = new EventHandler();
 	private final EnvironmentPanel panel;
 	
-	private final DefaultListModel<AgentAddress> agentList = new DefaultListModel<AgentAddress>();
-	private final JList<AgentAddress> agentListObj = new JList<AgentAddress>(this.agentList);
+	private final DefaultListModel<AgentAddress> agentList = new DefaultListModel<>();
+	private final JList<AgentAddress> agentListObj = new JList<>(this.agentList);
 	
 	private AgentProbe currentProbe = null;
-	private final DefaultListModel<String> probeList = new DefaultListModel<String>();
+	private final DefaultListModel<String> probeList = new DefaultListModel<>();
 	
 	/**
 	 * @param kernel is the current Janus Kernel.
@@ -94,7 +94,7 @@ extends JFrame {
 		this.agentListObj.getSelectionModel().addListSelectionListener(this.eventHandler);
 		JScrollPane agentListScrollPane = new JScrollPane(this.agentListObj);
 		
-		JList<String> probeTable = new JList<String>(this.probeList);
+		JList<String> probeTable = new JList<>(this.probeList);
 		probeTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane probeScrollPane = new JScrollPane(probeTable);
 

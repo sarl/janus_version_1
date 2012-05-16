@@ -287,7 +287,7 @@ public class CRIOContext {
 		public void removeInactivePersistentGroups(float delay, TimeUnit unit) {
 			GroupRepository gr = getGroupRepository();
 			KernelTimeManager tm = getTimeManager();
-			Collection<GroupAddress> adrs = new ArrayList<GroupAddress>();
+			Collection<GroupAddress> adrs = new ArrayList<>();
 			KernelScopeGroup grp;
 			for(GroupAddress adr : gr) {
 				grp = gr.get(adr);

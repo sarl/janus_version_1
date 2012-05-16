@@ -151,7 +151,7 @@ public abstract class AbstractSignalManager implements SignalManager, SignalList
 	@Override
 	public void addSignalListener(SignalListener listener) {
 		if (this.listeners == null) {
-			this.listeners = new ArrayList<SignalListener>();
+			this.listeners = new ArrayList<>();
 		}
 		this.listeners.add(listener);
 	}

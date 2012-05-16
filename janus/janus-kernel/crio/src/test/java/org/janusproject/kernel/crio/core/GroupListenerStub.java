@@ -37,8 +37,8 @@ import org.janusproject.kernel.crio.organization.GroupListener;
  */
 class GroupListenerStub implements GroupListener {
 
-	private final List<GroupEvent> creation = new ArrayList<GroupEvent>();
-	private final List<GroupEvent> deletion = new ArrayList<GroupEvent>();
+	private final List<GroupEvent> creation = new ArrayList<>();
+	private final List<GroupEvent> deletion = new ArrayList<>();
 	
 	/**
 	 */
