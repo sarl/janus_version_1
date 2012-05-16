@@ -20,6 +20,7 @@
  */
 package org.janusproject.demo.groovy.simplemessage.agent;
 
+import org.janusproject.demo.groovy.simplemessage.Launcher;
 import org.janusproject.groovyengine.GroovyAgent;
 import org.janusproject.kernel.status.Status;
 
@@ -36,13 +37,11 @@ import org.janusproject.kernel.status.Status;
 public class GroovyAgentReceiver extends GroovyAgent {
 	private static final long serialVersionUID = 2261480592543737175L;
 
-	private static final String GroovyScriptPath = GroovyAgentReceiver.class.getClassLoader().getResource("org/janusproject/demo/groovy/simplemessage").getPath(); //$NON-NLS-1$
-
 	@Override
 	public Status live() {		
 		Status s = super.live();
 		if (s.isSuccess()) {
-			runGroovyFunction(GroovyScriptPath,"receiver.gy", "live", this); //$NON-NLS-1$  //$NON-NLS-2$
+			runFunction(Launcher.RECEIVER_SCRIPT, "live", this); //$NON-NLS-1$
 		}
 		return s;
 	}

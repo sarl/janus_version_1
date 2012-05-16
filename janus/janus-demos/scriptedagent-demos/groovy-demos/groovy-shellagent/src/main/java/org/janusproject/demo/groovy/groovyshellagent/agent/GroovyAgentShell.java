@@ -20,23 +20,33 @@
  */
 
 package org.janusproject.demo.groovy.groovyshellagent.agent;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.LogRecord;
+import java.util.logging.Handler;
 
-import org.janusproject.demo.groovy.groovyshellagent.agent.channel.GroovyScriptExecutorChannel;
-import org.janusproject.demo.groovy.groovyshellagent.agent.channel.LoggingChannel;
+import org.arakhne.vmutil.locale.Locale;
+import org.janusproject.demo.agentshell.base.AgentShellChannel;
+import org.janusproject.demo.agentshell.base.AgentShellChannel.LogListener;
+import org.janusproject.demo.agentshell.base.AgentShellChannel.ResultListener;
 import org.janusproject.groovyengine.GroovyAgent;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.channels.Channel;
 import org.janusproject.kernel.channels.ChannelInteractable;
 import org.janusproject.kernel.status.Status;
+import org.janusproject.kernel.util.event.ListenerCollection;
 
 /**
  * An agent able to execute a groovy Command or Script
  * 
+ * @author $Author: sgalland$
  * @author $Author: lcabasson$
  * @author $Author: cwintz$
  * @author $Author: ngaud$
@@ -53,292 +63,213 @@ public class GroovyAgentShell extends GroovyAgent implements ChannelInteractable
 	 * Channel to communicate with the associated GUI
 	 */
 	private final AgentChannelImpl channelImpl = new AgentChannelImpl();
+
+	/** Buffer for the next command to run.
+	 */
+	private final List<String> command = new LinkedList<>();
 	
-	/**
-	 * Channel to communicate logged messages to the associated GUI
+	/** Buffer for the next command to run.
 	 */
-	private final LoggingChannel logChannel = new AgentLoggingChannelImpl();
-
-	/**
-	 * the result of the execute command/script
-	 */
-	private String groovyCommandResult;
-
-	/**
-	 * command to execute
-	 */
-	private String groovyCommand;
-
-	/**
-	 * script to execute
-	 */
-	private String groovyScript;
-
-	/**
-	 * Errors sent by Groovy Engine logger
-	 */
-	private List<LogRecord> logRecords = new LinkedList<LogRecord>();
+	private final Collection<ResultListener> listeners = new LinkedList<>();
 	
-	/**
-	 * command counter for waiting result
+	/** Buffer for the next script to run.
 	 */
-	private int commandCounter;
+	private final List<File> scripts = new LinkedList<>();
 
-	/**
-	 * boolean saying if the agent need to die
+	/** Listeners on log events.
 	 */
-	private boolean alive = true;
-
-	/**
-	 * StringWriter for Groovy errors output
-	 */
-	private PersonnalWriter errors;
-
-	/**
-	 * StringWriter for groovy "puts" output
-	 */
-	private PersonnalWriter puts;
-
+	private final ListenerCollection<LogListener> logListeners = new ListenerCollection<>();
+	
 	/**
 	 * Default constructor
 	 */
-	public GroovyAgentShell() 
-	{
-		super();
-
-		setGroovyCommand(""); //$NON-NLS-1$
-		setGroovyScript(""); //$NON-NLS-1$
-		setGroovyExecutionResult(""); //$NON-NLS-1$
-		
-		setCommandCounter(0);
-		
-		this.errors = new PersonnalWriter();
-		this.puts = new PersonnalWriter();
-		
-		this.getScriptExecutor().getLogger().addHandler(
-				new ForwardToChannelLoggingHandler(this.logChannel)
-		);
+	public GroovyAgentShell() {
+		//
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Status activate(Object... parameters) {
+		Status s = super.activate(parameters);
+		getLogger().addHandler(new LogHandler());
+		return s;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public Status live() {
+	public synchronized Status live() {
 		Status s = super.live();
-
 		if (s.isSuccess()) {
-			// Check if something to do from the Shell
-			if (!getGroovyCommand().equals("")) { //$NON-NLS-1$
-				// a command to execute appear
-				this.groovyCommandResult = runGroovyCommand(this.groovyCommand, this.errors, this.puts) + this.puts.getBuffer() + this.errors.getBuffer();
-				this.errors.getBuffer().setLength(0);// errors.flush() doesn't work
-				this.puts.getBuffer().setLength(0);// puts.flush() doesn't work
-				setCommandCounter(getCommandCounter() + 1);
-				setGroovyCommand(""); //$NON-NLS-1$
+			String r;
+			
+			List<String> results = new ArrayList<>();
+			
+			Iterator<String> commandIterator = this.command.iterator();
+			while (commandIterator.hasNext()) {
+				String cmd = commandIterator.next();
+				commandIterator.remove();
+				r = runCommandAsInteractiveInterpreter(cmd);
+				results.add(cmd);
+				results.add(r);
 			}
-			if (!getGroovyScript().equals("")) { //$NON-NLS-1$
-				// a script to execute appear
-				this.groovyCommandResult = runScriptFromPath(getGroovyScript(), this.errors, this.puts) + this.puts.getBuffer() + this.errors.getBuffer();
-				this.errors.getBuffer().setLength(0);// errors.flush() doesn't work
-				this.puts.getBuffer().setLength(0);// puts.flush() doesn't work
-				setCommandCounter(getCommandCounter() + 1);
-				setGroovyScript(""); //$NON-NLS-1$
+			
+			Iterator<File> scriptIterator = this.scripts.iterator();
+			while (scriptIterator.hasNext()) {
+				File file = scriptIterator.next();
+				scriptIterator.remove();
+				r = runScriptAsInteractiveInterpreter(file);
+				results.add(Locale.getString(GroovyAgentShell.class, "RUN_SCRIPT_CMD", file.getAbsolutePath())); //$NON-NLS-1$
+				results.add(r);
 			}
-			if (!this.logRecords.isEmpty()) {
-				for (LogRecord lr : this.logRecords)
-					this.groovyCommandResult += lr.getMessage() + "\n"; //$NON-NLS-1$
+
+			Iterator<ResultListener> listenerIterator = this.listeners.iterator();
+			while (listenerIterator.hasNext()) {
+				ResultListener listener = listenerIterator.next();
+				listener.onResultAvailable(results);
 			}
-			if (!isLive())
-				// this agent need to die
-				this.killMe();
 		}
 		return s;
 	}
 
 	@Override
 	public <C extends Channel> C getChannel(Class<C> type, Object... p) {
-		if (type.isAssignableFrom(AgentChannelImpl.class)) {
-			return type.cast(getChannelImpl());
+		if (type.isAssignableFrom(AgentShellChannel.class)) {
+			return type.cast(this.channelImpl);
 		}
 		return null;
 	}
 
 	@Override
 	public Set<? extends Class<? extends Channel>> getSupportedChannels() {
-		return Collections.singleton(AgentChannelImpl.class);
-	}
-	
-	/**
-	 * Add a log record to forward to the UI
-	 * @param lr Log record to forward
-	 */
-	void addLogRecord(LogRecord lr) {
-		this.logRecords.add(lr);
-	}
-	
-	// Accessors
-	/**
-	 * @return the result to send to the IHM
-	 */
-	public String getGroovyExecutionResult() {
-		return this.groovyCommandResult;
+		return Collections.singleton(AgentShellChannel.class);
 	}
 
 	/**
-	 * @param result - the result comming from execution
+	 * @author $Author: sgalland$
+	 * @author $Author: lcabasson$
+	 * @author $Author: cwintz$
+	 * @author $Author: ngaud$
 	 */
-	public void setGroovyExecutionResult(String result) {
-		this.groovyCommandResult = result;
-	}
-
-	/**
-	 * @return the cmd
-	 */
-	public String getGroovyCommand() {
-		return this.groovyCommand;
-	}
-
-	/**
-	 * @param cmd
-	 */
-	public void setGroovyCommand(String cmd) {
-		this.groovyCommand = cmd;
-	}
-
-	/**
-	 * 
-	 * @return the current groovy script
-	 */
-	public String getGroovyScript() {
-		return this.groovyScript;
-	}
-
-	/**
-	 * 
-	 * @param script - the current groovy script
-	 */
-	public void setGroovyScript(String script) {
-		this.groovyScript = script;
-	}
-
-	/**
-	 * @return the cptCmd
-	 */
-	public int getCommandCounter() {
-		return this.commandCounter;
-	}
-
-	/**
-	 * @param cmdCounter - the cptCmd to set
-	 */
-	public void setCommandCounter(int cmdCounter) {
-		this.commandCounter = cmdCounter;
-	}
-
-	/**
-	 * 
-	 * @return true 
-	 */
-	public boolean isLive() {
-		return this.alive;
-	}
-
-	/**
-	 * 
-	 * @param live
-	 */
-	public void setLive(boolean live) {
-		this.alive = live;
-	}
-
-	/**
-	 * @return the channelImpl
-	 */
-	public AgentChannelImpl getChannelImpl() {
-		return this.channelImpl;
-	}
-
-	/** INNER CLASS */
-
-	private class AgentChannelImpl implements GroovyScriptExecutorChannel {
+	private class AgentChannelImpl implements AgentShellChannel {
 
 		public AgentChannelImpl() {
 			//
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public Address getChannelOwner() {
 			return getAddress();
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
 		@Override
-		public void setGroovyCommand(String cmd) {
-			GroovyAgentShell.this.setGroovyCommand(cmd);
-		}
-
-		@Override
-		public String getGroovyExecutionResult() {
-			return GroovyAgentShell.this.getGroovyExecutionResult();
+		public void runCommand(String cmd, ResultListener listener) {
+			synchronized(GroovyAgentShell.this) {
+				GroovyAgentShell.this.command.add(cmd);
+				GroovyAgentShell.this.listeners.add(listener);
+			}
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
-		public int getCommandCounter() {
-			return GroovyAgentShell.this.getCommandCounter();
-		}
-
+		@SuppressWarnings("synthetic-access")
 		@Override
 		public void killAgent() {
-			GroovyAgentShell.this.setLive(false);
+			GroovyAgentShell.this.killMe();
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
+		@SuppressWarnings("synthetic-access")
 		@Override
-		public void setGroovyScript(String path) {
-			GroovyAgentShell.this.setGroovyScript(path);
+		public void runScript(File absolutePath, ResultListener listener) {
+			synchronized(GroovyAgentShell.this) {
+				GroovyAgentShell.this.scripts.add(absolutePath);
+				GroovyAgentShell.this.listeners.add(listener);
+			}	
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
+		@SuppressWarnings("synthetic-access")
 		@Override
-		public String getScriptPath() 
-		{
-			if (GroovyAgentShell.this.getGroovyDirectory() == null) {
-				return ""; //$NON-NLS-1$
+		public File getScriptPath() {
+			return getScriptRepository().getLocalDirectories().next();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public void addLogListener(LogListener listener) {
+			GroovyAgentShell.this.logListeners.add(LogListener.class, listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public void removeLogListener(LogListener listener) {
+			GroovyAgentShell.this.logListeners.remove(LogListener.class, listener);
+		}
+
+	}
+
+	/**
+	 * @author $Author: sgalland$
+	 * @author $Author: lcabasson$
+	 * @author $Author: cwintz$
+	 * @author $Author: ngaud$
+	 */
+	private class LogHandler extends Handler {
+
+		public LogHandler() {
+			//
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public void publish(LogRecord record) {
+			LogListener[] list = GroovyAgentShell.this.logListeners.getListeners(LogListener.class);
+			for(LogListener listener : list) {
+				listener.onLogAvailable(record);
 			}
-			return GroovyAgentShell.this.getGroovyDirectory().getDirectory().getAbsolutePath();
-		}
-
-	}
-
-	private class AgentLoggingChannelImpl implements LoggingChannel
-	{		
-		/**
-		 * Creates a new channel to forward logging message
-		 */
-		public AgentLoggingChannelImpl() {
-			// default constructor
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Address getChannelOwner() {
-			return getAddress();
+		public void flush() {
+			//
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void loggingMessageReceived(LogRecord lr) {
-			GroovyAgentShell.this.addLogRecord(lr);
+		public void close() throws SecurityException {
+			//
 		}
-		
+
 	}
-	
+
 }

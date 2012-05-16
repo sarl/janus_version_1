@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.demo.groovy.market.selective.Launcher;
-import org.janusproject.groovyengine.GroovyExecutionScriptContext;
+import org.janusproject.groovyengine.GroovyExecutionContext;
 import org.janusproject.kernel.agent.KernelAgentFactory;
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.mmf.JanusApplication;
@@ -44,8 +44,7 @@ import org.osgi.framework.BundleContext;
  * @mavenartifactid $ArtifactId$
  */
 public class GroovySelectiveMarketActivator implements BundleActivator, JanusApplication {
-
-	private static final String GroovyScriptPath = Launcher.class.getClassLoader().getResource("org/janusproject/demo/groovy/market/selective/").getPath(); //$NON-NLS-1$
+	
 	private Logger logger;
 
 	/**
@@ -74,8 +73,8 @@ public class GroovySelectiveMarketActivator implements BundleActivator, JanusApp
 	public Status start(KernelService kernel) {
 		this.logger.log(Level.INFO, Locale.getString(GroovySelectiveMarketActivator.class, "MARKET_START")); //$NON-NLS-1$
 
-		GroovyExecutionScriptContext resc = new GroovyExecutionScriptContext();
-		resc.runScriptFromPath(GroovyScriptPath, "launcher.gy"); //$NON-NLS-1$ 
+		GroovyExecutionContext resc = new GroovyExecutionContext();
+		resc.runScript(Launcher.LAUNCHING_SCRIPT); 
 
 		return StatusFactory.ok(this);
 	}

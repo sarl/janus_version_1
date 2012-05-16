@@ -20,6 +20,9 @@
  */
 package org.janusproject.demo.groovy.simplemessage;
 
+import java.net.URL;
+
+import org.arakhne.vmutil.Resources;
 import org.janusproject.demo.groovy.simplemessage.agent.GroovyAgentReceiver;
 import org.janusproject.demo.groovy.simplemessage.agent.GroovyAgentSender;
 import org.janusproject.kernel.Kernel;
@@ -37,6 +40,14 @@ import org.janusproject.kernel.agent.Kernels;
  * @mavenartifactid $ArtifactId$
  */
 public class Launcher {
+
+	/** URL of the Groovy receiver script.
+	 */
+	public static final URL RECEIVER_SCRIPT = Resources.getResource(Launcher.class, "receiver.gy"); //$NON-NLS-1$
+
+	/** URL of the Groovy receiver script.
+	 */
+	public static final URL SENDER_SCRIPT = Resources.getResource(Launcher.class, "sender.gy"); //$NON-NLS-1$
 
 	/**
 	 * @param args

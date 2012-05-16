@@ -21,11 +21,10 @@
 package org.janusproject.demo.groovy.groovyshellagent.osgi;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.arakhne.vmutil.locale.Locale;
+import org.janusproject.demo.agentshell.base.ConsoleGUI;
 import org.janusproject.demo.groovy.groovyshellagent.agent.GroovyAgentShell;
-import org.janusproject.demo.groovy.groovyshellagent.gui.GroovyConsoleGUI;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.KernelAgentFactory;
 import org.janusproject.kernel.logger.LoggerUtil;
@@ -50,16 +49,12 @@ import org.osgi.framework.BundleContext;
 
 public class GroovyShellAgentActivator implements BundleActivator, JanusApplication {
 
-	private Logger logger;
-	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
 		LoggerUtil.setGlobalLevel(Level.INFO);
-		this.logger = Logger.getLogger(this.getClass().getCanonicalName());
-		this.logger.info(Locale.getString(GroovyShellAgentActivator.class, "ACTIVATING_SHELLAGENT")); //$NON-NLS-1$
 		context.registerService(JanusApplication.class.getName(), this, null);
 	}
 
@@ -76,18 +71,16 @@ public class GroovyShellAgentActivator implements BundleActivator, JanusApplicat
 	 */
 	@Override
 	public Status start(KernelService kernel) {
-		this.logger.log(Level.INFO, Locale.getString(GroovyShellAgentActivator.class, "SHELLAGENT_START")); //$NON-NLS-1$
-		
 		GroovyAgentShell jrba = new GroovyAgentShell();
 		
 		AgentAddress aa = kernel.launchLightAgent(jrba, "Console 1"); //$NON-NLS-1$
-		GroovyConsoleGUI c = new GroovyConsoleGUI(aa);
+		ConsoleGUI c = new ConsoleGUI(aa);
 		c.setVisible(true);	
 		
 		GroovyAgentShell jrba2 = new GroovyAgentShell();
 		
 		AgentAddress aa2 = kernel.launchLightAgent(jrba2, "Console 2"); //$NON-NLS-1$
-		GroovyConsoleGUI c2 = new GroovyConsoleGUI(aa2);
+		ConsoleGUI c2 = new ConsoleGUI(aa2);
 		c2.setVisible(true);
 		
 

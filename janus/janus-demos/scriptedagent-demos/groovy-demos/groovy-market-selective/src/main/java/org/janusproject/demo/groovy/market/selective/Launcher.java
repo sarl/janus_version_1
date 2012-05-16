@@ -20,9 +20,10 @@
  */
 package org.janusproject.demo.groovy.market.selective;
 
+import java.net.URL;
 
-import org.janusproject.groovyengine.GroovyExecutionScriptContext;
-
+import org.arakhne.vmutil.Resources;
+import org.janusproject.groovyengine.GroovyExecutionContext;
 
 /**
  * Launcher of Groovy Selective Market Demos
@@ -36,8 +37,9 @@ import org.janusproject.groovyengine.GroovyExecutionScriptContext;
  */
 public class Launcher {
 	
-	
-	private static final String GroovyScriptPath = Launcher.class.getClassLoader().getResource("org/janusproject/demo/groovy/market/selective/").getPath(); //$NON-NLS-1$
+	/** URL of the launching Groovy script.
+	 */
+	public static final URL LAUNCHING_SCRIPT = Resources.getResource(Launcher.class, "Launcher.gy"); //$NON-NLS-1$
 	
 	/**
 	 * Execute a script which is the Launcher.java
@@ -45,8 +47,8 @@ public class Launcher {
 	 * @param args
 	 */
 	public static void main(String[] args) {		
-		GroovyExecutionScriptContext resc = new GroovyExecutionScriptContext();
-		resc.runScriptFromPath(GroovyScriptPath,"Launcher.gy"); //$NON-NLS-1$
+		GroovyExecutionContext resc = new GroovyExecutionContext();
+		resc.runScript(LAUNCHING_SCRIPT);
 	}
 
 }

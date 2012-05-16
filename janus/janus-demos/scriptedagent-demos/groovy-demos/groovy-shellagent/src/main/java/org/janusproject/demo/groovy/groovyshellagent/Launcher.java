@@ -20,8 +20,8 @@
  */
 package org.janusproject.demo.groovy.groovyshellagent;
 
+import org.janusproject.demo.agentshell.base.ConsoleGUI;
 import org.janusproject.demo.groovy.groovyshellagent.agent.GroovyAgentShell;
-import org.janusproject.demo.groovy.groovyshellagent.gui.GroovyConsoleGUI;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Kernels;
@@ -51,8 +51,8 @@ public class Launcher {
 		
 		AgentAddress address = k.launchLightAgent(agentShell, "Console 1"); //$NON-NLS-1$
 		AgentAddress address2 = k.launchLightAgent(agentShell2, "Console 2"); //$NON-NLS-1$
-		GroovyConsoleGUI console2 = new GroovyConsoleGUI(address2);
-		GroovyConsoleGUI console = new GroovyConsoleGUI(address);
+		ConsoleGUI console2 = new ConsoleGUI(address2);
+		ConsoleGUI console = new ConsoleGUI(address);
 		console.setVisible(true);	
 		console2.setVisible(true);
 
