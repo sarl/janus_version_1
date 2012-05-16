@@ -97,7 +97,7 @@ public class AgentTest extends TestCase {
 	}
 	
 	private void bindToKernel(Agent h) {
-		h.kernel = new WeakReference<KernelAgent>(this.kernel);
+		h.kernel = new WeakReference<>(this.kernel);
 		this.kernel.getKernelContext().getAgentRepository().add(h.getAddress(), h);
 	}
 
@@ -133,7 +133,7 @@ public class AgentTest extends TestCase {
 	 */
 	public void testGetCreator() {
 		Agent h = new Agent();
-		h.kernel = new WeakReference<KernelAgent>(this.kernel);
+		h.kernel = new WeakReference<>(this.kernel);
 
 		assertNull(h.getCreator());
 		
@@ -1586,7 +1586,7 @@ public class AgentTest extends TestCase {
 		bindToKernel(agent3);
 		bindToKernel(agent4);
 		
-		Collection<AgentAddress> addresses = new ArrayList<AgentAddress>();
+		Collection<AgentAddress> addresses = new ArrayList<>();
 		iterator = agent1.getLocalAgents();
 		assertNotNull(iterator);
 		assertEquals(4, iterator.totalSize());
@@ -1868,7 +1868,7 @@ public class AgentTest extends TestCase {
 		public int state = 0;
 		
 		/** */
-		public final List<Signal> signals = new ArrayList<Signal>();
+		public final List<Signal> signals = new ArrayList<>();
 
 		/**
 		 */
@@ -1929,7 +1929,7 @@ public class AgentTest extends TestCase {
 	private class SignalListenerStub implements SignalListener {
 
 		/** */
-		public final List<Signal> signals = new ArrayList<Signal>();
+		public final List<Signal> signals = new ArrayList<>();
 
 		/**
 		 */

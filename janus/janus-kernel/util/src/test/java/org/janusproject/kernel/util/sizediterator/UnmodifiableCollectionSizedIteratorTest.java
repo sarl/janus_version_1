@@ -47,7 +47,7 @@ public class UnmodifiableCollectionSizedIteratorTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.collection = new ArrayList<DataStub>();
+		this.collection = new ArrayList<>();
 		this.m1 = new DataStub(1);
 		this.m2 = new DataStub(10);
 		this.m3 = new DataStub(5);
@@ -56,7 +56,7 @@ public class UnmodifiableCollectionSizedIteratorTest extends TestCase {
 		this.collection.add(this.m2);
 		this.collection.add(this.m3);
 		this.collection.add(this.m4);
-		this.iterator = new UnmodifiableCollectionSizedIterator<DataStub>(this.collection);
+		this.iterator = new UnmodifiableCollectionSizedIterator<>(this.collection);
 	}
 	
 	/**

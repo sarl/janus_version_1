@@ -54,7 +54,7 @@ public class DefaultActivatorTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.activator = new DefaultActivator<ActivableStub>(ActivableStub.class);
+		this.activator = new DefaultActivator<>(ActivableStub.class);
 		this.a1 = new ActivableStub();
 		this.a2 = new ActivableStub();
 		this.stubs = Arrays.asList(this.a1, this.a2);
@@ -89,7 +89,7 @@ public class DefaultActivatorTest extends TestCase {
 		if (c1==c2) return;
 		if (c1!=null && c2!=null) {
 			try {
-				ArrayList<Object> obj = new ArrayList<Object>(c1);
+				ArrayList<Object> obj = new ArrayList<>(c1);
 				try {
 					boolean failure = false;
 					Object o1;

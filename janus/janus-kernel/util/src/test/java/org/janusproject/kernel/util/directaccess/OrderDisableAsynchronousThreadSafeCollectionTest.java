@@ -52,7 +52,7 @@ public class OrderDisableAsynchronousThreadSafeCollectionTest extends TestCase {
 		this.m1 = new DataStub(10);
 		this.m2 = new DataStub(1);
 
-		this.collection = new AsynchronousThreadSafeCollection<DataStub>(DataStub.class);
+		this.collection = new AsynchronousThreadSafeCollection<>(DataStub.class);
 		this.collection.setSetBehaviorEnabled(false);
 		
 		this.listener = new ListenerStub();

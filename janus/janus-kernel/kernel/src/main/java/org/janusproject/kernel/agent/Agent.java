@@ -708,7 +708,7 @@ implements Activable, Holon, Serializable {
 				obtainConditions,
 				leaveConditions);
 		this.mergingOrganization = null;
-		this.internalOrganizations = new ArrayList<GroupAddress>();
+		this.internalOrganizations = new ArrayList<>();
 		return true;
 	}
 

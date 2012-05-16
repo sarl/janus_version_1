@@ -48,7 +48,7 @@ public class UnmodifiableMapValueSizedIteratorTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.map = new HashMap<Object,DataStub>();
+		this.map = new HashMap<>();
 		this.k1 = new DataStub(1);
 		this.k2 = new DataStub(10);
 		this.k3 = new DataStub(5);
@@ -61,7 +61,7 @@ public class UnmodifiableMapValueSizedIteratorTest extends TestCase {
 		this.map.put(this.k2,this.m2);
 		this.map.put(this.k3,this.m3);
 		this.map.put(this.k4,this.m4);
-		this.iterator = new UnmodifiableMapValueSizedIterator<DataStub>(this.map);
+		this.iterator = new UnmodifiableMapValueSizedIterator<>(this.map);
 	}
 	
 	/**

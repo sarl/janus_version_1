@@ -73,7 +73,7 @@ public class TreeSetMailbox extends AbstractMailbox {
 		Comparator<? super Message> c;
 		if (comparator==null) c = CreationDateMessageComparator.SINGLETON;
 		else c = comparator;
-		this.inbox = new TreeSet<Message>(c);
+		this.inbox = new TreeSet<>(c);
 	}
 	
 	/**
@@ -290,7 +290,7 @@ public class TreeSetMailbox extends AbstractMailbox {
 	@Override
 	public Iterator<Message> iterator(boolean consumeMails) {
 		if (consumeMails)
-			return new AutoremoveIterator<Message>(this.inbox.iterator());
+			return new AutoremoveIterator<>(this.inbox.iterator());
 		return this.inbox.iterator();
 	}
 
@@ -300,8 +300,8 @@ public class TreeSetMailbox extends AbstractMailbox {
 	@Override
 	public Iterator<Message> iterator(Selector<? super Message> selector, boolean consumeMails) {
 		if (consumeMails)
-			return new AutoremoveSelectorIterator<Message>(selector, this.inbox.iterator());
-		return new SelectorIterator<Message>(selector, this.inbox.iterator());
+			return new AutoremoveSelectorIterator<>(selector, this.inbox.iterator());
+		return new SelectorIterator<>(selector, this.inbox.iterator());
 	}
 
 	/**

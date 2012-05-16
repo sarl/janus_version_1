@@ -45,14 +45,14 @@ extends AbstractRepository<ID,DATA> {
 	/**
 	 */
 	public HashRepository() {
-		this.content = new HashMap<ID,DATA>();
+		this.content = new HashMap<>();
 	}
 	
 	/**
      * @param initialCapacity is the initial capacity.
 	 */
 	public HashRepository(int initialCapacity) {
-		this.content = new HashMap<ID,DATA>(initialCapacity);
+		this.content = new HashMap<>(initialCapacity);
 	}
 
 	/**
@@ -60,7 +60,7 @@ extends AbstractRepository<ID,DATA> {
 	 */
 	@Override
 	protected SizedIterator<Entry<ID,DATA>> getEntryIterator() {
-		return new ModifiableCollectionSizedIterator<Entry<ID,DATA>>(
+		return new ModifiableCollectionSizedIterator<>(
 				this.content.entrySet(),
 				this);
 	}

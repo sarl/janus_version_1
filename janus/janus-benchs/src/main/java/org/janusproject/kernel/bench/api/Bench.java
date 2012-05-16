@@ -55,7 +55,7 @@ public abstract class Bench<R extends BenchRun> {
 	private int nbTests = BenchConstants.DEFAULT_TEST_NUMBER;
 	private int nbRuns = BenchConstants.DEFAULT_RUN_NUMBER;
 	
-	private final List<R> runs = new LinkedList<R>();
+	private final List<R> runs = new LinkedList<>();
 	
 	private R currentRun = null;
 	
@@ -255,7 +255,7 @@ public abstract class Bench<R extends BenchRun> {
 	 */
 	public final void runBenchs(float taskStart, float taskSize) throws Exception {
 		// Retreive the hierarchy of classes.
-		List<Class<?>> classes = new LinkedList<Class<?>>();
+		List<Class<?>> classes = new LinkedList<>();
 		{
 			Class<?> type = getClass();
 			while (type!=null && !type.equals(Bench.class)) {
@@ -268,7 +268,7 @@ public abstract class Bench<R extends BenchRun> {
 		
 		initialize();
 		
-		List<Method> benchMethods = new ArrayList<Method>(); 
+		List<Method> benchMethods = new ArrayList<>(); 
 		for(Class<?> type : classes) {
 			for(Method method : type.getDeclaredMethods()) {
 				if (method.getName().startsWith(PREFIX)) {

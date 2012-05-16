@@ -53,7 +53,7 @@ public class BufferedLinkedListMailbox extends LinkedListMailbox implements Buff
 	 * Create mailbox manager.
 	 */
 	public BufferedLinkedListMailbox() {
-		this.buffer = new LinkedList<Message>();
+		this.buffer = new LinkedList<>();
 	}
 
 	/**

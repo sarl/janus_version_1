@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.demo.jruby.market.selective.Launcher;
-import org.janusproject.jrubyengine.RubyExecutionScriptContext;
+import org.janusproject.jrubyengine.RubyExecutionContext;
 import org.janusproject.kernel.agent.KernelAgentFactory;
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.mmf.JanusApplication;
@@ -49,7 +49,6 @@ import org.osgi.framework.BundleContext;
  */
 public class JRubySelectiveMarketActivator implements BundleActivator, JanusApplication {
 
-	private static final String RubyScriptPath = Launcher.class.getClassLoader().getResource("org/janusproject/demo/jruby/market/selective/").getPath(); //$NON-NLS-1$
 	private Logger logger;
 
 	/**
@@ -78,8 +77,8 @@ public class JRubySelectiveMarketActivator implements BundleActivator, JanusAppl
 	public Status start(KernelService kernel) {
 		this.logger.log(Level.INFO, Locale.getString(JRubySelectiveMarketActivator.class, "MARKET_START")); //$NON-NLS-1$
 
-		RubyExecutionScriptContext resc = new RubyExecutionScriptContext();
-		resc.runScriptFromPath(RubyScriptPath, "launcher.rb"); //$NON-NLS-1$ 
+		RubyExecutionContext resc = new RubyExecutionContext();
+		resc.runScript(Launcher.LAUNCHING_SCRIPT); 
 
 		return StatusFactory.ok(this);
 	}

@@ -42,7 +42,7 @@ public class SafeIterator3Test extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.iterator = new SafeIterator<Integer>();
+		this.iterator = new SafeIterator<>();
 	}
 	
 	/**

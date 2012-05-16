@@ -197,7 +197,7 @@ public class Benchs {
 
 	@SafeVarargs
 	private static List<Class<? extends Bench<?>>> selectBenchs(Class<? extends Bench<?>>... benchs) {
-		List<Class<? extends Bench<?>>> benchsToRun = new ArrayList<Class<? extends Bench<?>>>();
+		List<Class<? extends Bench<?>>> benchsToRun = new ArrayList<>();
 		SelectionGUI gui = new SelectionGUI(benchs);
 		gui.setVisible(true);
 		if (gui.isJei()) {
@@ -367,8 +367,8 @@ public class Benchs {
 			setPreferredSize(new Dimension(600, 600));
 			setLayout(new BorderLayout());
 			setModal(true);
-			this.model = new DefaultListModel<Class<? extends Bench<?>>>();
-			this.list = new JList<Class<? extends Bench<?>>>(this.model);
+			this.model = new DefaultListModel<>();
+			this.list = new JList<>(this.model);
 			add(BorderLayout.CENTER, new JScrollPane(this.list));
 			this.list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			this.list.setCellRenderer(new SelectionRenderer());
@@ -505,7 +505,7 @@ public class Benchs {
 		 */
 		@SuppressWarnings("synthetic-access")
 		@Override
-		public Component getListCellRendererComponent(JList list, Object value,
+		public Component getListCellRendererComponent(JList<?> list, Object value,
 				int index, boolean isSelected, boolean cellHasFocus) {
 			JLabel label = (JLabel)super.getListCellRendererComponent(list, value, index, isSelected,
 					cellHasFocus);

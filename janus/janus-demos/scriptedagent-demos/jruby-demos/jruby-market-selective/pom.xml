@@ -106,11 +106,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
-			<artifactId>jrubyjanusextensions</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.janus-project.demos</groupId>
 			<artifactId>market-selective</artifactId>
 		</dependency>

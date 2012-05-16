@@ -71,7 +71,7 @@ public class Utils {
 	 * @return a list of file correspodning to the dependencies of the specfied set of artifacts
 	 */
 	public static Set<File> getOsgiDependencyFiles(Log log, Set<Artifact> artifacts, List<String> excludedArtifacts) {
-		Set<File> result = new HashSet<File>();
+		Set<File> result = new HashSet<>();
 		Iterator<Artifact> i = artifacts.iterator();
 		Artifact a;
 		

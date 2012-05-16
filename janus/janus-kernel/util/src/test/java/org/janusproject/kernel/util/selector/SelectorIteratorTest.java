@@ -46,7 +46,7 @@ public class SelectorIteratorTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.collection = new ArrayList<Integer>();
+		this.collection = new ArrayList<>();
 		this.m1 = 1;
 		this.m2 = 10;
 		this.m3 = 5;
@@ -56,7 +56,7 @@ public class SelectorIteratorTest extends TestCase {
 		this.collection.add(this.m3);
 		this.collection.add(this.m4);
 		this.selector = new OddSelector();
-		this.iterator = new SelectorIterator<Integer>(this.selector, this.collection.iterator());
+		this.iterator = new SelectorIterator<>(this.selector, this.collection.iterator());
 	}
 	
 	/**

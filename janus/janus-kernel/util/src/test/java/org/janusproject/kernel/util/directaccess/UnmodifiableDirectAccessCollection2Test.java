@@ -45,7 +45,7 @@ public class UnmodifiableDirectAccessCollection2Test extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.original = new AsynchronousThreadSafeCollection<Integer>(Integer.class);
+		this.original = new AsynchronousThreadSafeCollection<>(Integer.class);
 		this.m1 = 1;
 		this.m2 = 10;
 		this.m3 = 5;
@@ -57,7 +57,7 @@ public class UnmodifiableDirectAccessCollection2Test extends TestCase {
 		this.original.add(this.m3);
 		this.original.add(this.m4);
 		this.original.applyChanges(true);
-		this.collection = new UnmodifiableDirectAccessCollection<Integer>(this.original);
+		this.collection = new UnmodifiableDirectAccessCollection<>(this.original);
 	}
 	
 	/**

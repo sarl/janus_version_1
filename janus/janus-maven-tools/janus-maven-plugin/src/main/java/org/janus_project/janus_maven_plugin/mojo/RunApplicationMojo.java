@@ -85,7 +85,7 @@ public class RunApplicationMojo extends AbstractJanusModuleMojo {
 		File binForCmd = new File(binDir, launcherFileName);
 
 		try {
-			List<String> params = new ArrayList<String>();
+			List<String> params = new ArrayList<>();
 			
 			Properties props = System.getProperties();
 			String propValue;

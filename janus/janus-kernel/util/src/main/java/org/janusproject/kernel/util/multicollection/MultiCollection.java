@@ -42,7 +42,7 @@ import java.util.NoSuchElementException;
 public class MultiCollection<E>
 implements Collection<E> {
 	
-	private final List<Collection<? extends E>> collections = new ArrayList<Collection<? extends E>>();
+	private final List<Collection<? extends E>> collections = new ArrayList<>();
 	
 	/**
 	 */
@@ -131,7 +131,7 @@ implements Collection<E> {
 	 */
 	@Override
 	public Iterator<E> iterator() {
-		return new MultiIterator<E>(this.collections.iterator());
+		return new MultiIterator<>(this.collections.iterator());
 	}
 
 	/**

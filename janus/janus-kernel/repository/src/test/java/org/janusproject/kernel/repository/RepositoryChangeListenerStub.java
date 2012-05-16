@@ -36,7 +36,7 @@ import org.janusproject.kernel.repository.RepositoryChangeEvent.ChangeType;
  */
 class RepositoryChangeListenerStub implements RepositoryChangeListener {
 
-	private final List<RepositoryChangeEvent> lastEvents = new ArrayList<RepositoryChangeEvent>();
+	private final List<RepositoryChangeEvent> lastEvents = new ArrayList<>();
 	
 	/**
 	 */

@@ -46,14 +46,14 @@ extends AbstractRepository<ID,DATA> {
 	/**
 	 */
 	public TreeRepository() {
-		this.content = new TreeMap<ID,DATA>();
+		this.content = new TreeMap<>();
 	}
 	
 	/**
 	 * @param comparator is the object used to organize the tree map.
 	 */
 	public TreeRepository(Comparator<? super ID> comparator) {
-		this.content = new TreeMap<ID,DATA>(comparator);
+		this.content = new TreeMap<>(comparator);
 	}
 
 	/**
@@ -61,7 +61,7 @@ extends AbstractRepository<ID,DATA> {
 	 */
 	@Override
 	protected SizedIterator<Entry<ID,DATA>> getEntryIterator() {
-		return new ModifiableCollectionSizedIterator<Entry<ID,DATA>>(
+		return new ModifiableCollectionSizedIterator<>(
 				this.content.entrySet(),
 				this);
 	}

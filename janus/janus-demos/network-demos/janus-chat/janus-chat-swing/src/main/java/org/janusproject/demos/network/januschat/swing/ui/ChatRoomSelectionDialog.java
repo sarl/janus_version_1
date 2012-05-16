@@ -70,8 +70,8 @@ public class ChatRoomSelectionDialog extends JDialog implements ActionListener {
 		setModal(true);
 		setTitle(Locale.getString(ChatRoomSelectionDialog.class, "TITLE")); //$NON-NLS-1$
 
-		this.model = new DefaultListModel<GroupAddress>();
-		this.list = new JList<GroupAddress>(this.model);
+		this.model = new DefaultListModel<>();
+		this.list = new JList<>(this.model);
 		this.list.setCellRenderer(new RoomRenderer());
 		JScrollPane scrollPane = new JScrollPane(this.list);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -141,7 +141,7 @@ public class ChatRoomSelectionDialog extends JDialog implements ActionListener {
 		 */
 		@Override
 		public Component getListCellRendererComponent(
-				JList list, Object value,
+				JList<?> list, Object value,
 				int index, boolean isSelected, boolean cellHasFocus) {
 			JLabel component = (JLabel)super.getListCellRendererComponent(
 					list, value, index, isSelected,

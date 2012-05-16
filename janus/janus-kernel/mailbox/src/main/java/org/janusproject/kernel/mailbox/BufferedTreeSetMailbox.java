@@ -52,7 +52,7 @@ public class BufferedTreeSetMailbox extends TreeSetMailbox implements BufferedMa
 	 * Create mailbox manager.
 	 */
 	public BufferedTreeSetMailbox() {
-		this.buffer = new LinkedList<Message>();
+		this.buffer = new LinkedList<>();
 	}
 
 	/**

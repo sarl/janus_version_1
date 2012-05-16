@@ -84,7 +84,7 @@ public class PrivateMessageDialog extends JDialog implements ActionListener {
 			receiverNameLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 			topPane.add(receiverNameLabel);
 			
-			this.receiver = new JComboBox<AgentAddress>();
+			this.receiver = new JComboBox<>();
 			this.receiver.setEditable(false);
 			topPane.add(this.receiver);
 						

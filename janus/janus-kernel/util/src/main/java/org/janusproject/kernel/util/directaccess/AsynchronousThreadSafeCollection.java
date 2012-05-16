@@ -60,13 +60,13 @@ implements DirectAccessCollection<E> {
 
 	private final Class<E> elementType;
 	private final List<E> currentElements;
-	private final List<E> addedElements = new ArrayList<E>();
-	private final List<E> removedElements = new ArrayList<E>();
+	private final List<E> addedElements = new ArrayList<>();
+	private final List<E> removedElements = new ArrayList<>();
 	private boolean clearedListFlag = false;
 	private boolean autoApply = true;
 	private boolean isSet = false;
 	
-	private final Set<SafeIterator<E>> iterators = new TreeSet<SafeIterator<E>>(GenericComparator.SINGLETON);
+	private final Set<SafeIterator<E>> iterators = new TreeSet<>(GenericComparator.SINGLETON);
 	
 	private final Comparator<? super E> elementComparator;
 	
@@ -87,7 +87,7 @@ implements DirectAccessCollection<E> {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public AsynchronousThreadSafeCollection(Class<E> type, Comparator<? super E> comparator) {
 		assert(type!=null);
-		this.currentElements = new ArrayList<E>();
+		this.currentElements = new ArrayList<>();
 		this.elementType = type;
 		if (comparator==null) {
 			if (Comparable.class.isAssignableFrom(type)) {
@@ -120,9 +120,9 @@ implements DirectAccessCollection<E> {
 	public AsynchronousThreadSafeCollection(Class<E> type, E element, Comparator<? super E> comparator) {
 		this.elementType = type;
 		if (element!=null)
-			this.currentElements = new ArrayList<E>(Collections.singleton(element));
+			this.currentElements = new ArrayList<>(Collections.singleton(element));
 		else
-			this.currentElements = new ArrayList<E>();
+			this.currentElements = new ArrayList<>();
 		if (comparator==null) {
 			if (Comparable.class.isAssignableFrom(type)) {
 				this.elementComparator = new ComparableComparator();
@@ -143,9 +143,9 @@ implements DirectAccessCollection<E> {
 	public AsynchronousThreadSafeCollection(Class<E> type, Collection<? extends E> collection) {
 		this.elementType = type;
 		if (collection==null)
-			this.currentElements = new ArrayList<E>();
+			this.currentElements = new ArrayList<>();
 		else
-			this.currentElements = new ArrayList<E>(collection);
+			this.currentElements = new ArrayList<>(collection);
 		this.elementComparator = null;
 	}
 	
@@ -164,7 +164,7 @@ implements DirectAccessCollection<E> {
 	 */
 	public synchronized void addAsynchronousThreadSafeCollectionListener(AsynchronousThreadSafeCollectionListener<E> listener) {
 		if (this.listeners==null)
-			this.listeners = new ListenerCollection<AsynchronousThreadSafeCollectionListener<E>>();
+			this.listeners = new ListenerCollection<>();
 		this.listeners.add(AsynchronousThreadSafeCollectionListener.class, listener);
 	}
 	
@@ -363,7 +363,7 @@ implements DirectAccessCollection<E> {
 			this.clearedListFlag = true;
 		}
 		else if (!this.currentElements.isEmpty()) {
-			List<E> removed = new ArrayList<E>(this.currentElements);
+			List<E> removed = new ArrayList<>(this.currentElements);
 			this.currentElements.clear();
 			changed = true;
 			fireRemoval(removed);
@@ -643,7 +643,7 @@ implements DirectAccessCollection<E> {
 	 */
 	@Override
 	public SafeIterator<E> iterator() {
-		return new SafeIterator<E>(this, this.currentElements.iterator());
+		return new SafeIterator<>(this, this.currentElements.iterator());
 	}
 		
 	/** Apply registered changes in the current content.
@@ -669,8 +669,8 @@ implements DirectAccessCollection<E> {
 		
 		if (force || !isIterated()) {
 
-			List<E> addition = new ArrayList<E>();
-			List<E> removal = new ArrayList<E>();
+			List<E> addition = new ArrayList<>();
+			List<E> removal = new ArrayList<>();
 			
 			if (this.clearedListFlag) {
 				removal.addAll(this.currentElements);

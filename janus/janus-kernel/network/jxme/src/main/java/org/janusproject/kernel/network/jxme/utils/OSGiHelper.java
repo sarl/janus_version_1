@@ -41,7 +41,7 @@ import org.osgi.framework.BundleContext;
  */
 public class OSGiHelper {
 
-	private Map<String, Class<?>> cache = new HashMap<String, Class<?>>();
+	private Map<String, Class<?>> cache = new HashMap<>();
 	private BundleContext context = null;
 
 	/**

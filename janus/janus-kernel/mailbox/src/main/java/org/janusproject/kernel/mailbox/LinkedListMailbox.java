@@ -78,7 +78,7 @@ public class LinkedListMailbox extends AbstractMailbox {
 	public LinkedListMailbox(Comparator<? super Message> comparator) {
 		if (comparator==null) this.messageComparator = CreationDateMessageComparator.SINGLETON;
 		else this.messageComparator = comparator;
-		this.inbox = new LinkedList<Message>();
+		this.inbox = new LinkedList<>();
 	}
 	
 	/**
@@ -269,7 +269,7 @@ public class LinkedListMailbox extends AbstractMailbox {
 	@Override
 	public Iterator<Message> iterator(boolean consumeMails) {
 		if (consumeMails)
-			return new AutoremoveIterator<Message>(this.inbox.iterator());
+			return new AutoremoveIterator<>(this.inbox.iterator());
 		return this.inbox.iterator();
 	}
 
@@ -279,8 +279,8 @@ public class LinkedListMailbox extends AbstractMailbox {
 	@Override
 	public Iterator<Message> iterator(Selector<? super Message> selector, boolean consumeMails) {
 		if (consumeMails)
-			return new AutoremoveSelectorIterator<Message>(selector, this.inbox.iterator());
-		return new SelectorIterator<Message>(selector, this.inbox.iterator());
+			return new AutoremoveSelectorIterator<>(selector, this.inbox.iterator());
+		return new SelectorIterator<>(selector, this.inbox.iterator());
 	}
 
 	/**

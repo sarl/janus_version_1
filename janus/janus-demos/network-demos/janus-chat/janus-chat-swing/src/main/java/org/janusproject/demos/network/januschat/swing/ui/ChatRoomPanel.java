@@ -83,7 +83,7 @@ public class ChatRoomPanel extends JPanel implements ActionListener, MouseListen
 	 */
 	public ChatRoomPanel(GroupAddress chatroom, ChatChannel chatChannel) {
 		this.chatroom = chatroom;
-		this.chatChannel = new WeakReference<ChatChannel>(chatChannel);
+		this.chatChannel = new WeakReference<>(chatChannel);
 
 		this.chatChannel.get().addIncomingPrivateMessageListener(this);
 		
@@ -111,8 +111,8 @@ public class ChatRoomPanel extends JPanel implements ActionListener, MouseListen
 		sendBt.addActionListener(this);
 		sendToolPane.add(sendBt);
 		
-		this.participants = new DefaultListModel<AgentAddress>();
-		this.participantList = new JList<AgentAddress>(this.participants);
+		this.participants = new DefaultListModel<>();
+		this.participantList = new JList<>(this.participants);
 		this.participantList.setCellRenderer(new ParticipantRenderer());
 		this.participantList.addMouseListener(this);
 		scrollPane = new JScrollPane(this.participantList);
@@ -318,7 +318,7 @@ public class ChatRoomPanel extends JPanel implements ActionListener, MouseListen
 		 */
 		@Override
 		public Component getListCellRendererComponent(
-				JList list, Object value,
+				JList<?> list, Object value,
 				int index, boolean isSelected, boolean cellHasFocus) {
 			JLabel component = (JLabel)super.getListCellRendererComponent(
 					list, value, index, isSelected,

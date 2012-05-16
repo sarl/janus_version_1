@@ -35,7 +35,6 @@ import org.janusproject.kernel.crio.core.CRIOContext;
 import org.janusproject.kernel.crio.core.PrivilegedPlayerAddressService;
 import org.janusproject.kernel.crio.interaction.PrivilegedMessageTransportService;
 import org.janusproject.kernel.crio.organization.PrivilegedPersistentGroupCleanerService;
-import org.janusproject.kernel.schedule.PrivilegedJanusThreadExecutor;
 import org.janusproject.kernel.time.KernelTimeManager;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
 import org.janusproject.kernel.util.sizediterator.UnmodifiableSizedIterator;
@@ -50,6 +49,12 @@ import org.janusproject.kernel.util.sizediterator.UnmodifiableSizedIterator;
  */
 public class KernelContext extends CRIOContext {
 
+	/** Number of threads to keep in the scheduled thread pool.
+	 * Note that a value of zero causes pseudo-infinite loop in the allocation
+	 * and release of the threads.
+	 */
+	public static final int NUMBER_OF_IDDLE_THREAD_IN_SCHEDULED_THREAD_POOL = 2;
+	
 	private final ExecutorService executionService = new ThreadPoolExecutor(
 			1, // Min number of threads in pool size, even if iddle
 			Short.MAX_VALUE, // Max pool size
@@ -70,7 +75,6 @@ public class KernelContext extends CRIOContext {
 	
 	private final PrivilegedMessageTransportService privilegedMTS;
 	private final PrivilegedJanusPropertySetter privilegedJPS;
-	private final PrivilegedJanusThreadExecutor privilegedTES;
 	private final PrivilegedPersistentGroupCleanerService privilegedPGC;
 	private final PrivilegedPlayerAddressService privilegedPA;
 
@@ -114,12 +118,8 @@ public class KernelContext extends CRIOContext {
 		super(kernelAgent.getUUID(), tm, distantKernelHandler, privilegedServiceListener);
 		this.kernel = kernelAgent;
 
-		PrivilegedExecutorService pes = new PrivilegedExecutorService();
-		privilegedServiceListener.setPrivilegedThreadExecutorService(pes);
-		
 		this.privilegedMTS = privilegedServiceListener.getPrivilegedMessageTransportService();
 		this.privilegedJPS = privilegedServiceListener.getPrivilegedJanusPropertySetter();
-		this.privilegedTES = privilegedServiceListener.getPrivilegedThreadExecutorService();
 		this.privilegedPGC = privilegedServiceListener.getPrivilegedPersistentGroupCleanerService();
 		this.privilegedPA = privilegedServiceListener.getPrivilegedPlayerAddressService();
 	}
@@ -178,7 +178,7 @@ public class KernelContext extends CRIOContext {
 	 * 
 	 * @return the executor sevice for agents.
 	 */
-	final ExecutorService getAgentExecutorService() {
+	final ExecutorService getExecutorService() {
 		return this.executionService;
 	}
 
@@ -189,10 +189,10 @@ public class KernelContext extends CRIOContext {
 	 * 
 	 * @return a scheduled executor service.
 	 */
-	final ScheduledExecutorService getScheduledExecutorService() {
+	public final ScheduledExecutorService getScheduledExecutorService() {
 		if (this.scheduledExecutionService == null)
 			this.scheduledExecutionService = Executors
-					.newScheduledThreadPool(0);
+					.newScheduledThreadPool(NUMBER_OF_IDDLE_THREAD_IN_SCHEDULED_THREAD_POOL);
 		return this.scheduledExecutionService;
 	}
 
@@ -211,7 +211,7 @@ public class KernelContext extends CRIOContext {
 	 * @since 0.4
 	 */
 	public final SizedIterator<AgentAddress> getLocalAgents() {
-		return new UnmodifiableSizedIterator<AgentAddress>(this.agents.sizedIterator());
+		return new UnmodifiableSizedIterator<>(this.agents.sizedIterator());
 	}
 
 	/**
@@ -308,15 +308,6 @@ public class KernelContext extends CRIOContext {
 		return this.privilegedJPS;
 	}
 
-	/** Replies the privileged Janus thread executor.
-	 * 
-	 * @return the privileged Janus thread executor.
-	 * @since 0.4
-	 */
-	PrivilegedJanusThreadExecutor getPrivilegedJanusThreadExecutor() {
-		return this.privilegedTES;
-	}
-
 	/** Replies the privileged cleaner of persistent groups.
 	 * 
 	 * @return the privileged cleaner.
@@ -325,67 +316,6 @@ public class KernelContext extends CRIOContext {
 	PrivilegedPersistentGroupCleanerService getPrivilegedJanusPersistentGroupCleaner() {
 		return this.privilegedPGC;
 	}
-
-	/**
-	 * This class provides privilegied access to restricted-access kernel features. 
-	 * 
-	 * @author $Author: sgalland$
-	 * @version $FullVersion$
-	 * @mavengroupid $GroupId$
-	 * @mavenartifactid $ArtifactId$
-	 * @since 0.4
-	 */
-	protected interface PrivilegedContext extends CRIOContext.PrivilegedContext {
-		
-		/** Invoked to provide a privileged thread executor service.
-		 * 
-		 * @param tes is the privileged service.
-		 */
-		public void setPrivilegedThreadExecutorService(PrivilegedJanusThreadExecutor tes);
-
-		/** Replies a privileged thread executor service.
-		 * 
-		 * @return the privileged service.
-		 * @since 0.4
-		 */
-		public PrivilegedJanusThreadExecutor getPrivilegedThreadExecutorService();
-
-	}
-
-	/**
-	 * Provides of a privileged access to executor services.
-	 * 
-	 * @author $Author: sgalland$
-	 * @version $FullVersion$
-	 * @mavengroupid $GroupId$
-	 * @mavenartifactid $ArtifactId$
-	 * @since 0.4
-	 */
-	private class PrivilegedExecutorService implements PrivilegedJanusThreadExecutor {
-		
-		/**
-		 */
-		public PrivilegedExecutorService() {
-			//
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public ExecutorService getExecutorService() {
-			return KernelContext.this.getAgentExecutorService();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public ScheduledExecutorService getScheduledExecutorService() {
-			return KernelContext.this.getScheduledExecutorService();
-		}
-		
-	} // class PrivilegedExecutorService
 
 	/**
 	 * This class represents an execution context for CRIO classes and Janus kernel.
@@ -399,7 +329,6 @@ public class KernelContext extends CRIOContext {
 
 		private PrivilegedMessageTransportService mts = null;
 		private PrivilegedJanusPropertySetter jps = null;
-		private PrivilegedJanusThreadExecutor tes = null;
 		private PrivilegedPersistentGroupCleanerService pgc = null;
 		private PrivilegedPlayerAddressService pa = null;
 
@@ -429,24 +358,8 @@ public class KernelContext extends CRIOContext {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void setPrivilegedThreadExecutorService(PrivilegedJanusThreadExecutor tes) {
-			this.tes = tes;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
 		public void setPrivilegedPersistentGroupCleanerService(PrivilegedPersistentGroupCleanerService pgc) {
 			this.pgc = pgc;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public PrivilegedJanusThreadExecutor getPrivilegedThreadExecutorService() {
-			return this.tes;
 		}
 
 		/**

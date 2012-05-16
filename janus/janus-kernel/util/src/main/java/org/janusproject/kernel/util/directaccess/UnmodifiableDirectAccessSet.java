@@ -94,7 +94,7 @@ implements DirectAccessCollection<M> {
 	 */
 	@Override
 	public SafeIterator<M> iterator() {
-		return new SafeIterator<M>(this.originalCollection.iterator());
+		return new SafeIterator<>(this.originalCollection.iterator());
 	}
 
 	/**

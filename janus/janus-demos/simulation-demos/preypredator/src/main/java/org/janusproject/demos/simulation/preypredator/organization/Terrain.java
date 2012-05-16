@@ -97,7 +97,7 @@ public class Terrain extends Role {
 	private int awaitingAgents = 0;
 	private int width;
 	private int height;
-	private final Map<AgentAddress,MoveDirection> awaitingMessages = new TreeMap<AgentAddress,MoveDirection>();
+	private final Map<AgentAddress,MoveDirection> awaitingMessages = new TreeMap<>();
 
 	/**
 	 */
@@ -190,14 +190,14 @@ public class Terrain extends Role {
 				// All agents have sent messages
 
 				// Compute desired positions
-				Map<AgentAddress, WorldState> desiredPositions = new TreeMap<AgentAddress,WorldState>();
+				Map<AgentAddress, WorldState> desiredPositions = new TreeMap<>();
 				for (Entry<AgentAddress,MoveDirection> entry : this.awaitingMessages.entrySet()) {
 					desiredPositions.put(entry.getKey(), 
 							predictMove(entry.getKey(), entry.getValue(), locations));
 				}
 					
 				// Detect conflicts
-				Map<WorldState, Set<AgentAddress>> conflicts = new HashMap<WorldState,Set<AgentAddress>>();
+				Map<WorldState, Set<AgentAddress>> conflicts = new HashMap<>();
 				for (Entry<AgentAddress,WorldState> entry1 : desiredPositions.entrySet()) {
 					for (Entry<AgentAddress,WorldState> entry2 : desiredPositions.entrySet()) {
 						if (!entry1.getKey().equals(entry2.getKey())) {
@@ -205,7 +205,7 @@ public class Terrain extends Role {
 								// Conflit
 								Set<AgentAddress> conflictedAgents = conflicts.get(entry1.getValue());
 								if (conflictedAgents==null) {
-									conflictedAgents = new HashSet<AgentAddress>();
+									conflictedAgents = new HashSet<>();
 									conflicts.put(entry1.getValue(), conflictedAgents);
 								}
 								conflictedAgents.add(entry1.getKey());

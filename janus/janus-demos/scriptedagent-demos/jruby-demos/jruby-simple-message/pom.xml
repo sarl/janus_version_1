@@ -107,11 +107,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
-			<artifactId>jrubyjanusextensions</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.janus-project.kernel</groupId>
 			<artifactId>osgi</artifactId>
 		</dependency>

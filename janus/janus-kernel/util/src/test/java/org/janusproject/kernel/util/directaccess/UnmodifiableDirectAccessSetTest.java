@@ -49,7 +49,7 @@ public class UnmodifiableDirectAccessSetTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.original = new TreeSet<Integer>();
+		this.original = new TreeSet<>();
 		this.m1 = 1;
 		this.m2 = 10;
 		this.m3 = 5;
@@ -60,7 +60,7 @@ public class UnmodifiableDirectAccessSetTest extends TestCase {
 		this.original.add(this.m2);
 		this.original.add(this.m3);
 		this.original.add(this.m4);
-		this.set = new UnmodifiableDirectAccessSet<Integer>(this.original);
+		this.set = new UnmodifiableDirectAccessSet<>(this.original);
 	}
 	
 	/**
@@ -200,17 +200,17 @@ public class UnmodifiableDirectAccessSetTest extends TestCase {
     /**
      */
     public void testContainsAll() {
-    	List<Integer> l = new ArrayList<Integer>();
+    	List<Integer> l = new ArrayList<>();
     	l.add(this.m1);
     	l.add(this.m2);
     	assertTrue(this.set.containsAll(l));
 
-    	l = new ArrayList<Integer>();
+    	l = new ArrayList<>();
     	l.add(this.m1);
     	l.add(this.m5);
     	assertTrue(this.set.containsAll(l));
 
-    	l = new ArrayList<Integer>();
+    	l = new ArrayList<>();
     	l.add(this.m1);
     	l.add(this.m6);
     	assertFalse(this.set.containsAll(l));

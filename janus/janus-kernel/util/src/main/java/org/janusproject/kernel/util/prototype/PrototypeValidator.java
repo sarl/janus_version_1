@@ -199,7 +199,7 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 	private AT searchFirstPrototypeInClassHierarchy(
 			Class<? extends MT> objectToTest) {
 		AT proto;
-		List<Class<? extends MT>> candidates = new LinkedList<Class<? extends MT>>();
+		List<Class<? extends MT>> candidates = new LinkedList<>();
 		Class<? extends MT> type;
 		Class<?> parent;
 		Class<?>[] superTypes;

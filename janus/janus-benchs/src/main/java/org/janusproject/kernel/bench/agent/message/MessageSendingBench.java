@@ -84,7 +84,7 @@ public class MessageSendingBench extends CsvBench<AgentNumberBenchRun> {
 		LoggerUtil.setLoggingEnable(false);
 		Kernel kernel = Kernels.create();
 		
-		List<AgentAddress> addr = new ArrayList<AgentAddress>();
+		List<AgentAddress> addr = new ArrayList<>();
 		
 		AtomicInteger nbLaunchedAgents = new AtomicInteger(0);
 		

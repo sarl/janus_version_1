@@ -48,7 +48,7 @@ public class ActivatorAgentTest extends TestCase {
 
 	private KernelAgent kernel;
 	private ActivatorAgent<AgentActivator> agent;
-	
+
 	/**
 	 * @throws Exception
 	 */
@@ -58,10 +58,10 @@ public class ActivatorAgentTest extends TestCase {
 		LoggerUtil.setGlobalLevel(Level.OFF);
 		Kernels.shutdownNow();
 		this.kernel = new KernelAgent(new AgentActivator(), true, null, null);
-		this.agent = new ActivatorAgent<AgentActivator>(new AgentActivator());
-		this.agent.kernel = new WeakReference<KernelAgent>(this.kernel);
+		this.agent = new ActivatorAgent<>(new AgentActivator());
+		this.agent.kernel = new WeakReference<>(this.kernel);
 	}
-	
+
 	/**
 	 * @throws Exception
 	 */
@@ -73,9 +73,9 @@ public class ActivatorAgentTest extends TestCase {
 		Kernels.shutdownNow();
 		super.tearDown();
 	}
-	
+
 	private void bindToKernel(Agent h) {
-	h.kernel = new WeakReference<KernelAgent>(this.kernel);
+		h.kernel = new WeakReference<>(this.kernel);
 		this.kernel.getKernelContext().getAgentRepository().add(h.getAddress(), h);
 	}
 
@@ -83,7 +83,7 @@ public class ActivatorAgentTest extends TestCase {
 		if (expected==actual) return;
 		if (expected!=null && actual!=null && expected.size()==actual.size()) {
 			try {
-				ArrayList<Object> obj = new ArrayList<Object>(actual);
+				ArrayList<Object> obj = new ArrayList<>(actual);
 				Iterator<?> iterator = expected.iterator();
 				boolean failure = false;
 				Object o1;
@@ -110,7 +110,7 @@ public class ActivatorAgentTest extends TestCase {
 		assertNotNull(s = this.agent.getActivator());
 		assertSame(s, this.agent.getActivator());
 	}
-	
+
 	/**
 	 */
 	public void testGetInitializationParameters() {
@@ -119,34 +119,34 @@ public class ActivatorAgentTest extends TestCase {
 				Arrays.asList(1, 2, 3),
 				Arrays.asList(this.agent.getInitializationParameters()));
 	}
-	
+
 	/**
 	 */
 	public void testIsSelfKillableNow_notSuicidal() {
 		AgentStub ag = new AgentStub(false);
 		bindToKernel(ag);
-		
+
 		ag.proceedPrivateInitialization();
 
 		assertFalse(ag.canCommitSuicide());
 		assertFalse(ag.isSelfKillableNow());
-		
+
 		for(int i=0; i<5; i++) ag.live();
-		
+
 		assertFalse(ag.canCommitSuicide());
 		assertFalse(ag.isSelfKillableNow());
-		
+
 		ag.requestTestRole();
 		for(int i=0; i<5; i++) ag.live();
-		
+
 		assertFalse(ag.canCommitSuicide());
 		assertFalse(ag.isSelfKillableNow());
-		
+
 		Agent ag2 = new Agent();
 		bindToKernel(ag2);
 		ag.activator.addAgent(ag2);
 		for(int i=0; i<5; i++) ag.live();
-		
+
 		assertFalse(ag.canCommitSuicide());
 		assertFalse(ag.isSelfKillableNow());
 
@@ -168,28 +168,28 @@ public class ActivatorAgentTest extends TestCase {
 	public void testIsSelfKillableNow_suicidal() {
 		AgentStub ag = new AgentStub(true);
 		bindToKernel(ag);
-		
+
 		ag.proceedPrivateInitialization();
 
 		assertTrue(ag.canCommitSuicide());
 		assertFalse(ag.isSelfKillableNow());
-		
+
 		for(int i=0; i<5; i++) ag.live();
-		
+
 		assertTrue(ag.canCommitSuicide());
 		assertFalse(ag.isSelfKillableNow());
-		
+
 		ag.requestTestRole();
 		for(int i=0; i<5; i++) ag.live();
-		
+
 		assertTrue(ag.canCommitSuicide());
 		assertFalse(ag.isSelfKillableNow());
-		
+
 		Agent ag2 = new Agent();
 		bindToKernel(ag2);
 		ag.activator.addAgent(ag2);
 		for(int i=0; i<5; i++) ag.live();
-		
+
 		assertTrue(ag.canCommitSuicide());
 		assertFalse(ag.isSelfKillableNow());
 
@@ -207,7 +207,7 @@ public class ActivatorAgentTest extends TestCase {
 
 		ag.requestTestRole();
 		for(int i=0; i<5; i++) ag.live();
-		
+
 		assertTrue(ag.canCommitSuicide());
 		assertFalse(ag.isSelfKillableNow());
 
@@ -229,17 +229,17 @@ public class ActivatorAgentTest extends TestCase {
 		private static final long serialVersionUID = 4510410418205108880L;
 
 		private GroupAddress group = null;
-		
+
 		/** Activator. */
 		public final AgentActivator activator;
-		
+
 		/**
 		 * @param commitSuicide
 		 */
 		public AgentStub(boolean commitSuicide) {
 			this(new AgentActivator(), commitSuicide);
 		}
-		
+
 		/**
 		 * @param activator
 		 * @param commitSuicide
@@ -272,7 +272,7 @@ public class ActivatorAgentTest extends TestCase {
 				}
 			}));
 		}
-		
+
 		/**
 		 */
 		public void leaveTestRole() {
@@ -280,7 +280,7 @@ public class ActivatorAgentTest extends TestCase {
 			assertTrue(leaveRole(RoleStub.class, this.group));
 			this.group = null;
 		}
-		
+
 	}
 
 }

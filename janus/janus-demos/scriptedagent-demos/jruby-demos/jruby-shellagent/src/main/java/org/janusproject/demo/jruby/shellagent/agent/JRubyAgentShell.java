@@ -20,14 +20,27 @@
  */
 package org.janusproject.demo.jruby.shellagent.agent;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
+import org.arakhne.vmutil.locale.Locale;
+import org.janusproject.demo.agentshell.base.AgentShellChannel;
+import org.janusproject.demo.agentshell.base.AgentShellChannel.LogListener;
+import org.janusproject.demo.agentshell.base.AgentShellChannel.ResultListener;
 import org.janusproject.jrubyengine.JRubyAgent;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.channels.Channel;
 import org.janusproject.kernel.channels.ChannelInteractable;
 import org.janusproject.kernel.status.Status;
+import org.janusproject.kernel.util.event.ListenerCollection;
 
 /**
  * A simple agent able to execute a Ruby Command or Script
@@ -49,234 +62,210 @@ public class JRubyAgentShell extends JRubyAgent implements ChannelInteractable {
 	 */
 	private final AgentChannelImpl channelImpl = new AgentChannelImpl();
 
-	/**
-	 * the result of the execute command/script
+	/** Buffer for the next command to run.
 	 */
-	private String jRubyCommandResult;
-
-	/**
-	 * command to execute
+	private final List<String> command = new LinkedList<>();
+	
+	/** Buffer for the next command to run.
 	 */
-	private String jRubyCommand;
-
-	/**
-	 * script to execute
+	private final Collection<ResultListener> listeners = new LinkedList<>();
+	
+	/** Buffer for the next script to run.
 	 */
-	private String jRubyScript;
+	private final List<File> scripts = new LinkedList<>();
 
-	/**
-	 * command counter for waiting result
+	/** Listeners on log events.
 	 */
-	private int commandCounter;
-
-	/**
-	 * boolean saying if the agent need to die
-	 */
-	private boolean alive = true;
-
-	/**
-	 * StringWriter for ruby errors output
-	 */
-	private PersonnalWriter errors;
-
-	/**
-	 * StringWriter for ruby "puts" output
-	 */
-	private PersonnalWriter puts;
-
+	private final ListenerCollection<LogListener> logListeners = new ListenerCollection<>();
+	
 	/**
 	 * Default constructor
 	 */
 	public JRubyAgentShell() {
-		super();
-
-		setJRubyCommand(""); //$NON-NLS-1$
-		setJRubyScript(""); //$NON-NLS-1$
-		setJRubyExecutionResult(""); //$NON-NLS-1$
-		
-		setCommandCounter(0);
-		
-		this.errors = new PersonnalWriter();
-		this.puts = new PersonnalWriter();
+		//
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Status activate(Object... parameters) {
+		Status s = super.activate(parameters);
+		getLogger().addHandler(new LogHandler());
+		return s;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public Status live() {
+	public synchronized Status live() {
 		Status s = super.live();
-
 		if (s.isSuccess()) {
-			// Check if something to do from the Shell
-			if (!getJRubyCommand().equals("")) { //$NON-NLS-1$
-				// a command to execute appear
-				this.jRubyCommandResult = runRubyCommand(this.jRubyCommand, this.errors, this.puts) + this.puts.getBuffer() + this.errors.getBuffer();
-				this.errors.getBuffer().setLength(0);// errors.flush() doesn't work
-				this.puts.getBuffer().setLength(0);// puts.flush() doesn't work
-				setCommandCounter(getCommandCounter() + 1);
-				setJRubyCommand(""); //$NON-NLS-1$
+			String r;
+			
+			List<String> results = new ArrayList<>();
+			
+			Iterator<String> commandIterator = this.command.iterator();
+			while (commandIterator.hasNext()) {
+				String cmd = commandIterator.next();
+				commandIterator.remove();
+				r = runCommandAsInteractiveInterpreter(cmd);
+				results.add(cmd);
+				results.add(r);
 			}
-			if (!getJRubyScript().equals("")) { //$NON-NLS-1$
-				// a script to execute appear
-				this.jRubyCommandResult = runScriptFromPath(getJRubyScript(), this.errors, this.puts) + this.puts.getBuffer() + this.errors.getBuffer();
-				this.errors.getBuffer().setLength(0);// errors.flush() doesn't work
-				this.puts.getBuffer().setLength(0);// puts.flush() doesn't work
-				setCommandCounter(getCommandCounter() + 1);
-				setJRubyScript(""); //$NON-NLS-1$
+			
+			Iterator<File> scriptIterator = this.scripts.iterator();
+			while (scriptIterator.hasNext()) {
+				File file = scriptIterator.next();
+				scriptIterator.remove();
+				r = runScriptAsInteractiveInterpreter(file);
+				results.add(Locale.getString(JRubyAgentShell.class, "RUN_SCRIPT_CMD", file.getAbsolutePath())); //$NON-NLS-1$
+				results.add(r);
 			}
-			if (!isLive())
-				// this agent need to die
-				this.killMe();
+
+			Iterator<ResultListener> listenerIterator = this.listeners.iterator();
+			while (listenerIterator.hasNext()) {
+				ResultListener listener = listenerIterator.next();
+				listener.onResultAvailable(results);
+			}
 		}
 		return s;
 	}
 
 	@Override
 	public <C extends Channel> C getChannel(Class<C> type, Object... p) {
-		if (type.isAssignableFrom(AgentChannelImpl.class)) {
-			return type.cast(getChannelImpl());
+		if (type.isAssignableFrom(AgentShellChannel.class)) {
+			return type.cast(this.channelImpl);
 		}
 		return null;
 	}
 
 	@Override
 	public Set<? extends Class<? extends Channel>> getSupportedChannels() {
-		return Collections.singleton(AgentChannelImpl.class);
-	}
-
-	// Accessors
-	/**
-	 * @return the result to send to the IHM
-	 */
-	public String getJRubyExecutionResult() {
-		return this.jRubyCommandResult;
+		return Collections.singleton(AgentShellChannel.class);
 	}
 
 	/**
-	 * @param result - the result comming from execution
+	 * @author $Author: sgalland$
+	 * @author $Author: lcabasson$
+	 * @author $Author: cwintz$
+	 * @author $Author: ngaud$
 	 */
-	public void setJRubyExecutionResult(String result) {
-		this.jRubyCommandResult = result;
-	}
-
-	/**
-	 * @return the cmd
-	 */
-	public String getJRubyCommand() {
-		return this.jRubyCommand;
-	}
-
-	/**
-	 * @param cmd
-	 */
-	public void setJRubyCommand(String cmd) {
-		this.jRubyCommand = cmd;
-	}
-
-	/**
-	 * 
-	 * @return the current JRuby script
-	 */
-	public String getJRubyScript() {
-		return this.jRubyScript;
-	}
-
-	/**
-	 * 
-	 * @param script - the current JRuby script
-	 */
-	public void setJRubyScript(String script) {
-		this.jRubyScript = script;
-	}
-
-	/**
-	 * @return the cptCmd
-	 */
-	public int getCommandCounter() {
-		return this.commandCounter;
-	}
-
-	/**
-	 * @param cmdCounter - the cptCmd to set
-	 */
-	public void setCommandCounter(int cmdCounter) {
-		this.commandCounter = cmdCounter;
-	}
-
-	/**
-	 * 
-	 * @return true 
-	 */
-	public boolean isLive() {
-		return this.alive;
-	}
-
-	/**
-	 * 
-	 * @param live
-	 */
-	public void setLive(boolean live) {
-		this.alive = live;
-	}
-
-	/**
-	 * @return the channelImpl
-	 */
-	public AgentChannelImpl getChannelImpl() {
-		return this.channelImpl;
-	}
-
-	/** INNER CLASS */
-
-	private class AgentChannelImpl implements JRubyScriptExecutorChannel {
+	private class AgentChannelImpl implements AgentShellChannel {
 
 		public AgentChannelImpl() {
 			//
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public Address getChannelOwner() {
 			return getAddress();
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
 		@Override
-		public void setJRubyCommand(String cmd) {
-			JRubyAgentShell.this.setJRubyCommand(cmd);
-		}
-
-		@Override
-		public String getJRubyExecutionResult() {
-			return JRubyAgentShell.this.getJRubyExecutionResult();
+		public void runCommand(String cmd, ResultListener listener) {
+			synchronized(JRubyAgentShell.this) {
+				JRubyAgentShell.this.command.add(cmd);
+				JRubyAgentShell.this.listeners.add(listener);
+			}
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
-		public int getCommandCounter() {
-			return JRubyAgentShell.this.getCommandCounter();
-		}
-
+		@SuppressWarnings("synthetic-access")
 		@Override
 		public void killAgent() {
-			JRubyAgentShell.this.setLive(false);
+			JRubyAgentShell.this.killMe();
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
+		@SuppressWarnings("synthetic-access")
 		@Override
-		public void setJRubyScript(String path) {
-			JRubyAgentShell.this.setJRubyScript(path);
+		public void runScript(File absolutePath, ResultListener listener) {
+			synchronized(JRubyAgentShell.this) {
+				JRubyAgentShell.this.scripts.add(absolutePath);
+				JRubyAgentShell.this.listeners.add(listener);
+			}	
 		}
 
 		/**
 		 * {@inheritDoc}
 		 */
+		@SuppressWarnings("synthetic-access")
 		@Override
-		public String getScriptPath() {
-			if (JRubyAgentShell.this.getRubyDirectory() == null) {
-				return ""; //$NON-NLS-1$
+		public File getScriptPath() {
+			return getScriptRepository().getLocalDirectories().next();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public void addLogListener(LogListener listener) {
+			JRubyAgentShell.this.logListeners.add(LogListener.class, listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public void removeLogListener(LogListener listener) {
+			JRubyAgentShell.this.logListeners.remove(LogListener.class, listener);
+		}
+
+	}
+
+	/**
+	 * @author $Author: sgalland$
+	 * @author $Author: lcabasson$
+	 * @author $Author: cwintz$
+	 * @author $Author: ngaud$
+	 */
+	private class LogHandler extends Handler {
+
+		public LogHandler() {
+			//
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public void publish(LogRecord record) {
+			LogListener[] list = JRubyAgentShell.this.logListeners.getListeners(LogListener.class);
+			for(LogListener listener : list) {
+				listener.onLogAvailable(record);
 			}
-			return JRubyAgentShell.this.getRubyDirectory().getDirectory().getAbsolutePath();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void flush() {
+			//
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void close() throws SecurityException {
+			//
 		}
 
 	}

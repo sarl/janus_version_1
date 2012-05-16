@@ -79,7 +79,7 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 	
 
 	private final ExecutorService executors;
-	private final Map<GroupAddress, JanusGroupJxtaGroup> groups = new ConcurrentHashMap<GroupAddress, JanusGroupJxtaGroup>();
+	private final Map<GroupAddress, JanusGroupJxtaGroup> groups = new ConcurrentHashMap<>();
 	
 	private Logger logger = null;
 	private AgentAddress kernelAddress = null;

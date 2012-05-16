@@ -70,7 +70,7 @@ public class Head extends Role {
 	 */
 	public Head() {
 		super();
-		this.availableCapacities = new HashMap<Class<? extends Capacity>, List<AgentAddress>>();
+		this.availableCapacities = new HashMap<>();
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class Head extends Role {
 			if (member != null) {
 				member.add(ha);
 			} else {
-				member = new LinkedList<AgentAddress>();
+				member = new LinkedList<>();
 				member.add(ha);
 				this.availableCapacities.put(c, member);
 			}

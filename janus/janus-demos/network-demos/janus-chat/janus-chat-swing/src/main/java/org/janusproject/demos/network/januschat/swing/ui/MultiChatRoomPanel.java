@@ -56,7 +56,7 @@ public class MultiChatRoomPanel extends JPanel implements IncomingChatListener {
 	 */
 	public MultiChatRoomPanel(ChatChannel chatChannel) {
 		assert(chatChannel!=null);
-		this.chatChannel = new WeakReference<ChatChannel>(chatChannel);
+		this.chatChannel = new WeakReference<>(chatChannel);
 		setLayout(new BorderLayout());
 		
 		this.tabPanes = new JTabbedPane(SwingConstants.TOP);

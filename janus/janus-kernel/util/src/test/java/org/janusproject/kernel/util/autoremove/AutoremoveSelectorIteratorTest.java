@@ -45,7 +45,7 @@ public class AutoremoveSelectorIteratorTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.collection = new ArrayList<Integer>();
+		this.collection = new ArrayList<>();
 		this.m1 = 1;
 		this.m2 = 10;
 		this.m3 = 5;
@@ -54,7 +54,7 @@ public class AutoremoveSelectorIteratorTest extends TestCase {
 		this.collection.add(this.m2);
 		this.collection.add(this.m3);
 		this.collection.add(this.m4);
-		this.iterator = new AutoremoveIterator<Integer>(this.collection.iterator());
+		this.iterator = new AutoremoveIterator<>(this.collection.iterator());
 	}
 	
 	/**

@@ -81,8 +81,8 @@ public class KernelContextTest extends TestCase {
 	 */
 	public void testGetAgentExecutorService() {
 		ExecutorService r;
-		assertNotNull(r = this.context.getAgentExecutorService());
-		assertSame(r, this.context.getAgentExecutorService());
+		assertNotNull(r = this.context.getExecutorService());
+		assertSame(r, this.context.getExecutorService());
 	}
 
 	/**

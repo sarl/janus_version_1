@@ -76,7 +76,7 @@ class StdPeerGroupParamAdv {
      *     {@link net.jxta.protocol.ModuleImplAdvertisement}.</li>
      * </ul>
      */
-    private final Map<ModuleClassID, Object> services = new HashMap<ModuleClassID, Object>();
+    private final Map<ModuleClassID, Object> services = new HashMap<>();
 
     /**
      * The protocols (message transports) which will be loaded for this peer
@@ -88,7 +88,7 @@ class StdPeerGroupParamAdv {
      *     {@link net.jxta.protocol.ModuleImplAdvertisement}.</li>
      * </ul>
      */
-    private final Map<ModuleClassID, Object> transports = new HashMap<ModuleClassID, Object>();
+    private final Map<ModuleClassID, Object> transports = new HashMap<>();
 
     /**
      * The applications which will be loaded for this peer group.
@@ -99,7 +99,7 @@ class StdPeerGroupParamAdv {
      *     {@link net.jxta.protocol.ModuleImplAdvertisement}.</li>
      * </ul>
      */
-    private final Map<ModuleClassID, Object> apps = new HashMap<ModuleClassID, Object>();
+    private final Map<ModuleClassID, Object> apps = new HashMap<>();
 
     /**
      * Private constructor for new instances.

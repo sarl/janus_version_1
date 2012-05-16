@@ -24,8 +24,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.arakhne.vmutil.locale.Locale;
+import org.janusproject.demo.agentshell.base.ConsoleGUI;
 import org.janusproject.demo.jruby.shellagent.agent.JRubyAgentShell;
-import org.janusproject.demo.jruby.shellagent.gui.JRubyConsoleGUI;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.KernelAgentFactory;
 import org.janusproject.kernel.logger.LoggerUtil;
@@ -79,13 +79,13 @@ public class JRubyShellAgentActivator  implements BundleActivator, JanusApplicat
 		JRubyAgentShell jrba = new JRubyAgentShell();
 		
 		AgentAddress aa = kernel.launchLightAgent(jrba, "Console 1"); //$NON-NLS-1$
-		JRubyConsoleGUI c = new JRubyConsoleGUI(aa);
+		ConsoleGUI c = new ConsoleGUI(aa);
 		c.setVisible(true);	
 		
 		JRubyAgentShell jrba2 = new JRubyAgentShell();
 		
 		AgentAddress aa2 = kernel.launchLightAgent(jrba2, "Console 2"); //$NON-NLS-1$
-		JRubyConsoleGUI c2 = new JRubyConsoleGUI(aa2);
+		ConsoleGUI c2 = new ConsoleGUI(aa2);
 		c2.setVisible(true);
 		
 

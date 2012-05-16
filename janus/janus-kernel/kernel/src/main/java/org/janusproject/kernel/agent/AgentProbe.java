@@ -58,7 +58,7 @@ extends AbstractIndividualProbe {
 	 */
 	public AgentProbe(ProbeManager manager, AgentAddress watchedAgent) {
 		super(watchedAgent);
-		this.manager = new WeakReference<ProbeManager>(manager);
+		this.manager = new WeakReference<>(manager);
 	}
 
 	private Agent getAgent() {
@@ -68,7 +68,7 @@ extends AbstractIndividualProbe {
 			if (pm!=null) {
 				a = pm.getAgent(getWatchedObject());
 				if (a!=null && !a.isAlive()) a = null;
-				if (a!=null) this.probedAgent = new WeakReference<Agent>(a);
+				if (a!=null) this.probedAgent = new WeakReference<>(a);
 			}
 		}
 		return a;

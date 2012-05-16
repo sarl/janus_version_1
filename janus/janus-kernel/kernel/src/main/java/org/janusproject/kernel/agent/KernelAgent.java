@@ -105,15 +105,15 @@ extends ActivatorAgent<AgentActivator> {
 	private final AtomicBoolean isNonKernelAgentLaunched = new AtomicBoolean(false);
 	private final AtomicBoolean isLaunch = new AtomicBoolean(false);
 	
-	private final Collection<DifferedLightAgentInfo> differedLightAgents = new LinkedList<DifferedLightAgentInfo>();
-	private final Collection<AgentThread> differedHeavyAgents = new LinkedList<AgentThread>();
+	private final Collection<DifferedLightAgentInfo> differedLightAgents = new LinkedList<>();
+	private final Collection<AgentThread> differedHeavyAgents = new LinkedList<>();
 	
 	/** This collection contains the agents that want to become heavy.
 	 * They are buffered to ensure that the agent activators had removed
 	 * the agents from their scheduling lists, before they are launched
 	 * as heavy.
 	 */
-	private final Collection<Agent> newHeavyAgents = new LinkedList<Agent>();
+	private final Collection<Agent> newHeavyAgents = new LinkedList<>();
 	
 	/**
 	 * Create a kernel agent with the default settings.
@@ -211,7 +211,7 @@ extends ActivatorAgent<AgentActivator> {
 		Kernels.add(this);
 		
 		// Launching kernel agent
-		this.context.getAgentExecutorService().execute(new AgentThread(this, null));
+		this.context.getExecutorService().execute(new AgentThread(this, null));
 		while (!this.isLaunch.get()) {
 			Thread.yield();
 		}
@@ -280,7 +280,7 @@ extends ActivatorAgent<AgentActivator> {
      * @throws NullPointerException if the task is null
 	 */
 	protected final Future<?> submitTask(Runnable task) {
-		ExecutorService service = getKernelContext().getPrivilegedJanusThreadExecutor().getExecutorService();
+		ExecutorService service = getKernelContext().getExecutorService();
 		assert(service!=null);
 		return service.submit(task);
 	}
@@ -309,7 +309,7 @@ extends ActivatorAgent<AgentActivator> {
      * @since 0.4
 	 */
 	protected final ScheduledFuture<?> submitTaskWithFixedDelay(Runnable task, long initialDelay, long delay, TimeUnit unit) {
-		ScheduledExecutorService service = getKernelContext().getPrivilegedJanusThreadExecutor().getScheduledExecutorService();
+		ScheduledExecutorService service = getKernelContext().getScheduledExecutorService();
 		assert(service!=null);
 		return service.scheduleWithFixedDelay(task, initialDelay, delay, unit);
 	}
@@ -341,7 +341,7 @@ extends ActivatorAgent<AgentActivator> {
      * @since 0.4
      */
 	protected final ScheduledFuture<?> submitTaskAtFixedRate(Runnable task, long initialDelay, long period, TimeUnit unit) {
-		ScheduledExecutorService service = getKernelContext().getPrivilegedJanusThreadExecutor().getScheduledExecutorService();
+		ScheduledExecutorService service = getKernelContext().getScheduledExecutorService();
 		assert(service!=null);
 		return service.scheduleAtFixedRate(task, initialDelay, period, unit);
 	}
@@ -362,7 +362,7 @@ extends ActivatorAgent<AgentActivator> {
      * @since 0.4
      */
 	protected final ScheduledFuture<?> submitTaskAtFixedRate(Runnable task, long delay, TimeUnit unit) {
-		ScheduledExecutorService service = getKernelContext().getPrivilegedJanusThreadExecutor().getScheduledExecutorService();
+		ScheduledExecutorService service = getKernelContext().getScheduledExecutorService();
 		assert(service!=null);
 		return service.schedule(task, delay, unit);
 	}
@@ -540,7 +540,7 @@ extends ActivatorAgent<AgentActivator> {
 			while (iterator.hasNext()) {
 				a = iterator.next();
 				try {
-					this.context.getAgentExecutorService().submit(new AgentThread(a));
+					this.context.getExecutorService().submit(new AgentThread(a));
 				}
 				catch(AssertionError e) {
 					throw e;
@@ -724,7 +724,7 @@ extends ActivatorAgent<AgentActivator> {
 	 */
 	void shutdownNow() {
 		// Prevent to accept new threads
-		this.context.getAgentExecutorService().shutdown();
+		this.context.getExecutorService().shutdown();
 		this.context.getScheduledExecutorService().shutdown();
 
 		// Clear repositories
@@ -735,7 +735,7 @@ extends ActivatorAgent<AgentActivator> {
 		Kernels.remove(this);
 		
 		// Register for an hard shutdown
-		this.context.getAgentExecutorService().shutdownNow();
+		this.context.getExecutorService().shutdownNow();
 		this.context.getScheduledExecutorService().shutdownNow();
 
 		// Kill agent threads that were not interrupted
@@ -885,7 +885,7 @@ extends ActivatorAgent<AgentActivator> {
 		if (name!=null) adr.setName(name);
 		
 		this.context.getAgentRepository().add(adr, agent);
-		agent.kernel = new WeakReference<KernelAgent>(this);
+		agent.kernel = new WeakReference<>(this);
 		agent.creator = creator;
 		
 		AgentActivator currentActivator = activator;
@@ -1042,7 +1042,7 @@ extends ActivatorAgent<AgentActivator> {
 		if (name!=null) adr.setName(name);
 		
 		this.context.getAgentRepository().add(adr, agent);
-		agent.kernel = new WeakReference<KernelAgent>(this);
+		agent.kernel = new WeakReference<>(this);
 		agent.creator = creator;
 
 		if (initParameters!=null && initParameters.length>0)
@@ -1060,7 +1060,7 @@ extends ActivatorAgent<AgentActivator> {
 			}
 		}
 		else {
-			this.context.getAgentExecutorService().submit(at);
+			this.context.getExecutorService().submit(at);
 		}
 		
 		return adr;
@@ -1093,7 +1093,7 @@ extends ActivatorAgent<AgentActivator> {
 	protected void launchDifferedExecutionAgents() {
 		synchronized(this.differedHeavyAgents) {
 			Iterator<AgentThread> iterator = this.differedHeavyAgents.iterator();
-			ExecutorService exec = this.context.getAgentExecutorService();
+			ExecutorService exec = this.context.getExecutorService();
 			while (iterator.hasNext()) {
 				exec.submit(iterator.next());
 			}
@@ -1320,7 +1320,7 @@ extends ActivatorAgent<AgentActivator> {
 		 */
 		public void kill(Runnable listener) {
 			if (this.killingListeners==null) {
-				this.killingListeners = new ArrayList<Runnable>();
+				this.killingListeners = new ArrayList<>();
 			}
 			this.killingListeners.add(listener);
 			this.kill = true;
@@ -2099,7 +2099,7 @@ extends ActivatorAgent<AgentActivator> {
 		 * @param agent
 		 */
 		public KillAwaiter(KernelAgent agent) {
-			this.agent = new WeakReference<KernelAgent>(agent);
+			this.agent = new WeakReference<>(agent);
 		}
 		
 		/**

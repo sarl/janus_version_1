@@ -53,7 +53,7 @@ public class NoAutoOrderDisableAsynchronousThreadSafeCollectionTest extends Test
 		this.m1 = new DataStub(10);
 		this.m2 = new DataStub(1);
 
-		this.collection = new AsynchronousThreadSafeCollection<DataStub>(DataStub.class);
+		this.collection = new AsynchronousThreadSafeCollection<>(DataStub.class);
 		this.collection.setAutoApplyEnabled(false);
 		this.collection.setSetBehaviorEnabled(false);
 		

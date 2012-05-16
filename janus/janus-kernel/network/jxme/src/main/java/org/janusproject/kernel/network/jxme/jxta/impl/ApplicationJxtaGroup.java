@@ -98,8 +98,8 @@ class ApplicationJxtaGroup extends JanusJXTAGroup implements DiscoveryListener {
 			String janusGId = null;
 			String janusGroupName = null;
 
-			Collection<GroupCondition> obtainConditions = new HashSet<GroupCondition>();
-			Collection<GroupCondition> leaveConditions = new HashSet<GroupCondition>();
+			Collection<GroupCondition> obtainConditions = new HashSet<>();
+			Collection<GroupCondition> leaveConditions = new HashSet<>();
 			MembershipService membership = null;
 			GroupCondition condition;
 

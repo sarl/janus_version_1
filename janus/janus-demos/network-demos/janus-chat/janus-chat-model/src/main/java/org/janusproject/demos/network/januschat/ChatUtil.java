@@ -41,7 +41,7 @@ import org.janusproject.kernel.util.random.RandomNumber;
  */
 public class ChatUtil {
 
-	private static final ListenerCollection<ChatterListener> listeners = new ListenerCollection<ChatterListener>(); 
+	private static final ListenerCollection<ChatterListener> listeners = new ListenerCollection<>(); 
 	
 	/** Create a chatter.
 	 * 

@@ -315,7 +315,7 @@ class PeerGroupUtil {
 	 */
 	public static List<PeerGroupAdvertisement> getJanusGroupAdvs(PeerGroup pg, UUID groupId) {
 		assert (groupId != null);
-		List<PeerGroupAdvertisement> p = new ArrayList<PeerGroupAdvertisement>();
+		List<PeerGroupAdvertisement> p = new ArrayList<>();
 
 		try {
 			for (Enumeration<?> gas = pg.getDiscoveryService().getLocalAdvertisements(DiscoveryService.GROUP, "Name", groupId.toString()); gas //$NON-NLS-1$
@@ -342,7 +342,7 @@ class PeerGroupUtil {
 	 * @return the list of advertisement associated to the specified JXTA group
 	 */
 	public static List<PeerGroupAdvertisement> getAdvs(PeerGroup pg, String name) {
-		List<PeerGroupAdvertisement> p = new ArrayList<PeerGroupAdvertisement>();
+		List<PeerGroupAdvertisement> p = new ArrayList<>();
 
 		try {
 			for (Enumeration<?> gas = pg.getDiscoveryService().getLocalAdvertisements(DiscoveryService.GROUP, name != null ? "Name" : null, name); gas //$NON-NLS-1$

@@ -200,7 +200,7 @@ class InteractionUtil {
 		if (agents.size()>1) {
 			// Random selection of the receiver
 			int n;
-			Set<Integer> invalidValues = new TreeSet<Integer>();
+			Set<Integer> invalidValues = new TreeSet<>();
 			
 			do {
 				invalidValues.clear();

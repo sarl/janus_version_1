@@ -111,7 +111,7 @@ class PipeUtil {
 	 * @return the pipe advertisement or <code>null</code>.
 	 */
 	public static List<PipeAdvertisement> getAdvertisements(PeerGroup pg, String name) {
-		List<PipeAdvertisement> p = new ArrayList<PipeAdvertisement>();
+		List<PipeAdvertisement> p = new ArrayList<>();
 		Enumeration<?> pas;
 		try {
 			pas = pg.getDiscoveryService().getLocalAdvertisements(

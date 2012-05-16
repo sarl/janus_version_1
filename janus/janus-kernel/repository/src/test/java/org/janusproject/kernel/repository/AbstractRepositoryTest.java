@@ -252,10 +252,10 @@ public class AbstractRepositoryTest extends TestCase {
 		 */
 		@Override
 		protected SizedIterator<Entry<String,String>> getEntryIterator() {
-			TreeMap<String,String> map = new TreeMap<String,String>();
+			TreeMap<String,String> map = new TreeMap<>();
 			map.put(this.key1, this.value1);
 			map.put(this.key2, this.value2);
-			return new ModifiableCollectionSizedIterator<Entry<String,String>>(
+			return new ModifiableCollectionSizedIterator<>(
 					map.entrySet(),
 					this);
 		}

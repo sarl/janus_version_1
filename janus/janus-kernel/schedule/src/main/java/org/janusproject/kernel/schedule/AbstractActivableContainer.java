@@ -73,7 +73,7 @@ implements Activator<A> {
 	 * @param type is the type of supported activable objects.
 	 */
 	public AbstractActivableContainer(Class<A> type) {
-		this.activeObjects = new AsynchronousThreadSafeCollection<A>(type);
+		this.activeObjects = new AsynchronousThreadSafeCollection<>(type);
 		this.activeObjects.setAutoApplyEnabled(false);
 		this.isUsed = false;
 	}
@@ -85,7 +85,7 @@ implements Activator<A> {
 	public AbstractActivableContainer(Class<A> type, Collection<? extends A> scheduledObjects) {
 		assert(type!=null);
 		assert(scheduledObjects!=null);
-		this.activeObjects = new AsynchronousThreadSafeCollection<A>(type);
+		this.activeObjects = new AsynchronousThreadSafeCollection<>(type);
 		this.activeObjects.setAutoApplyEnabled(false);
 		this.isUsed = !scheduledObjects.isEmpty();
 	}

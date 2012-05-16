@@ -117,7 +117,7 @@ public class Part extends Role {
 			return 5;
 
 		case 6:
-			sendMessage(Super.class, new ResultCapacityMessage<Capacity>(
+			sendMessage(Super.class, new ResultCapacityMessage<>(
 						this.m.getRequestedCapacity(),
 						this.m.getInitialCaller(),
 						this.m.getCallIdentifier(),

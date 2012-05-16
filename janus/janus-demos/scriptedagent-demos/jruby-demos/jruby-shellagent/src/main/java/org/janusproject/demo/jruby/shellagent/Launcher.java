@@ -20,8 +20,8 @@
  */
 package org.janusproject.demo.jruby.shellagent;
 
+import org.janusproject.demo.agentshell.base.ConsoleGUI;
 import org.janusproject.demo.jruby.shellagent.agent.JRubyAgentShell;
-import org.janusproject.demo.jruby.shellagent.gui.JRubyConsoleGUI;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.agent.Kernels;
@@ -50,7 +50,7 @@ public class Launcher {
 		JRubyAgentShell jrba = new JRubyAgentShell();
 		
 		AgentAddress aa = k.launchLightAgent(jrba, "Console 1"); //$NON-NLS-1$
-		JRubyConsoleGUI c = new JRubyConsoleGUI(aa);
+		ConsoleGUI c = new ConsoleGUI(aa);
 		c.setVisible(true);	
 		
 		/*JRubyAgentShell jrba2 = new JRubyAgentShell();

@@ -20,7 +20,10 @@
  */
 package org.janusproject.demo.jruby.market.selective;
 
-import org.janusproject.jrubyengine.RubyExecutionScriptContext;
+import java.net.URL;
+
+import org.arakhne.vmutil.Resources;
+import org.janusproject.jrubyengine.RubyExecutionContext;
 
 /**
  * Launcher of JRuby Selective Market Demos
@@ -35,8 +38,9 @@ import org.janusproject.jrubyengine.RubyExecutionScriptContext;
  */
 public class Launcher {
 	
-	
-	private static final String RubyScriptPath = Launcher.class.getClassLoader().getResource("org/janusproject/demo/jruby/market/selective/").getPath(); //$NON-NLS-1$
+	/** URL of the launching Ruby script.
+	 */
+	public static final URL LAUNCHING_SCRIPT = Resources.getResource(Launcher.class, "launcher.rb"); //$NON-NLS-1$
 	
 	/**
 	 * Execute a script which is the Launcher.java
@@ -44,8 +48,8 @@ public class Launcher {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		RubyExecutionScriptContext resc=new RubyExecutionScriptContext();
-		resc.runScriptFromPath(RubyScriptPath,"launcher.rb"); //$NON-NLS-1$
+		RubyExecutionContext resc = new RubyExecutionContext();
+		resc.runScript(LAUNCHING_SCRIPT);
 	}
 
 }

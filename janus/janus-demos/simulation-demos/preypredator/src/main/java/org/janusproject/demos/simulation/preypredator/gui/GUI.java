@@ -331,7 +331,7 @@ public class GUI extends JPanel implements WorldStateChangeListener {
 	 */
 	private class RefreshThread implements Runnable {
 
-		private final Queue<Map<AgentAddress,WorldState>> queue = new LinkedList<Map<AgentAddress,WorldState>>(); 
+		private final Queue<Map<AgentAddress,WorldState>> queue = new LinkedList<>(); 
 		
 		private boolean run = true;
 		private int moveStep = -2;

@@ -146,7 +146,7 @@ public class LightAgentTest extends TestCase {
 		
 		/** Errors.
 		 */
-		public final List<Throwable> errors = new LinkedList<Throwable>();
+		public final List<Throwable> errors = new LinkedList<>();
 		
 		/**
 		 */

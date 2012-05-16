@@ -36,8 +36,8 @@ import junit.framework.AssertionFailedError;
  */
 class ListenerStub implements AsynchronousThreadSafeCollectionListener<DataStub> {
 
-	private final List<DataStub> addedObjects = new ArrayList<DataStub>();
-	private final List<DataStub> removedObjects = new ArrayList<DataStub>();
+	private final List<DataStub> addedObjects = new ArrayList<>();
+	private final List<DataStub> removedObjects = new ArrayList<>();
 	
 	/**
 	 */

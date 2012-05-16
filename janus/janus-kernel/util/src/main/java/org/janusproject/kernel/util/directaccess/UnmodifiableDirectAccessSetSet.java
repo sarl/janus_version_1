@@ -125,7 +125,7 @@ implements DirectAccessCollection<M> {
 	 */
 	@Override
 	public SafeIterator<M> iterator() {
-		return new SafeIterator<M>(new DoubleSizedIterator<M>(this.originalSet1, this.originalSet2));
+		return new SafeIterator<>(new DoubleSizedIterator<>(this.originalSet1, this.originalSet2));
 	}
 
 	/**

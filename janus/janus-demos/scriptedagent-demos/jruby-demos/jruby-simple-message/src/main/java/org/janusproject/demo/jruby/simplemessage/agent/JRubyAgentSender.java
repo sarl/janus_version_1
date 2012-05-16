@@ -20,6 +20,9 @@
  */
 package org.janusproject.demo.jruby.simplemessage.agent;
 
+import java.net.URL;
+
+import org.arakhne.vmutil.Resources;
 import org.janusproject.jrubyengine.JRubyAgent;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.status.Status;
@@ -39,8 +42,10 @@ public class JRubyAgentSender extends JRubyAgent{
 
 	private static final long serialVersionUID = 2508734170719659042L;
 
-	private static final String RubyScriptPath = JRubyAgentReceiver.class.getClassLoader().getResource("org/janusproject/demo/jruby/simplemessage/agent/").getPath(); //$NON-NLS-1$
-	
+	/** URL of the Ruby receiver script.
+	 */
+	public static final URL SENDER_SCRIPT = Resources.getResource(JRubyAgentSender.class, "sender.rb"); //$NON-NLS-1$
+
 	/**
 	 * Boolean specifying if the message was sent or not
 	 */
@@ -64,7 +69,8 @@ public class JRubyAgentSender extends JRubyAgent{
 	public Status live() {
 		Status s = super.live();
 		if (s.isSuccess()) {
-			this.isMessageSended=(Boolean) runRubyFunction(RubyScriptPath,"sender.rb", "live", this.isMessageSended, this.receiverAddress,this); //$NON-NLS-1$ //$NON-NLS-2$
+			this.isMessageSended=(Boolean) 
+					runFunction(SENDER_SCRIPT, "live", this.isMessageSended, this.receiverAddress,this); //$NON-NLS-1$
 		}
 		return s;
 	}
