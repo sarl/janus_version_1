@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2012 Janus Core Developers
+ * Copyright (C) 2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.janusproject.jrubyengine;
+package org.janusproject.javascriptengine;
 
 import javax.script.ScriptEngineManager;
 
 import org.janusproject.scriptedagent.ScriptedAgent;
 
 /**
- * Agent created to run JRuby commands and scripts
+ * Agent created to run JavaScript commands and scripts.
  * 
  * @author $Author: sgalland$
  * @author $Author: ngaud$
- * @author $Author: gvinson$
- * @author $Author: rbuecher$
  * @version $Name$ $Revision$ $Date$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
-public abstract class JRubyAgent extends ScriptedAgent {
+public class JavaScriptAgent extends ScriptedAgent {
 
-	private static final long serialVersionUID = -2048354743353866599L;
+	private static final long serialVersionUID = -5485603272382497156L;
 
 	/**
-	 * Creates a new GroovyAgent.
+	 * Creates a new JythonAgent.
 	 * 
 	 * @param scriptManager is the manager of the script engines to use.
 	 */
-	public JRubyAgent(ScriptEngineManager scriptManager) {
-		super(new RubyExecutionContext());
+	public JavaScriptAgent(ScriptEngineManager scriptManager) {
+		super(new JavaScriptExecutionContext(scriptManager));
 	}
 	
 	/**
-	 * Creates a new GroovyAgent. 
+	 * Creates a new JythonAgent. 
 	 */
-	public JRubyAgent() {
-		super(new RubyExecutionContext());
+	public JavaScriptAgent() {
+		this(getSharedScriptEngineManager());
 	}
-	
+
 }

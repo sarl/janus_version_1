@@ -8,10 +8,10 @@
 	</parent>
 
 	<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
-	<artifactId>jrubyengine</artifactId>
+	<artifactId>script</artifactId>
 	<version>0.5-SNAPSHOT</version>
-	<name>Generic Agent and Role JRuby Engine</name>
-
+	<name>Script API for Agents</name>
+	
 	<!-- ======================================= -->
 	<!-- ==== Build === -->
 	<!-- ======================================= -->
@@ -23,7 +23,7 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<extensions>true</extensions>
 				<configuration>
-					<instructions>						
+					<instructions>
 						<Include-Resource>
 							{maven-resources}, {maven-dependencies},
 							META-INF/license=target/classes/META-INF/license,
@@ -61,17 +61,17 @@
 	<!-- ======================================= -->
 	<!-- ==== Dependency === -->
 	<!-- ======================================= -->
-	
+
 	<dependencies>
 
 		<dependency>
-			<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
-			<artifactId>script</artifactId>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>kernel</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.jruby</groupId>
-			<artifactId>jruby</artifactId>
+			<groupId>org.arakhne.afc</groupId>
+			<artifactId>arakhneVmutils</artifactId>
 		</dependency>
 
 		<dependency>
@@ -80,6 +80,5 @@
 			<scope>test</scope>
 		</dependency>
 
-	</dependencies>
-
+	</dependencies>	
 </project>

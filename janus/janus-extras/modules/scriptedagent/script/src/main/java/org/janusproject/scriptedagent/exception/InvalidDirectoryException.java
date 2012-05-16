@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2012 Janus Core Developers
+ * Copyright (C) 2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.janusproject.jrubyengine;
+package org.janusproject.scriptedagent.exception;
 
-import javax.script.ScriptEngineManager;
+import java.net.URL;
 
-import org.janusproject.scriptedagent.ScriptedAgent;
+import org.arakhne.vmutil.locale.Locale;
 
 /**
- * Agent created to run JRuby commands and scripts
+ * Invalid directory for Jython scripts.
  * 
  * @author $Author: sgalland$
- * @author $Author: ngaud$
- * @author $Author: gvinson$
- * @author $Author: rbuecher$
  * @version $Name$ $Revision$ $Date$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
-public abstract class JRubyAgent extends ScriptedAgent {
+public class InvalidDirectoryException extends RuntimeException {
 
-	private static final long serialVersionUID = -2048354743353866599L;
-
+	private static final long serialVersionUID = 7445830696521857366L;
+	
+	private final URL directory;
+	
 	/**
-	 * Creates a new GroovyAgent.
+	 * @param directory is the invalid directory.
+	 */
+	public InvalidDirectoryException(URL directory) {
+		super(Locale.getString("MESSAGE", directory)); //$NON-NLS-1$
+		this.directory = directory;
+	}
+	
+	/** Replies the invalid directory.
 	 * 
-	 * @param scriptManager is the manager of the script engines to use.
+	 * @return the invalid directory.
 	 */
-	public JRubyAgent(ScriptEngineManager scriptManager) {
-		super(new RubyExecutionContext());
+	public URL getInvalidDirectory() {
+		return this.directory;
 	}
-	
-	/**
-	 * Creates a new GroovyAgent. 
-	 */
-	public JRubyAgent() {
-		super(new RubyExecutionContext());
-	}
-	
 }

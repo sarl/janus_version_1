@@ -16,9 +16,11 @@
 	<inceptionYear>2011</inceptionYear>
 
 	<modules>
-		<module>jrubyengine</module>
-		<module>jrubyjanusextensions</module>
+		<module>script</module>
 		<module>groovyengine</module>
+		<module>javascriptengine</module>
+		<module>jythonengine</module>
+		<module>jrubyengine</module>
 	</modules>
 
 </project>

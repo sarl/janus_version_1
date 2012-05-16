@@ -8,9 +8,9 @@
 	</parent>
 
 	<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
-	<artifactId>jrubyengine</artifactId>
+	<artifactId>jythonengine</artifactId>
 	<version>0.5-SNAPSHOT</version>
-	<name>Generic Agent and Role JRuby Engine</name>
+	<name>Generic Agent and Role Jython Engine</name>
 
 	<!-- ======================================= -->
 	<!-- ==== Build === -->
@@ -23,7 +23,7 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<extensions>true</extensions>
 				<configuration>
-					<instructions>						
+					<instructions>
 						<Include-Resource>
 							{maven-resources}, {maven-dependencies},
 							META-INF/license=target/classes/META-INF/license,
@@ -61,7 +61,7 @@
 	<!-- ======================================= -->
 	<!-- ==== Dependency === -->
 	<!-- ======================================= -->
-	
+
 	<dependencies>
 
 		<dependency>
@@ -70,8 +70,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.jruby</groupId>
-			<artifactId>jruby</artifactId>
+			<groupId>org.python</groupId>
+			<artifactId>jython-standalone</artifactId>
 		</dependency>
 
 		<dependency>

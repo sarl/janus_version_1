@@ -8,9 +8,8 @@
 	</parent>
 
 	<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
-	<artifactId>jrubyengine</artifactId>
+	<artifactId>javascriptengine</artifactId>
 	<version>0.5-SNAPSHOT</version>
-	<name>Generic Agent and Role JRuby Engine</name>
 
 	<!-- ======================================= -->
 	<!-- ==== Build === -->
@@ -23,7 +22,7 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<extensions>true</extensions>
 				<configuration>
-					<instructions>						
+					<instructions>
 						<Include-Resource>
 							{maven-resources}, {maven-dependencies},
 							META-INF/license=target/classes/META-INF/license,
@@ -61,17 +60,12 @@
 	<!-- ======================================= -->
 	<!-- ==== Dependency === -->
 	<!-- ======================================= -->
-	
+
 	<dependencies>
 
 		<dependency>
 			<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
 			<artifactId>script</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jruby</groupId>
-			<artifactId>jruby</artifactId>
 		</dependency>
 
 		<dependency>
