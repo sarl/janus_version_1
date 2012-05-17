@@ -1,0 +1,1 @@
+(defun myprint(a) (print a))
