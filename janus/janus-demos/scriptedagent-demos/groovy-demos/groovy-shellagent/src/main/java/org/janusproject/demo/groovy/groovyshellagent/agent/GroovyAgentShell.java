@@ -32,6 +32,8 @@ import java.util.Set;
 import java.util.logging.LogRecord;
 import java.util.logging.Handler;
 
+import javax.swing.filechooser.FileFilter;
+
 import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.demo.agentshell.base.AgentShellChannel;
 import org.janusproject.demo.agentshell.base.AgentShellChannel.LogListener;
@@ -166,6 +168,15 @@ public class GroovyAgentShell extends GroovyAgent implements ChannelInteractable
 		@Override
 		public Address getChannelOwner() {
 			return getAddress();
+		}
+		
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public FileFilter getFileFilter() {
+			return GroovyAgentShell.this.getScriptExecutionContext().getFileFilter(true);
 		}
 
 		/**

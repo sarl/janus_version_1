@@ -10,7 +10,7 @@
 	<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
 	<artifactId>jrubyengine</artifactId>
 	<version>0.5-SNAPSHOT</version>
-	<name>Generic Agent and Role JRuby Engine</name>
+	<name>Ruby Interpreter for Agents</name>
 
 	<!-- ======================================= -->
 	<!-- ==== Build === -->

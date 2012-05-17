@@ -21,6 +21,7 @@
 		<module>javascriptengine</module>
 		<module>jythonengine</module>
 		<module>jrubyengine</module>
+		<module>lispengine</module>
 	</modules>
 
 </project>

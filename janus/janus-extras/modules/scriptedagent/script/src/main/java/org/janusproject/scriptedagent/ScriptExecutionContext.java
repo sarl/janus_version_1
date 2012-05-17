@@ -39,6 +39,41 @@ import javax.script.ScriptEngine;
  */
 public interface ScriptExecutionContext {
 
+	/** Replies if the interpreter supported by this script execution context
+	 * is compliant with the agent-separation concern.
+	 * <p>
+	 * If the interpreter is compliant with the agent-separation convern; it
+	 * means that each agent has its own memory context in the interpreter.
+	 * <p>
+	 * If the interpreter is not compliant with the agent-separation convern; it
+	 * means that all the agents have the same global memory context in the interpreter.
+	 * 
+	 * @return <code>true</code> if each agent has its own memory context;
+	 * <code>false</code> if all the agents have the same memory context.
+	 */
+	public boolean isAgentSeparationCompliant();
+	
+	/** Replies the name of the language supported by this execution context.
+	 * 
+	 * @return the name of the language.
+	 */
+	public String getLanguageName();
+	
+	/** Replies the version of the language supported by this execution context.
+	 * 
+	 * @return the version of the language.
+	 */
+	public String getLanguageVersion();
+	
+	/** Replies a file filter that is matching any file that has the extension
+	 * associated to the supported language.
+	 * 
+	 * @param allowDirectories indicates if the accepting function is accepting
+	 * the directories or not. 
+	 * @return the file filter.
+	 */
+	public ScriptFileFilter getFileFilter(boolean allowDirectories);
+	
 	/** Add listener on script errors.
 	 * 
 	 * @param listener
@@ -72,18 +107,6 @@ public interface ScriptExecutionContext {
 	 */
 	public void setLogger(Logger logger);
 	
-	/** Replies the preferred file filter for the scripts.
-	 * 
-	 * @return the preferred file filter for the scripts.
-	 */
-	public ScriptFileFilter getPreferredFileFilter();
-	
-	/** Set the preferred file filter for the scripts.
-	 * 
-	 * @param fileFilter is the preferred file filter for the scripts.
-	 */
-	public void setPreferredFileFilter(ScriptFileFilter fileFilter);
-
 	/** Set the script repository.
 	 * 
 	 * @param repository is the manager of script.

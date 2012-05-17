@@ -31,6 +31,8 @@ import java.util.Set;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
+import javax.swing.filechooser.FileFilter;
+
 import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.demo.agentshell.base.AgentShellChannel;
 import org.janusproject.demo.agentshell.base.AgentShellChannel.LogListener;
@@ -164,6 +166,15 @@ public class JRubyAgentShell extends JRubyAgent implements ChannelInteractable {
 		@Override
 		public Address getChannelOwner() {
 			return getAddress();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public FileFilter getFileFilter() {
+			return JRubyAgentShell.this.getScriptExecutionContext().getFileFilter(true);
 		}
 
 		/**

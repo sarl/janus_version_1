@@ -10,6 +10,7 @@
 	<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
 	<artifactId>javascriptengine</artifactId>
 	<version>0.5-SNAPSHOT</version>
+	<name>JavaScript Interpreter for Agents</name>
 
 	<!-- ======================================= -->
 	<!-- ==== Build === -->

@@ -57,6 +57,13 @@ public class IndependentEngineTest extends TestCase {
 	}
 	
 	/**
+	 */
+	public void testAgentSeperationConcern() {
+		assertTrue(this.context1.isAgentSeparationCompliant());
+		assertTrue(this.context2.isAgentSeparationCompliant());
+	}
+	
+	/**
 	 * @throws Exception
 	 */
 	public void testGlobalIndependancy() throws Exception {

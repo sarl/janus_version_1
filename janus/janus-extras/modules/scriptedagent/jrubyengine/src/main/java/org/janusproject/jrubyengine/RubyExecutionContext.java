@@ -26,7 +26,12 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 
 import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
+import org.jruby.RubyNil;
+import org.jruby.RubyString;
+import org.jruby.embed.jsr223.JanusJRubyEngine;
 import org.jruby.embed.jsr223.JanusJRubyEngineFactory;
+import org.jruby.javasupport.JavaUtil;
+import org.jruby.runtime.builtin.IRubyObject;
 
 /**
  * This class generates a Groovy execution context.
@@ -60,19 +65,40 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 	}
 
 	/**
-	 * Prefix used to build the name of temporary variables.
-	 * It is recommanded that the scripts must not contains any
-	 * variable with this prefix.
-	 */
-	public static final String TEMP_VARIABLE_PREFIX = "janus_ruby_private_temp_var"; //$NON-NLS-1$
-
-	/**
 	 * Default constructor.
 	 */
 	public RubyExecutionContext() {
 		super(
-				new RubyFileFilter(false),
 				getSharedScriptEngineManager().getScriptEngine());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final boolean isAgentSeparationCompliant() {
+		return true;
+	}
+	
+	private String toRuby(Object v) {
+		IRubyObject rObj = JavaUtil.convertJavaToUsableRubyObject(
+				((JanusJRubyEngine)getScriptEngine()).getRuntime(),
+				v);
+		if (rObj instanceof RubyNil) return "nil"; //$NON-NLS-1$
+		RubyString str = rObj.asString();
+		String rawValue = str.toString();
+		if (v instanceof CharSequence || v instanceof Character) {
+			rawValue = "\""+rawValue.replaceAll("\"", "\\\\\"")+"\"";   //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
+		}
+		return rawValue;
+	}
+	
+	private static boolean isSerializable(Object v) {
+		return (v==null)
+				|| (v instanceof Number)
+				|| (v instanceof CharSequence)
+				|| (v instanceof Boolean)
+				|| (v instanceof Character);
 	}
 
 	/**
@@ -92,11 +118,13 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 			command.append(functionName.trim());
 		}
 		command.append('(');
-		if (params!=null && params.length>0) {
-			String paramName;
-			for(int i=0; i<params.length; ++i) {
-				if (i>0) command.append(',');
-				paramName = makeTempVariable(TEMP_VARIABLE_PREFIX, null);
+		for(int i=0; i<params.length; ++i) {
+			if (i>0) command.append(',');
+			if (isSerializable(params[i])) {
+				command.append(toRuby(params[i]));
+			}
+			else {
+				String paramName = makeTempVariable();
 				context.setAttribute(paramName, params[i], ScriptContext.ENGINE_SCOPE);
 				command.append("$"+paramName); //$NON-NLS-1$
 			}

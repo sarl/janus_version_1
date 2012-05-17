@@ -253,12 +253,7 @@ public class ScriptRepositoryTest extends TestCase {
 		/**
 		 */
 		public Filter() {
-			super(false);
-		}
-		
-		@Override
-		public String getDescription() {
-			return null;
+			super(null, false, null);
 		}
 		
 		@Override

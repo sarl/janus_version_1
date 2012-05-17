@@ -43,6 +43,8 @@ public class JythonExecutionContextTest extends TestCase {
 	private static final String ADDITION_SCRIPT_NAME = "addition.py"; //$NON-NLS-1$
 	private static final String INTERPRETED_ADDITION_SCRIPT_NAME = "interpretedaddition.py"; //$NON-NLS-1$
 	private static final String HELLO_WORLD_SCRIPT_NAME = "HelloWorld.py"; //$NON-NLS-1$
+	private static final String MY_PRINT_SCRIPT_NAME = "Print.py"; //$NON-NLS-1$
+	private static final String METHOD_SCRIPT_NAME = "Method.py"; //$NON-NLS-1$
 	
 	private JythonExecutionContext interpreter;
 	
@@ -92,33 +94,25 @@ public class JythonExecutionContextTest extends TestCase {
 	public void testMakeFunctionCall() throws Exception {
 		assertEquals("myFunc()", this.interpreter.makeFunctionCall("myFunc")); //$NON-NLS-1$ //$NON-NLS-2$
 		
-		assertEquals("myFunc(" + //$NON-NLS-1$
-				JythonExecutionContext.TEMP_VARIABLE_PREFIX+"0," + //$NON-NLS-1$
-				JythonExecutionContext.TEMP_VARIABLE_PREFIX+"1," + //$NON-NLS-1$
-				JythonExecutionContext.TEMP_VARIABLE_PREFIX+"2)", //$NON-NLS-1$
-				this.interpreter.makeFunctionCall("myFunc", 1, 3, "abc")); //$NON-NLS-1$ //$NON-NLS-2$
-		assertEquals(1,
-				this.interpreter.getScriptEngine().getContext().getAttribute(JythonExecutionContext.TEMP_VARIABLE_PREFIX+"0")); //$NON-NLS-1$
-		assertEquals(3,
-				this.interpreter.getScriptEngine().getContext().getAttribute(JythonExecutionContext.TEMP_VARIABLE_PREFIX+"1")); //$NON-NLS-1$
-		assertEquals("abc", //$NON-NLS-1$
-				this.interpreter.getScriptEngine().getContext().getAttribute(JythonExecutionContext.TEMP_VARIABLE_PREFIX+"2")); //$NON-NLS-1$
+		assertEquals("myFunc(1,3,\"ab\\\"c\")", //$NON-NLS-1$
+				this.interpreter.makeFunctionCall("myFunc", 1, 3, "ab\"c")); //$NON-NLS-1$ //$NON-NLS-2$
 
-		assertEquals("myFunc(" + //$NON-NLS-1$
-				JythonExecutionContext.TEMP_VARIABLE_PREFIX+"3," + //$NON-NLS-1$
-				JythonExecutionContext.TEMP_VARIABLE_PREFIX+"4)", //$NON-NLS-1$
+		assertEquals("myFunc(1.5,2)", //$NON-NLS-1$
 				this.interpreter.makeFunctionCall("myFunc", 1.5d, new BigDecimal(2))); //$NON-NLS-1$
-		assertEquals(1.5d,
-				this.interpreter.getScriptEngine().getContext().getAttribute(JythonExecutionContext.TEMP_VARIABLE_PREFIX+"3")); //$NON-NLS-1$
-		assertEquals(new BigDecimal(2),
-				this.interpreter.getScriptEngine().getContext().getAttribute(JythonExecutionContext.TEMP_VARIABLE_PREFIX+"4")); //$NON-NLS-1$
+		
+		assertEquals("myFunc(None,3)",  //$NON-NLS-1$
+				this.interpreter.makeFunctionCall("myFunc", null, 3)); //$NON-NLS-1$
 	}
 	
 	/**
 	 * @throws Exception
 	 */
 	public void testRunCommandString() throws Exception {
-		Object v = this.interpreter.runCommand("5+6"); //$NON-NLS-1$
+		Object v = this.interpreter.runCommand("(None == None)"); //$NON-NLS-1$
+		assertTrue((Boolean)v);
+		this.listener.assertFalse();
+
+		v = this.interpreter.runCommand("5+6"); //$NON-NLS-1$
 		assertEquals(11, v);
 		this.listener.assertFalse();
 		
@@ -288,6 +282,17 @@ public class JythonExecutionContextTest extends TestCase {
 		assertEquals(45, v);
 		assertEquals("", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
+
+		this.listener.reset();
+		output = new StringWriter();
+		this.interpreter.setStandardOutput(output);
+		v = this.interpreter.runFunction(
+				MY_PRINT_SCRIPT_NAME,
+				"myprint", //$NON-NLS-1$
+				"ab\"c"); //$NON-NLS-1$
+		assertNull(v);
+		assertEquals("ab\"c\n", output.toString()); //$NON-NLS-1$
+		this.listener.assertFalse();
 	}
 
 	/**
@@ -328,6 +333,17 @@ public class JythonExecutionContextTest extends TestCase {
 				27);
 		assertEquals(45, v);
 		assertEquals("", output.toString()); //$NON-NLS-1$
+		this.listener.assertFalse();
+
+		this.listener.reset();
+		output = new StringWriter();
+		this.interpreter.setStandardOutput(output);
+		v = this.interpreter.runFunction(
+				makeFile(MY_PRINT_SCRIPT_NAME),
+				"myprint", //$NON-NLS-1$
+				"ab\"c"); //$NON-NLS-1$
+		assertNull(v);
+		assertEquals("ab\"c\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 	}
 
@@ -370,8 +386,36 @@ public class JythonExecutionContextTest extends TestCase {
 		assertEquals(45, v);
 		assertEquals("", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
+
+		this.listener.reset();
+		output = new StringWriter();
+		this.interpreter.setStandardOutput(output);
+		v = this.interpreter.runFunction(
+				makeURL(MY_PRINT_SCRIPT_NAME),
+				"myprint", //$NON-NLS-1$
+				"ab\"c"); //$NON-NLS-1$
+		assertNull(v);
+		assertEquals("ab\"c\n", output.toString()); //$NON-NLS-1$
+		this.listener.assertFalse();
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public void testMethodInvocation() throws Exception {
+		this.listener.reset();
+		StringWriter output = new StringWriter();
+		this.interpreter.setStandardOutput(output);
+		Object v = this.interpreter.runFunction(
+				makeURL(METHOD_SCRIPT_NAME),
+				"printMyMsg", //$NON-NLS-1$
+				new TestObject(" was printed"), //$NON-NLS-1$
+				"my message"); //$NON-NLS-1$
+		assertNull(v);
+		assertEquals("my message was printed\n", output.toString()); //$NON-NLS-1$
+		this.listener.assertFalse();
+	}
+	
 	/**
 	 * @author $Author: sgalland$
 	 */

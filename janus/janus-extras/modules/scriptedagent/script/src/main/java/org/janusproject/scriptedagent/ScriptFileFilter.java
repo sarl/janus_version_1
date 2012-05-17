@@ -23,6 +23,7 @@ package org.janusproject.scriptedagent;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.net.URL;
+import java.util.List;
 
 import javax.swing.filechooser.FileFilter;
 
@@ -38,30 +39,29 @@ import org.arakhne.vmutil.FileSystem;
  * @mavenartifactid $ArtifactId$
  * @since 0.5
  */
-public abstract class ScriptFileFilter extends FileFilter implements FilenameFilter {
+public class ScriptFileFilter extends FileFilter implements FilenameFilter {
 
+	private final String description;
 	private final boolean allowDirectories;
+	private final List<String> extensions;
 	
 	/**
-	 * Create a file filter that is enabling directories. 
-	 */
-	public ScriptFileFilter() {
-		this(true);
-	}
-	
-	/**
+	 * @param description is the description of the files.
 	 * @param enableDirectories indicates if the accepting function is accepting
 	 * the directories or not. 
+	 * @param extensions are the extensions associated to the interpreter.
 	 */
-	public ScriptFileFilter(boolean enableDirectories) {
+	public ScriptFileFilter(String description, boolean enableDirectories, List<String> extensions) {
+		this.description = description;
 		this.allowDirectories = enableDirectories;
+		this.extensions = extensions;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final boolean accept(File dir, String name) {
+	public boolean accept(File dir, String name) {
 		return accept(new File(dir, name));
 	}
 	
@@ -95,29 +95,28 @@ public abstract class ScriptFileFilter extends FileFilter implements FilenameFil
      * @return <code>true</code> if and only if the basename should be
      * included in the file list; <code>false</code> otherwise.
      */
-    protected abstract boolean isExtension(String basename);
+    protected boolean isExtension(String basename) {
+   		for(String ext : this.extensions) {
+   			if (FileSystem.hasExtension(basename, ext))
+   				return true;
+    	}
+		return false;
+    }
 	
     /**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final String toString() {
-		return getDescription();
+	public String toString() {
+		return this.description;
 	}
 	
-	/** Test if one of the given extensions is present at the end of the given name.
-	 * 
-	 * @param name
-	 * @param extensions
-	 * @return <code>true</code> if one extension is at the end of the name;
-	 * <code>false</code> otherwise.
+	/**
+	 * {@inheritDoc}
 	 */
-	protected boolean matchExtensions(String name, String... extensions) {
-		for(String extension : extensions) {
-			if (FileSystem.hasExtension(name, extension))
-				return true;
-		}
-		return false;
+	@Override
+	public String getDescription() {
+		return this.description;
 	}
-	
+		
 }

@@ -10,7 +10,7 @@
 	<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
 	<artifactId>jythonengine</artifactId>
 	<version>0.5-SNAPSHOT</version>
-	<name>Generic Agent and Role Jython Engine</name>
+	<name>Python Interpreter for Agents</name>
 
 	<!-- ======================================= -->
 	<!-- ==== Build === -->

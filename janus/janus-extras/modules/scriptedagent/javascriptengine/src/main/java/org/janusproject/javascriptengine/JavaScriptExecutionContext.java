@@ -43,12 +43,22 @@ public class JavaScriptExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	public static final String JAVASCRIPT_ENGINE_NAME = "javascript"; //$NON-NLS-1$
 
-	/**
-	 * Prefix used to build the name of temporary variables.
-	 * It is recommanded that the scripts must not contains any
-	 * variable with this prefix.
-	 */
-	public static final String TEMP_VARIABLE_PREFIX = "__janus_javascript_private_temp_var__"; //$NON-NLS-1$
+	private static String toJavaScript(Object v) {
+		if (v==null) return "null"; //$NON-NLS-1$
+		if (v instanceof CharSequence || v instanceof Character) {
+			String rawValue = v.toString();
+			return "\""+rawValue.replaceAll("\"", "\\\\\"")+"\"";   //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
+		}
+		return v.toString();
+	}
+	
+	private static boolean isSerializable(Object v) {
+		return (v==null)
+				|| (v instanceof Number)
+				|| (v instanceof CharSequence)
+				|| (v instanceof Boolean)
+				|| (v instanceof Character);
+	}
 
 	/**
 	 * Default constructor.
@@ -57,7 +67,6 @@ public class JavaScriptExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	public JavaScriptExecutionContext(ScriptEngineManager scriptManager) {
 		super(
-			new JavaScriptFileFilter(false),
 			scriptManager.getEngineByName(JAVASCRIPT_ENGINE_NAME));
 	}
 
@@ -66,6 +75,14 @@ public class JavaScriptExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	public JavaScriptExecutionContext() {
 		this(ScriptedAgent.getSharedScriptEngineManager());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final boolean isAgentSeparationCompliant() {
+		return true;
 	}
 
 	/**
@@ -85,11 +102,13 @@ public class JavaScriptExecutionContext extends AbstractScriptExecutionContext {
 			command.append(functionName.trim());
 		}
 		command.append('(');
-		if (params!=null && params.length>0) {
-			String paramName;
-			for(int i=0; i<params.length; ++i) {
-				if (i>0) command.append(',');
-				paramName = makeTempVariable(TEMP_VARIABLE_PREFIX, null);
+		for(int i=0; i<params.length; ++i) {
+			if (i>0) command.append(',');
+			if (isSerializable(params[i])) {
+				command.append(toJavaScript(params[i]));
+			}
+			else {
+				String paramName = makeTempVariable();
 				context.setAttribute(paramName, params[i], ScriptContext.ENGINE_SCOPE);
 				command.append(paramName);
 			}

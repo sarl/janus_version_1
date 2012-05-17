@@ -542,6 +542,13 @@
 				<version>2.5.2</version>
 			</dependency>
 
+			<!-- ********** ** COMMON LISP ** ********** -->
+			<dependency>
+				<groupId>org.armedbear.lisp</groupId>
+				<artifactId>abcl</artifactId>
+				<version>0.27.0</version>
+			</dependency>
+			
 			<!-- ********** ** AETHER ** ********** -->
 			<dependency>
 				<groupId>org.sonatype.aether</groupId>

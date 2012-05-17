@@ -39,7 +39,7 @@ public class Launcher {
 	
 	/** URL of the launching Groovy script.
 	 */
-	public static final URL LAUNCHING_SCRIPT = Resources.getResource(Launcher.class, "Launcher.gy"); //$NON-NLS-1$
+	public static final URL LAUNCHING_SCRIPT = Resources.getResource(Launcher.class, "Launcher.groovy"); //$NON-NLS-1$
 	
 	/**
 	 * Execute a script which is the Launcher.java

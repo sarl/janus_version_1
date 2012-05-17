@@ -46,12 +46,22 @@ public class GroovyExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	public static final String GROOVY_ENGINE_NAME = "groovy"; //$NON-NLS-1$
 
-	/**
-	 * Prefix used to build the name of temporary variables.
-	 * It is recommanded that the scripts must not contains any
-	 * variable with this prefix.
-	 */
-	public static final String TEMP_VARIABLE_PREFIX = "__janus_groovy_private_temp_var__"; //$NON-NLS-1$
+	private static String toGroovy(Object v) {
+		if (v==null) return "null"; //$NON-NLS-1$
+		if (v instanceof CharSequence || v instanceof Character) {
+			String rawValue = v.toString();
+			return "\""+rawValue.replaceAll("\"", "\\\\\"")+"\"";   //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
+		}
+		return v.toString();
+	}
+	
+	private static boolean isSerializable(Object v) {
+		return (v==null)
+				|| (v instanceof Number)
+				|| (v instanceof CharSequence)
+				|| (v instanceof Boolean)
+				|| (v instanceof Character);
+	}
 
 	/**
 	 * Default constructor.
@@ -60,7 +70,6 @@ public class GroovyExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	public GroovyExecutionContext(ScriptEngineManager scriptManager) {
 		super(
-			new GroovyFileFilter(false),
 			scriptManager.getEngineByName(GROOVY_ENGINE_NAME));
 	}
 
@@ -69,6 +78,14 @@ public class GroovyExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	public GroovyExecutionContext() {
 		this(ScriptedAgent.getSharedScriptEngineManager());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final boolean isAgentSeparationCompliant() {
+		return true;
 	}
 
 	/**
@@ -92,11 +109,17 @@ public class GroovyExecutionContext extends AbstractScriptExecutionContext {
 			String paramName;
 			for(int i=0; i<params.length; ++i) {
 				if (i>0) command.append(',');
-				paramName = makeTempVariable(TEMP_VARIABLE_PREFIX, null);
-				context.setAttribute(paramName, params[i], ScriptContext.ENGINE_SCOPE);
-				command.append(paramName);
+				if (isSerializable(params[i])) {
+					command.append(toGroovy(params[i]));
+				}
+				else {
+					paramName = makeTempVariable();
+					context.setAttribute(paramName, params[i], ScriptContext.ENGINE_SCOPE);
+					command.append(paramName);
+				}
 			}
 		}
+		
 		command.append(')');
 		return command.toString();
 	}

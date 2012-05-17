@@ -22,7 +22,6 @@ package org.janusproject.scriptedagent;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
@@ -33,6 +32,7 @@ import java.util.logging.Logger;
 
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
+import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 
 import org.arakhne.vmutil.FileSystem;
@@ -50,8 +50,6 @@ import org.janusproject.kernel.util.event.ListenerCollection;
  */
 public abstract class AbstractScriptExecutionContext implements ScriptExecutionContext {
 
-	private ScriptFileFilter filter;
-	
 	private Logger logger = null;
 	
 	private ScriptRepository repository;
@@ -68,16 +66,40 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	private int tempVariableIndex = 0;
 	
 	/**
-	 * 
-	 * @param filter is the preferred file filter to be used by this context.
 	 * @param engine is the real script engine implementation to use.
 	 */
-	public AbstractScriptExecutionContext(ScriptFileFilter filter, ScriptEngine engine) {
-		assert(filter!=null);
-		this.filter = filter;
+	public AbstractScriptExecutionContext(ScriptEngine engine) {
 		this.engine = engine;
 		this.repository = new ScriptRepository();
 		if (this.engine==null) throw new Error(Locale.getString("NO_ENGINE", getClass().getCanonicalName())); //$NON-NLS-1$
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getLanguageName() {
+		return this.engine.getFactory().getLanguageName();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getLanguageVersion() {
+		return this.engine.getFactory().getLanguageVersion();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final ScriptFileFilter getFileFilter(boolean allowDirectories) {
+		ScriptEngineFactory factory = this.engine.getFactory();
+		return new ScriptFileFilter(
+				factory.getLanguageName(),
+				allowDirectories,
+				factory.getExtensions());
 	}
 	
 	/** {@inheritDoc}
@@ -192,21 +214,6 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	/** {@inheritDoc}
 	 */
 	@Override
-	public final ScriptFileFilter getPreferredFileFilter() {
-		return this.filter;
-	}
-	
-	/** {@inheritDoc}
-	 */
-	@Override
-	public final void setPreferredFileFilter(ScriptFileFilter fileFilter) {
-		assert(fileFilter!=null);
-		this.filter = fileFilter;
-	}
-
-	/** {@inheritDoc}
-	 */
-	@Override
 	public final void setScriptRepository(ScriptRepository repository) {
 		assert(repository!=null);
 		this.repository = repository;
@@ -231,17 +238,56 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 		}
 	}
 	
+	/** Invoked to evaluate the script in the given stream.
+	 * <p>
+	 * This function was created to be overridden by the subclasses
+	 * to invoke the appropriate "eval" function on the engine.
+	 * The default implementation, invode {@link ScriptEngine#eval(Reader)}.
+	 * 
+	 * @param engine is the engine to use for evaluation.
+	 * @param stream is the stream to read.
+	 * @return the result of the evaluation.
+	 * @throws ScriptException 
+	 */
+	protected Object evaluate(ScriptEngine engine, Reader stream) throws ScriptException {
+		return engine.eval(stream);
+	}
+	
+	/** Invoked to evaluate the script in the string.
+	 * <p>
+	 * This function was created to be overridden by the subclasses
+	 * to invoke the appropriate "eval" function on the engine.
+	 * The default implementation, invode {@link ScriptEngine#eval(String)}.
+	 * 
+	 * @param engine is the engine to use for evaluation.
+	 * @param script is the script to evaluate.
+	 * @return the result of the evaluation.
+	 * @throws ScriptException 
+	 */
+	protected Object evaluate(ScriptEngine engine, String script) throws ScriptException {
+		return engine.eval(script);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Object runCommand(String aCommand) {
-		ScriptEngine engine = getScriptEngine();
 		try {
-			return engine.eval(aCommand);
+			return evaluate(getScriptEngine(), aCommand);
 		}
 		catch (ScriptException e) {
 			if (!fireScriptError(e)) log(e);
+			return null;
+		}
+		catch (Exception e) {
+			ScriptException se = new ScriptException(e);
+			if (!fireScriptError(se)) log(se);
+			return null;
+		}
+		catch (Throwable e) {
+			ScriptException se = new ScriptException(new Exception(e));
+			if (!fireScriptError(se)) log(se);
 			return null;
 		}
 	}
@@ -250,10 +296,10 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object runScript(String scriptBasename) {
-		ScriptFileFilter filter = getPreferredFileFilter();
+	public final Object runScript(String scriptBasename) {
+		ScriptFileFilter filter = getFileFilter(false);
 		ScriptException firstException = null;
-		IOException firstIOException = null;
+		Throwable firstThrowable = null;
 		if (filter==null || filter.accept(new File(scriptBasename))) {
 			Iterator<URL> iterator = this.repository.getDirectories();
 			URL bu, fu;
@@ -262,25 +308,29 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 				bu = iterator.next();
 				fu = FileSystem.join(bu, scriptBasename);
 				try {
-					return engine.eval(new InputStreamReader(fu.openStream()));
-				}
-				catch (IOException e) {
-					if (firstIOException==null) {
-						firstIOException = e;
-					}
+					return evaluate(engine, new InputStreamReader(fu.openStream()));
 				}
 				catch (ScriptException e) {
 					if (firstException==null) {
 						firstException = e;
 					}
 				}
+				catch (Throwable e) {
+					if (firstThrowable==null) {
+						firstThrowable = e;
+					}
+				}
+				
 			}
 		}
 		if (firstException!=null) {
 			log(firstException);
 		}
-		else if (firstIOException!=null) {
-			log(new ScriptException(firstIOException));
+		else if (firstThrowable!=null) {
+			if (firstThrowable instanceof Exception)
+				log(new ScriptException((Exception)firstThrowable));
+			else
+				log(new ScriptException(new Exception(firstThrowable)));
 		}
 		else {
 			log(new ScriptException(Locale.getString("NO_SCRIPT", scriptBasename))); //$NON-NLS-1$
@@ -292,15 +342,18 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object runScript(File scriptFilename) {
+	public final Object runScript(File scriptFilename) {
 		try {
-			return getScriptEngine().eval(new FileReader(scriptFilename));
-		}
-		catch (IOException e) {
-			log(new ScriptException(e));
+			return evaluate(getScriptEngine(), new FileReader(scriptFilename));
 		}
 		catch (ScriptException e) {
 			log(e);
+		}
+		catch (Exception e) {
+			log(new ScriptException(e));
+		}
+		catch (Throwable e) {
+			log(new ScriptException(new Exception(e)));
 		}
 		return null;
 	}
@@ -309,15 +362,18 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object runScript(URL scriptFilename) {
+	public final Object runScript(URL scriptFilename) {
 		try {
-			return getScriptEngine().eval(new InputStreamReader(scriptFilename.openStream()));
-		}
-		catch (IOException e) {
-			log(new ScriptException(e));
+			return evaluate(getScriptEngine(), new InputStreamReader(scriptFilename.openStream()));
 		}
 		catch (ScriptException e) {
 			log(e);
+		}
+		catch (Exception e) {
+			log(new ScriptException(e));
+		}
+		catch (Throwable e) {
+			log(new ScriptException(new Exception(e)));
 		}
 		return null;
 	}
@@ -333,18 +389,13 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 
 	/** Create the unique name for a temp variable.
 	 * 
-	 * @param prefix is the prefix of the name.
-	 * @param postfix is the postfix of the name.
 	 * @return the name of the temporary variable.
 	 */
-	protected final String makeTempVariable(String prefix, String postfix) {
+	protected final String makeTempVariable() {
 		StringBuilder t = new StringBuilder();
-		assert(prefix!=null && !prefix.isEmpty());
-		t.append(prefix);
+		t.append("___JANUS_KERNEL_TEMP_VARIABLE__"); //$NON-NLS-1$
 		t.append(this.tempVariableIndex);
 		++this.tempVariableIndex;
-		if (postfix!=null && !postfix.isEmpty())
-			t.append(prefix);
 		return t.toString();
 	}
 	
@@ -352,11 +403,12 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object runFunction(String scriptBasename, String functionName,
+	public final Object runFunction(String scriptBasename, String functionName,
 			Object... params) {
 		runScript(scriptBasename);
 		try {
-			return runCommand(makeFunctionCall(functionName, params));
+			return runCommand(
+					makeFunctionCall(functionName, params));
 		}
 		finally {
 			this.tempVariableIndex = 0;
@@ -368,7 +420,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object runFunction(File scriptFilename, String functionName,
+	public final Object runFunction(File scriptFilename, String functionName,
 			Object... params) {
 		runScript(scriptFilename);
 		try {
@@ -384,7 +436,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object runFunction(URL scriptFilename, String functionName,
+	public final Object runFunction(URL scriptFilename, String functionName,
 			Object... params) {
 		runScript(scriptFilename);
 		try {

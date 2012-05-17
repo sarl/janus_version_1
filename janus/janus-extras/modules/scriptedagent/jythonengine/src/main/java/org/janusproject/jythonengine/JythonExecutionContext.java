@@ -26,6 +26,10 @@ import javax.script.ScriptEngineManager;
 
 import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
 import org.janusproject.scriptedagent.ScriptedAgent;
+import org.python.core.Py;
+import org.python.core.PyBaseString;
+import org.python.core.PyObject;
+import org.python.core.PyUnicode;
 
 /**
  * This class generates a Jython execution context.
@@ -43,12 +47,32 @@ public class JythonExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	public static final String JYTHON_ENGINE_NAME = "python"; //$NON-NLS-1$
 
-	/**
-	 * Prefix used to build the name of temporary variables.
-	 * It is recommanded that the scripts must not contains any
-	 * variable with this prefix.
-	 */
-	public static final String TEMP_VARIABLE_PREFIX = "__janus_jython_private_temp_var__"; //$NON-NLS-1$
+	private static String toPython(Object v) {
+		PyObject obj = Py.java2py(v);
+		String rawValue;
+		if (obj instanceof PyBaseString) {
+			if (obj instanceof PyUnicode) {
+				rawValue = ((PyUnicode)obj).encode();
+			}
+			else {
+				rawValue = obj.asString();
+			}
+			rawValue = "\""+rawValue.replaceAll("\"", "\\\\\"")+"\"";   //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
+		}
+		else {
+			rawValue = obj.__str__().toString();
+		}
+
+		return rawValue;
+	}
+
+	private static boolean isSerializable(Object v) {
+		return (v==null)
+				|| (v instanceof Number)
+				|| (v instanceof CharSequence)
+				|| (v instanceof Boolean)
+				|| (v instanceof Character);
+	}
 
 	/**
 	 * Default constructor.
@@ -57,8 +81,7 @@ public class JythonExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	public JythonExecutionContext(ScriptEngineManager scriptManager) {
 		super(
-			new JythonFileFilter(false),
-			scriptManager.getEngineByName(JYTHON_ENGINE_NAME));
+				scriptManager.getEngineByName(JYTHON_ENGINE_NAME));
 	}
 
 	/**
@@ -66,6 +89,14 @@ public class JythonExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	public JythonExecutionContext() {
 		this(ScriptedAgent.getSharedScriptEngineManager());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final boolean isAgentSeparationCompliant() {
+		return true;
 	}
 
 	/**
@@ -85,11 +116,13 @@ public class JythonExecutionContext extends AbstractScriptExecutionContext {
 			command.append(functionName.trim());
 		}
 		command.append('(');
-		if (params!=null && params.length>0) {
-			String paramName;
-			for(int i=0; i<params.length; ++i) {
-				if (i>0) command.append(',');
-				paramName = makeTempVariable(TEMP_VARIABLE_PREFIX, null);
+		for(int i=0; i<params.length; ++i) {
+			if (i>0) command.append(',');
+			if (isSerializable(params[i])) {
+				command.append(toPython(params[i]));
+			}
+			else {
+				String paramName = makeTempVariable();
 				context.setAttribute(paramName, params[i], ScriptContext.ENGINE_SCOPE);
 				command.append(paramName);
 			}
@@ -97,5 +130,5 @@ public class JythonExecutionContext extends AbstractScriptExecutionContext {
 		command.append(')');
 		return command.toString();
 	}
-	
+
 }

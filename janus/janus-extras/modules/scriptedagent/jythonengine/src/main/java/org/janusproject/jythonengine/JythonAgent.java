@@ -28,10 +28,8 @@ import org.janusproject.scriptedagent.ScriptedAgent;
  * Agent created to run Jython commands and scripts.
  * 
  * @author $Author: sgalland$
- * @author $Author: cwintz$
- * @author $Author: ngaud$
  * @version $Name$ $Revision$ $Date$
- * @mavengroupid $Groupid$
+ * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
 public class JythonAgent extends ScriptedAgent {

@@ -26,6 +26,8 @@ import java.util.EventListener;
 import java.util.List;
 import java.util.logging.LogRecord;
 
+import javax.swing.filechooser.FileFilter;
+
 import org.janusproject.kernel.channels.Channel;
 
 /**
@@ -69,6 +71,11 @@ public interface AgentShellChannel extends Channel {
 	 * @return the path of the directory containing Groovy's scripts
 	 */
 	public File getScriptPath();
+	
+	/**
+	 * @return the preferred file filter for the script interpreter.
+	 */
+	public FileFilter getFileFilter();
 	
 	/** Add listener on log messages.
 	 * 

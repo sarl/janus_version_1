@@ -45,7 +45,6 @@ import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
 import org.arakhne.vmutil.locale.Locale;
-import org.janusproject.groovyengine.GroovyFileFilter;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
@@ -143,9 +142,8 @@ public class ConsoleGUI extends JFrame implements AgentShellChannel.ResultListen
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GroovyFileFilter filter = new GroovyFileFilter();
 				JFileChooser chooser = new JFileChooser(getAgentChannel().getScriptPath());
-				chooser.setFileFilter(filter);
+				chooser.setFileFilter(getAgentChannel().getFileFilter());
 				if (chooser.showOpenDialog(ConsoleGUI.this)==JFileChooser.APPROVE_OPTION) {
 					File selectedFile = chooser.getSelectedFile();
 					assert(selectedFile!=null);

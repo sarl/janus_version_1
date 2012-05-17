@@ -38,7 +38,7 @@ import org.jruby.embed.util.SystemPropertyCatcher;
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
-public class JanusJRubyEngineFactory extends JRubyEngineFactory {
+public final class JanusJRubyEngineFactory extends JRubyEngineFactory {
 
 	@Override
 	public ScriptEngine getScriptEngine() {
@@ -48,8 +48,7 @@ public class JanusJRubyEngineFactory extends JRubyEngineFactory {
 		ScriptingContainer container = new ScriptingContainer(scope, behavior, lazy);
 		SystemPropertyCatcher.setClassLoader(container);
 		SystemPropertyCatcher.setConfiguration(container);
-		JRubyEngine engine = new JRubyEngine(container, this);
-		return engine;
+		return new JanusJRubyEngine(container, this);
 	}
 
 }
