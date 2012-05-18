@@ -22,6 +22,7 @@
 		<module>jythonengine</module>
 		<module>jrubyengine</module>
 		<module>lispengine</module>
+		<module>luaengine</module>
 	</modules>
 
 </project>

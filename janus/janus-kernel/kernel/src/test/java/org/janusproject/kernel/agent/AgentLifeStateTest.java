@@ -64,20 +64,18 @@ public class AgentLifeStateTest extends TestCase {
 		assertSame(AgentLifeState.DYING, AgentLifeState.ALIVE.next());
 		assertSame(AgentLifeState.BREAKING_DOWN, AgentLifeState.DYING.next());
 		assertSame(AgentLifeState.DIED, AgentLifeState.BREAKING_DOWN.next());
-		assertSame(AgentLifeState.NIL, AgentLifeState.DIED.next());
-		assertSame(AgentLifeState.NIL, AgentLifeState.NIL.next());
+		assertSame(AgentLifeState.DIED, AgentLifeState.DIED.next());
 	}
 	
 	/**
 	 */
 	public void testPrevious() {
-		assertSame(AgentLifeState.NIL, AgentLifeState.UNBORN.previous());
+		assertSame(AgentLifeState.UNBORN, AgentLifeState.UNBORN.previous());
 		assertSame(AgentLifeState.UNBORN, AgentLifeState.BORN.previous());
 		assertSame(AgentLifeState.BORN, AgentLifeState.ALIVE.previous());
 		assertSame(AgentLifeState.ALIVE, AgentLifeState.DYING.previous());
 		assertSame(AgentLifeState.DYING, AgentLifeState.BREAKING_DOWN.previous());
 		assertSame(AgentLifeState.BREAKING_DOWN, AgentLifeState.DIED.previous());
-		assertSame(AgentLifeState.NIL, AgentLifeState.NIL.previous());
 	}
 	
 	/**
@@ -89,7 +87,6 @@ public class AgentLifeStateTest extends TestCase {
 		assertTrue(AgentLifeState.DYING.isAlive());
 		assertFalse(AgentLifeState.BREAKING_DOWN.isAlive());
 		assertFalse(AgentLifeState.DIED.isAlive());
-		assertFalse(AgentLifeState.NIL.isAlive());
 	}
 
 	/**
@@ -101,7 +98,6 @@ public class AgentLifeStateTest extends TestCase {
 		assertFalse(AgentLifeState.DYING.isLifeless());
 		assertTrue(AgentLifeState.BREAKING_DOWN.isLifeless());
 		assertTrue(AgentLifeState.DIED.isLifeless());
-		assertTrue(AgentLifeState.NIL.isLifeless());
 	}
 
 	/**
@@ -113,7 +109,6 @@ public class AgentLifeStateTest extends TestCase {
 		assertFalse(AgentLifeState.DYING.isPrenatal());
 		assertFalse(AgentLifeState.BREAKING_DOWN.isPrenatal());
 		assertFalse(AgentLifeState.DIED.isPrenatal());
-		assertFalse(AgentLifeState.NIL.isPrenatal());
 	}
 
 	/**
@@ -125,7 +120,6 @@ public class AgentLifeStateTest extends TestCase {
 		assertFalse(AgentLifeState.DYING.isMortuary());
 		assertTrue(AgentLifeState.BREAKING_DOWN.isMortuary());
 		assertTrue(AgentLifeState.DIED.isMortuary());
-		assertFalse(AgentLifeState.NIL.isMortuary());
 	}
 
 	/**
