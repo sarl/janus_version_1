@@ -1,0 +1,5 @@
+(defun liveAgent(agent)
+	(cons (print "this=")
+		  (cons (print nil)
+		  		(cons (print "; agent=")
+		  			  (print agent)))))

@@ -23,7 +23,7 @@ package org.janusproject.demo.jruby.simplemessage.agent;
 import java.net.URL;
 
 import org.arakhne.vmutil.Resources;
-import org.janusproject.jrubyengine.JRubyAgent;
+import org.janusproject.jrubyengine.RubyAgent;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.status.Status;
 
@@ -38,7 +38,7 @@ import org.janusproject.kernel.status.Status;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public class JRubyAgentSender extends JRubyAgent{
+public class JRubyAgentSender extends RubyAgent{
 
 	private static final long serialVersionUID = 2508734170719659042L;
 

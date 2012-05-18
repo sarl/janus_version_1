@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 import javax.script.ScriptEngineManager;
 
 import org.arakhne.vmutil.FileSystem;
+import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.kernel.agent.Agent;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
@@ -42,6 +43,13 @@ import org.janusproject.scriptedagent.exception.InvalidDirectoryException;
 
 /**
  * Agent which is able to run scripts.
+ * <p>
+ * If you passed a script to load to the constructor of the agent;
+ * the agent will invokes the functions defined by 
+ * {@link #ACTIVATE_SCRIPT_FUNCTION}, {@link #LIVE_SCRIPT_FUNCTION},
+ * and {@link #END_SCRIPT_FUNCTION} from the corresponding java
+ * functions. The expected prototypes of these functions are
+ * described in the documentation of their names.
  * 
  * @author $Author: sgalland$
  * @author $Author: cwintz$
@@ -54,6 +62,47 @@ import org.janusproject.scriptedagent.exception.InvalidDirectoryException;
 public class ScriptedAgent extends Agent {
 
 	private static final long serialVersionUID = -6624883872941692209L;
+
+	/** Name of the function that may be defined in the script
+	 * and invoked by from {@link #activate(Object...)}.
+	 * <p>
+	 * The name is "activateAgent" and not "activate" to avoid infinite
+	 * loop call of the java's activating function.
+	 * <p>
+	 * The expected prototype of the scripted activation function is:<ul>
+	 * <li>Parameter 0: the agent object itself;</li>
+	 * <li>Parameter 1 to n: the parameters passed to the Java activate function;</li>
+	 * <li>Return value: none.</li>
+	 * </ul>
+	 */
+	public static final String ACTIVATE_SCRIPT_FUNCTION = "activateAgent"; //$NON-NLS-1$
+
+	/** Name of the function that may be defined in the script
+	 * and invoked by from {@link #live()}.
+	 * <p>
+	 * The name is "liveAgent" and not "live" to avoid infinite
+	 * loop call of the java's living function.
+	 * <p>
+	 * The expected prototype of the scripted living function is:<ul>
+	 * <li>Parameter 0: the agent object itself;</li>
+	 * <li>Return value: none.</li>
+	 * </ul>
+	 */
+	public static final String LIVE_SCRIPT_FUNCTION = "liveAgent"; //$NON-NLS-1$
+	
+	/** Name of the function that may be defined in the script
+	 * and invoked by from {@link #activate(Object...)}.
+	 * <p>
+	 * The name is "endAgent" and not "end" because this last word
+	 * is often a keyword of the scripting language. Moreover
+	 * it permits to avoid infinite loop call of the java's ending function.
+	 * <p>
+	 * The expected prototype of the scripted destruction function is:<ul>
+	 * <li>Parameter 0: the agent object itself;</li>
+	 * <li>Return value: none.</li>
+	 * </ul>
+	 */
+	public static final String END_SCRIPT_FUNCTION = "endAgent"; //$NON-NLS-1$
 
 	/** Inactivity delay (in milliseconds) allowed for the internal tee manager.
 	 * The tee manager is providing a convenient way to catch the outputs of
@@ -81,6 +130,26 @@ public class ScriptedAgent extends Agent {
 	private ScriptExecutionContext scriptExecutor;
 
 	private TeeManager teeManager = null;
+	
+	private ScriptLoader scriptLoader = null;
+	private boolean automaticScriptExecution;
+
+	/**
+	 * Creates a new scripted agent and load the given script.
+	 * The script to load is locaded in
+	 * one of the directories managed by the script directory repository.
+	 * 
+	 * @param interpreter is the script interpreter to use.
+	 * @param startupScriptLoader is the script loader to use to load the startup script.
+	 */
+	protected ScriptedAgent(ScriptExecutionContext interpreter, ScriptLoader startupScriptLoader) {
+		super();
+		this.scriptExecutor = interpreter;
+		initRepository();
+		this.scriptLoader = startupScriptLoader;
+		this.automaticScriptExecution = startupScriptLoader!=null;
+		this.scriptExecutor.bindTo(this);
+	}
 
 	/**
 	 * Creates a new scripted agent.
@@ -88,11 +157,41 @@ public class ScriptedAgent extends Agent {
 	 * @param interpreter is the script interpreter to use.
 	 */
 	public ScriptedAgent(ScriptExecutionContext interpreter) {
-		super();
-		this.scriptExecutor = interpreter;
-		initRepository();
+		this(interpreter, (ScriptLoader)null);
 	}
 
+	/**
+	 * Creates a new scripted agent and load the given script.
+	 * The script to load is locaded in
+	 * one of the directories managed by the script directory repository.
+	 * 
+	 * @param interpreter is the script interpreter to use.
+	 * @param scriptBasename is the basename of the script to load at startup.
+	 */
+	public ScriptedAgent(ScriptExecutionContext interpreter, String scriptBasename) {
+		this(interpreter, new RepositoryScriptLoader(scriptBasename));
+	}
+
+	/**
+	 * Creates a new scripted agent and load the given script.
+	 * 
+	 * @param interpreter is the script interpreter to use.
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public ScriptedAgent(ScriptExecutionContext interpreter, File script) {
+		this(interpreter, new FileScriptLoader(script));
+	}
+
+	/**
+	 * Creates a new scripted agent and load the given script.
+	 * 
+	 * @param interpreter is the script interpreter to use.
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public ScriptedAgent(ScriptExecutionContext interpreter, final URL script) {
+		this(interpreter, new URLScriptLoader(script));
+	}
+	
 	private void initRepository() {
 		ScriptRepository repos = this.scriptExecutor.getScriptRepository();
 		if (repos==null) {
@@ -117,18 +216,77 @@ public class ScriptedAgent extends Agent {
 	 */
 	@Override
 	public Status activate(Object... parameters) {
+		Status status = null;
+		
+		// Finalize the creation of the script execution context
 		this.scriptExecutor.setLogger(getLogger());
-		return StatusFactory.ok(this);
+		
+		// Load the startup script
+		if (this.scriptLoader!=null) {
+			status = this.scriptLoader.load(getScriptExecutionContext(), this);
+			if (status!=null && status.isFailure())
+				this.automaticScriptExecution = false;
+			this.scriptLoader = null;
+		}
+		
+		// Run the activation function from the script.
+		if (this.automaticScriptExecution) {
+			preScriptActivation();
+			if (parameters!=null && parameters.length>0)
+				status = run(ACTIVATE_SCRIPT_FUNCTION, true, parameters);
+			else
+				status = run(ACTIVATE_SCRIPT_FUNCTION, true);
+		}
+		
+		return status;
+	}
+	
+	/** Invoked by {@link #activate(Object...)} just before
+	 * the scripted activation function is invoked.
+	 * This function is present for overridding by subclasses. 
+	 */
+	protected void preScriptActivation() {
+		//
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Status live() {
+		Status status = super.live();
+
+		// Run the living function from the script.
+		if (this.automaticScriptExecution && (status==null || status.isSuccess())) {
+			status = run(LIVE_SCRIPT_FUNCTION, false);
+		}
+		
+		return status;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Status end() {
+		Status status = null;
+		
+		// Run the destruction function from the script.
+		if (this.automaticScriptExecution) {
+			status = run(END_SCRIPT_FUNCTION, true);
+		}
+		
+		return status;
 	}
 
 	private void ensureTeeManager() {
 		if (this.teeManager==null) {
 			this.teeManager = new TeeManager(
-					getScriptExecutor(),
+					getScriptExecutionContext(),
 					getKernelContext().getScheduledExecutorService());
 		}
 		else {
-			this.teeManager.preExecution(getScriptExecutor());
+			this.teeManager.preExecution(getScriptExecutionContext());
 		}
 	}
 	
@@ -137,15 +295,6 @@ public class ScriptedAgent extends Agent {
 			this.teeManager.resetWriters(getScriptExecutionContext());
 			this.teeManager = null;
 		}
-	}
-
-	/**
-	 * Returns the script context associated with this agent.
-	 * 
-	 * @return the scriptExecutor
-	 */
-	protected final ScriptExecutionContext getScriptExecutor() {
-		return this.scriptExecutor;
 	}
 
 	/**
@@ -322,7 +471,7 @@ public class ScriptedAgent extends Agent {
 	 *            is the command which will be executed in the context
 	 * @return the return of the script context for the command.
 	 */
-	protected final Object runCommand(String aCommand) {
+	protected Object runCommand(String aCommand) {
 		return this.scriptExecutor.runCommand(aCommand);
 	}
 
@@ -362,7 +511,7 @@ public class ScriptedAgent extends Agent {
 	 * @param params is the list of the parameters to pass to the function.
 	 * @return the default output
 	 */
-	protected final Object runFunction(String scriptBasename, String functionName, Object... params) {
+	protected Object runFunction(String scriptBasename, String functionName, Object... params) {
 		return this.scriptExecutor.runFunction(scriptBasename, functionName, params);
 	}
 
@@ -402,7 +551,7 @@ public class ScriptedAgent extends Agent {
 	 * @param params is the list of the parameters to pass to the function.
 	 * @return the default output
 	 */
-	protected final Object runFunction(File scriptFilename, String functionName, Object... params) {
+	protected Object runFunction(File scriptFilename, String functionName, Object... params) {
 		return this.scriptExecutor.runFunction(scriptFilename, functionName, params);
 	}
 
@@ -465,6 +614,117 @@ public class ScriptedAgent extends Agent {
 		ensureTeeManager();
 		Object r = runFunction(scriptFilename, functionName, params);
 		return this.teeManager.postExecution(r);
+	}
+
+	/**
+	 * Invokes the function with the given name and the given parameters, and that
+	 * is defined in an already loaded script.
+	 * This function is similar to a call to {@link #runCommand(String)}
+	 * with the result of {@link ScriptExecutionContext#makeFunctionCall(String, Object...)}
+	 * as parameter.
+	 * <p>
+	 * The text printed out on the standard outputs are not replied.
+	 * See {@link #runFunctionAsInteractiveInterpreter(String, Object...)}
+	 * to obtain the same output as inside an interactive interpreter.
+	 * 
+	 * @param functionName is the name of the function to invoke.
+	 * @param params is the list of the parameters to pass to the function.
+	 * @return the default output
+	 */
+	protected Object runFunction(String functionName, Object... params) {
+		return this.scriptExecutor.runFunction(functionName, params);
+	}
+
+	/**
+	 * Invokes the function with the given name and the given parameters, and that
+	 * is defined in an already loaded script.
+	 * This function is similar to a call to {@link #runCommand(String)}
+	 * with the result of {@link ScriptExecutionContext#makeFunctionCall(String, Object...)}
+	 * as parameter.
+	 * <p>
+	 * <p>
+	 * If you want to obtain the real result of the execution,
+	 * and not only the printed-out text, see
+	 * {@link #runFunction(String, Object...)}.
+	 * <p>
+	 * This function capture the output streams (standard and
+	 * error) and append them to the result of the command. 
+	 * 
+	 * @param functionName is the name of the function to invoke.
+	 * @param params is the list of the parameters to pass to the function.
+	 * @return the default output
+	 */
+	protected final Object runFunctionAsInteractiveInterpreter(String functionName, Object... params) {
+		ensureTeeManager();
+		Object r = runFunction(functionName, params);
+		return this.teeManager.postExecution(r);
+	}
+	
+	/** Run a function in the context of the scripted agent.
+	 * In addition to {@link #runFunction(String, Object...)},
+	 * {@link #runAgentFunction(String, Object...)} passes the
+	 * agent instance as first parameter of the function and
+	 * tries to force the "this" instance to the agent.
+	 * 
+	 * @param name is the name of the function to invoke.
+	 * @param parameters are the parameters to pass to the function.
+	 */
+	protected void runAgentFunction(String name, Object... parameters) {
+		if (parameters==null || parameters.length==0) {
+			this.scriptExecutor.runFunction(name, this);
+		}
+		else {
+			Object[] params = new Object[parameters.length+1];
+			System.arraycopy(parameters, 0, params, 1, parameters.length);
+			params[0] = this;
+			this.scriptExecutor.runFunction(name, params);
+		}
+	}
+	
+	private Status run(String name, boolean ignoreMissedMethod) {
+		Status status = null;
+		ScriptExecutionContext context = getScriptExecutionContext();
+		boolean isCatched = context.isCatchAllExceptions();
+		context.setCatchAllExceptions(false);
+		try {
+			if (!ignoreMissedMethod || context.isFunction(name)) {
+				runAgentFunction(name);
+			}
+		}
+		catch(Throwable e) {
+			status = StatusFactory.error(ScriptedAgent.this,
+					Locale.getString(ScriptedAgent.class,
+							"ERROR_IN_SCRIPT", //$NON-NLS-1$
+							name,
+							getAddress()),
+					e);
+			status.setLoggable(false); // Status already logged
+		}
+		context.setCatchAllExceptions(isCatched);
+		return status;
+	}
+
+	private Status run(String name, boolean ignoreMissedMethod, Object[] parameters) {
+		Status status = null;
+		ScriptExecutionContext context = getScriptExecutionContext();
+		boolean isCatched = context.isCatchAllExceptions();
+		context.setCatchAllExceptions(false);
+		try {
+			if (!ignoreMissedMethod || context.isFunction(name)) {
+				runAgentFunction(name, parameters);
+			}
+		}
+		catch(Throwable e) {
+			status = StatusFactory.error(ScriptedAgent.this,
+					Locale.getString(ScriptedAgent.class,
+							"ERROR_IN_SCRIPT", //$NON-NLS-1$
+							name,
+							getAddress()),
+					e);
+			status.setLoggable(false); // Status already logged
+		}
+		context.setCatchAllExceptions(isCatched);
+		return status;
 	}
 
 	/**
@@ -616,6 +876,145 @@ public class ScriptedAgent extends Agent {
 			}
 		}
 
+	}
+
+	/** This class help to load startup scripts.
+	 * 
+	 * @author $Author: sgalland$
+	 * @version $Name$ $Revision$ $Date$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 * @since 0.5
+	 */
+	protected static abstract class ScriptLoader {
+
+		/**
+		 */
+		public ScriptLoader() {
+			//
+		}
+		
+		/** Run the startup script.
+		 * 
+		 * @param context
+		 * @param agent
+		 * @throws IOException
+		 */
+		protected abstract void loadStartupScript(ScriptExecutionContext context, ScriptedAgent agent) throws IOException;
+		
+		/** Load the startup script.
+		 * 
+		 * @param context is the execution context
+		 * @param agent is the agent associated to the script.
+		 * @return the execution status.
+		 */
+		Status load(ScriptExecutionContext context, ScriptedAgent agent) {
+			Status status = null;
+			boolean isCatched = context.isCatchAllExceptions();
+			context.setCatchAllExceptions(false);
+			try {
+				loadStartupScript(context, agent);
+			}
+			catch(Throwable e) {
+				status = StatusFactory.error(
+						agent,
+						Locale.getString(ScriptedAgent.class,
+								"AUTOMATIC_EXECUTION_CANCELED", //$NON-NLS-1$
+								agent.getAddress()),
+						e);
+				status.setLoggable(false); // Status already logged
+			}
+			context.setCatchAllExceptions(isCatched);
+			return status;
+		}
+		
+	}
+	
+	/** This class help to load startup script from the repository
+	 * 
+	 * @author $Author: sgalland$
+	 * @version $Name$ $Revision$ $Date$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 * @since 0.5
+	 */
+	protected static class RepositoryScriptLoader extends ScriptLoader {
+
+		private final String basename;
+		
+		/**
+		 * @param scriptBasename is the basename of the script to load at start up.
+		 */
+		public RepositoryScriptLoader(String scriptBasename) {
+			this.basename = scriptBasename;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		protected void loadStartupScript(ScriptExecutionContext context, ScriptedAgent agent) throws IOException {
+			context.runScript(this.basename);
+		}
+				
+	}
+
+	/** This class help to load startup script from the repository
+	 * 
+	 * @author $Author: sgalland$
+	 * @version $Name$ $Revision$ $Date$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 * @since 0.5
+	 */
+	protected static class FileScriptLoader extends ScriptLoader {
+
+		private final File filename;
+		
+		/**
+		 * @param script is the filename of the script to load at start up.
+		 */
+		public FileScriptLoader(File script) {
+			this.filename = script;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		protected void loadStartupScript(ScriptExecutionContext context, ScriptedAgent agent) throws IOException {
+			context.runScript(this.filename);
+		}
+				
+	}
+
+	/** This class help to load startup script from the repository
+	 * 
+	 * @author $Author: sgalland$
+	 * @version $Name$ $Revision$ $Date$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 * @since 0.5
+	 */
+	protected static class URLScriptLoader extends ScriptLoader {
+
+		private final URL filename;
+		
+		/**
+		 * @param script is the filename of the script to load at start up.
+		 */
+		public URLScriptLoader(URL script) {
+			this.filename = script;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		protected void loadStartupScript(ScriptExecutionContext context, ScriptedAgent agent) throws IOException {
+			context.runScript(this.filename);
+		}
+				
 	}
 
 }

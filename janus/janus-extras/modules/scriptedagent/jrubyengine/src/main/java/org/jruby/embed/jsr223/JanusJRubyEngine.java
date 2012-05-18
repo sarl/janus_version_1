@@ -52,4 +52,12 @@ public final class JanusJRubyEngine extends JRubyEngine {
 		return this.container.getProvider().getRuntime();
 	}
 
+	/** Replies the Ruby runtime used by the engine.
+	 * 
+	 * @return the Ruby runtime.
+	 */
+	public ScriptingContainer getContainer() {
+		return this.container;
+	}
+
 }

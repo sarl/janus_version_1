@@ -27,6 +27,7 @@ import java.net.URL;
 import java.util.logging.Logger;
 
 import javax.script.ScriptEngine;
+import javax.script.ScriptEngineFactory;
 
 /**
  * Execution context for a script language.
@@ -38,6 +39,14 @@ import javax.script.ScriptEngine;
  * @since 0.5
  */
 public interface ScriptExecutionContext {
+
+	/** Bind this context to the given agent.
+	 * By default this method does nothing.
+	 * It is here to be overridden by the subclasses.
+	 * 
+	 * @param agent
+	 */
+	public void bindTo(ScriptedAgent agent);
 
 	/** Replies if the interpreter supported by this script execution context
 	 * is compliant with the agent-separation concern.
@@ -75,16 +84,58 @@ public interface ScriptExecutionContext {
 	public ScriptFileFilter getFileFilter(boolean allowDirectories);
 	
 	/** Add listener on script errors.
+	 * If a listener on errors is existing in this {@link ScriptExecutionContext},
+	 * then the {@link ScriptExecutionContext} does not log nor throw
+	 * the error.
 	 * 
 	 * @param listener
+	 * @see #removeScriptErrorListener(ScriptErrorListener)
+	 * @see #setCatchAllExceptions(boolean)
+	 * @see #isCatchAllExceptions()
 	 */
 	public void addScriptErrorListener(ScriptErrorListener listener);
 	
 	/** Remove listener on script errors.
+	 * If a listener on errors is existing in this {@link ScriptExecutionContext},
+	 * then the {@link ScriptExecutionContext} does not log nor throw
+	 * the error.
 	 * 
 	 * @param listener
+	 * @see #addScriptErrorListener(ScriptErrorListener)
+	 * @see #setCatchAllExceptions(boolean)
+	 * @see #isCatchAllExceptions()
 	 */
 	public void removeScriptErrorListener(ScriptErrorListener listener);
+	
+	/** Indicates if the errors in the scripts may be catched
+	 * by the {@link ScriptExecutionContext} and never thrown outside.
+	 * If a listener on errors is existing in this {@link ScriptExecutionContext},
+	 * then the {@link ScriptExecutionContext} does not log nor throw
+	 * the error.
+	 * 
+	 * @param catchAll is <code>true</code> to force the context to catch
+	 * all the exceptions. It is <code>false</code> to enable the exceptions
+	 * to be thrown outside the context.
+	 * @see #addScriptErrorListener(ScriptErrorListener)
+	 * @see #removeScriptErrorListener(ScriptErrorListener)
+	 * @see #isCatchAllExceptions()
+	 */
+	public void setCatchAllExceptions(boolean catchAll);
+
+	/** Indicates if the errors in the scripts may be catched
+	 * by the {@link ScriptExecutionContext} and never thrown outside.
+	 * If a listener on errors is existing in this {@link ScriptExecutionContext},
+	 * then the {@link ScriptExecutionContext} does not log nor throw
+	 * the error.
+	 * 
+	 * @return <code>true</code> if the context is catching
+	 * all the exceptions; <code>false</code> if the exceptions
+	 * are thrown outside the context.
+	 * @see #addScriptErrorListener(ScriptErrorListener)
+	 * @see #removeScriptErrorListener(ScriptErrorListener)
+	 * @see #isCatchAllExceptions()
+	 */
+	public boolean isCatchAllExceptions();
 
 	/**
 	 * Returns the underlying script engine.
@@ -165,6 +216,16 @@ public interface ScriptExecutionContext {
 	public Object runScript(String scriptBasename);
 	
 	/**
+	 * Find a script with the given basename in the
+	 * directories managed by the script repository.
+	 * 
+	 * @param scriptBasename is the basename targeting the script file.
+	 * @return the URL of the script or <code>null</code> if the script
+	 * was not found.
+	 */
+	public URL findScript(String scriptBasename);
+
+	/**
 	 * Evaluate a script in the given file.
 	 * 
 	 * @param scriptFilename
@@ -179,6 +240,14 @@ public interface ScriptExecutionContext {
 	 * @return the value returned by the script.
 	 */
 	public Object runScript(URL scriptFilename);
+
+	/**
+	 * Evaluate a script in the specified stream.
+	 * 
+	 * @param stream
+	 * @return the value returned by the script.
+	 */
+	public Object runScript(Reader stream);
 
 	/**
 	 * Run the command in the context.
@@ -229,6 +298,57 @@ public interface ScriptExecutionContext {
 	 */
 	public Object runFunction(URL scriptFilename, String functionName, Object... params);
 	
+	/**
+	 * Invokes the function with the given name and the given parameters, and that
+	 * is defined in an already loaded script.
+	 * This function is similar to a call to {@link #runCommand(String)}
+	 * with the result of {@link #makeFunctionCall(String, Object...)}
+	 * as parameter.
+	 * 
+	 * @param functionName is the name of the function to invoke.
+	 * @param params is the list of the parameters to pass to the function.
+	 * @return the default output
+	 */
+	public Object runFunction(String functionName, Object... params);
+
+	/** Create and replies the call to the function with the specified
+	 * name and the specified parameters.
+	 * This method is similar to but does not invokes
+	 * {@link ScriptEngineFactory#getMethodCallSyntax(String, String, String...)}.
+	 * 
+	 * @param functionName is the name of the function to call.
+	 * @param params are the parameters to pass to the function.
+	 * @return the script command.
+	 */
+	public String makeFunctionCall(String functionName, Object... params);
+
+	/** Replies if a function with the specified name is defined in the script engine.
+	 * 
+	 * @param functionName is the name of the function to search for.
+	 * @return <code>true</code> if the function was defined; <code>false</code> if not.
+	 */
+	public boolean isFunction(String functionName);
+
+	/** Create and replies the call to the method on the given object
+	 * instance and the specified parameters.
+	 * This method invokes {@link ScriptEngineFactory#getMethodCallSyntax(String, String, String...)}
+	 * with the proper parameters.
+	 * 
+	 * @param objectInstance is the object to call on.
+	 * @param functionName is the name of the function to call.
+	 * @param params are the parameters to pass to the function.
+	 * @return the script command.
+	 */
+	public String makeMethodCall(Object objectInstance, String functionName, Object... params);
+
+	/** Translate and reply a string representation of the specified value
+	 * that is suitable to be put inside the script source code.
+	 * 
+	 * @param value is the value to translation
+	 * @return the string representation of the value.
+	 */
+	public String toScriptSyntax(Object value);
+
 	/** Replies the value of a global variable.
 	 * 
 	 * @param name is the name of the variable.

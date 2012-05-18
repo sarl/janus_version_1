@@ -37,7 +37,7 @@ import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.demo.agentshell.base.AgentShellChannel;
 import org.janusproject.demo.agentshell.base.AgentShellChannel.LogListener;
 import org.janusproject.demo.agentshell.base.AgentShellChannel.ResultListener;
-import org.janusproject.jrubyengine.JRubyAgent;
+import org.janusproject.jrubyengine.RubyAgent;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.channels.Channel;
 import org.janusproject.kernel.channels.ChannelInteractable;
@@ -55,7 +55,7 @@ import org.janusproject.kernel.util.event.ListenerCollection;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public class JRubyAgentShell extends JRubyAgent implements ChannelInteractable {
+public class JRubyAgentShell extends RubyAgent implements ChannelInteractable {
 
 	private static final long serialVersionUID = 8374430877811627485L;
 

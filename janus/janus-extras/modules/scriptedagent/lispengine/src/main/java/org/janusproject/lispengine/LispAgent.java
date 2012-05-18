@@ -20,9 +20,12 @@
  */
 package org.janusproject.lispengine;
 
+import java.io.File;
+import java.net.URL;
+
 import javax.script.ScriptEngineManager;
 
-import org.janusproject.scriptedagent.ScriptedAgent;
+import org.janusproject.scriptedagent.UnprotectedScriptedAgent;
 
 /**
  * Agent created to run Common Lisp commands and scripts.
@@ -32,7 +35,7 @@ import org.janusproject.scriptedagent.ScriptedAgent;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public class LispAgent extends ScriptedAgent {
+public class LispAgent extends UnprotectedScriptedAgent {
 
 	private static final long serialVersionUID = 2223144942117074910L;
 
@@ -50,6 +53,67 @@ public class LispAgent extends ScriptedAgent {
 	 */
 	public LispAgent() {
 		this(getSharedScriptEngineManager());
+	}
+
+	/**
+	 * Creates a new LispAgent.
+	 * The script to load is locaded in
+	 * one of the directories managed by the script directory repository.
+	 * 
+	 * @param scriptManager is the manager of the script engines to use.
+	 * @param scriptBasename is the basename of the script to load at startup.
+	 */
+	public LispAgent(ScriptEngineManager scriptManager, String scriptBasename) {
+		super(new LispExecutionContext(scriptManager), scriptBasename);
+	}
+	
+	/**
+	 * Creates a new LispAgent. 
+	 * The script to load is locaded in
+	 * one of the directories managed by the script directory repository.
+	 * 
+	 * @param scriptBasename is the basename of the script to load at startup.
+	 */
+	public LispAgent(String scriptBasename) {
+		this(getSharedScriptEngineManager(), scriptBasename);
+	}
+
+	/**
+	 * Creates a new LispAgent.
+	 * 
+	 * @param scriptManager is the manager of the script engines to use.
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public LispAgent(ScriptEngineManager scriptManager, File script) {
+		super(new LispExecutionContext(scriptManager), script);
+	}
+	
+	/**
+	 * Creates a new LispAgent. 
+	 * 
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public LispAgent(File script) {
+		this(getSharedScriptEngineManager(), script);
+	}
+
+	/**
+	 * Creates a new LispAgent.
+	 * 
+	 * @param scriptManager is the manager of the script engines to use.
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public LispAgent(ScriptEngineManager scriptManager, URL script) {
+		super(new LispExecutionContext(scriptManager), script);
+	}
+	
+	/**
+	 * Creates a new LispAgent. 
+	 * 
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public LispAgent(URL script) {
+		this(getSharedScriptEngineManager(), script);
 	}
 
 }

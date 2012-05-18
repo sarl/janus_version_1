@@ -21,6 +21,9 @@
  */
 package org.janusproject.groovyengine;
 
+import java.io.File;
+import java.net.URL;
+
 import javax.script.ScriptEngineManager;
 
 import org.janusproject.scriptedagent.ScriptedAgent;
@@ -56,4 +59,65 @@ public class GroovyAgent extends ScriptedAgent {
 		this(getSharedScriptEngineManager());
 	}
 	
+	/**
+	 * Creates a new GroovyAgent and load the script at startup.
+	 * The script to load is locaded in
+	 * one of the directories managed by the script directory repository.
+	 * 
+	 * @param scriptManager is the manager of the script engines to use.
+	 * @param scriptBasename is the basename of the script to load at startup.
+	 */
+	public GroovyAgent(ScriptEngineManager scriptManager, String scriptBasename) {
+		super(new GroovyExecutionContext(scriptManager), scriptBasename);
+	}
+	
+	/**
+	 * Creates a new GroovyAgent and load the script at startup.
+	 * The script to load is locaded in
+	 * one of the directories managed by the script directory repository.
+	 * 
+	 * @param scriptBasename is the basename of the script to load at startup.
+	 */
+	public GroovyAgent(String scriptBasename) {
+		this(getSharedScriptEngineManager(), scriptBasename);
+	}
+
+	/**
+	 * Creates a new GroovyAgent and load the script at startup.
+	 * 
+	 * @param scriptManager is the manager of the script engines to use.
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public GroovyAgent(ScriptEngineManager scriptManager, File script) {
+		super(new GroovyExecutionContext(scriptManager), script);
+	}
+	
+	/**
+	 * Creates a new GroovyAgent and load the script at startup.
+	 * 
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public GroovyAgent(File script) {
+		this(getSharedScriptEngineManager(), script);
+	}
+
+	/**
+	 * Creates a new GroovyAgent and load the script at startup.
+	 * 
+	 * @param scriptManager is the manager of the script engines to use.
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public GroovyAgent(ScriptEngineManager scriptManager, URL script) {
+		super(new GroovyExecutionContext(scriptManager), script);
+	}
+	
+	/**
+	 * Creates a new GroovyAgent and load the script at startup.
+	 * 
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public GroovyAgent(URL script) {
+		this(getSharedScriptEngineManager(), script);
+	}
+
 }

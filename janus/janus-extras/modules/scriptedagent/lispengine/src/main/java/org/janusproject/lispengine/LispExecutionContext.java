@@ -30,9 +30,11 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.armedbear.lisp.Function;
 import org.armedbear.lisp.JavaObject;
 import org.armedbear.lisp.LispObject;
 import org.armedbear.lisp.Symbol;
+import org.armedbear.lisp.scripting.AbclScriptEngine;
 import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
 import org.janusproject.scriptedagent.ScriptedAgent;
 
@@ -61,21 +63,18 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 		return JavaObject.getInstance(vv, true);
 	}
 
-	private static String toLisp(Object v) {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toScriptSyntax(Object v) {
 		return toLispObject(v).printObject();
 	}
 
-	private static boolean isSerializable(Object v) {
-		return (v==null)
-				|| (v instanceof Number)
-				|| (v instanceof CharSequence)
-				|| (v instanceof Boolean)
-				|| (v instanceof Character);
-	}
-
 	private final org.armedbear.lisp.Package lispPackage;
+	private final String packageName;
 	private final String packageNameHeader;
-	
+
 	/**
 	 * Default constructor.
 	 * 
@@ -83,14 +82,14 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	public LispExecutionContext(ScriptEngineManager scriptManager) {
 		super(
-			scriptManager.getEngineByName(LISP_ENGINE_NAME));
-		String packageName = "janus-platform-scope-"+UUID.randomUUID().toString(); //$NON-NLS-1$
-		this.packageNameHeader = "(in-package :"+packageName+") ";  //$NON-NLS-1$//$NON-NLS-2$
+				scriptManager.getEngineByName(LISP_ENGINE_NAME));
+		this.packageName = "janus-platform-scope-"+UUID.randomUUID().toString(); //$NON-NLS-1$
+		this.packageNameHeader = "(in-package :"+this.packageName+") ";  //$NON-NLS-1$//$NON-NLS-2$
 		try {
 			this.lispPackage = (org.armedbear.lisp.Package)
 					getScriptEngine().eval("(defpackage :"+ //$NON-NLS-1$
-					packageName+
-					" (:use :cl :ext :java :abcl-script :abcl-script-user))"); //$NON-NLS-1$
+							this.packageName+
+							" (:use :cl :ext :java :abcl-script :abcl-script-user))"); //$NON-NLS-1$
 		}
 		catch (ScriptException e) {
 			throw new RuntimeException(e);
@@ -126,7 +125,7 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 		for(int i=0; i<params.length; ++i) {
 			call.append(' ');
 			if (isSerializable(params[i])) {
-				call.append(toLisp(params[i]));
+				call.append(toScriptSyntax(params[i]));
 			}
 			else {
 				String paramName = makeTempVariable();
@@ -140,7 +139,48 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 		call.append(')');
 		return call.toString();
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String makeMethodCall(Object instance, String functionName, Object... params) {
+		assert(functionName!=null && !functionName.isEmpty());
+		ScriptEngine engine = getScriptEngine();
+		ScriptContext context = engine.getContext();
+		StringBuilder call = new StringBuilder();
+		call.append("(jcall "); //$NON-NLS-1$
+		call.append(functionName.trim());
+		call.append(' ');
+		if (isSerializable(instance)) {
+			call.append(toScriptSyntax(instance));
+		}
+		else {
+			String paramName = makeTempVariable();
+			LispObject obj = toLispObject(instance);
+			context.setAttribute(paramName, obj, ScriptContext.ENGINE_SCOPE);
+			Symbol symbol = this.lispPackage.addInternalSymbol(paramName);
+			symbol.setSymbolValue(obj);
+			call.append(paramName);
+		}
+		for(int i=0; i<params.length; ++i) {
+			call.append(' ');
+			if (isSerializable(params[i])) {
+				call.append(toScriptSyntax(params[i]));
+			}
+			else {
+				String paramName = makeTempVariable();
+				LispObject obj = toLispObject(params[i]);
+				context.setAttribute(paramName, obj, ScriptContext.ENGINE_SCOPE);
+				Symbol symbol = this.lispPackage.addInternalSymbol(paramName);
+				symbol.setSymbolValue(obj);
+				call.append(paramName);
+			}
+		}
+		call.append(')');
+		return call.toString();
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -148,7 +188,7 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 	public Object getGlobalValue(String name) {
 		return runCommand(name);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -156,12 +196,12 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 	public void setGlobalValue(String name, Object value) {
 		runCommand(
 				"(set "+ //$NON-NLS-1$
-				name+
-				" "+ //$NON-NLS-1$
-				toLisp(value)+
+						name+
+						" "+ //$NON-NLS-1$
+						toScriptSyntax(value)+
 				")"); //$NON-NLS-1$
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -169,13 +209,37 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 	protected Object evaluate(ScriptEngine engine, String script) throws ScriptException {
 		return super.evaluate(engine, this.packageNameHeader+script);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected Object evaluate(ScriptEngine engine, Reader stream) throws ScriptException {
 		return super.evaluate(engine, new PrefixedReader(this.packageNameHeader, stream));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isFunction(String functionName) {
+		try {
+			AbclScriptEngine engine = (AbclScriptEngine)getScriptEngine();
+			Symbol s;
+			if(functionName.indexOf(':') >= 0) {
+				s = engine.findSymbol(functionName);
+			} else {
+				s = engine.findSymbol(functionName, this.packageName);
+			}
+			if(s != null) {
+				LispObject f = s.getSymbolFunction();
+				return (f != null && f instanceof Function);
+			}
+		}
+		catch(Throwable _) {
+			//
+		}
+		return false;
 	}
 
 	/**
@@ -187,12 +251,12 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 	 * @mavenartifactid $ArtifactId$
 	 */
 	private static class PrefixedReader extends Reader {
-		
+
 		private final String header;
 		private final Reader reader;
-		
+
 		private int headerIndex = 0;
-		
+
 		public PrefixedReader(String prefix, Reader reader) {
 			this.header = prefix;
 			this.reader = reader;
@@ -221,7 +285,7 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 		public void close() throws IOException {
 			this.reader.close();
 		}
-		
+
 	}
-	
+
 }

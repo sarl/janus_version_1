@@ -20,12 +20,15 @@
  */
 package org.janusproject.jrubyengine;
 
+import java.io.Writer;
 import java.lang.ref.SoftReference;
 
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 
 import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
+import org.janusproject.scriptedagent.BlackHoleWriter;
+import org.jruby.RubyMethod;
 import org.jruby.RubyNil;
 import org.jruby.RubyString;
 import org.jruby.embed.jsr223.JanusJRubyEngine;
@@ -80,7 +83,11 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 		return true;
 	}
 	
-	private String toRuby(Object v) {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toScriptSyntax(Object v) {
 		IRubyObject rObj = JavaUtil.convertJavaToUsableRubyObject(
 				((JanusJRubyEngine)getScriptEngine()).getRuntime(),
 				v);
@@ -93,14 +100,6 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 		return rawValue;
 	}
 	
-	private static boolean isSerializable(Object v) {
-		return (v==null)
-				|| (v instanceof Number)
-				|| (v instanceof CharSequence)
-				|| (v instanceof Boolean)
-				|| (v instanceof Character);
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -110,18 +109,12 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 		ScriptEngine engine = getScriptEngine();
 		ScriptContext context = engine.getContext();
 		StringBuilder command = new StringBuilder();
-		int parenthesis = functionName.indexOf('(');
-		if (parenthesis>=0) {
-			command.append(functionName.substring(0, parenthesis).trim());
-		}
-		else {
-			command.append(functionName.trim());
-		}
+		command.append(functionName.trim());
 		command.append('(');
 		for(int i=0; i<params.length; ++i) {
 			if (i>0) command.append(',');
 			if (isSerializable(params[i])) {
-				command.append(toRuby(params[i]));
+				command.append(toScriptSyntax(params[i]));
 			}
 			else {
 				String paramName = makeTempVariable();
@@ -131,6 +124,65 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 		}
 		command.append(')');
 		return command.toString();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String makeMethodCall(Object objectInstance, String functionName,
+			Object... params) {
+		ScriptEngine engine = getScriptEngine();
+		ScriptContext context = engine.getContext();
+
+		// Translate the object instance
+		String paramName;
+		String instanceName;
+		if (isSerializable(objectInstance)) {
+			instanceName = toScriptSyntax(objectInstance);
+		}
+		else {
+			paramName = makeTempVariable();
+			context.setAttribute(paramName, objectInstance, ScriptContext.ENGINE_SCOPE);
+			instanceName = "$"+paramName; //$NON-NLS-1$
+		}
+		
+		// Translate the parameters
+		String[] p = new String[params.length];
+		for(int i=0; i<p.length; ++i) {
+			if (isSerializable(params[i])) {
+				p[i] = toScriptSyntax(params[i]);
+			}
+			else {
+				paramName = makeTempVariable();
+				context.setAttribute(paramName, params[i], ScriptContext.ENGINE_SCOPE);
+				p[i] = "$"+paramName; //$NON-NLS-1$
+			}
+		}
+		
+		// Create the call
+		return engine.getFactory().getMethodCallSyntax(instanceName, functionName, p);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isFunction(String functionName) {
+		Writer old = getStandardError();
+		Writer w = new BlackHoleWriter();
+		setStandardError(w);
+		try {
+			Object m = evaluate(getScriptEngine(), ":self.method( :"+functionName+" )");  //$NON-NLS-1$//$NON-NLS-2$
+			return m instanceof RubyMethod;
+		}
+		catch (Throwable _) {
+			//
+		}
+		finally {
+			setStandardError(old);
+		}
+		return false;
 	}
 	
 }

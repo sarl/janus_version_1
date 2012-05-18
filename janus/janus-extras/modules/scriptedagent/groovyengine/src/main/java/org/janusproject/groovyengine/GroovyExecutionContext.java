@@ -20,10 +20,13 @@
  */
 package org.janusproject.groovyengine;
 
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
+import java.lang.reflect.Method;
+
+import groovy.lang.GroovyClassLoader;
+
 import javax.script.ScriptEngineManager;
 
+import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl;
 import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
 import org.janusproject.scriptedagent.ScriptedAgent;
 
@@ -45,23 +48,6 @@ public class GroovyExecutionContext extends AbstractScriptExecutionContext {
 	 * Name of the groovy engine for Java script engine manager
 	 */
 	public static final String GROOVY_ENGINE_NAME = "groovy"; //$NON-NLS-1$
-
-	private static String toGroovy(Object v) {
-		if (v==null) return "null"; //$NON-NLS-1$
-		if (v instanceof CharSequence || v instanceof Character) {
-			String rawValue = v.toString();
-			return "\""+rawValue.replaceAll("\"", "\\\\\"")+"\"";   //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
-		}
-		return v.toString();
-	}
-	
-	private static boolean isSerializable(Object v) {
-		return (v==null)
-				|| (v instanceof Number)
-				|| (v instanceof CharSequence)
-				|| (v instanceof Boolean)
-				|| (v instanceof Character);
-	}
 
 	/**
 	 * Default constructor.
@@ -87,41 +73,44 @@ public class GroovyExecutionContext extends AbstractScriptExecutionContext {
 	public final boolean isAgentSeparationCompliant() {
 		return true;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String makeFunctionCall(String functionName, Object... params) {
-		assert(functionName!=null && !functionName.isEmpty());
-		ScriptEngine engine = getScriptEngine();
-		ScriptContext context = engine.getContext();
-		StringBuilder command = new StringBuilder();
-		int parenthesis = functionName.indexOf('(');
-		if (parenthesis>=0) {
-			command.append(functionName.substring(0, parenthesis).trim());
+	public String toScriptSyntax(Object v) {
+		if (v==null) return "null"; //$NON-NLS-1$
+		if (v instanceof CharSequence || v instanceof Character) {
+			String rawValue = v.toString();
+			return "\""+rawValue.replaceAll("\"", "\\\\\"")+"\"";   //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
 		}
-		else {
-			command.append(functionName.trim());
-		}
-		command.append('(');
-		if (params!=null && params.length>0) {
-			String paramName;
-			for(int i=0; i<params.length; ++i) {
-				if (i>0) command.append(',');
-				if (isSerializable(params[i])) {
-					command.append(toGroovy(params[i]));
+		return v.toString();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isFunction(String functionName) {
+		GroovyScriptEngineImpl engine = (GroovyScriptEngineImpl)getScriptEngine();
+		GroovyClassLoader classLoader = engine.getClassLoader();
+		String name;
+		for(Class<?> type : classLoader.getLoadedClasses()) {
+			name = type.getName();
+			// The Groovy engine is naming the global classes with the prefix "Script"
+			if (name.startsWith("Script")) { //$NON-NLS-1$
+				try {
+					for(Method method : type.getDeclaredMethods()) {
+						if (functionName.equals(method.getName()))
+							return true;
+					}
 				}
-				else {
-					paramName = makeTempVariable();
-					context.setAttribute(paramName, params[i], ScriptContext.ENGINE_SCOPE);
-					command.append(paramName);
+				catch (Throwable e) {
+					//
 				}
 			}
 		}
-		
-		command.append(')');
-		return command.toString();
+		return false;
 	}
 	
 }

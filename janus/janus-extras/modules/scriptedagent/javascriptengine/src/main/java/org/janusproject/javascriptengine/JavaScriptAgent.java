@@ -20,12 +20,19 @@
  */
 package org.janusproject.javascriptengine;
 
+import java.io.File;
+import java.net.URL;
+
 import javax.script.ScriptEngineManager;
 
-import org.janusproject.scriptedagent.ScriptedAgent;
+import org.janusproject.scriptedagent.ScriptExecutionContext;
+import org.janusproject.scriptedagent.UnprotectedScriptedAgent;
 
 /**
  * Agent created to run JavaScript commands and scripts.
+ * <p>
+ * To invoke protected methods from the agent, please use
+ * {@link #invoke(String, Object...)}.
  * 
  * @author $Author: sgalland$
  * @author $Author: ngaud$
@@ -33,24 +40,109 @@ import org.janusproject.scriptedagent.ScriptedAgent;
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
-public class JavaScriptAgent extends ScriptedAgent {
+public class JavaScriptAgent extends UnprotectedScriptedAgent {
 
 	private static final long serialVersionUID = -5485603272382497156L;
 
+	
 	/**
-	 * Creates a new JythonAgent.
+	 * Creates a new JavaScriptAgent.
 	 * 
 	 * @param scriptManager is the manager of the script engines to use.
 	 */
 	public JavaScriptAgent(ScriptEngineManager scriptManager) {
 		super(new JavaScriptExecutionContext(scriptManager));
 	}
-	
+
 	/**
-	 * Creates a new JythonAgent. 
+	 * Creates a new JavaScriptAgent. 
 	 */
 	public JavaScriptAgent() {
 		this(getSharedScriptEngineManager());
 	}
 
+	/**
+	 * Creates a new JavaScriptAgent and load the script at startup.
+	 * The script to load is locaded in
+	 * one of the directories managed by the script directory repository.
+	 * 
+	 * @param scriptManager is the manager of the script engines to use.
+	 * @param scriptBasename is the basename of the script to load at startup.
+	 */
+	public JavaScriptAgent(ScriptEngineManager scriptManager, String scriptBasename) {
+		super(new JavaScriptExecutionContext(scriptManager), scriptBasename);
+	}
+
+	/**
+	 * Creates a new JavaScriptAgent and load the script at startup. 
+	 * The script to load is locaded in
+	 * one of the directories managed by the script directory repository.
+	 * 
+	 * @param scriptBasename is the basename of the script to load at startup.
+	 */
+	public JavaScriptAgent(String scriptBasename) {
+		this(getSharedScriptEngineManager(), scriptBasename);
+	}
+
+	/**
+	 * Creates a new JavaScriptAgent and load the script at startup.
+	 * 
+	 * @param scriptManager is the manager of the script engines to use.
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public JavaScriptAgent(ScriptEngineManager scriptManager, File script) {
+		super(new JavaScriptExecutionContext(scriptManager), script);
+	}
+
+	/**
+	 * Creates a new JavaScriptAgent and load the script at startup. 
+	 * The script to load is locaded in
+	 * one of the directories managed by the script directory repository.
+	 * 
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public JavaScriptAgent(File script) {
+		this(getSharedScriptEngineManager(), script);
+	}
+
+	/**
+	 * Creates a new JavaScriptAgent and load the script at startup.
+	 * 
+	 * @param scriptManager is the manager of the script engines to use.
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public JavaScriptAgent(ScriptEngineManager scriptManager, URL script) {
+		super(new JavaScriptExecutionContext(scriptManager), script);
+	}
+
+	/**
+	 * Creates a new JavaScriptAgent and load the script at startup. 
+	 * The script to load is locaded in
+	 * one of the directories managed by the script directory repository.
+	 * 
+	 * @param script is the filename of the script to load at startup.
+	 */
+	public JavaScriptAgent(URL script) {
+		this(getSharedScriptEngineManager(), script);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void runAgentFunction(String name, Object... parameters) {
+		ScriptExecutionContext executor = getScriptExecutionContext();
+		String cmd;
+		if (parameters==null || parameters.length==0) {
+			cmd = executor.makeMethodCall(this, name, this);
+		}
+		else {
+			Object[] params = new Object[parameters.length+1];
+			System.arraycopy(parameters, 0, params, 1, parameters.length);
+			params[0] = this;
+			cmd = executor.makeMethodCall(this, name, params);
+		}
+		executor.runCommand(cmd);
+	}
+		
 }

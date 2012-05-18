@@ -1,0 +1,5 @@
+(defun liveAgent(agent)
+	(if (jfield "scriptedLiveExecuted" agent)
+	   	(cons (jcall "invoke" agent "killMe")
+	   	      (jfield "scriptedKilledExecuted" agent +TRUE+))
+	   	(jfield "scriptedLiveExecuted" agent +TRUE+)))

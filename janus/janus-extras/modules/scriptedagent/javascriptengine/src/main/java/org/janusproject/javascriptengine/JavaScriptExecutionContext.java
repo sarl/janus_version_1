@@ -20,9 +20,8 @@
  */
 package org.janusproject.javascriptengine;
 
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
 import org.janusproject.scriptedagent.ScriptedAgent;
@@ -43,21 +42,17 @@ public class JavaScriptExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	public static final String JAVASCRIPT_ENGINE_NAME = "javascript"; //$NON-NLS-1$
 
-	private static String toJavaScript(Object v) {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toScriptSyntax(Object v) {
 		if (v==null) return "null"; //$NON-NLS-1$
 		if (v instanceof CharSequence || v instanceof Character) {
 			String rawValue = v.toString();
 			return "\""+rawValue.replaceAll("\"", "\\\\\"")+"\"";   //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
 		}
 		return v.toString();
-	}
-	
-	private static boolean isSerializable(Object v) {
-		return (v==null)
-				|| (v instanceof Number)
-				|| (v instanceof CharSequence)
-				|| (v instanceof Boolean)
-				|| (v instanceof Character);
 	}
 
 	/**
@@ -89,32 +84,28 @@ public class JavaScriptExecutionContext extends AbstractScriptExecutionContext {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String makeFunctionCall(String functionName, Object... params) {
-		assert(functionName!=null && !functionName.isEmpty());
-		ScriptEngine engine = getScriptEngine();
-		ScriptContext context = engine.getContext();
-		StringBuilder command = new StringBuilder();
-		int parenthesis = functionName.indexOf('(');
-		if (parenthesis>=0) {
-			command.append(functionName.substring(0, parenthesis).trim());
-		}
-		else {
-			command.append(functionName.trim());
-		}
-		command.append('(');
-		for(int i=0; i<params.length; ++i) {
-			if (i>0) command.append(',');
-			if (isSerializable(params[i])) {
-				command.append(toJavaScript(params[i]));
-			}
-			else {
-				String paramName = makeTempVariable();
-				context.setAttribute(paramName, params[i], ScriptContext.ENGINE_SCOPE);
-				command.append(paramName);
-			}
-		}
-		command.append(')');
-		return command.toString();
+	public String makeMethodCall(Object objectInstance, String functionName,
+			Object... params) {
+		Object[] parameters = new Object[params.length+1];
+		System.arraycopy(params, 0, parameters, 1, params.length);
+		parameters[0] = objectInstance;
+		return makeFunctionCall(functionName+".call", parameters); //$NON-NLS-1$
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isFunction(String functionName) {
+		try {
+			Object v = evaluate(getScriptEngine(), "(typeof "+functionName+" == 'function')"); //$NON-NLS-1$ //$NON-NLS-2$
+			if (v instanceof Boolean)
+				return ((Boolean)v).booleanValue();
+		}
+		catch (ScriptException e) {
+			//
+		}
+		return false;
+	}
+		
 }

@@ -48,6 +48,10 @@ public class MultipleStatus implements MultiStatus {
 	 */
 	private List<Status> children = new ArrayList<>(2);
 	
+	/** Indicates is the status want to be silent.
+	 */
+	private boolean isLoggable = true;
+
 	/**
 	 * Creates a new status object.  
 	 * The created status has no children.
@@ -273,8 +277,16 @@ public class MultipleStatus implements MultiStatus {
 	 */
 	@Override
 	public boolean isLoggable() {
-		if (isEmpty()) return false;
+		if (!this.isLoggable || isEmpty()) return false;
 		return getHigherStatus().isLoggable();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setLoggable(boolean loggable) {
+		this.isLoggable = loggable;
 	}
 
 	/**
@@ -354,14 +366,21 @@ public class MultipleStatus implements MultiStatus {
 	    	
     	}
     	
+    	Status st;
+    	
     	switch(this.children.size()) {
     	case 0:
-    		return StatusFactory.ok(provider);
+    		st = StatusFactory.ok(provider);
+    		st.setLoggable(this.isLoggable);
+    		break;
     	case 1:
-    		return getHigherStatus();
+    		st = getHigherStatus();
+    		st.setLoggable(this.isLoggable);
+    		break;
     	default:
-    		return this;
+    		st = this;
     	}
+		return st;
     }
 
     /**

@@ -142,13 +142,26 @@ public interface Status extends Serializable {
 	/**
 	 * Returns whether this status may be logged or not.
 	 * A status may be logged if its severity is associated
-	 * to a printable log level.
+	 * to a printable log level, and is was not set to
+	 * unloggable with {@link #setLoggable(boolean)}.
 	 *
 	 * @return <code>true</code> if this status has a failure severity,
 	 * and <code>false</code> otherwise
 	 * @since 0.5
 	 */
 	public boolean isLoggable();
+
+	/**
+	 * Set if this status may be logged or not.
+	 * A status may be logged if its severity is associated
+	 * to a printable log level.
+	 *
+	 * @param loggable is <code>true</code> if this status may be loggable
+	 * depending on its severity, <code>false</code> if this status
+	 * should never be logged whatever its severity.
+	 * @since 0.5
+	 */
+	public void setLoggable(boolean loggable);
 
 	/**
 	 * Returns the string representation of this status,

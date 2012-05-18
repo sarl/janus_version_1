@@ -20,8 +20,6 @@
  */
 package org.janusproject.jythonengine;
 
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
 import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
@@ -30,6 +28,7 @@ import org.python.core.Py;
 import org.python.core.PyBaseString;
 import org.python.core.PyObject;
 import org.python.core.PyUnicode;
+import org.python.jsr223.JanusJythonScriptEngine;
 
 /**
  * This class generates a Jython execution context.
@@ -43,45 +42,12 @@ import org.python.core.PyUnicode;
 public class JythonExecutionContext extends AbstractScriptExecutionContext {
 
 	/**
-	 * Name of the jython engine for Java script engine manager
-	 */
-	public static final String JYTHON_ENGINE_NAME = "python"; //$NON-NLS-1$
-
-	private static String toPython(Object v) {
-		PyObject obj = Py.java2py(v);
-		String rawValue;
-		if (obj instanceof PyBaseString) {
-			if (obj instanceof PyUnicode) {
-				rawValue = ((PyUnicode)obj).encode();
-			}
-			else {
-				rawValue = obj.asString();
-			}
-			rawValue = "\""+rawValue.replaceAll("\"", "\\\\\"")+"\"";   //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
-		}
-		else {
-			rawValue = obj.__str__().toString();
-		}
-
-		return rawValue;
-	}
-
-	private static boolean isSerializable(Object v) {
-		return (v==null)
-				|| (v instanceof Number)
-				|| (v instanceof CharSequence)
-				|| (v instanceof Boolean)
-				|| (v instanceof Character);
-	}
-
-	/**
 	 * Default constructor.
 	 * 
 	 * @param scriptManager is the manager of script engines.
 	 */
 	public JythonExecutionContext(ScriptEngineManager scriptManager) {
-		super(
-				scriptManager.getEngineByName(JYTHON_ENGINE_NAME));
+		super(new JanusJythonScriptEngine());
 	}
 
 	/**
@@ -103,32 +69,32 @@ public class JythonExecutionContext extends AbstractScriptExecutionContext {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String makeFunctionCall(String functionName, Object... params) {
-		assert(functionName!=null && !functionName.isEmpty());
-		ScriptEngine engine = getScriptEngine();
-		ScriptContext context = engine.getContext();
-		StringBuilder command = new StringBuilder();
-		int parenthesis = functionName.indexOf('(');
-		if (parenthesis>=0) {
-			command.append(functionName.substring(0, parenthesis).trim());
-		}
-		else {
-			command.append(functionName.trim());
-		}
-		command.append('(');
-		for(int i=0; i<params.length; ++i) {
-			if (i>0) command.append(',');
-			if (isSerializable(params[i])) {
-				command.append(toPython(params[i]));
+	public String toScriptSyntax(Object v) {
+		PyObject obj = Py.java2py(v);
+		String rawValue;
+		if (obj instanceof PyBaseString) {
+			if (obj instanceof PyUnicode) {
+				rawValue = ((PyUnicode)obj).encode();
 			}
 			else {
-				String paramName = makeTempVariable();
-				context.setAttribute(paramName, params[i], ScriptContext.ENGINE_SCOPE);
-				command.append(paramName);
+				rawValue = obj.asString();
 			}
+			rawValue = "\""+rawValue.replaceAll("\"", "\\\\\"")+"\"";   //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
 		}
-		command.append(')');
-		return command.toString();
+		else {
+			rawValue = obj.__str__().toString();
+		}
+
+		return rawValue;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isFunction(String functionName) {
+		JanusJythonScriptEngine engine = (JanusJythonScriptEngine)getScriptEngine();
+		return engine.getDeclaredFunction(functionName)!=null;
 	}
 
 }

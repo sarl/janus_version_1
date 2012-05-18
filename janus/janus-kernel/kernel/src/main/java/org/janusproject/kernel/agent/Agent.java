@@ -281,8 +281,8 @@ implements Activable, Holon, Serializable {
 	 * @since 0.5
 	 */
 	public synchronized void waitUntilTermination() throws InterruptedException {
-		if (!getState().isMortuary()) {
-			wait();
+		while (getState()!=AgentLifeState.DIED) {
+			wait(10000);
 		}
 	}
 
@@ -457,7 +457,7 @@ implements Activable, Holon, Serializable {
 	 * @EXECUTIONAPI
 	 */
 	@Override
-	public boolean isAlive() {
+	public synchronized boolean isAlive() {
 		return this.agentState.isAlive();
 	}
 
@@ -466,7 +466,7 @@ implements Activable, Holon, Serializable {
 	 * @EXECUTIONAPI
 	 */
 	@Override
-	public AgentLifeState getState() {
+	public synchronized AgentLifeState getState() {
 		return this.agentState;
 	}
 	
@@ -484,7 +484,7 @@ implements Activable, Holon, Serializable {
 	 * 
 	 * @param state
 	 */
-	void setState(AgentLifeState state) {
+	synchronized void setState(AgentLifeState state) {
 		assert(state!=null);
 		if (this.agentState!=state) {
 			this.agentState = state;
@@ -810,7 +810,11 @@ implements Activable, Holon, Serializable {
 
 		Status s = activate(params);
 		
-		setState(AgentLifeState.ALIVE);
+		if (s==null || s.isSuccess())
+			setState(AgentLifeState.ALIVE);
+		else
+			setState(AgentLifeState.DIED);
+		
 		return s;
 	}
 
