@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2004-2011 Janus Core Developers
+ * Copyright (C) 2004-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,12 +106,7 @@ public class StatusFactory {
 	 * @return the status.
 	 */
 	public static Status cancel(String provider, Throwable cause) {
-		assert(provider!=null);
-		return new SingleStatus(
-				StatusSeverity.CANCEL, 
-				provider, 
-				KernelStatusConstants.CANCELATION, 
-				null, cause);
+		return cancel(provider, null, cause);
 	}
 
 	/** Create a CANCEL status.
@@ -121,12 +116,7 @@ public class StatusFactory {
 	 * @return the status.
 	 */
 	public static Status cancel(Class<?> provider, Throwable cause) {
-		assert(provider!=null);
-		return new SingleStatus(
-				StatusSeverity.CANCEL, 
-				provider.getCanonicalName(), 
-				KernelStatusConstants.CANCELATION,
-				null, cause);
+		return cancel(provider, null, cause);
 	}
 
 	/** Create a CANCEL status.
@@ -136,12 +126,58 @@ public class StatusFactory {
 	 * @return the status.
 	 */
 	public static Status cancel(Object provider, Throwable cause) {
+		return cancel(provider, null, cause);
+	}
+
+	/** Create a CANCEL status.
+	 * 
+	 * @param provider is the provider of the status flag, eg the caller of this function.
+	 * @param message
+	 * @param cause is the throwable object which is the cause of the cancelation.
+	 * @return the status.
+	 * @since 0.5
+	 */
+	public static Status cancel(String provider, String message, Throwable cause) {
+		assert(provider!=null);
+		return new SingleStatus(
+				StatusSeverity.CANCEL, 
+				provider, 
+				KernelStatusConstants.CANCELATION,
+				message, cause);
+	}
+
+	/** Create a CANCEL status.
+	 * 
+	 * @param provider is the provider of the status flag, eg the caller of this function.
+	 * @param message
+	 * @param cause is the throwable object which is the cause of the cancelation.
+	 * @return the status.
+	 * @since 0.5
+	 */
+	public static Status cancel(Class<?> provider, String message, Throwable cause) {
+		assert(provider!=null);
+		return new SingleStatus(
+				StatusSeverity.CANCEL, 
+				provider.getCanonicalName(), 
+				KernelStatusConstants.CANCELATION,
+				message, cause);
+	}
+
+	/** Create a CANCEL status.
+	 * 
+	 * @param provider is the provider of the status flag, eg the caller of this function.
+	 * @param message
+	 * @param cause is the throwable object which is the cause of the cancelation.
+	 * @return the status.
+	 * @since 0.5
+	 */
+	public static Status cancel(Object provider, String message, Throwable cause) {
 		assert(provider!=null);
 		return new SingleStatus(
 				StatusSeverity.CANCEL, 
 				Integer.toString(System.identityHashCode(provider)),
 				KernelStatusConstants.CANCELATION, 
-				null, cause);
+				message, cause);
 	}
 
 	/** Create a ERROR status.
