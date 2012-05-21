@@ -135,16 +135,6 @@ import org.janusproject.kernel.schedule.Activable;
  * 		<td>yes</td>
  * 		<td>yes</td>
  * </tr>
- * <tr>
- * 		<td>{@link #NIL}</td>
- * 		<td>no</td>
- * 		<td>-</td>
- * 		<td>-</td>
- * 		<td>-</td>
- * 		<td>-</td>
- * 		<td>-</td>
- * 		<td>-</td>
- * </tr>
  * </table>
  * 
  * @author $Author: sgalland$
@@ -161,7 +151,7 @@ public enum AgentLifeState {
 		@Override
 		public AgentLifeState next() { return BORN; }
 		@Override
-		public AgentLifeState previous() { return NIL; }
+		public AgentLifeState previous() { return UNBORN; }
 		@Override
 		public boolean isAlive() { return false; }
 		@Override
@@ -250,7 +240,7 @@ public enum AgentLifeState {
 	 */
 	DIED {
 		@Override
-		public AgentLifeState next() { return NIL; }
+		public AgentLifeState next() { return DIED; }
 		@Override
 		public AgentLifeState previous() { return BREAKING_DOWN; }
 		@Override
@@ -261,23 +251,6 @@ public enum AgentLifeState {
 		public boolean isPrenatal() { return false; }
 		@Override
 		public boolean isMortuary() { return true; }
-	},
-
-	/** The entity is not presents in memory.
-	 */
-	NIL {
-		@Override
-		public AgentLifeState next() { return NIL; }
-		@Override
-		public AgentLifeState previous() { return NIL; }
-		@Override
-		public boolean isAlive() { return false; }
-		@Override
-		public boolean isLifeless() { return true; }
-		@Override
-		public boolean isPrenatal() { return false; }
-		@Override
-		public boolean isMortuary() { return false; }
 	};
 
 	/** Replies the next state.
@@ -303,8 +276,8 @@ public enum AgentLifeState {
 
 	/** Replies if the state does not permit to the entity to do something.
 	 * <p>
-	 * Basically {@link #UNBORN}, {@link #BORN}, {@link #DIED}, {@link #BREAKING_DOWN}, 
-	 * and {@link #NIL} are all lifeless states.
+	 * Basically {@link #UNBORN}, {@link #BORN}, {@link #DIED}, and {@link #BREAKING_DOWN} 
+	 * are all lifeless states.
 	 * 
 	 * @return <code>true</code> if the entity is not able to do something,
 	 * otherwise <code>false</code>.

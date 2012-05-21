@@ -127,7 +127,6 @@ extends AbstractActivator<Agent> {
 				break;
 			case BREAKING_DOWN:
 			case DIED:
-			case NIL:
 				// void states
 				ms.addStatus(new SingleStatus(
 						StatusSeverity.WARNING,
