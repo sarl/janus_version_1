@@ -263,15 +263,11 @@ public class HeavyAgentTest extends TestCase {
 		 */
 		@Override
 		public Status live() {
-			super.live();
-			boolean noMessage = true;
 			Message m = getMessage();
-			while (m!=null) {
-				noMessage = false;
+			if (m!=null) {
 				this.nbMessages.incrementAndGet();
-				m = getMessage();
 			}
-			if (this.stop.get() && noMessage) {
+			if (this.stop.get() && m==null) {
 				killMe();
 			}
 			return null;

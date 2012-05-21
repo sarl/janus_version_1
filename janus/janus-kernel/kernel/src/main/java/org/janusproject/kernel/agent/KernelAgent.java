@@ -445,7 +445,7 @@ extends ActivatorAgent<AgentActivator> {
 			try {
 				s = agent.proceedPrivateDestruction();
 				
-				if (s!=null && s.isLoggable()) {
+				if (s.isLoggable()) {
 					s.logOn(getLogger());
 				}
 			}
@@ -459,10 +459,6 @@ extends ActivatorAgent<AgentActivator> {
 						e.getLocalizedMessage(),
 						e);
 			}
-		}
-		else if (agent.getState().isPrenatal()) {
-			agent.setState(AgentLifeState.DIED);
-			s = StatusFactory.ok(this);
 		}
 		else {
 			s = StatusFactory.ok(this);
@@ -1359,10 +1355,6 @@ extends ActivatorAgent<AgentActivator> {
 				if (s!=null && s.isLoggable()) {
 					s.logOn(this.agent.getLogger());
 				}
-				
-				if (s!=null && s.isFailure()) {
-					KernelAgent.this.removeAgentFromKernel(this.agent);
-				}
 				else {
 					
 					assert(this.agent.getState()==AgentLifeState.ALIVE);
@@ -1381,9 +1373,6 @@ extends ActivatorAgent<AgentActivator> {
 								s = this.agent.proceedPrivateBehaviour();
 								if (s!=null && s.isLoggable()) {
 									s.logOn(this.agent.getLogger());
-								}
-								if (s!=null && s.isFailure() && s.getSeverity()!=StatusSeverity.CANCEL) {
-									this.kill = true; // Force to kill the agent because is has failed
 								}
 							}
 							Thread.yield();

@@ -43,10 +43,6 @@ public class SingleStatus implements Status {
 	 * The severity of this status
 	 */
 	private StatusSeverity severity;
-	
-	/** Indicates is the status want to be silent.
-	 */
-	private boolean isLoggable = true;
 
 	/**
 	 * The id of the package/class/module providing the status
@@ -299,15 +295,7 @@ public class SingleStatus implements Status {
 	 */
 	@Override
 	public boolean isLoggable() {
-		return this.isLoggable && this.severity.toLevel()!=Level.OFF;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setLoggable(boolean loggable) {
-		this.isLoggable = loggable;
+		return this.severity.toLevel()!=Level.OFF;
 	}
 
 	@Override

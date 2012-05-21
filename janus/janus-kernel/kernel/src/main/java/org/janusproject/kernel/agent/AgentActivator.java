@@ -67,24 +67,22 @@ extends AbstractActivator<Agent> {
 	protected Status executeInit(Iterator<? extends Agent> agents, Object... parameters) {
 		MultipleStatus ms = new MultipleStatus();
 		Agent h;
-		Status s;
 		while (agents.hasNext()) {
 			h = agents.next();
 			if (h.getState()==AgentLifeState.UNBORN && !h.isMigrating.get()) {
 				try {
-					s = h.proceedPrivateInitialization(parameters);
+					ms.addStatus(h.proceedPrivateInitialization(parameters));
 				}
 				catch(AssertionError e) {
 					throw e;
 				}
 				catch(Throwable e) {
-					s = new ExceptionStatus(e);
+					ms.addStatus(new ExceptionStatus(e));
 				}
 			}
 			else {
-				s = StatusFactory.ok(h);
+				ms.addStatus(StatusFactory.ok(h));
 			}
-			ms.addStatus(s);
 		}
 		return ms.pack(this);
 	}
@@ -96,52 +94,48 @@ extends AbstractActivator<Agent> {
 	protected Status executeBehaviour(Iterator<? extends Agent> agents) {
 		MultipleStatus ms = new MultipleStatus();
 		Agent h;
-		Status s;
 		while (agents.hasNext()) {
 			h = agents.next();
-			s = null;
 			switch(h.getState()) {
 			case ALIVE:
 				// standard execution
 				try {
 					if (!h.isSleeping()) {
-						s = h.proceedPrivateBehaviour();
+						ms.addStatus(h.proceedPrivateBehaviour());
 					}
 				}
 				catch(AssertionError e) {
 					throw e;
 				}
 				catch(Throwable e) {
-					s = new ExceptionStatus(e);
+					ms.addStatus(new ExceptionStatus(e));
+					ms.addStatus(killAgent(h));
 				}
 				break;
 			case DYING:
 				// kill the agent
-				s = killAgent(h);
-				break;
-			case DIED:
-				// Special case of the failure in the activation function
-				killAgent(h);
+				ms.addStatus(killAgent(h));
 				break;
 			case UNBORN:
 			case BORN:
 				// void states
-				s = new SingleStatus(
+				ms.addStatus(new SingleStatus(
 						StatusSeverity.WARNING,
 						h.getAddress().toString(),
-						KernelStatusConstants.UNEXPECTED_AGENT_STATE_DURING_ACTIVATION);
-				killAgent(h);
+						KernelStatusConstants.UNEXPECTED_AGENT_STATE_DURING_ACTIVATION));
+				agents.remove();
 				break;
 			case BREAKING_DOWN:
+			case DIED:
+			case NIL:
 				// void states
-				s = new SingleStatus(
+				ms.addStatus(new SingleStatus(
 						StatusSeverity.WARNING,
 						h.getAddress().toString(),
-						KernelStatusConstants.UNEXPECTED_AGENT_STATE_DURING_DESTRUCTION);
-				killAgent(h);
+						KernelStatusConstants.UNEXPECTED_AGENT_STATE_DURING_DESTRUCTION));
+				agents.remove();
 				break;
 			}
-			if (s!=null) ms.addStatus(s);
 			Thread.yield();
 		}
 		return ms.pack(this);

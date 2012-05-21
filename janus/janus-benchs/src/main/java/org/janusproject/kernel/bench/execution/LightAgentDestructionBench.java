@@ -134,7 +134,7 @@ public class LightAgentDestructionBench extends CsvBench<AgentNumberBenchRun> {
 	 */
 	public void benchLaunchHeavy() throws Exception {
 		this.agent.requestKill();
-		while (this.agent.getState()!=AgentLifeState.DIED) {
+		while (this.agent.getState()!=AgentLifeState.NIL && this.agent.getState()!=AgentLifeState.DIED) {
 			Thread.yield();
 		}
 	}
@@ -144,7 +144,7 @@ public class LightAgentDestructionBench extends CsvBench<AgentNumberBenchRun> {
 	 */
 	public void benchLaunchLight() throws Exception {
 		this.agent.requestKill();
-		while (this.agent.getState()!=AgentLifeState.DIED) {
+		while (this.agent.getState()!=AgentLifeState.NIL && this.agent.getState()!=AgentLifeState.DIED) {
 			Thread.yield();
 		}
 	}
