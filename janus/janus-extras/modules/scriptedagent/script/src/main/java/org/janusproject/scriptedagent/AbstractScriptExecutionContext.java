@@ -192,7 +192,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void setStandardInput(Reader stdin) {
+	public void setStandardInput(Reader stdin) {
 		this.engine.getContext().setReader(stdin);
 	}
 
@@ -200,7 +200,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Reader getStandardInput() {
+	public Reader getStandardInput() {
 		return this.engine.getContext().getReader();
 	}
 
@@ -208,7 +208,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void setStandardOutput(Writer stdout) {
+	public void setStandardOutput(Writer stdout) {
 		this.engine.getContext().setWriter(stdout);
 	}
 
@@ -216,7 +216,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Writer getStandardOutput() {
+	public Writer getStandardOutput() {
 		return this.engine.getContext().getWriter();
 	}
 
@@ -224,7 +224,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void setStandardError(Writer stderr) {
+	public void setStandardError(Writer stderr) {
 		this.engine.getContext().setErrorWriter(stderr);
 	}
 
@@ -232,7 +232,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Writer getStandardError() {
+	public Writer getStandardError() {
 		return this.engine.getContext().getErrorWriter();
 	}
 

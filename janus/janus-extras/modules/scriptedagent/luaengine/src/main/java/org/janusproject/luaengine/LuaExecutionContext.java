@@ -20,7 +20,6 @@
  */
 package org.janusproject.luaengine;
 
-<<<<<<< HEAD
 import javax.script.ScriptEngineManager;
 
 import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
@@ -124,111 +123,4 @@ public class LuaExecutionContext extends AbstractScriptExecutionContext {
 		return null;
 	}
 
-=======
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
-import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
-import org.janusproject.scriptedagent.ScriptedAgent;
-import org.luaj.vm2.LuaString;
-import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.lib.jse.CoerceJavaToLua;
-import org.luaj.vm2.script.LuaScriptEngineFactory;
-
-/**
- * This class generates a Lua execution context.
- * It allows to run several scripts under several forms (path, commands, ...).
- * 
- * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
- * @mavengroupid $Groupid$
- * @mavenartifactid $ArtifactId$
- */
-public class LuaExecutionContext extends AbstractScriptExecutionContext {
-
-	static {
-		LuaScriptEngineFactory.setOneEnginePerThread(false);
-	}
-	
-	/**
-	 * Name of the lua engine for Java script engine manager
-	 */
-	public static final String LUA_ENGINE_NAME = "lua"; //$NON-NLS-1$
-
-	private static String toLua(Object v) {
-		LuaValue value = CoerceJavaToLua.coerce(v);
-		String rawValue = value.toString();
-		if (value instanceof LuaString) {
-			rawValue = "\""+rawValue.replaceAll("\"", "\\\\\"")+"\"";   //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
-		}
-		return rawValue;
-	}
-
-	private static boolean isSerializable(Object v) {
-		return (v==null)
-				|| (v instanceof Number)
-				|| (v instanceof CharSequence)
-				|| (v instanceof Boolean)
-				|| (v instanceof Character);
-	}
-
-	/**
-	 * Default constructor.
-	 * 
-	 * @param scriptManager is the manager of script engines.
-	 */
-	public LuaExecutionContext(ScriptEngineManager scriptManager) {
-		super(new LuaScriptEngineFactory().getScriptEngine());
-				//scriptManager.getEngineByName(LUA_ENGINE_NAME));
-	}
-
-	/**
-	 * Default constructor.
-	 */
-	public LuaExecutionContext() {
-		this(ScriptedAgent.getSharedScriptEngineManager());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final boolean isAgentSeparationCompliant() {
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String makeFunctionCall(String functionName, Object... params) {
-		assert(functionName!=null && !functionName.isEmpty());
-		ScriptEngine engine = getScriptEngine();
-		ScriptContext context = engine.getContext();
-		StringBuilder command = new StringBuilder();
-		int parenthesis = functionName.indexOf('(');
-		if (parenthesis>=0) {
-			command.append(functionName.substring(0, parenthesis).trim());
-		}
-		else {
-			command.append(functionName.trim());
-		}
-		command.append('(');
-		for(int i=0; i<params.length; ++i) {
-			if (i>0) command.append(',');
-			if (isSerializable(params[i])) {
-				command.append(toLua(params[i]));
-			}
-			else {
-				String paramName = makeTempVariable();
-				context.setAttribute(paramName, params[i], ScriptContext.ENGINE_SCOPE);
-				command.append(paramName);
-			}
-		}
-		command.append(')');
-		return command.toString();
-	}
-		
->>>>>>> 3c85039b2b07617d65f8914591ce1b6de88f8bd5
 }
