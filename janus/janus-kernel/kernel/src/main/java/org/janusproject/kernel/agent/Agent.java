@@ -1172,6 +1172,26 @@ implements Activable, Holon, Serializable {
 	}
 	
 	/**
+	 * Replies the first available message of the specified
+	 * type in the agent mail box
+	 * and remove it from the mailbox.
+	 * 
+	 * @param <T> is the type of the message to reply.
+	 * @param type is the type of the message to reply.
+	 * @return the first available message, or <code>null</code> if
+	 * the mailbox is empty.
+	 * @see #peekMessage()
+	 * @see #getMessages()
+	 * @see #peekMessages()
+	 * @see #hasMessage()
+	 * @MESSAGEAPI
+	 * @since 0.5
+	 */
+	protected final <T extends Message> T getMessage(Class<T> type) {
+		return getMailbox().removeFirst(new TypeSelector<>(type));
+	}
+
+	/**
 	 * Replies the first available message in the agent mail box
 	 * and leave it inside the mailbox.
 	 * 
@@ -1187,6 +1207,25 @@ implements Activable, Holon, Serializable {
 		return getMailbox().getFirst();
 	}
 	
+	/**
+	 * Replies the first available message in the agent mail box
+	 * and leave it inside the mailbox.
+	 * 
+	 * @param <T> is the type of the message to reply.
+	 * @param type is the type of the message to reply.
+	 * @return the first available message, or <code>null</code> if
+	 * the mailbox is empty.
+	 * @see #getMessage()
+	 * @see #getMessages()
+	 * @see #peekMessages()
+	 * @see #hasMessage()
+	 * @MESSAGEAPI
+	 * @since 0.5
+	 */
+	protected final <T extends Message> T peekMessage(Class<T> type) {
+		return getMailbox().getFirst(new TypeSelector<>(type));
+	}
+
 	/**
 	 * Replies the messages in the agent mailbox.
 	 * Each time an message is consumed

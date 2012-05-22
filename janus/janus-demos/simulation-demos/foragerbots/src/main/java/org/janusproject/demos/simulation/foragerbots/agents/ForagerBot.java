@@ -30,8 +30,6 @@ import org.janusproject.demos.simulation.foragerbots.message.RegistrationMessage
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Agent;
 import org.janusproject.kernel.agent.AgentActivationPrototype;
-import org.janusproject.kernel.mailbox.MailTypeSelector;
-import org.janusproject.kernel.mailbox.Mailbox;
 import org.janusproject.kernel.probe.Watchable;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
@@ -109,8 +107,7 @@ public class ForagerBot extends Agent {
 			break;
 		case WAIT_REGISTRATION:
 			{
-				Mailbox mailbox = getMailbox();
-				RegistrationAckMessage ack = (RegistrationAckMessage)mailbox.removeFirst(new MailTypeSelector(RegistrationAckMessage.class));
+				RegistrationAckMessage ack = getMessage(RegistrationAckMessage.class);
 				if (ack!=null) {
 					this.gridAgent = ack.getContext().getSender();
 					this.baseX = ack.getBaseX();
@@ -125,8 +122,7 @@ public class ForagerBot extends Agent {
 			break;
 		case GOTO_RESOURCE:
 			{
-				Mailbox mailbox = getMailbox();
-				PerceptionMessage perception = (PerceptionMessage)mailbox.removeFirst(new MailTypeSelector(PerceptionMessage.class));
+				PerceptionMessage perception = getMessage(PerceptionMessage.class);
 				if (perception!=null) {
 					Cell cell = perception.getCurrentCell();
 					int dx = this.lastResourceX - cell.x;
@@ -153,8 +149,7 @@ public class ForagerBot extends Agent {
 			break;
 		case SEARCH_RESOURCE:
 			{
-				Mailbox mailbox = getMailbox();
-				PerceptionMessage perception = (PerceptionMessage)mailbox.removeFirst(new MailTypeSelector(PerceptionMessage.class));
+				PerceptionMessage perception = getMessage(PerceptionMessage.class);
 				if (perception!=null) {
 					Cell cell = perception.getCurrentCell();
 					if (cell.getResourceAmount()>0) {
@@ -181,8 +176,7 @@ public class ForagerBot extends Agent {
 			break;
 		case RETURN_TO_BASE:
 			{
-				Mailbox mailbox = getMailbox();
-				PerceptionMessage perception = (PerceptionMessage)mailbox.removeFirst(new MailTypeSelector(PerceptionMessage.class));
+				PerceptionMessage perception = getMessage(PerceptionMessage.class);
 				if (perception!=null) {
 					Cell cell = perception.getCurrentCell();
 					int dx = this.baseX - cell.x;
