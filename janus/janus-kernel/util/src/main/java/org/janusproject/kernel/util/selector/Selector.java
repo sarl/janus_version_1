@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,14 @@ public interface Selector<M> {
 	 * @param object - the object to test
 	 * @return <code>true</code> if selected, otherwise <code>false</code>
 	 */
-	public boolean isSelected(M object);
+	public boolean isSelected(Object object);
+
+	/**
+	 * Replies the class supported by this selector. 
+	 * 
+	 * @return the class type, never <code>null</code>.
+	 * @since 0.5
+	 */
+	public Class<M> getSupportedClass();
 
 }

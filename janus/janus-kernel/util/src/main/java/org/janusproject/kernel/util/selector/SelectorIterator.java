@@ -35,15 +35,15 @@ import java.util.NoSuchElementException;
 public class SelectorIterator<M>
 implements Iterator<M> {
 
-	private final Selector<? super M> selector;
-	private final Iterator<M> original;
+	private final Selector<? extends M> selector;
+	private final Iterator<?> original;
 	private M next;
 
 	/**
 	 * @param selector
 	 * @param iterator
 	 */
-	public SelectorIterator(Selector<? super M> selector, Iterator<M> iterator) {
+	public SelectorIterator(Selector<? extends M> selector, Iterator<?> iterator) {
 		assert(selector!=null);
 		assert(iterator!=null);
 		this.selector = selector;
@@ -53,11 +53,11 @@ implements Iterator<M> {
 	
 	private void searchNext() {
 		this.next = null;
-		M m;
+		Object obj;
 		while (this.next==null && this.original.hasNext()) {
-			m = this.original.next();
-			if (this.selector.isSelected(m)) {
-				this.next = m;
+			obj = this.original.next();
+			if (this.selector.isSelected(obj)) {
+				this.next = this.selector.getSupportedClass().cast(obj);
 			}
 		}
 	}

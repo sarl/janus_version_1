@@ -845,7 +845,7 @@ public class RoleTest extends TestCase {
 		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 
-		iterator = this.role.getMessages();
+		iterator = this.role.getMessages().iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 
@@ -857,7 +857,7 @@ public class RoleTest extends TestCase {
 			((BufferedMailbox) mb).synchronizeMessages();
 		}
 
-		iterator = this.role.getMessages();
+		iterator = this.role.getMessages().iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -865,7 +865,7 @@ public class RoleTest extends TestCase {
 		assertSame(m2, iterator.next());
 		assertFalse(iterator.hasNext());
 
-		iterator = this.role.getMessages();
+		iterator = this.role.getMessages().iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 	}
@@ -878,7 +878,7 @@ public class RoleTest extends TestCase {
 		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 
-		iterator = this.role.peekMessages();
+		iterator = this.role.peekMessages().iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 
@@ -890,7 +890,7 @@ public class RoleTest extends TestCase {
 			((BufferedMailbox) mb).synchronizeMessages();
 		}
 
-		iterator = this.role.peekMessages();
+		iterator = this.role.peekMessages().iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -898,7 +898,7 @@ public class RoleTest extends TestCase {
 		assertSame(m2, iterator.next());
 		assertFalse(iterator.hasNext());
 
-		iterator = this.role.peekMessages();
+		iterator = this.role.peekMessages().iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());

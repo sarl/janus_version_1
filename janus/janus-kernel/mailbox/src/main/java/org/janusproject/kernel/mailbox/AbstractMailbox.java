@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2004-2011 Janus Core Developers
+ * Copyright (C) 2004-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import java.util.Iterator;
 
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.util.selector.Selector;
+import org.janusproject.kernel.util.selector.TypeSelector;
 
 /**
  * Abstract implementation of a {@link Mailbox}.
@@ -70,8 +71,8 @@ public abstract class AbstractMailbox implements Mailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Message getFirst(Selector<? super Message> selector, long timeout) {
-		Message msg = null;
+	public final <T extends Message> T getFirst(Selector<T> selector, long timeout) {
+		T msg = null;
 
 		long timeoutDate = System.currentTimeMillis() + timeout; 
 		
@@ -108,8 +109,8 @@ public abstract class AbstractMailbox implements Mailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Message removeFirst(Selector<? super Message> selector, long timeout) {
-		Message msg = null;
+	public final <T extends Message> T removeFirst(Selector<T> selector, long timeout) {
+		T msg = null;
 
 		long timeoutDate = System.currentTimeMillis() + timeout; 
 		
@@ -135,8 +136,63 @@ public abstract class AbstractMailbox implements Mailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Iterator<Message> iterator(Selector<? super Message> selector) {
+	public final <T extends Message> Iterator<T> iterator(Selector<T> selector) {
 		return iterator(selector, true);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final <T extends Message> Iterator<T> iterator(Class<T> type) {
+		return iterator(new TypeSelector<>(type));
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final <T extends Message> Iterable<T> iterable(Class<T> type) {
+		return iterable(new TypeSelector<>(type));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final <T extends Message> Iterable<T> iterable(final Selector<T> selector) {
+		return new Iterable<T>() {
+			@Override
+			public Iterator<T> iterator() {
+				return AbstractMailbox.this.iterator(selector);
+			}
+		};
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final <T extends Message> Iterable<T> iterable(final Selector<T> selector,
+			final boolean consumeMails) {
+		return new Iterable<T>() {
+			@Override
+			public Iterator<T> iterator() {
+				return AbstractMailbox.this.iterator(selector, consumeMails);
+			}
+		};
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final Iterable<Message> iterable(final boolean consumeMails) {
+		return new Iterable<Message>() {
+			@Override
+			public Iterator<Message> iterator() {
+				return AbstractMailbox.this.iterator(consumeMails);
+			}
+		};
+	}
 }

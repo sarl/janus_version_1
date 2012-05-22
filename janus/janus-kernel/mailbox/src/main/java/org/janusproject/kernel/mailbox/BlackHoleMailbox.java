@@ -115,7 +115,7 @@ public class BlackHoleMailbox extends AbstractMailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean removeAll(Selector<? super Message> selector) {
+	public boolean removeAll(Selector<? extends Message> selector) {
 		if (this.removalDelay>0) {
 			try {
 				Thread.sleep(0, this.removalDelay);
@@ -147,7 +147,7 @@ public class BlackHoleMailbox extends AbstractMailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean contains(Selector<? super Message> selector) {
+	public boolean contains(Selector<? extends Message> selector) {
 		if (this.readingDelay>0) {
 			try {
 				Thread.sleep(0, this.readingDelay);
@@ -226,7 +226,7 @@ public class BlackHoleMailbox extends AbstractMailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Message removeFirst(Selector<? super Message> selector) {
+	public <T extends Message> T removeFirst(Selector<T> selector) {
 		if (this.removalDelay>0) {
 			try {
 				Thread.sleep(0, this.removalDelay);
@@ -242,7 +242,7 @@ public class BlackHoleMailbox extends AbstractMailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Message getFirst(Selector<? super Message> selector) {
+	public <T extends Message> T getFirst(Selector<T> selector) {
 		if (this.readingDelay>0) {
 			try {
 				Thread.sleep(0, this.readingDelay);
@@ -290,7 +290,7 @@ public class BlackHoleMailbox extends AbstractMailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Iterator<Message> iterator(Selector<? super Message> selector,
+	public <T extends Message> Iterator<T> iterator(Selector<T> selector,
 			boolean consumeMails) {
 		if (this.readingDelay>0) {
 			try {
@@ -300,7 +300,7 @@ public class BlackHoleMailbox extends AbstractMailbox {
 				//
 			}
 		}
-		return Collections.<Message>emptyList().iterator();
+		return Collections.<T>emptyList().iterator();
 	}
 
 	/**

@@ -37,7 +37,7 @@ public class AutoremoveSelectorIteratorTest extends TestCase {
 
 	private ArrayList<Integer> collection;
 	private OddSelector selector;
-	private AutoremoveSelectorIterator<Integer> iterator;
+	private AutoremoveSelectorIterator<Number> iterator;
 	private Integer m1, m2, m3, m4;
 	
 	/**
@@ -57,7 +57,9 @@ public class AutoremoveSelectorIteratorTest extends TestCase {
 		this.collection.add(this.m3);
 		this.collection.add(this.m4);
 		this.selector = new OddSelector();
-		this.iterator = new AutoremoveSelectorIterator<>(this.selector, this.collection.iterator());
+		this.iterator = new AutoremoveSelectorIterator<>(
+				this.selector,
+				this.collection.iterator());
 	}
 	
 	/**

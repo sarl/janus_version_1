@@ -128,7 +128,7 @@ public class TreeSetMailbox extends AbstractMailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean contains(Selector<? super Message> selector) {
+	public boolean contains(Selector<? extends Message> selector) {
 		assert(selector!=null);
 		for(Message msg : this.inbox) {
 			if (selector.isSelected(msg)) return true;
@@ -171,11 +171,12 @@ public class TreeSetMailbox extends AbstractMailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Message getFirst(Selector<? super Message> selector) {
+	public <T extends Message> T getFirst(Selector<T> selector) {
 		assert(selector!=null);
 		try {
 			for(Message msg : this.inbox) {
-				if (selector.isSelected(msg)) return msg;
+				if (selector.isSelected(msg))
+					return selector.getSupportedClass().cast(msg);
 			}
 		}
 		catch(Throwable _) {
@@ -226,7 +227,7 @@ public class TreeSetMailbox extends AbstractMailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean removeAll(Selector<? super Message> selector) {
+	public boolean removeAll(Selector<? extends Message> selector) {
 		assert(selector!=null);
 		Iterator<Message> iterator = this.inbox.iterator();
 		boolean changed = false;
@@ -257,7 +258,7 @@ public class TreeSetMailbox extends AbstractMailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Message removeFirst(Selector<? super Message> selector) {
+	public <T extends Message> T removeFirst(Selector<T> selector) {
 		assert(selector!=null);
 		try {
 			Iterator<Message> iterator = this.inbox.iterator();
@@ -266,7 +267,7 @@ public class TreeSetMailbox extends AbstractMailbox {
 				m = iterator.next();
 				if (selector.isSelected(m)) {
 					iterator.remove();
-					return m;
+					return selector.getSupportedClass().cast(m);
 				}
 			}
 		}
@@ -298,10 +299,12 @@ public class TreeSetMailbox extends AbstractMailbox {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Iterator<Message> iterator(Selector<? super Message> selector, boolean consumeMails) {
+	public <T extends Message> Iterator<T> iterator(Selector<T> selector, boolean consumeMails) {
 		if (consumeMails)
-			return new AutoremoveSelectorIterator<>(selector, this.inbox.iterator());
-		return new SelectorIterator<>(selector, this.inbox.iterator());
+			return new AutoremoveSelectorIterator<>(
+					selector, this.inbox.iterator());
+		return new SelectorIterator<>(
+				selector, this.inbox.iterator());
 	}
 
 	/**

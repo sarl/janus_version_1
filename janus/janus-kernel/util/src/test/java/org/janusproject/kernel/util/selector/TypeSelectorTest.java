@@ -46,13 +46,14 @@ public class TypeSelectorTest extends TestCase {
 	/**
 	 */
 	public void testIsSelected() {
-		TypeSelector<Number> selector = new TypeSelector<Number>(Integer.class);
-		assertFalse(selector.isSelected((byte)4));
-		assertFalse(selector.isSelected((short)4));
+		TypeSelector<Number> selector = new TypeSelector<>(Number.class);
+		assertTrue(selector.isSelected((byte)4));
+		assertTrue(selector.isSelected((short)4));
 		assertTrue(selector.isSelected(4));
-		assertFalse(selector.isSelected(4l));
-		assertFalse(selector.isSelected(4f));
-		assertFalse(selector.isSelected(4.));
+		assertTrue(selector.isSelected(4l));
+		assertTrue(selector.isSelected(4f));
+		assertTrue(selector.isSelected(4.));
+		assertFalse(selector.isSelected("")); //$NON-NLS-1$
 	}
 
 }
