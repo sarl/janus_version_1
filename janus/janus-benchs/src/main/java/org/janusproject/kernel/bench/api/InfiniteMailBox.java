@@ -75,7 +75,7 @@ public class InfiniteMailBox implements Mailbox, Iterator<Message> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean removeAll(Selector<? super Message> selector) {
+	public boolean removeAll(Selector<? extends Message> selector) {
 		return false;
 	}
 
@@ -91,7 +91,7 @@ public class InfiniteMailBox implements Mailbox, Iterator<Message> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean contains(Selector<? super Message> selector) {
+	public boolean contains(Selector<? extends Message> selector) {
 		return false;
 	}
 
@@ -139,16 +139,16 @@ public class InfiniteMailBox implements Mailbox, Iterator<Message> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Message removeFirst(Selector<? super Message> selector) {
-		return new StringMessage(""); //$NON-NLS-1$
+	public <T extends Message> T removeFirst(Selector<T> selector) {
+		return selector.getSupportedClass().cast(new StringMessage("")); //$NON-NLS-1$
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Message getFirst(Selector<? super Message> selector) {
-		return new StringMessage(""); //$NON-NLS-1$
+	public <T extends Message> T getFirst(Selector<T> selector) {
+		return selector.getSupportedClass().cast(new StringMessage("")); //$NON-NLS-1$
 	}
 
 	/**
@@ -187,25 +187,26 @@ public class InfiniteMailBox implements Mailbox, Iterator<Message> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Message removeFirst(Selector<? super Message> selector,
+	public <T extends Message> T removeFirst(Selector<T> selector,
 			long timeout) {
-		return new StringMessage(""); //$NON-NLS-1$
+		return selector.getSupportedClass().cast(new StringMessage("")); //$NON-NLS-1$
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Message getFirst(Selector<? super Message> selector, long timeout) {
-		return new StringMessage(""); //$NON-NLS-1$
+	public <T extends Message> T getFirst(Selector<T> selector, long timeout) {
+		return selector.getSupportedClass().cast(new StringMessage("")); //$NON-NLS-1$
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Iterator<Message> iterator(Selector<? super Message> selector) {
-		return this;
+	public <T extends Message> Iterator<T> iterator(Selector<T> selector) {
+		return (Iterator<T>)this;
 	}
 
 	/**
@@ -219,10 +220,11 @@ public class InfiniteMailBox implements Mailbox, Iterator<Message> {
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Iterator<Message> iterator(Selector<? super Message> selector,
+	public <T extends Message> Iterator<T> iterator(Selector<T> selector,
 			boolean consumeMails) {
-		return this;
+		return (Iterator<T>)this;
 	}
 
 	/**
@@ -263,6 +265,51 @@ public class InfiniteMailBox implements Mailbox, Iterator<Message> {
 	@Override
 	public void remove() {
 		//
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends Message> Iterator<T> iterator(Class<T> type) {
+		return (Iterator<T>)this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends Message> Iterable<T> iterable(Class<T> type) {
+		return (Iterable<T>)this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends Message> Iterable<T> iterable(Selector<T> selector) {
+		return (Iterable<T>)this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T extends Message> Iterable<T> iterable(Selector<T> selector,
+			boolean consumeMails) {
+		return (Iterable<T>)this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Iterable<Message> iterable(boolean consumeMails) {
+		return this;
 	}
 
 }
