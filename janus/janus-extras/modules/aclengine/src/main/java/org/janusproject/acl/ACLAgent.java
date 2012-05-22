@@ -8,7 +8,6 @@ import org.janusproject.acl.encoding.PayloadEncoding;
 import org.janusproject.acl.protocol.EnumFipaProtocol;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Agent;
-import org.janusproject.kernel.message.Message;
 
 /**
  * Implements the agent concept of the Janus Metamodel
@@ -23,26 +22,26 @@ import org.janusproject.kernel.message.Message;
  * @mavenartifactid $ArtifactId$
  */
 public class ACLAgent extends Agent {
-	
+
 	private static final long serialVersionUID = -8831445952166271312L;
-	
+
 	/**
 	 * The ACL Message Handler of this agent
 	 */
 	private ACLMessageHandler aclMessageHandler;
-	
+
 	/**
 	 * The text encoding of the ACLTransportMessage
 	 * Default UTF-8
 	 */
 	private PayloadEncoding payloadEncoding;
-	
+
 	/**
 	 * The ACL representation of the ACLTransportMessage (Bit-efficient, String or XML)
 	 * Default Bit-efficient
 	 */
 	private ACLRepresentation aclRepresentation;
-	
+
 	/**
 	 * Creates a new ACL Agent with default payload encoding (UTF8) and default acl representation (string).
 	 */
@@ -51,7 +50,7 @@ public class ACLAgent extends Agent {
 		this.payloadEncoding = PayloadEncoding.UTF8;
 		this.aclRepresentation = ACLRepresentation.STRING;
 	}
-	
+
 	/**
 	 * Creates a new ACL Agent.
 	 * 
@@ -79,13 +78,13 @@ public class ACLAgent extends Agent {
 	 *         was found, or <code>null</code> otherwise.
 	 */
 	public final AgentAddress sendACLMessage(ACLMessage message, AgentAddress... agents) {
-		
+
 		initACLMessage(message);
 		ACLTransportMessage transportMessage = getAclMessageHandler().prepareOutgoingACLMessage(message, agents);
-		
+
 		return sendMessage(transportMessage, agents);
 	}
-	
+
 	/**
 	 * Replies the first available ACL Message in the agent mail box and remove it from the mailbox.
 	 * 
@@ -97,30 +96,16 @@ public class ACLAgent extends Agent {
 	 * @see #hasACLMessage()
 	 */
 	protected final ACLMessage getACLMessage() {
-		
-		ACLMessage aMsg = null;
-		Boolean flag = true;
-
-		Iterator<Message> messagesIterator = peekMessages();
-
-		while( ( messagesIterator.hasNext() ) && ( flag == true ) )
-		{
-			Message msg = messagesIterator.next();
-			
-			if( msg instanceof ACLTransportMessage )
-			{
-				aMsg = getAclMessageFromTransportMessage( (ACLTransportMessage) msg ) ;
-				
-				if(aMsg != null){
-					getMailbox().remove( msg );
-					flag = false;
-				}
+		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
+			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
+			if(aMsg != null) {
+				getMailbox().remove( msg );
+				return aMsg;
 			}
 		}
-		
-		return aMsg;
+		return null;
 	}
-	
+
 	/**
 	 * Replies the first available ACL Message
 	 * in the agent mail box  
@@ -137,37 +122,20 @@ public class ACLAgent extends Agent {
 	 * @see #hasACLMessage()
 	 */
 	public final ACLMessage getACLMessage(EnumFipaProtocol protocolType, Performative performative) {
-		
-		ACLMessage aMsg = null;
-		Boolean flag = true;
-
-		Iterator<Message> messagesIterator = peekMessages();
-
-		while( ( messagesIterator.hasNext() ) && ( flag == true ) )
-		{
-			Message msg = messagesIterator.next();
-			
-			if( msg instanceof ACLTransportMessage )
-			{
-				aMsg = getAclMessageFromTransportMessage( (ACLTransportMessage) msg ) ;
-				
-				if(aMsg != null 
-						&& ( aMsg.getPerformative() == performative )
-						&& ( aMsg.getProtocol() == protocolType)
+		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
+			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
+			if(aMsg != null 
+					&& ( aMsg.getPerformative() == performative )
+					&& ( aMsg.getProtocol() == protocolType)
 					)
-				{
-					getMailbox().remove( msg );
-					flag = false;
-				}
-				else{
-					aMsg = null;
-				}
+			{
+				getMailbox().remove( msg );
+				return aMsg;
 			}
 		}
-		
-		return aMsg;
+		return null;
 	}
-	
+
 	/**
 	 * Replies the first available ACL Message 
 	 * for a specific conversation 
@@ -180,33 +148,16 @@ public class ACLAgent extends Agent {
 	 * @return the first available ACL Message, or <code>null</code>
 	 */
 	public final ACLMessage getACLMessageForConversationId(UUID conversationId) {
-		
-		ACLMessage aMsg = null;
-		Boolean flag = true;
-
-		Iterator<Message> messagesIterator = peekMessages();
-
-		while( ( messagesIterator.hasNext() ) && ( flag == true ) )
-		{
-			Message msg = messagesIterator.next();
-			
-			if( msg instanceof ACLTransportMessage )
-			{
-				aMsg = getAclMessageFromTransportMessage( (ACLTransportMessage) msg ) ;
-				
-				if( ( aMsg != null ) && ( aMsg.getConversationId().compareTo(conversationId) == 0 ) ){
-					getMailbox().remove( msg );
-					flag = false;
-				}
-				else{
-					aMsg = null;
-				}
+		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
+			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
+			if( ( aMsg != null ) && ( aMsg.getConversationId().compareTo(conversationId) == 0 ) ){
+				getMailbox().remove( msg );
+				return aMsg;
 			}
 		}
-		
-		return aMsg;
+		return null;
 	}
-	
+
 	/**
 	 * Replies all the ACL Messages in the agent mailbox.
 	 * <p>
@@ -221,30 +172,21 @@ public class ACLAgent extends Agent {
 	 * @see #peekACLMessages()
 	 * @see #hasACLMessage()
 	 */
-	protected final Iterator<ACLMessage> getACLMessages() {
+	protected final Iterable<ACLMessage> getACLMessages() {
 
 		LinkedList<ACLMessage> resultList = new LinkedList<>();
 
-		Iterator<Message> messagesIterator = peekMessages();
-
-		while( messagesIterator.hasNext() )
-		{
-			Message msg = messagesIterator.next();
-			
-			if( msg instanceof ACLTransportMessage )
-			{
-				ACLMessage aMsg = getAclMessageFromTransportMessage( (ACLTransportMessage) msg ) ;
-
-				if(aMsg != null){
-					getMailbox().remove( msg );
-					resultList.add( aMsg );
-				}
+		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
+			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
+			if(aMsg != null){
+				getMailbox().remove( msg );
+				resultList.add( aMsg );
 			}
 		}
 		
-		return resultList.iterator();
+		return resultList;
 	}
-	
+
 	/**
 	 * Replies all the ACL Messages in the agent mailbox with the specified performative.
 	 * Each time a message is consumed
@@ -263,29 +205,17 @@ public class ACLAgent extends Agent {
 
 		LinkedList<ACLMessage> resultList = new LinkedList<>();
 
-		Iterator<Message> messagesIterator = peekMessages();
-
-		while( messagesIterator.hasNext() )
-		{
-			Message msg = messagesIterator.next();
-			
-			if( msg instanceof ACLTransportMessage )
-			{
-				ACLMessage aMsg = getAclMessageFromTransportMessage( (ACLTransportMessage) msg ) ;
-
-				if(aMsg != null && aMsg.getPerformative() == performative){
-					getMailbox().remove( msg );
-					resultList.add( aMsg );
-				}
-				else{
-					aMsg = null;
-				}
+		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
+			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
+			if(aMsg != null && aMsg.getPerformative() == performative){
+				getMailbox().remove( msg );
+				resultList.add( aMsg );
 			}
 		}
-		
+
 		return resultList.iterator();
 	}
-	
+
 	/**
 	 * Replies the first available ACL Message in the agent mail box
 	 * and leave it inside the mailbox.
@@ -298,27 +228,13 @@ public class ACLAgent extends Agent {
 	 * @see #hasACLMessage()
 	 */
 	protected final ACLMessage peekACLMessage() {
-		
-		ACLMessage aMsg = null;
-		Boolean flag = true;
-
-		Iterator<Message> messagesIterator = peekMessages();
-
-		while( ( messagesIterator.hasNext() ) && ( flag == true ) )
-		{
-			Message msg = messagesIterator.next();
-			
-			if( msg instanceof ACLTransportMessage )
-			{
-				aMsg = getAclMessageFromTransportMessage( (ACLTransportMessage) msg ) ;
-				
-				if(aMsg != null) flag = false;
-			}
+		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
+			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
+			if(aMsg != null) return aMsg;
 		}
-		
-		return aMsg;
+		return null;
 	}
-	
+
 	/**
 	 * Replies the ACL Messages in the agent mailbox.
 	 * Each time a message is consumed
@@ -335,26 +251,18 @@ public class ACLAgent extends Agent {
 	protected final Iterator<ACLMessage> peekACLMessages() {
 
 		LinkedList<ACLMessage> resultList = new LinkedList<>();
-		
-		Iterator<Message> messagesIterator = peekMessages();
-		
-		while( messagesIterator.hasNext() )
-		{
-			Message msg = messagesIterator.next();
-			
-			if( msg instanceof ACLTransportMessage )
-			{
-				ACLMessage aMsg = getAclMessageFromTransportMessage( (ACLTransportMessage) msg ) ;
-				
-				if(aMsg != null){
-					resultList.add( aMsg );
-				}
+
+		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
+			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
+
+			if(aMsg != null){
+				resultList.add( aMsg );
 			}
 		}
 		
 		return resultList.iterator();
 	}
-	
+
 	/** 
 	 * Indicates if the agent mailbox contains at least one ACL Message or not.
 	 * 
@@ -362,18 +270,8 @@ public class ACLAgent extends Agent {
 	 * otherwise <code>false</code>
 	 */
 	protected final boolean hasACLMessage(){
-		
-		int nbAclMsg = 0;
-		
-		Iterator<Message> messagesIterator = peekMessages();
-		
-		while( messagesIterator.hasNext() ){
-			Message msg = messagesIterator.next();
-			
-			if( msg instanceof ACLTransportMessage ) nbAclMsg++;
-		}
-		
-		return ( nbAclMsg > 0 );
+		Iterator<?> iterator = peekMessages(ACLTransportMessage.class).iterator();
+		return iterator.hasNext();
 	}
 
 	/**
@@ -384,7 +282,7 @@ public class ACLAgent extends Agent {
 	 * @return the ACL Message
 	 */
 	protected final ACLMessage getAclMessageFromTransportMessage( ACLTransportMessage tMsg ){
-		
+
 		if( ( tMsg.getContent() != null ) && (tMsg.getContent() instanceof byte[] ) )
 		{
 			try{
@@ -395,10 +293,10 @@ public class ACLAgent extends Agent {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Gets the ACL Message Handler for the agent
 	 * 
@@ -421,7 +319,7 @@ public class ACLAgent extends Agent {
 			this.aclMessageHandler = aclMessageHandler;
 		}
 	}
-	
+
 	/**
 	 * Initiates and completes a given ACL Message before sending it.
 	 * 
