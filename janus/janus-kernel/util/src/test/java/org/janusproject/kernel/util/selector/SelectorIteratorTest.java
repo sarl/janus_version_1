@@ -36,7 +36,7 @@ public class SelectorIteratorTest extends TestCase {
 
 	private ArrayList<Integer> collection;
 	private OddSelector selector;
-	private SelectorIterator<Integer> iterator;
+	private SelectorIterator<Number> iterator;
 	private Integer m1, m2, m3, m4;
 	
 	/**
@@ -56,7 +56,8 @@ public class SelectorIteratorTest extends TestCase {
 		this.collection.add(this.m3);
 		this.collection.add(this.m4);
 		this.selector = new OddSelector();
-		this.iterator = new SelectorIterator<>(this.selector, this.collection.iterator());
+		this.iterator = new SelectorIterator<>(
+				this.selector, this.collection.iterator());
 	}
 	
 	/**

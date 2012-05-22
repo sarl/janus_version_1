@@ -35,12 +35,12 @@ package org.janusproject.kernel.util.selector;
 public class TypeSelector<M>
 implements Selector<M> {
 
-	private final Class<? extends M> type;
+	private final Class<M> type;
 	
 	/**
 	 * @param type is the type of the mails to select.
 	 */
-	public TypeSelector(Class<? extends M> type) {
+	public TypeSelector(Class<M> type) {
 		assert(type!=null);
 		this.type = type;
 	}
@@ -49,8 +49,16 @@ implements Selector<M> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isSelected(M msg) {
+	public boolean isSelected(Object msg) {
 		return msg!=null && this.type.isInstance(msg);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Class<M> getSupportedClass() {
+		return this.type;
 	}
 
 }

@@ -44,8 +44,17 @@ implements Selector<Message> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isSelected(Message msg) {
-		return msg!=null && ((msg.getContext().getCreationDate()%2)==1);
+	public boolean isSelected(Object msg) {
+		return msg instanceof Message &&
+				(((Message)msg).getContext().getCreationDate()%2)==1;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Class<Message> getSupportedClass() {
+		return Message.class;
 	}
 
 }

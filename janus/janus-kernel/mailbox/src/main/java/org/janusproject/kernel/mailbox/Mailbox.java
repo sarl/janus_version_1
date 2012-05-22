@@ -73,7 +73,7 @@ public interface Mailbox extends Serializable, Iterable<Message> {
 	 * @param selector permits to select the mails.
 	 * @return <tt>true</tt> if the inbox has changed due to this removal action.
 	 */
-	public boolean removeAll(Selector<? super Message> selector);
+	public boolean removeAll(Selector<? extends Message> selector);
 
 	/**
 	 * Returns <tt>true</tt> if the inbox contains the specified message
@@ -89,7 +89,7 @@ public interface Mailbox extends Serializable, Iterable<Message> {
 	 * @param selector permits to select the mails.
 	 * @return <tt>true</tt> if the inbox contains a matching message.
 	 */
-	public boolean contains(Selector<? super Message> selector);
+	public boolean contains(Selector<? extends Message> selector);
 
 	/**
      * Returns <tt>true</tt> if the inbox contains no elements.
@@ -126,18 +126,20 @@ public interface Mailbox extends Serializable, Iterable<Message> {
 	/**
 	 * Gets and remove the first message in the mailbox that is matching the given selector.
 	 * 
+     * @param <T> is the type of the messages to reply.
 	 * @param selector permits to select the mails.
 	 * @return the first message or null if empty.
 	 */
-	public Message removeFirst(Selector<? super Message> selector);
+	public <T extends Message> T removeFirst(Selector<T> selector);
 	
 	/**
 	 * Gets the first message in the mailbox but do not remove it.
 	 * 
+     * @param <T> is the type of the messages to reply.
 	 * @param selector permits to select the mails.
 	 * @return the first message or null if empty.
 	 */
-	public Message getFirst(Selector<? super Message> selector);	
+	public <T extends Message> T getFirst(Selector<T> selector);	
 
 	/**
 	 * Gets and remove the message located at the specified index in the inbox if any, null else.
@@ -172,20 +174,22 @@ public interface Mailbox extends Serializable, Iterable<Message> {
 	/**
 	 * Wait until a matching mail is available or a timeout is reached, then remove it from mailbox and reply it.
 	 * 
+     * @param <T> is the type of the messages to reply.
 	 * @param timeout is the tie to wait in milliseconds
 	 * @param selector permits to select the mails.
 	 * @return the first message or null if empty.
 	 */
-	public Message removeFirst(Selector<? super Message> selector, long timeout);
+	public <T extends Message> T removeFirst(Selector<T> selector, long timeout);
 	
 	/**
 	 * Wait until a matching mail is available or a timeout is reached, then reply it without removal from mailbox.
 	 * 
+     * @param <T> is the type of the messages to reply.
 	 * @param timeout is the tie to wait in milliseconds
 	 * @param selector permits to select the mails.
 	 * @return the first message or null if empty.
 	 */
-	public Message getFirst(Selector<? super Message> selector, long timeout);
+	public <T extends Message> T getFirst(Selector<T> selector, long timeout);
 	
 	/** Replies an iterator on all the messages matching the given selector.
 	 * <p>
@@ -194,10 +198,11 @@ public interface Mailbox extends Serializable, Iterable<Message> {
 	 * It means that is is invoking {@link #remove(int)} at
 	 * each <code>next</code> function invocation.
 	 * 
+     * @param <T> is the type of the messages to reply.
 	 * @param selector permits to select the mails.
 	 * @return an iterator on messages.
 	 */
-	public Iterator<Message> iterator(Selector<? super Message> selector);
+	public <T extends Message> Iterator<T> iterator(Selector<T> selector);
 
     /**
      * Replies an iterator on all the messages.
@@ -219,13 +224,14 @@ public interface Mailbox extends Serializable, Iterable<Message> {
 	 * It means that is is invoking {@link #remove(int)} at
 	 * each <code>next</code> function invocation.
 	 * 
+     * @param <T> is the type of the messages to reply.
 	 * @param selector permits to select the mails.
      * @param consumeMails is <code>true</code> to remove the
      * elements replied by the iterator from ths mailbox, is
      * <code>false</code> to let the mailbox unchanged.
 	 * @return an iterator on messages.
 	 */
-	public Iterator<Message> iterator(Selector<? super Message> selector, boolean consumeMails);
+	public <T extends Message> Iterator<T> iterator(Selector<T> selector, boolean consumeMails);
 
     /**
      * Replies an iterator on all the messages.
@@ -235,8 +241,83 @@ public interface Mailbox extends Serializable, Iterable<Message> {
      * <code>false</code> to let the mailbox unchanged.
      * @return an Iterator.
      */
-    Iterator<Message> iterator(boolean consumeMails);
+	public Iterator<Message> iterator(boolean consumeMails);
     
+    /**
+     * Replies an iterator on all the messages of a given type.
+     * <p>
+     * This function is equivalent to:
+     * <pre><code>
+     * this.iterator(new MailTypeSelector(type));
+     * </code></pre>
+     * 
+     * @param <T> is the type of the messages to reply.
+     * @param type is the type of a message.
+     * @return an Iterator.
+     * @since 0.5
+     */
+	public <T extends Message> Iterator<T> iterator(Class<T> type);
+
+    /**
+     * Replies an iterator on all the messages of a given type.
+     * <p>
+     * This function is equivalent to:
+     * <pre><code>
+     * this.iterable(new MailTypeSelector(type));
+     * </code></pre>
+     * 
+     * @param <T> is the type of the messages to reply.
+     * @param type is the type of a message.
+     * @return an Iterator.
+     * @since 0.5
+     */
+	public <T extends Message> Iterable<T> iterable(Class<T> type);
+
+	/** Replies an iterator on all the messages matching the given selector.
+	 * <p>
+	 * <strong>Caution:</strong> The replied iterator consumes 
+	 * the messages from the mailbox.
+	 * It means that is is invoking {@link #remove(int)} at
+	 * each <code>next</code> function invocation.
+	 * 
+     * @param <T> is the type of the messages to reply.
+	 * @param selector permits to select the mails.
+	 * @return an iterator on messages.
+	 * @since 0.5
+	 */
+	public <T extends Message> Iterable<T> iterable(Selector<T> selector);
+
+	/** Replies an iterator on all the messages matching the given selector.
+	 * <p>
+	 * <strong>Caution:</strong> The replied iterator consumes 
+	 * the messages from the mailbox.
+	 * It means that is is invoking {@link #remove(int)} at
+	 * each <code>next</code> function invocation.
+	 * 
+	 * @param selector permits to select the mails.
+     * @param consumeMails is <code>true</code> to remove the
+     * elements replied by the iterator from ths mailbox, is
+     * <code>false</code> to let the mailbox unchanged.
+	 * @return an iterator on messages.
+     * @since 0.5
+	 */
+	public <T extends Message> Iterable<T> iterable(Selector<T> selector, boolean consumeMails);
+
+    /**
+     * Replies an iterable on all the messages.
+     * If the parameter is <code>true</code>, 
+     * this object is directly replied;
+     * otherwise an iterable object that
+     * does not conusme the mails is returned.
+     * 
+     * @param consumeMails is <code>true</code> to remove the
+     * elements replied by the iterator from ths mailbox, is
+     * <code>false</code> to let the mailbox unchanged.
+     * @return an Iterator.
+     * @since 0.5
+     */
+    public Iterable<Message> iterable(boolean consumeMails);
+
     /** Replies the comparator that is used to sort the messages in the mailbox.
      * 
      * @return the comparator that is used to sort the messages in the mailbox, never <code>null</code>.

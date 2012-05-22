@@ -30,6 +30,7 @@ import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.message.CreationDateMessageComparator;
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.util.selector.Selector;
+import org.janusproject.kernel.util.selector.TypeSelector;
 
 import junit.framework.TestCase;
 
@@ -74,8 +75,8 @@ public class AbstractMailboxTest extends TestCase {
 	/**
 	 */
 	public void testGetFirstSelectorLong() {
-		assertSame(this.m1, this.mailbox.getFirst(new MailTypeSelector(MessageStub.class), 500));
-		assertNull(this.mailbox.getFirst(new MailTypeSelector(MessageStub2.class), 500));
+		assertSame(this.m1, this.mailbox.getFirst(new TypeSelector<>(MessageStub.class), 500));
+		assertNull(this.mailbox.getFirst(new TypeSelector<>(MessageStub2.class), 500));
 	}
 
 	/**
@@ -87,8 +88,8 @@ public class AbstractMailboxTest extends TestCase {
 	/**
 	 */
 	public void testRemoveFirstSelectorLong() {
-		assertNull(this.mailbox.removeFirst(new MailTypeSelector(MessageStub2.class), 500));
-		assertSame(this.m1, this.mailbox.removeFirst(new MailTypeSelector(MessageStub.class), 500));
+		assertNull(this.mailbox.removeFirst(new TypeSelector<>(MessageStub2.class), 500));
+		assertSame(this.m1, this.mailbox.removeFirst(new TypeSelector<>(MessageStub.class), 500));
 	}
 
 	/**
@@ -133,7 +134,7 @@ public class AbstractMailboxTest extends TestCase {
 
 		@SuppressWarnings("synthetic-access")
 		@Override
-		public boolean contains(Selector<? super Message> selector) {
+		public boolean contains(Selector<? extends Message> selector) {
 			if (this.removed) return false;
 			return selector.isSelected(AbstractMailboxTest.this.m1);
 		}
@@ -154,10 +155,12 @@ public class AbstractMailboxTest extends TestCase {
 
 		@SuppressWarnings("synthetic-access")
 		@Override
-		public MessageStub getFirst(Selector<? super Message> selector) {
+		public <T extends Message> T getFirst(Selector<T> selector) {
 			if (this.removed) return null;
 			return selector.isSelected(AbstractMailboxTest.this.m1) 
-					? AbstractMailboxTest.this.m1 : null;
+					? 
+						selector.getSupportedClass().cast(AbstractMailboxTest.this.m1)
+					:	null;
 		}
 
 		@Override
@@ -178,10 +181,11 @@ public class AbstractMailboxTest extends TestCase {
 		 */
 		@SuppressWarnings("synthetic-access")
 		@Override
-		public Iterator<Message> iterator(Selector<? super Message> selector, boolean ignored) {
+		public <T extends Message> Iterator<T> iterator(Selector<T> selector, boolean ignored) {
 			if (this.removed)
-				return Collections.<Message>emptyList().iterator();
-			return Arrays.<Message>asList(AbstractMailboxTest.this.m1).iterator();
+				return Collections.<T>emptyList().iterator();
+			return Arrays.<T>asList(
+					selector.getSupportedClass().cast(AbstractMailboxTest.this.m1)).iterator();
 		}
 
 		@Override
@@ -197,7 +201,7 @@ public class AbstractMailboxTest extends TestCase {
 		}
 
 		@Override
-		public boolean removeAll(Selector<? super Message> selector) {
+		public boolean removeAll(Selector<? extends Message> selector) {
 			boolean r = this.removed;
 			this.removed = true;
 			return !r;
@@ -213,11 +217,11 @@ public class AbstractMailboxTest extends TestCase {
 
 		@SuppressWarnings("synthetic-access")
 		@Override
-		public MessageStub removeFirst(Selector<? super Message> selector) {
+		public <T extends Message> T removeFirst(Selector<T> selector) {
 			if (this.removed) return null;
 			if (selector.isSelected(AbstractMailboxTest.this.m1)) {
 				this.removed = true;
-				return AbstractMailboxTest.this.m1;
+				return selector.getSupportedClass().cast(AbstractMailboxTest.this.m1);
 			}
 			return null;
 		}

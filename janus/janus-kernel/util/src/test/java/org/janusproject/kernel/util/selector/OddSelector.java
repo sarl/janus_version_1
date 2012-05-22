@@ -31,7 +31,7 @@ import org.janusproject.kernel.util.selector.Selector;
  * @mavenartifactid $ArtifactId$
  */
 class OddSelector
-implements Selector<Integer> {
+implements Selector<Number> {
 
 	/**
 	 */
@@ -43,8 +43,16 @@ implements Selector<Integer> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isSelected(Integer v) {
-		return v!=null && ((v.intValue()%2)==1);
+	public boolean isSelected(Object v) {
+		return v instanceof Number && ((((Number)v).intValue()%2)==1);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Class<Number> getSupportedClass() {
+		return Number.class;
 	}
 
 }

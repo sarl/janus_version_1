@@ -26,7 +26,6 @@ import java.lang.ref.WeakReference;
 import java.security.AccessControlContext;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -73,6 +72,7 @@ import org.janusproject.kernel.time.KernelTimeManager;
 import org.janusproject.kernel.util.directaccess.DirectAccessCollection;
 import org.janusproject.kernel.util.multicollection.MultiCollection;
 import org.janusproject.kernel.util.random.RandomNumber;
+import org.janusproject.kernel.util.selector.TypeSelector;
 import org.janusproject.kernel.util.sizediterator.EmptyIterator;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
 
@@ -988,8 +988,28 @@ public abstract class Role extends
 	 * @see #hasMessage()
 	 * @MESSAGEAPI
 	 */
-	protected final Iterator<Message> getMessages() {
-		return getMailbox().iterator(true);
+	protected final Iterable<Message> getMessages() {
+		return getMailbox();
+	}
+
+	/**
+	 * Replies the messages in the mailbox that has the given type.
+	 * Each time an message is consumed
+	 * from the replied iterable object, the corresponding message is removed
+	 * from the mailbox.
+	 * 
+	 * @param <T> is the type of the expected messages.
+	 * @param type is the type of the expected messages.
+	 * @return all the messages, never <code>null</code>.
+	 * @see #getMessage()
+	 * @see #peekMessage()
+	 * @see #peekMessages()
+	 * @see #hasMessage()
+	 * @MESSAGEAPI
+	 * @since 5.0
+	 */
+	protected final <T extends Message> Iterable<T> getMessages(Class<T> type) {
+		return getMailbox().iterable(type);
 	}
 
 	/**
@@ -1004,8 +1024,27 @@ public abstract class Role extends
 	 * @see #hasMessage()
 	 * @MESSAGEAPI
 	 */
-	protected final Iterator<Message> peekMessages() {
-		return getMailbox().iterator(false);
+	protected final Iterable<Message> peekMessages() {
+		return getMailbox().iterable(false);
+	}
+
+	/**
+	 * Replies the messages in the mailbox. Each time an message is consumed
+	 * from the replied iterable object, the corresponding message is NOT
+	 * removed from the mailbox.
+	 * 
+	 * @param <T> is the type of the expected messages.
+	 * @param type is the type of the expected messages.
+	 * @return all the messages, never <code>null</code>.
+	 * @see #getMessage()
+	 * @see #peekMessage()
+	 * @see #getMessages()
+	 * @see #hasMessage()
+	 * @MESSAGEAPI
+	 * @since 0.5
+	 */
+	protected final <T extends Message> Iterable<T> peekMessages(Class<T> type) {
+		return getMailbox().iterable(new TypeSelector<>(type), false);
 	}
 
 	/**

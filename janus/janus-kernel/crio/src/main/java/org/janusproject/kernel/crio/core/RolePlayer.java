@@ -1436,7 +1436,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 * @return all the messages, never <code>null</code>.
 	 * @MESSAGEAPI
 	 */
-	protected final Iterator<Message> getMessages(GroupAddress group,
+	protected final Iterable<Message> getMessages(GroupAddress group,
 			Class<? extends Role> role) {
 		Role r = getRole(group, role);
 		if (r == null)
@@ -1456,7 +1456,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 * @return all the messages, never <code>null</code>.
 	 * @MESSAGEAPI
 	 */
-	protected final Iterator<Message> peekMessages(GroupAddress group,
+	protected final Iterable<Message> peekMessages(GroupAddress group,
 			Class<? extends Role> role) {
 		Role r = getRole(group, role);
 		if (r == null)

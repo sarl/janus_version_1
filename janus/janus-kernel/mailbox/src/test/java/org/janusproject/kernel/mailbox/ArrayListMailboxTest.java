@@ -27,6 +27,7 @@ import junit.framework.TestCase;
 
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.message.Message;
+import org.janusproject.kernel.util.selector.TypeSelector;
 
 
 /**
@@ -91,8 +92,8 @@ public class ArrayListMailboxTest extends TestCase {
 	/**
 	 */
 	public void testContainsSelector() {
-		assertTrue(this.mailbox.contains(new MailTypeSelector(MessageStub.class)));
-		assertFalse(this.mailbox.contains(new MailTypeSelector(MessageStub2.class)));
+		assertTrue(this.mailbox.contains(new TypeSelector<>(MessageStub.class)));
+		assertFalse(this.mailbox.contains(new TypeSelector<>(MessageStub2.class)));
 	}
 
 	/**
@@ -113,8 +114,8 @@ public class ArrayListMailboxTest extends TestCase {
 	/**
 	 */
 	public void testGetFirstSelector() {
-		assertSame(this.m1, this.mailbox.getFirst(new MailTypeSelector(MessageStub.class)));
-		assertNull(this.mailbox.getFirst(new MailTypeSelector(MessageStub2.class)));
+		assertSame(this.m1, this.mailbox.getFirst(new TypeSelector<>(MessageStub.class)));
+		assertNull(this.mailbox.getFirst(new TypeSelector<>(MessageStub2.class)));
 	}
 
 	/**
@@ -174,9 +175,9 @@ public class ArrayListMailboxTest extends TestCase {
 	/**
 	 */
 	public void testIteratorSelector() {
-		Iterator<Message> iterator;
+		Iterator<? extends Message> iterator;
 		
-		iterator = this.mailbox.iterator(new MailTypeSelector(MessageStub2.class));
+		iterator = this.mailbox.iterator(new TypeSelector<>(MessageStub2.class));
 		assertFalse(iterator.hasNext());
 		
 		assertEquals(2, this.mailbox.size());
@@ -193,9 +194,9 @@ public class ArrayListMailboxTest extends TestCase {
 	/**
 	 */
 	public void testIteratorSelectorBoolean_true() {
-		Iterator<Message> iterator;
+		Iterator<? extends Message> iterator;
 		
-		iterator = this.mailbox.iterator(new MailTypeSelector(MessageStub2.class), true);
+		iterator = this.mailbox.iterator(new TypeSelector<>(MessageStub2.class), true);
 		assertFalse(iterator.hasNext());
 		
 		assertEquals(2, this.mailbox.size());
@@ -212,9 +213,9 @@ public class ArrayListMailboxTest extends TestCase {
 	/**
 	 */
 	public void testIteratorSelectorBoolean_false() {
-		Iterator<Message> iterator;
+		Iterator<? extends Message> iterator;
 		
-		iterator = this.mailbox.iterator(new MailTypeSelector(MessageStub2.class), false);
+		iterator = this.mailbox.iterator(new TypeSelector<>(MessageStub2.class), false);
 		assertFalse(iterator.hasNext());
 		
 		assertEquals(2, this.mailbox.size());
@@ -335,7 +336,7 @@ public class ArrayListMailboxTest extends TestCase {
 	public void testRemoveAllSelector() {
 		Iterator<Message> iterator;
 
-		assertFalse(this.mailbox.removeAll(new MailTypeSelector(MessageStub2.class)));
+		assertFalse(this.mailbox.removeAll(new TypeSelector<>(MessageStub2.class)));
 		
 		iterator = this.mailbox.iterator(false);
 		
@@ -345,7 +346,7 @@ public class ArrayListMailboxTest extends TestCase {
 		assertSame(this.m2, iterator.next());
 		assertFalse(iterator.hasNext());
 
-		assertTrue(this.mailbox.removeAll(new MailTypeSelector(MessageStub.class)));
+		assertTrue(this.mailbox.removeAll(new TypeSelector<>(MessageStub.class)));
 		
 		iterator = this.mailbox.iterator(false);
 		
@@ -377,7 +378,7 @@ public class ArrayListMailboxTest extends TestCase {
 	public void testRemoveFirstSelector() {
 		Iterator<Message> iterator;
 
-		assertNull(this.mailbox.removeFirst(new MailTypeSelector(MessageStub2.class)));
+		assertNull(this.mailbox.removeFirst(new TypeSelector<>(MessageStub2.class)));
 		
 		iterator = this.mailbox.iterator(false);
 		

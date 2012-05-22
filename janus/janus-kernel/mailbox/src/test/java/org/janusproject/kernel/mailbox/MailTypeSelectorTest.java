@@ -23,6 +23,7 @@ package org.janusproject.kernel.mailbox;
 import java.util.logging.Level;
 
 import org.janusproject.kernel.logger.LoggerUtil;
+import org.janusproject.kernel.util.selector.TypeSelector;
 
 import junit.framework.TestCase;
 
@@ -46,7 +47,7 @@ public class MailTypeSelectorTest extends TestCase {
 	/**
 	 */
 	public void testIsSelectedMail() {
-		MailTypeSelector selector1 = new MailTypeSelector(MessageStub.class);
+		TypeSelector<MessageStub> selector1 = new TypeSelector<>(MessageStub.class);
 		MessageStub m1 = new MessageStub(1f, "m1"); //$NON-NLS-1$
 		MessageStub m2 = new MessageStub(1f, "m2"); //$NON-NLS-1$
 		MessageStub2 m3 = new MessageStub2(1f, "m3"); //$NON-NLS-1$

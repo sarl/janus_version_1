@@ -577,7 +577,7 @@ public class RolePlayerTest extends TestCase {
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 
 		iterator = this.player1.getMessages(this.group1.getAddress(),
-				RoleStub.class);
+				RoleStub.class).iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 
@@ -593,7 +593,7 @@ public class RolePlayerTest extends TestCase {
 		}
 
 		iterator = this.player1.getMessages(this.group1.getAddress(),
-				RoleStub.class);
+				RoleStub.class).iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -606,7 +606,7 @@ public class RolePlayerTest extends TestCase {
 		}
 
 		iterator = this.player1.getMessages(this.group1.getAddress(),
-				RoleStub.class);
+				RoleStub.class).iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 	}
@@ -620,7 +620,7 @@ public class RolePlayerTest extends TestCase {
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 
 		iterator = this.player1.peekMessages(this.group1.getAddress(),
-				RoleStub.class);
+				RoleStub.class).iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 
@@ -636,7 +636,7 @@ public class RolePlayerTest extends TestCase {
 		}
 
 		iterator = this.player1.peekMessages(this.group1.getAddress(),
-				RoleStub.class);
+				RoleStub.class).iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -649,7 +649,7 @@ public class RolePlayerTest extends TestCase {
 		}
 
 		iterator = this.player1.peekMessages(this.group1.getAddress(),
-				RoleStub.class);
+				RoleStub.class).iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
