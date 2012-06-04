@@ -513,7 +513,7 @@ public class AgentTest extends TestCase {
 		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 		
-		iterator = this.agent.getMessages();
+		iterator = this.agent.getMessages().iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 		
@@ -529,7 +529,7 @@ public class AgentTest extends TestCase {
 			((BufferedMailbox)mb).synchronizeMessages();
 		}
 
-		iterator = this.agent.getMessages();
+		iterator = this.agent.getMessages().iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -537,7 +537,7 @@ public class AgentTest extends TestCase {
 		assertSame(m2, iterator.next());
 		assertFalse(iterator.hasNext());
 
-		iterator = this.agent.getMessages();
+		iterator = this.agent.getMessages().iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 	}
@@ -552,7 +552,7 @@ public class AgentTest extends TestCase {
 		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 		
-		iterator = this.agent.peekMessages();
+		iterator = this.agent.peekMessages().iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 		
@@ -568,7 +568,7 @@ public class AgentTest extends TestCase {
 			((BufferedMailbox)mb).synchronizeMessages();
 		}
 
-		iterator = this.agent.peekMessages();
+		iterator = this.agent.peekMessages().iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -576,7 +576,7 @@ public class AgentTest extends TestCase {
 		assertSame(m2, iterator.next());
 		assertFalse(iterator.hasNext());
 
-		iterator = this.agent.peekMessages();
+		iterator = this.agent.peekMessages().iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());

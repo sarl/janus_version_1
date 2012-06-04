@@ -56,6 +56,7 @@ import org.janusproject.kernel.status.SingleStatus;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusSeverity;
 import org.janusproject.kernel.time.KernelTimeManager;
+import org.janusproject.kernel.util.selector.TypeSelector;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
 
 /**
@@ -1182,6 +1183,26 @@ implements Activable, Holon, Serializable {
 	}
 	
 	/**
+	 * Replies the first available message of the specified type
+	 * in the agent mail box
+	 * and remove it from the mailbox.
+	 * 
+	 * @param <M> is the type of the messazge to search for.
+	 * @param type is the type of the messazge to search for.
+	 * @return the first available message, or <code>null</code> if
+	 * the mailbox is empty.
+	 * @see #peekMessage()
+	 * @see #getMessages()
+	 * @see #peekMessages()
+	 * @see #hasMessage()
+	 * @MESSAGEAPI
+	 * @since 0.5
+	 */
+	protected final <M extends Message> M getMessage(Class<M> type) {
+		return getMailbox().getFirst(new TypeSelector<>(type));
+	}
+
+	/**
 	 * Replies the first available message in the agent mail box
 	 * and leave it inside the mailbox.
 	 * 
@@ -1198,6 +1219,26 @@ implements Activable, Holon, Serializable {
 	}
 	
 	/**
+	 * Replies the first available message of the given type
+	 * in the agent mail box
+	 * and leave it inside the mailbox.
+	 * 
+	 * @param <M> is the type of the message to search for.
+	 * @param type is the type of the message to search for.
+	 * @return the first available message, or <code>null</code> if
+	 * the mailbox is empty.
+	 * @see #getMessage()
+	 * @see #getMessages()
+	 * @see #peekMessages()
+	 * @see #hasMessage()
+	 * @MESSAGEAPI
+	 * @since 0.5
+	 */
+	protected final <M extends Message> M peekMessage(Class<M> type) {
+		return getMailbox().getFirst(new TypeSelector<>(type));
+	}
+
+	/**
 	 * Replies the messages in the agent mailbox.
 	 * Each time an message is consumed
 	 * from the replied iterable object,
@@ -1211,10 +1252,32 @@ implements Activable, Holon, Serializable {
 	 * @see #hasMessage()
 	 * @MESSAGEAPI
 	 */
-	protected final Iterator<Message> getMessages() {
-		return getMailbox().iterator(true);
+	protected final Iterable<Message> getMessages() {
+		return getMailbox().iterable(true);
 	}
 	
+	/**
+	 * Replies the messages of the specified type
+	 * in the agent mailbox.
+	 * Each time an message is consumed
+	 * from the replied iterable object,
+	 * the corresponding message is removed
+	 * from the mailbox.
+	 * 
+	 * @param <M> is the type of the messages to search for.
+	 * @param type is the type of the messages to search for.
+	 * @return all the messages, never <code>null</code>.
+	 * @see #getMessage()
+	 * @see #peekMessage()
+	 * @see #peekMessages()
+	 * @see #hasMessage()
+	 * @MESSAGEAPI
+	 * @since 0.5
+	 */
+	protected final <M extends Message> Iterable<M> getMessages(Class<M> type) {
+		return getMailbox().iterable(new TypeSelector<>(type), true);
+	}
+
 	/**
 	 * Replies the messages in the agent mailbox.
 	 * Each time an message is consumed
@@ -1229,8 +1292,30 @@ implements Activable, Holon, Serializable {
 	 * @see #hasMessage()
 	 * @MESSAGEAPI
 	 */
-	protected final Iterator<Message> peekMessages() {
-		return getMailbox().iterator(false);
+	protected final Iterable<Message> peekMessages() {
+		return getMailbox().iterable(false);
+	}
+
+	/**
+	 * Replies the messages of the specified type
+	 * in the agent mailbox.
+	 * Each time an message is consumed
+	 * from the replied iterable object,
+	 * the corresponding message is NOT removed
+	 * from the mailbox.
+	 * 
+	 * @param <M> is the type of the messages to search for.
+	 * @param type is the type of the messages to search for.
+	 * @return all the messages, never <code>null</code>.
+	 * @see #getMessage()
+	 * @see #peekMessage()
+	 * @see #getMessages()
+	 * @see #hasMessage()
+	 * @MESSAGEAPI
+	 * @since 0.5
+	 */
+	protected final <M extends Message> Iterable<M> peekMessages(Class<M> type) {
+		return getMailbox().iterable(new TypeSelector<>(type), false);
 	}
 
 	/** Indicates if the agent mailbox contains a message or not.
