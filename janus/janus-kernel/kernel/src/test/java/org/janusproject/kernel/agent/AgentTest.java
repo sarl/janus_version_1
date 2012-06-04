@@ -320,18 +320,18 @@ public class AgentTest extends TestCase {
 
 	/**
 	 */
-	public void testIsSleeping() {
+	public void testWakeUpIfSleeping() {
 		bindToKernel(this.agent);
-		assertFalse(this.agent.isSleeping());
+		assertFalse(this.agent.wakeUpIfSleeping());
 	}
 
 	/**
 	 */
 	public void testSleepFloat() {
 		bindToKernel(this.agent);
-		assertFalse(this.agent.isSleeping());
+		assertFalse(this.agent.wakeUpIfSleeping());
 		assertTrue(this.agent.sleep(50));
-		assertTrue(this.agent.isSleeping());
+		assertTrue(this.agent.wakeUpIfSleeping());
 	}
 
 	/**
@@ -513,7 +513,7 @@ public class AgentTest extends TestCase {
 		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 		
-		iterator = this.agent.getMessages().iterator();
+		iterator = this.agent.getMessages();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 		
@@ -529,7 +529,7 @@ public class AgentTest extends TestCase {
 			((BufferedMailbox)mb).synchronizeMessages();
 		}
 
-		iterator = this.agent.getMessages().iterator();
+		iterator = this.agent.getMessages();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -537,7 +537,7 @@ public class AgentTest extends TestCase {
 		assertSame(m2, iterator.next());
 		assertFalse(iterator.hasNext());
 
-		iterator = this.agent.getMessages().iterator();
+		iterator = this.agent.getMessages();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 	}
@@ -552,7 +552,7 @@ public class AgentTest extends TestCase {
 		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 		
-		iterator = this.agent.peekMessages().iterator();
+		iterator = this.agent.peekMessages();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 		
@@ -568,7 +568,7 @@ public class AgentTest extends TestCase {
 			((BufferedMailbox)mb).synchronizeMessages();
 		}
 
-		iterator = this.agent.peekMessages().iterator();
+		iterator = this.agent.peekMessages();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -576,7 +576,7 @@ public class AgentTest extends TestCase {
 		assertSame(m2, iterator.next());
 		assertFalse(iterator.hasNext());
 
-		iterator = this.agent.peekMessages().iterator();
+		iterator = this.agent.peekMessages();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());

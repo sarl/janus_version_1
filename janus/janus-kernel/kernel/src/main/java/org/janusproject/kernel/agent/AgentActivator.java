@@ -104,7 +104,7 @@ extends AbstractActivator<Agent> {
 			case ALIVE:
 				// standard execution
 				try {
-					if (!h.isSleeping()) {
+					if (!h.wakeUpIfSleeping()) {
 						s = h.proceedPrivateBehaviour();
 					}
 				}

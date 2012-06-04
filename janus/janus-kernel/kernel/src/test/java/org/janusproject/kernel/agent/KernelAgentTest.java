@@ -224,16 +224,16 @@ public class KernelAgentTest extends TestCase {
 	
 	/**
 	 */
-	public void testIsSleeping() {
-		assertFalse(this.agent.isSleeping());
+	public void testWakeUpIfSleeping() {
+		assertFalse(this.agent.wakeUpIfSleeping());
 	}
 
 	/**
 	 */
 	public void testSleepFloat() {
-		assertFalse(this.agent.isSleeping());
+		assertFalse(this.agent.wakeUpIfSleeping());
 		assertFalse(this.agent.sleep(50));
-		assertFalse(this.agent.isSleeping());
+		assertFalse(this.agent.wakeUpIfSleeping());
 	}
 
 	/**
