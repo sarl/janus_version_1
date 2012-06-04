@@ -56,7 +56,6 @@ import org.janusproject.kernel.status.SingleStatus;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusSeverity;
 import org.janusproject.kernel.time.KernelTimeManager;
-import org.janusproject.kernel.util.selector.TypeSelector;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
 
 /**
@@ -1056,12 +1055,13 @@ implements Activable, Holon, Serializable {
 		return false;
 	}
 
-	/** Replies if this agent is sleeping.
+	/** Test the wake-up condition if present and replies if this agent is 
+	 * still sleeping.
 	 * 
-	 * @return <code>true</code> if this agent may be sleeping,
+	 * @return <code>true</code> if this agent continue to sleep,
 	 * otherwise <code>false</code>
 	 */
-	boolean isSleeping() {
+	boolean wakeUpIfSleeping() {
 		TimeCondition tc = this.agentWakeUpCondition;
 		if (tc!=null) {
 			KernelContext kc = getKernelContext();
@@ -1072,6 +1072,16 @@ implements Activable, Holon, Serializable {
 			return true;
 		}
 		return false;
+	}
+	
+	/** Replies if the agent is currently sleeping, ie. it is
+	 * waiting for a particular condition to wake up.
+	 *  
+	 * @return <code>true</code> if the agent is sleeping;
+	 * <code>false</code> if not.
+	 */
+	public boolean isSleeping() {
+		return this.agentWakeUpCondition!=null;
 	}
 	
 	/**
@@ -1172,26 +1182,6 @@ implements Activable, Holon, Serializable {
 	}
 	
 	/**
-	 * Replies the first available message of the specified
-	 * type in the agent mail box
-	 * and remove it from the mailbox.
-	 * 
-	 * @param <T> is the type of the message to reply.
-	 * @param type is the type of the message to reply.
-	 * @return the first available message, or <code>null</code> if
-	 * the mailbox is empty.
-	 * @see #peekMessage()
-	 * @see #getMessages()
-	 * @see #peekMessages()
-	 * @see #hasMessage()
-	 * @MESSAGEAPI
-	 * @since 0.5
-	 */
-	protected final <T extends Message> T getMessage(Class<T> type) {
-		return getMailbox().removeFirst(new TypeSelector<>(type));
-	}
-
-	/**
 	 * Replies the first available message in the agent mail box
 	 * and leave it inside the mailbox.
 	 * 
@@ -1208,25 +1198,6 @@ implements Activable, Holon, Serializable {
 	}
 	
 	/**
-	 * Replies the first available message in the agent mail box
-	 * and leave it inside the mailbox.
-	 * 
-	 * @param <T> is the type of the message to reply.
-	 * @param type is the type of the message to reply.
-	 * @return the first available message, or <code>null</code> if
-	 * the mailbox is empty.
-	 * @see #getMessage()
-	 * @see #getMessages()
-	 * @see #peekMessages()
-	 * @see #hasMessage()
-	 * @MESSAGEAPI
-	 * @since 0.5
-	 */
-	protected final <T extends Message> T peekMessage(Class<T> type) {
-		return getMailbox().getFirst(new TypeSelector<>(type));
-	}
-
-	/**
 	 * Replies the messages in the agent mailbox.
 	 * Each time an message is consumed
 	 * from the replied iterable object,
@@ -1240,33 +1211,11 @@ implements Activable, Holon, Serializable {
 	 * @see #hasMessage()
 	 * @MESSAGEAPI
 	 */
-	protected final Iterable<Message> getMessages() {
-		return getMailbox();
+	protected final Iterator<Message> getMessages() {
+		return getMailbox().iterator(true);
 	}
 	
 	/**
-	 * Replies the messages in the agent mailbox
-	 * that is of the specified type.
-	 * Each time an message is consumed
-	 * from the replied iterable object,
-	 * the corresponding message is removed
-	 * from the mailbox.
-	 * 
-	 * @param <T> is the type of the messages to reply.
-	 * @param type is the type of the messages to reply.
-	 * @return all the messages, never <code>null</code>.
-	 * @see #getMessage()
-	 * @see #peekMessage()
-	 * @see #peekMessages()
-	 * @see #hasMessage()
-	 * @MESSAGEAPI
-	 * @since 0.5
-	 */
-	protected final <T extends Message> Iterable<T> getMessages(Class<T> type) {
-		return getMailbox().iterable(type);
-	}
-
-	/**
 	 * Replies the messages in the agent mailbox.
 	 * Each time an message is consumed
 	 * from the replied iterable object,
@@ -1280,30 +1229,8 @@ implements Activable, Holon, Serializable {
 	 * @see #hasMessage()
 	 * @MESSAGEAPI
 	 */
-	protected final Iterable<Message> peekMessages() {
-		return getMailbox().iterable(false);
-	}
-
-	/**
-	 * Replies the messages in the agent mailbox
-	 * that is of the given type.
-	 * Each time an message is consumed
-	 * from the replied iterable object,
-	 * the corresponding message is NOT removed
-	 * from the mailbox.
-	 * 
-	 * @param <T> is the type of the messages to reply.
-	 * @param type is the type of the messages to reply.
-	 * @return all the messages, never <code>null</code>.
-	 * @see #getMessage()
-	 * @see #peekMessage()
-	 * @see #getMessages()
-	 * @see #hasMessage()
-	 * @MESSAGEAPI
-	 * @since 0.5
-	 */
-	protected final <T extends Message> Iterable<T> peekMessages(Class<T> type) {
-		return getMailbox().iterable(new TypeSelector<>(type), false);
+	protected final Iterator<Message> peekMessages() {
+		return getMailbox().iterator(false);
 	}
 
 	/** Indicates if the agent mailbox contains a message or not.
