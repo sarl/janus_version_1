@@ -64,7 +64,7 @@ import org.janusproject.kernel.crio.organization.PrivilegedPersistentGroupCleane
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.message.MessageContext;
-import org.janusproject.kernel.repository.RepositoryOverlooker;
+import org.janusproject.kernel.repository.Repository;
 import org.janusproject.kernel.schedule.Activable;
 import org.janusproject.kernel.status.ExceptionStatus;
 import org.janusproject.kernel.status.KernelStatusConstants;
@@ -221,8 +221,8 @@ extends ActivatorAgent<AgentActivator> {
 	 * 
 	 * @return the overlooker on the agent repository.
 	 */
-	protected final RepositoryOverlooker getAgentRepository() {
-		return getKernelContext().getAgentRepository().getOverlooker();
+	protected final Repository<AgentAddress,Agent> getAgentRepository() {
+		return getKernelContext().getAgentRepository();
 	}
 
 	/** Set the name of the application and the kernel agent.
@@ -645,6 +645,22 @@ extends ActivatorAgent<AgentActivator> {
 	protected final Status kill(AgentAddress dyingEntityAddress) {
 		return kill(this, dyingEntityAddress);
 	}
+	
+	/** Kill all the agents supported by this kernel.
+	 * 
+	 * @return the status of the request.
+	 */
+	protected final Status killAll() {
+		MultipleStatus s = new MultipleStatus();
+		// Force the thread agents to be paused
+		getKernelContext().setKernelPaused(true);
+		for(AgentAddress adr : getAgentRepository()) {
+			kill(this, adr);
+		}
+		getKernelContext().setKernelPaused(false);
+		return s.pack(this);
+	}
+	
 
 	/** Kill an entity from this kernel.
 	 * <p>
@@ -1369,7 +1385,7 @@ extends ActivatorAgent<AgentActivator> {
 					// Live
 					try {
 						while (!this.kill && this.agent.getState()==AgentLifeState.ALIVE) {
-							if (!getKernelContext().isKernelPaused() && !this.agent.isSleeping()) {
+							if (!getKernelContext().isKernelPaused() && !this.agent.wakeUpIfSleeping()) {
 								s = this.agent.proceedPrivateBehaviour();
 								if (s!=null && s.isLoggable()) {
 									s.logOn(this.agent.getLogger());
