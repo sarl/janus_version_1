@@ -287,7 +287,7 @@ public class RoleAddress implements Address {
 		if (address==null) return Integer.MAX_VALUE;
 		if (address instanceof RoleAddress) {
 			RoleAddress ra = (RoleAddress)address;
-			int cmp = this.group.compareTo(ra);
+			int cmp = this.group.compareTo(ra.group);
 			if (cmp!=0) return cmp;
 			cmp = ClassComparator.SINGLETON.compare(this.roleType, ra.roleType);
 			if (cmp!=0) return cmp;
