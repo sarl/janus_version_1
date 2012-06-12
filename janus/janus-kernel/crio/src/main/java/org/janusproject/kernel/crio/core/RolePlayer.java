@@ -2395,7 +2395,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	public final Group getGroupObject(GroupAddress groupId) {
 		KernelScopeGroup group = getCRIOContext().getGroupRepository().get(groupId);
 		if (group!=null) {
-			return group.toGroup(false);
+			return group.toGroup(isMemberOf(groupId));
 		}
 		return null;
 	}
