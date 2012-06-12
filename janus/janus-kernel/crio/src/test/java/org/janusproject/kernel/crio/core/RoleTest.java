@@ -1676,15 +1676,15 @@ public class RoleTest extends TestCase {
 		Group grp = this.role.getGroupObject(this.address);
 		assertNotNull(grp);
 		
-		assertNull(grp.getUserData());
+		assertNull(grp.getPrivateUserData());
 		Object userData1 = new Object();
 		Object userData2 = new Object();
-		assertNull(grp.setUserData(userData1));
-		assertSame(userData1, grp.getUserData());
-		assertSame(userData1, grp.setUserData(userData2));
-		assertSame(userData2, grp.getUserData());
-		assertSame(userData2, grp.setUserData(null));
-		assertNull(grp.getUserData());
+		assertNull(grp.setPrivateUserData(userData1));
+		assertSame(userData1, grp.getPrivateUserData());
+		assertSame(userData1, grp.setPrivateUserData(userData2));
+		assertSame(userData2, grp.getPrivateUserData());
+		assertSame(userData2, grp.setPrivateUserData(null));
+		assertNull(grp.getPrivateUserData());
 	}
 
 	/**
@@ -1703,13 +1703,13 @@ public class RoleTest extends TestCase {
 		Object userData1 = new Object();
 		Object userData2 = new Object();
 
-		assertNull(grp.getUserData());
-		assertNull(grp.setUserData(userData1));
-		assertNull(grp.getUserData());
-		assertNull(grp.setUserData(userData2));
-		assertNull(grp.getUserData());
-		assertNull(grp.setUserData(null));
-		assertNull(grp.getUserData());
+		assertNull(grp.getPrivateUserData());
+		assertNull(grp.setPrivateUserData(userData1));
+		assertNull(grp.getPrivateUserData());
+		assertNull(grp.setPrivateUserData(userData2));
+		assertNull(grp.getPrivateUserData());
+		assertNull(grp.setPrivateUserData(null));
+		assertNull(grp.getPrivateUserData());
 	}
 
 	/**

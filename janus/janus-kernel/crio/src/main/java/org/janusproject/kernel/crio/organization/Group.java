@@ -89,7 +89,8 @@ public interface Group {
 	 */
 	public boolean isPersistent();
 	
-	/** Replies any user data associated to the group.
+	/** Replies any user data associated to the group
+	 * but with only an access from the inside of the group.
 	 * Only the members of the group may obtain a
 	 * value different than <code>null</code>.
 	 * 
@@ -98,9 +99,10 @@ public interface Group {
 	 * of the group.
 	 * @since 0.5
 	 */
-	public Object getUserData();
+	public Object getPrivateUserData();
 	
-	/** Set any user data associated to the group.
+	/** Set any user data associated to the group
+	 * but with only an access from the inside of the group.
 	 * Only the members of the group may set this
 	 * value.
 	 * 
@@ -108,8 +110,31 @@ public interface Group {
 	 * @return the value of the user data previously stored in the group.
 	 * @since 0.5
 	 */
-	public Object setUserData(Object userData);
+	public Object setPrivateUserData(Object userData);
 	
+	/** Replies any user data associated to the group.
+	 * Only the members of the group may obtain a
+	 * value different than <code>null</code>.
+	 * 
+	 * @param key is the name of the user data.
+	 * @return any user data associated to the group;
+	 * or <code>null</code> if the caller is not a member
+	 * of the group.
+	 * @since 0.5
+	 */
+	public Object getPublicUserData(String key);
+	
+	/** Set any user data associated to the group.
+	 * Only the members of the group may set this
+	 * value.
+	 * 
+	 * @param key is the name of the user data.
+	 * @param userData is any user data associated to the group.
+	 * @return the value of the user data previously stored in the group.
+	 * @since 0.5
+	 */
+	public Object setPublicUserData(String key, Object userData);
+
 	/**
 	 * Add listener on role playing events in the group only.
 	 * 

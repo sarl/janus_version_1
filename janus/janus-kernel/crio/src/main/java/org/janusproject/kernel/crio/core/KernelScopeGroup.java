@@ -140,11 +140,16 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 	 */
 	private Float lastUsage = null;
 	
-	/** Any user data associated to the group.
+	/** Any user data associated to the group and with public access.
 	 * @since 0.5
 	 */
-	private Object userData = null;
+	private Map<String,Object> publicUserData = null;
 	
+	/** Any user data associated to the group with group access.
+	 * @since 0.5
+	 */
+	private Object privateUserData = null;
+
 	private ListenerCollection<EventListener> eventListeners = null;
 	
 	/**
@@ -1309,32 +1314,69 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		}
 	}
 	
-	/** Replies any user data associated to the group.
+	/** Replies any public user data associated to the group.
 	 * 
-	 * @return any user data associated to the group.
+	 * @param key is the name of the data to set.
+	 * @return any public user data associated to the group.
 	 * @since 0.5
 	 */
-	public Object getUserData() {
+	public Object getPublicUserData(String key) {
 		this.internalStructureLock.lock();
 		try {
-			return this.userData;
+			if (this.publicUserData==null) return null;
+			return this.publicUserData.get(key);
 		}
 		finally {
 			this.internalStructureLock.unlock();
 		}
 	}
 
-	/** Set any user data associated to the group.
+	/** Set any public user data associated to the group.
+	 *
+	 * @param key is the name of the data to set.
+	 * @param userData is any user data associated to the group.
+	 * @return the value of the public user data previously stored in the group.
+	 * @since 0.5
+	 */
+	public Object setPublicUserData(String key, Object userData) {
+		this.internalStructureLock.lock();
+		try {
+			if (this.publicUserData==null) {
+				this.publicUserData = new TreeMap<>();
+			}
+			return this.publicUserData.put(key, userData);
+		}
+		finally {
+			this.internalStructureLock.unlock();
+		}
+	}
+
+	/** Replies any private user data associated to the group.
+	 * 
+	 * @return any private user data associated to the group.
+	 * @since 0.5
+	 */
+	public Object getPrivateUserData() {
+		this.internalStructureLock.lock();
+		try {
+			return this.privateUserData;
+		}
+		finally {
+			this.internalStructureLock.unlock();
+		}
+	}
+
+	/** Set any private user data associated to the group.
 	 * 
 	 * @param userData is any user data associated to the group.
 	 * @return the value of the user data previously stored in the group.
 	 * @since 0.5
 	 */
-	public Object setUserData(Object userData) {
+	public Object setPrivateUserData(Object userData) {
 		this.internalStructureLock.lock();
 		try {
-			Object old = this.userData;
-			this.userData = userData;
+			Object old = this.privateUserData;
+			this.privateUserData = userData;
 			return old;
 		}
 		finally {
@@ -1763,9 +1805,18 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Object getUserData() {
-			if (this.isForMember)
-				return KernelScopeGroup.this.getUserData();
+		public Object getPublicUserData(String key) {
+			return KernelScopeGroup.this.getPublicUserData(key);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Object setPublicUserData(String key, Object userData) {
+			if (this.isForMember) {
+				return KernelScopeGroup.this.setPublicUserData(key, userData);
+			}
 			return null;
 		}
 
@@ -1773,9 +1824,19 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Object setUserData(Object userData) {
+		public Object getPrivateUserData() {
+			if (this.isForMember)
+				return KernelScopeGroup.this.getPrivateUserData();
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Object setPrivateUserData(Object userData) {
 			if (this.isForMember) {
-				return KernelScopeGroup.this.setUserData(userData);
+				return KernelScopeGroup.this.setPrivateUserData(userData);
 			}
 			return null;
 		}
