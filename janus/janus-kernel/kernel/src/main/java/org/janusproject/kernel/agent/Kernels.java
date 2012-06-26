@@ -646,7 +646,7 @@ public final class Kernels {
 	 * @return a new kernel agent.
 	 */
 	public static Kernel create(Boolean commitSuicide, AgentActivator activator, KernelTimeManager timeManager) {
-		return create(commitSuicide, activator, null, null, null, defaultKernelFactory);
+		return create(commitSuicide, activator, timeManager, null, null, defaultKernelFactory);
 	}
 
 	/** Create a new kernel agent even if another one
@@ -660,7 +660,7 @@ public final class Kernels {
 	 * @return a new kernel agent.
 	 */
 	public static Kernel create(Boolean commitSuicide, AgentActivator activator, KernelTimeManager timeManager, String applicationName) {
-		return create(commitSuicide, activator, null, null, applicationName, defaultKernelFactory);
+		return create(commitSuicide, activator, timeManager, null, applicationName, defaultKernelFactory);
 	}
 
 	/** Create a new kernel agent even if another one
