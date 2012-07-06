@@ -59,7 +59,14 @@ public class LoggerUtil {
 	private static Class<? extends Handler> defaultHandlerType = null;
 	
 	static {
-		boolean isEmbeddedOS = OperatingSystem.ANDROID.isCurrentOS();
+		boolean isEmbeddedOS;
+		try {
+			isEmbeddedOS = OperatingSystem.ANDROID.isCurrentOS();
+		}
+		catch(Throwable _) {
+			// High probability to be invoked from the inside of an applet
+			isEmbeddedOS = true;
+		}
 		isLoggingEnabled = new AtomicBoolean(!isEmbeddedOS);
 		isShortLogMessage = new AtomicBoolean(isEmbeddedOS);
 	}
