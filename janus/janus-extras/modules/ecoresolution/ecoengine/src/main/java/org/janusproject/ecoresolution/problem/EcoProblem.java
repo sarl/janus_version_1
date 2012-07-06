@@ -48,7 +48,7 @@ public abstract class EcoProblem {
 	 * @param goal is the goald of the entity.
 	 * @param aquaintances is the knowledge to insert at startup.
 	 */
-	protected final void init(InitializableEcoEntity entity, EcoRelation goal, EcoRelation... aquaintances) {
+	protected final static void init(InitializableEcoEntity entity, EcoRelation goal, EcoRelation... aquaintances) {
 		EcoIdentity m;
 		if (goal!=null) {
 			m = goal.getMaster();

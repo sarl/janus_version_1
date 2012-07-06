@@ -80,7 +80,7 @@ public class KernelTest extends TestCase {
 	/**
 	 * @throws Exception 
 	 */
-	public void testPause() throws Exception {
+	public static void testPause() throws Exception {
 		int v1, v2, v3, v4;
 		
 		Kernel k = Kernels.create();
@@ -166,7 +166,7 @@ public class KernelTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testSetHeavyAgent() throws Exception {
+	public static void testSetHeavyAgent() throws Exception {
 		Kernel k = Kernels.create();
 		AgentStub a = new AgentStub();
 		
@@ -187,7 +187,7 @@ public class KernelTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testSetLightAgent() throws Exception {
+	public static void testSetLightAgent() throws Exception {
 		Kernel k = Kernels.create();
 		AgentStub a = new AgentStub();
 		
@@ -208,7 +208,7 @@ public class KernelTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testChannelInteractableListener() throws Exception {
+	public static void testChannelInteractableListener() throws Exception {
 		KernelListenerStub kListener = new KernelListenerStub();
 		ChannelListenerStub listener = new ChannelListenerStub();
 		Kernel k = Kernels.create();
@@ -265,7 +265,7 @@ public class KernelTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testKernelListener() throws Exception {
+	public static void testKernelListener() throws Exception {
 		KernelListenerStub listener = new KernelListenerStub();
 		Kernel k = Kernels.create();
 		k.addKernelListener(listener);
@@ -316,7 +316,7 @@ public class KernelTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testAgentLifeStageListener() throws Exception {
+	public static void testAgentLifeStageListener() throws Exception {
 		AgentLifeListenerStub listener = new AgentLifeListenerStub();
 		Kernel k = Kernels.create();
 		k.addAgentLifeStateListener(listener);
@@ -559,7 +559,7 @@ public class KernelTest extends TestCase {
 			}
 		}
 		
-		private void assertKernelEvent(Collection<KernelEvent> list, Object source, KernelEventType type, AgentAddress address) {
+		private static void assertKernelEvent(Collection<KernelEvent> list, Object source, KernelEventType type, AgentAddress address) {
 			Iterator<KernelEvent> iterator = list.iterator();
 			KernelEvent e;
 			while (iterator.hasNext()) {

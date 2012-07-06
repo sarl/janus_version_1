@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ public class AgentActivatorTest extends TestCase {
 		return tab;
 	}
 
-	private void assertEquals(Collection<?> c1, Agent[] c2) {
+	private static void assertEquals(Collection<?> c1, Agent[] c2) {
 		if (c1!=null && c2!=null) {
 			try {
 				ArrayList<Object> obj = new ArrayList<>(c1);

@@ -131,7 +131,7 @@ public class OSGiModuleService {
 	 * @param versionRange
 	 * @return
 	 */
-	private String createFilter(String symbolicName, String versionRange) {
+	private static String createFilter(String symbolicName, String versionRange) {
 		StringBuilder filterStr = new StringBuilder();
 		filterStr.append("(|(presentationname=*)(symbolicname="); //$NON-NLS-1$
 		filterStr.append(symbolicName);
@@ -179,7 +179,7 @@ public class OSGiModuleService {
 	 * @param packageAdmin
 	 * @return A local bundle or null if not found
 	 */
-	private Bundle resolveBundle(String symbolicName, String versionRange,
+	private static Bundle resolveBundle(String symbolicName, String versionRange,
 			PackageAdmin packageAdmin) {
 		if (packageAdmin != null) {
 			Bundle[] bs = packageAdmin.getBundles(symbolicName, versionRange);

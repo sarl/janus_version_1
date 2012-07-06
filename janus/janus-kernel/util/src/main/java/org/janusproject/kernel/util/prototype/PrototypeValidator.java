@@ -237,11 +237,11 @@ public abstract class PrototypeValidator<MT, AT extends Annotation> {
 	 * 
 	 * @return the logger for this validator.
 	 */
-	protected Logger getLogger() {
+	protected static Logger getLogger() {
 		return Logger.getLogger(PrototypeValidator.class.getCanonicalName());
 	}
 	
-	private void check(
+	private static <MT> void check(
 			Class<? extends MT> objectToTest,
 			PrototypeScope scope,
 			Class<?>[] specifiedParameters,

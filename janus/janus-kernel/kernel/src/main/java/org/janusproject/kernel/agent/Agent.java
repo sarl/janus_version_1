@@ -176,6 +176,10 @@ implements Activable, Holon, Serializable {
 	/** Condition to wake up the agent.
 	 */
 	private volatile TimeCondition agentWakeUpCondition = null;
+	
+	/** Indicates if the agent has migrated from a kernel to another one.
+	 */
+	private final boolean hasMigrated = false;
 
 	/**
 	 * Create a new non-compound agent
@@ -478,7 +482,7 @@ implements Activable, Holon, Serializable {
 	 * @EXECUTIONAPI
 	 */
 	public boolean hasMigrated() {
-		return false;
+		return this.hasMigrated;
 	}
 
 	/** Force the value of the agent state

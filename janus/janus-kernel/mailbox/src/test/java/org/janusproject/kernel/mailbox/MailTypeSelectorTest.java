@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,8 @@ import junit.framework.TestCase;
  */
 public class MailTypeSelectorTest extends TestCase {
 
+	private TypeSelector<MessageStub> selector;
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -42,19 +44,28 @@ public class MailTypeSelectorTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
+		this.selector = new TypeSelector<>(MessageStub.class);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void tearDown() throws Exception {
+		this.selector = null;
+		super.tearDown();
 	}
 	
 	/**
 	 */
 	public void testIsSelectedMail() {
-		TypeSelector<MessageStub> selector1 = new TypeSelector<>(MessageStub.class);
 		MessageStub m1 = new MessageStub(1f, "m1"); //$NON-NLS-1$
 		MessageStub m2 = new MessageStub(1f, "m2"); //$NON-NLS-1$
 		MessageStub2 m3 = new MessageStub2(1f, "m3"); //$NON-NLS-1$
 		
-		assertTrue(selector1.isSelected(m1));
-		assertTrue(selector1.isSelected(m2));
-		assertFalse(selector1.isSelected(m3));
+		assertTrue(this.selector.isSelected(m1));
+		assertTrue(this.selector.isSelected(m2));
+		assertFalse(this.selector.isSelected(m3));
 	}
 
 }

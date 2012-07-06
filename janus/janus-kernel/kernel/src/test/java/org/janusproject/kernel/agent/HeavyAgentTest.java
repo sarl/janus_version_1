@@ -76,7 +76,7 @@ public class HeavyAgentTest extends TestCase {
 	/**
 	 * @throws Throwable
 	 */
-	public void testMessageSending() throws Throwable {
+	public static void testMessageSending() throws Throwable {
 		SendingAgent sAgent = new SendingAgent();
 		ReceivingAgent rAgent = new ReceivingAgent();
 		
@@ -108,7 +108,7 @@ public class HeavyAgentTest extends TestCase {
 	/**
 	 * @throws Throwable
 	 */
-	public void testReleaseAllRoles() throws Throwable {
+	public static void testReleaseAllRoles() throws Throwable {
 		PlayerAgent agent = new PlayerAgent();
 		Kernel k = Kernels.get();
 

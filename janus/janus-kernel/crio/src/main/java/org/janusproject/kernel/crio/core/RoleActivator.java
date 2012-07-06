@@ -24,10 +24,13 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.janusproject.kernel.schedule.AbstractActivator;
+import org.janusproject.kernel.schedule.ActivationStage;
 import org.janusproject.kernel.status.ExceptionStatus;
 import org.janusproject.kernel.status.MultipleStatus;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
+import org.janusproject.kernel.util.directaccess.DirectAccessCollection;
+import org.janusproject.kernel.util.directaccess.SafeIterator;
 
 /**
  * The base of the scheduling mecanisms.
@@ -131,6 +134,24 @@ extends AbstractActivator<Role> {
 	 */
 	void removeRole(Role role) {
 		removeActivableObject(role);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected SafeIterator<Role> getExecutionPolicy(ActivationStage stage,
+			DirectAccessCollection<Role> candidates) {
+		return candidates.iterator();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Iterator<? extends Role> getExecutionPolicy(
+			ActivationStage stage, Collection<? extends Role> candidates) {
+		return candidates.iterator();
 	}
 	
 }

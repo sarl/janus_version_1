@@ -166,7 +166,7 @@ public abstract class AbstractOperationPerSecondCsvBench<R extends OperationAgen
 	 * @return the number of operations.
 	 * @throws Exception
 	 */
-	protected long waitForNbOperationsPerSecond(BenchMarkedAgent agent) throws Exception {
+	protected static long waitForNbOperationsPerSecond(BenchMarkedAgent agent) throws Exception {
 		long s = System.currentTimeMillis();
 		Thread.sleep(BenchConstants.PER_SECOND_BENCH_SLEEPING_DURATION);
 		long e = System.currentTimeMillis();

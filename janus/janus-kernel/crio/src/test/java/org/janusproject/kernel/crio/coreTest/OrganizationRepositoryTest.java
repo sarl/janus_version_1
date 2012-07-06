@@ -57,7 +57,7 @@ public class OrganizationRepositoryTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testOrganizationClass_innerPublicClass() throws Exception {
+	public static void testOrganizationClass_innerPublicClass() throws Exception {
 		Constructor<MyInnerPublicClassOrgaStub> cons = MyInnerPublicClassOrgaStub.class.getConstructor(CRIOContext.class);
 		assertNotNull(cons);
 		
@@ -84,7 +84,7 @@ public class OrganizationRepositoryTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testOrganizationClass_innerPackageClass() throws Exception {
+	public static void testOrganizationClass_innerPackageClass() throws Exception {
 		Constructor<MyInnerPackageClassOrgaStub> cons = MyInnerPackageClassOrgaStub.class.getConstructor(CRIOContext.class);
 		assertNotNull(cons);
 		
@@ -111,7 +111,7 @@ public class OrganizationRepositoryTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testOrganizationClass_innerPrivateClass() throws Exception {
+	public static void testOrganizationClass_innerPrivateClass() throws Exception {
 		Constructor<MyInnerPrivateClassOrgaStub> cons = MyInnerPrivateClassOrgaStub.class.getConstructor(CRIOContext.class);
 		assertNotNull(cons);
 		

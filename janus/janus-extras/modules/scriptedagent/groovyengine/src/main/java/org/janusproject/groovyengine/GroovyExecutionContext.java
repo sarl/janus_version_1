@@ -20,11 +20,14 @@
  */
 package org.janusproject.groovyengine;
 
+import java.io.Reader;
 import java.lang.reflect.Method;
 
 import groovy.lang.GroovyClassLoader;
 
+import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl;
 import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
@@ -111,6 +114,24 @@ public class GroovyExecutionContext extends AbstractScriptExecutionContext {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Object evaluate(ScriptEngine engine, Reader stream)
+			throws ScriptException {
+		return engine.eval(stream);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Object evaluate(ScriptEngine engine, String script)
+			throws ScriptException {
+		return engine.eval(script);
 	}
 	
 }

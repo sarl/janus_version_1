@@ -546,7 +546,7 @@ public class JanusProperties extends Properties {
 	 * if it is not read-only or writtable in privileged context.
 	 * @see #isReadOnly(String)
 	 */
-	public boolean isConstantProperty(JanusProperty property) {
+	public static boolean isConstantProperty(JanusProperty property) {
 		assert(property!=null);
 		return property==JanusProperty.JANUS_KERNEL_HOME
 			|| property==JanusProperty.JANUS_APPLICATION_HOME
@@ -620,7 +620,7 @@ public class JanusProperties extends Properties {
 	 * @param prop
 	 * @return the properties which are depending on <var>prop</var>. 
 	 */
-	protected JanusProperty[] getDependentProperties(JanusProperty prop) {
+	protected static JanusProperty[] getDependentProperties(JanusProperty prop) {
 		switch(prop) {
 		case JANUS_APPLICATION_NAME:
 			return new JanusProperty[] {
@@ -1817,7 +1817,7 @@ public class JanusProperties extends Properties {
 	 * @see #getKernelDirectory()
 	 * @since 0.4
 	 */
-	public File getRootConfigurationDirectory() {
+	public static File getRootConfigurationDirectory() {
 		return FileSystem.getUserConfigurationDirectoryFor("janus"); //$NON-NLS-1$
 	}
 

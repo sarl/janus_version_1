@@ -70,7 +70,7 @@ extends CapacityImplementation {
 		super();
 	}
 
-	private GroupCapacityContext castContext(CapacityContext context) {
+	private static GroupCapacityContext castContext(CapacityContext context) {
 		assert(context!=null);
 		try {
 			return (GroupCapacityContext)context;
@@ -96,7 +96,7 @@ extends CapacityImplementation {
 	 * @see #call(CapacityContext)
 	 * @MESSAGEAPI
 	 */
-	protected final RoleAddress sendMessage(
+	protected static final RoleAddress sendMessage(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			AgentAddress receiver,
@@ -124,7 +124,7 @@ extends CapacityImplementation {
 	 * @MESSAGEAPI
 	 * @since 0.5
 	 */
-	protected final RoleAddress sendMessage(
+	protected static final RoleAddress sendMessage(
 			CapacityContext callContext,
 			RoleAddress receiver,
 			Message message) {
@@ -149,7 +149,7 @@ extends CapacityImplementation {
 	 * @return the address of the receiver.
 	 * @MESSAGEAPI
 	 */
-	protected final RoleAddress forwardMessage(
+	protected static final RoleAddress forwardMessage(
 			CapacityContext callContext,
 			Message message) {
 		assert(message!=null);
@@ -179,7 +179,7 @@ extends CapacityImplementation {
 	 * @return the address of the receiver.
 	 * @MESSAGEAPI
 	 */
-	protected final RoleAddress forwardMessage(
+	protected static final RoleAddress forwardMessage(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			AgentAddress receiver,
@@ -206,7 +206,7 @@ extends CapacityImplementation {
 	 *         was found, <code>null</code> else.
 	 * @MESSAGEAPI
 	 */
-	protected final RoleAddress sendMessage(
+	protected static final RoleAddress sendMessage(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			Message message) {
@@ -232,7 +232,7 @@ extends CapacityImplementation {
 	 *         was found, <code>null</code> else.
 	 * @MESSAGEAPI
 	 */
-	protected final RoleAddress forwardMessage(
+	protected static final RoleAddress forwardMessage(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			Message message) {
@@ -258,7 +258,7 @@ extends CapacityImplementation {
 	 *         was found, <code>null</code> else.
 	 * @MESSAGEAPI
 	 */
-	protected final RoleAddress forwardMessage(
+	protected static final RoleAddress forwardMessage(
 			CapacityContext callContext,
 			RoleAddress receiver,
 			Message message) {
@@ -285,7 +285,7 @@ extends CapacityImplementation {
 	 *         was found, <code>null</code> else.
 	 * @MESSAGEAPI
 	 */
-	protected final RoleAddress sendMessage(
+	protected static final RoleAddress sendMessage(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			MessageReceiverSelectionPolicy policy,
@@ -314,7 +314,7 @@ extends CapacityImplementation {
 	 *         was found, <code>null</code> else.
 	 * @MESSAGEAPI
 	 */
-	protected final RoleAddress forwardMessage(
+	protected static final RoleAddress forwardMessage(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			MessageReceiverSelectionPolicy policy,
@@ -341,7 +341,7 @@ extends CapacityImplementation {
 	 * @param message is the message to send
 	 * @MESSAGEAPI
 	 */
-	protected final void broadcastMessage(
+	protected static final void broadcastMessage(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			Message message) {
@@ -366,7 +366,7 @@ extends CapacityImplementation {
 	 * @param message is the message to send
 	 * @MESSAGEAPI
 	 */
-	protected final void forwardBroadcastMessage(
+	protected static final void forwardBroadcastMessage(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			Message message) {
@@ -388,7 +388,7 @@ extends CapacityImplementation {
 	 * @return the mailbox of the given role, or <code>null</code>.
 	 * @MESSAGEAPI
 	 */
-	protected final Mailbox getMailbox(CapacityContext callContext) {
+	protected static final Mailbox getMailbox(CapacityContext callContext) {
 		GroupCapacityContext context = castContext(callContext);
 		return context.getRole().getMailbox();
 	}
@@ -400,7 +400,7 @@ extends CapacityImplementation {
 	 * @return the mts of the given role, or <code>null</code>.
 	 * @MESSAGEAPI
 	 */
-	protected final MessageTransportService getMessageTransportService(CapacityContext callContext) {
+	protected static final MessageTransportService getMessageTransportService(CapacityContext callContext) {
 		GroupCapacityContext context = castContext(callContext);
 		return context.getRole().getMessageTransportService();
 	}
@@ -414,7 +414,7 @@ extends CapacityImplementation {
 	 * the mailbox is empty.
 	 * @MESSAGEAPI
 	 */
-	protected final Message getMessage(CapacityContext callContext) {
+	protected static final Message getMessage(CapacityContext callContext) {
 		return getMailbox(callContext).removeFirst();
 	}
 	
@@ -427,7 +427,7 @@ extends CapacityImplementation {
 	 * the mailbox is empty.
 	 * @MESSAGEAPI
 	 */
-	protected final Message peekMessage(CapacityContext callContext) {
+	protected static final Message peekMessage(CapacityContext callContext) {
 		return getMailbox(callContext).getFirst();
 	}
 	
@@ -442,7 +442,7 @@ extends CapacityImplementation {
 	 * @return all the messages, never <code>null</code>.
 	 * @MESSAGEAPI
 	 */
-	protected final Iterator<Message> getMessages(CapacityContext callContext) {
+	protected static final Iterator<Message> getMessages(CapacityContext callContext) {
 		return getMailbox(callContext).iterator(true);
 	}
 	
@@ -457,7 +457,7 @@ extends CapacityImplementation {
 	 * @return all the messages, never <code>null</code>.
 	 * @MESSAGEAPI
 	 */
-	protected final Iterator<Message> peekMessages(CapacityContext callContext) {
+	protected static final Iterator<Message> peekMessages(CapacityContext callContext) {
 		return getMailbox(callContext).iterator(false);
 	}
 
@@ -468,7 +468,7 @@ extends CapacityImplementation {
 	 * otherwise <code>false</code>
 	 * @MESSAGEAPI
 	 */
-	protected final boolean hasMessage(CapacityContext callContext) {
+	protected static final boolean hasMessage(CapacityContext callContext) {
 		return !getMailbox(callContext).isEmpty();
 	}
 	
@@ -479,7 +479,7 @@ extends CapacityImplementation {
 	 * @return the number of messages in the mailbox.
 	 * @MESSAGEAPI
 	 */
-	protected final long getMailboxSize(CapacityContext callContext) {
+	protected static final long getMailboxSize(CapacityContext callContext) {
 		return getMailbox(callContext).size();
 	}
 	
@@ -491,7 +491,7 @@ extends CapacityImplementation {
 	 * @return organization instance in the current context.
 	 * @GROUPAPI
 	 */
-	protected final Organization getOrganization(
+	protected static final Organization getOrganization(
 			CapacityContext callContext,
 			Class<? extends Organization> organization) {
 		GroupCapacityContext context = castContext(callContext);
@@ -511,7 +511,7 @@ extends CapacityImplementation {
 	 * @return The address of the group freshly created
 	 * @GROUPAPI
 	 */
-	protected final GroupAddress createGroup(
+	protected static final GroupAddress createGroup(
 			CapacityContext callContext,
 			Class<? extends Organization> organization,
 			Collection<? extends GroupCondition> obtainConditions,
@@ -534,7 +534,7 @@ extends CapacityImplementation {
 	 * @return The address of the group freshly created
 	 * @GROUPAPI
 	 */
-	protected final GroupAddress createGroup(
+	protected static final GroupAddress createGroup(
 			CapacityContext callContext,
 			OrganizationFactory<? extends Organization> factory,
 			Collection<? extends GroupCondition> obtainConditions,
@@ -554,7 +554,7 @@ extends CapacityImplementation {
 	 * @return The address of the group freshly created
 	 * @GROUPAPI
 	 */
-	protected final GroupAddress createGroup(
+	protected static final GroupAddress createGroup(
 			CapacityContext callContext,
 			Class<? extends Organization> organization) {
 		GroupCapacityContext context = castContext(callContext);
@@ -573,7 +573,7 @@ extends CapacityImplementation {
 	 * @return The address of the group freshly created
 	 * @GROUPAPI
 	 */
-	protected final GroupAddress createGroup(
+	protected static final GroupAddress createGroup(
 			CapacityContext callContext,
 			OrganizationFactory<? extends Organization> factory) {
 		GroupCapacityContext context = castContext(callContext);
@@ -592,7 +592,7 @@ extends CapacityImplementation {
 	 * @return the address of the group
 	 * @GROUPAPI
 	 */
-	protected final GroupAddress getOrCreateGroup(
+	protected static final GroupAddress getOrCreateGroup(
 			CapacityContext callContext,
 			Class<? extends Organization> organization) {
 		GroupCapacityContext context = castContext(callContext);
@@ -611,7 +611,7 @@ extends CapacityImplementation {
 	 * @return the address of the group
 	 * @GROUPAPI
 	 */
-	protected final GroupAddress getOrCreateGroup(
+	protected static final GroupAddress getOrCreateGroup(
 			CapacityContext callContext,
 			OrganizationFactory<? extends Organization> factory) {
 		GroupCapacityContext context = castContext(callContext);
@@ -629,7 +629,7 @@ extends CapacityImplementation {
 	 * @deprecated see {@link #getGroupAddress(CapacityContext)}
 	 */
 	@Deprecated
-	protected final GroupAddress getGroup(CapacityContext callContext) {
+	protected static final GroupAddress getGroup(CapacityContext callContext) {
 		return getGroupAddress(callContext);
 	}
 
@@ -641,7 +641,7 @@ extends CapacityImplementation {
 	 * @GROUPAPI
 	 * @since 0.5
 	 */
-	protected final GroupAddress getGroupAddress(CapacityContext callContext) {
+	protected static final GroupAddress getGroupAddress(CapacityContext callContext) {
 		GroupCapacityContext context = castContext(callContext);
 		Role role = context.getRole();
 		assert(role!=null);
@@ -655,7 +655,7 @@ extends CapacityImplementation {
 	 * @return the role of the invoker.
 	 * @GROUPAPI
 	 */
-	protected final Class<? extends Role> getRole(CapacityContext callContext) {
+	protected static final Class<? extends Role> getRole(CapacityContext callContext) {
 		GroupCapacityContext context = castContext(callContext);
 		Role role = context.getRole();
 		assert(role!=null);
@@ -674,7 +674,7 @@ extends CapacityImplementation {
 	 * @deprecated see {@link #getExistingGroup(CapacityContext, Class)}
 	 */
 	@Deprecated
-	protected final GroupAddress getGroup(
+	protected static final GroupAddress getGroup(
 			CapacityContext callContext,
 			Class<? extends Organization> organization) {
 		return getExistingGroup(callContext, organization);
@@ -691,7 +691,7 @@ extends CapacityImplementation {
 	 * @GROUPAPI
 	 * @since 0.5
 	 */
-	protected final GroupAddress getExistingGroup(
+	protected static final GroupAddress getExistingGroup(
 			CapacityContext callContext,
 			Class<? extends Organization> organization) {
 		GroupCapacityContext context = castContext(callContext);
@@ -712,7 +712,7 @@ extends CapacityImplementation {
 	 * @deprecated see {@link #getExistingGroup(CapacityContext, OrganizationFactory)}
 	 */
 	@Deprecated
-	protected final GroupAddress getGroup(
+	protected static final GroupAddress getGroup(
 			CapacityContext callContext,
 			OrganizationFactory<? extends Organization> factory) {
 		return getExistingGroup(callContext, factory);
@@ -729,7 +729,7 @@ extends CapacityImplementation {
 	 * @GROUPAPI
 	 * @since 0.5
 	 */
-	protected final GroupAddress getExistingGroup(
+	protected static final GroupAddress getExistingGroup(
 			CapacityContext callContext,
 			OrganizationFactory<? extends Organization> factory) {
 		GroupCapacityContext context = castContext(callContext);
@@ -747,7 +747,7 @@ extends CapacityImplementation {
 	 *         current role.
 	 * @GROUPAPI
 	 */
-	protected final SizedIterator<AgentAddress> getPlayers(CapacityContext callContext) {
+	protected static final SizedIterator<AgentAddress> getPlayers(CapacityContext callContext) {
 		GroupCapacityContext context = castContext(callContext);
 		Role role = context.getRole();
 		assert(role!=null);
@@ -764,7 +764,7 @@ extends CapacityImplementation {
 	 *         specified role.
 	 * @GROUPAPI
 	 */
-	protected final SizedIterator<AgentAddress> getPlayers(
+	protected static final SizedIterator<AgentAddress> getPlayers(
 			CapacityContext callContext,
 			Class<? extends Role> role) {
 		GroupCapacityContext context = castContext(callContext);
@@ -784,7 +784,7 @@ extends CapacityImplementation {
 	 *         specified role
 	 * @GROUPAPI
 	 */
-	protected final SizedIterator<AgentAddress> getPlayers(
+	protected static final SizedIterator<AgentAddress> getPlayers(
 			CapacityContext callContext, 
 			Class<? extends Role> role,
 			GroupAddress group) {
@@ -800,7 +800,7 @@ extends CapacityImplementation {
 	 * @return the player's capacities.
 	 * @CAPACITYAPI
 	 */
-	protected final Collection<Class<? extends Capacity>> getPlayerCapacities(CapacityContext callContext) {
+	protected static final Collection<Class<? extends Capacity>> getPlayerCapacities(CapacityContext callContext) {
 		GroupCapacityContext context = castContext(callContext);
 		Role r = context.getRole();
 		assert(r!=null);
@@ -814,7 +814,7 @@ extends CapacityImplementation {
 	 * @return the player's roles
 	 * @ROLEAPI
 	 */
-	protected final Collection<Class<? extends Role>> getPlayerRoles(CapacityContext callContext) {
+	protected static final Collection<Class<? extends Role>> getPlayerRoles(CapacityContext callContext) {
 		GroupCapacityContext context = castContext(callContext);
 		Role r = context.getRole();
 		assert(r!=null);
@@ -829,7 +829,7 @@ extends CapacityImplementation {
 	 * @return the player's roles in the given group.
 	 * @ROLEAPI
 	 */
-	protected final Collection<Class<? extends Role>> getPlayerRoles(
+	protected static final Collection<Class<? extends Role>> getPlayerRoles(
 			CapacityContext callContext,
 			GroupAddress group) {
 		GroupCapacityContext context = castContext(callContext);
@@ -844,7 +844,7 @@ extends CapacityImplementation {
 	 * @return the buffered player's memory.
 	 * @MINDAPI
 	 */
-	protected final Memory getMemory(CapacityContext callContext) {
+	protected static final Memory getMemory(CapacityContext callContext) {
 		GroupCapacityContext context = castContext(callContext);
 		Role r = context.getRole();
 		assert(r!=null);
@@ -863,7 +863,7 @@ extends CapacityImplementation {
 	 * if not.
 	 * @GROUPAPI
 	 */
-	protected final RoleAddress requestRole(
+	protected static final RoleAddress requestRole(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			GroupAddress group,
@@ -888,7 +888,7 @@ extends CapacityImplementation {
 	 * if not.
 	 * @GROUPAPI
 	 */
-	protected final RoleAddress requestRole(
+	protected static final RoleAddress requestRole(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			GroupAddress group,
@@ -914,7 +914,7 @@ extends CapacityImplementation {
 	 * if not.
 	 * @GROUPAPI
 	 */
-	protected final RoleAddress requestRole(
+	protected static final RoleAddress requestRole(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			GroupAddress group,
@@ -942,7 +942,7 @@ extends CapacityImplementation {
 	 * if not.
 	 * @GROUPAPI
 	 */
-	protected final RoleAddress requestRole(
+	protected static final RoleAddress requestRole(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			GroupAddress group,
@@ -966,7 +966,7 @@ extends CapacityImplementation {
 	 * if not.
 	 * @GROUPAPI
 	 */
-	protected final RoleAddress requestRole(
+	protected static final RoleAddress requestRole(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			Object... initParameters) {
@@ -989,7 +989,7 @@ extends CapacityImplementation {
 	 * if not.
 	 * @GROUPAPI
 	 */
-	protected final RoleAddress requestRole(
+	protected static final RoleAddress requestRole(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			AccessControlContext accessContext,
@@ -1013,7 +1013,7 @@ extends CapacityImplementation {
 	 * if not.
 	 * @GROUPAPI
 	 */
-	protected final RoleAddress requestRole(
+	protected static final RoleAddress requestRole(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			RoleFactory factory,
@@ -1039,7 +1039,7 @@ extends CapacityImplementation {
 	 * if not.
 	 * @GROUPAPI
 	 */
-	protected final RoleAddress requestRole(
+	protected static final RoleAddress requestRole(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			RoleFactory factory,
@@ -1061,7 +1061,7 @@ extends CapacityImplementation {
 	 * @param callContext is the context of invocation of this capacity.
 	 * @GROUPAPI
 	 */
-	protected final void leaveRole(CapacityContext callContext) {
+	protected static final void leaveRole(CapacityContext callContext) {
 		GroupCapacityContext context = castContext(callContext);
 		Role r = context.getRole();
 		assert(r!=null);
@@ -1080,7 +1080,7 @@ extends CapacityImplementation {
 	 * @return <code>true</code> if the request was accepted, <code>false</code> else
 	 * @GROUPAPI
 	 */
-	protected final boolean leaveRole(
+	protected static final boolean leaveRole(
 			CapacityContext callContext,
 			Class<? extends Role> role) {
 		GroupCapacityContext context = castContext(callContext);
@@ -1102,7 +1102,7 @@ extends CapacityImplementation {
 	 * @return <code>true</code> if the request was accepted, <code>false</code> else
 	 * @GROUPAPI
 	 */
-	protected final boolean leaveRole(
+	protected static final boolean leaveRole(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			GroupAddress group) {
@@ -1124,7 +1124,7 @@ extends CapacityImplementation {
 	 * or <code>null</code> if no entity is playing such role.
 	 * @GROUPAPI
 	 */
-	protected final AgentAddress getPlayer(
+	protected static final AgentAddress getPlayer(
 			CapacityContext callContext,
 			Class<? extends Role> role) {
 		GroupCapacityContext context = castContext(callContext);
@@ -1140,7 +1140,7 @@ extends CapacityImplementation {
 	 * @return the address of the entity currently playing this roles.
 	 * @GROUPAPI
 	 */
-	protected final AgentAddress getPlayer(CapacityContext callContext) {
+	protected static final AgentAddress getPlayer(CapacityContext callContext) {
 		assert(callContext!=null);
 		return callContext.getCaller().getAddress();
 	}
@@ -1158,7 +1158,7 @@ extends CapacityImplementation {
 	 * or <code>null</code> if no entity is playing such role.
 	 * @GROUPAPI
 	 */
-	protected final AgentAddress getPlayer(
+	protected static final AgentAddress getPlayer(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			GroupAddress group) {
@@ -1179,7 +1179,7 @@ extends CapacityImplementation {
 	 * @deprecated see {@link #getExistingGroups(CapacityContext, Class)}
 	 */
 	@Deprecated
-	protected final List<GroupAddress> getGroups(
+	protected static final List<GroupAddress> getGroups(
 			CapacityContext callContext,
 			Class<? extends Organization> organization) {
 		return getExistingGroups(callContext, organization);
@@ -1195,7 +1195,7 @@ extends CapacityImplementation {
 	 * @GROUPAPI
 	 * @since 0.5
 	 */
-	protected final List<GroupAddress> getExistingGroups(
+	protected static final List<GroupAddress> getExistingGroups(
 			CapacityContext callContext,
 			Class<? extends Organization> organization) {
 		GroupCapacityContext context = castContext(callContext);
@@ -1210,7 +1210,7 @@ extends CapacityImplementation {
 	 * @return played roles.
 	 * @GROUPAPI
 	 */
-	protected final Collection<Class<? extends Role>> getExistingRoles(CapacityContext callContext) {
+	protected static final Collection<Class<? extends Role>> getExistingRoles(CapacityContext callContext) {
 		GroupCapacityContext context = castContext(callContext);
 		Role r = context.getRole();
 		assert(r!=null);
@@ -1224,7 +1224,7 @@ extends CapacityImplementation {
 	 * @return played roles in the given group.
 	 * @GROUPAPI
 	 */
-	protected final SizedIterator<Class<? extends Role>> getExistingRoles(
+	protected static final SizedIterator<Class<? extends Role>> getExistingRoles(
 			CapacityContext callContext,
 			GroupAddress group) {
 		GroupCapacityContext context = castContext(callContext);
@@ -1242,7 +1242,7 @@ extends CapacityImplementation {
 	 * @deprecated see {@link #getPlayerGroups(CapacityContext)}
 	 */
 	@Deprecated
-	protected final Collection<GroupAddress> getGroups(CapacityContext callContext) {
+	protected static final Collection<GroupAddress> getGroups(CapacityContext callContext) {
 		return getPlayerGroups(callContext);
 	}
 
@@ -1254,7 +1254,7 @@ extends CapacityImplementation {
 	 * @GROUPAPI
 	 * @since 0.5
 	 */
-	protected final Collection<GroupAddress> getPlayerGroups(CapacityContext callContext) {
+	protected static final Collection<GroupAddress> getPlayerGroups(CapacityContext callContext) {
 		GroupCapacityContext context = castContext(callContext);
 		Role r = context.getRole();
 		assert(r!=null);
@@ -1269,7 +1269,7 @@ extends CapacityImplementation {
 	 * @return <code>true</code> if a role is played, otherwise
 	 * <code>false</code> 
 	 */
-	protected final boolean isPlayingRole(CapacityContext callContext, Class<? extends Role> role) {
+	protected static final boolean isPlayingRole(CapacityContext callContext, Class<? extends Role> role) {
 		GroupCapacityContext context = castContext(callContext);
 		Role r = context.getRole();
 		assert(r!=null);
@@ -1285,7 +1285,7 @@ extends CapacityImplementation {
 	 * @return <code>true</code> if a role is played, otherwise
 	 * <code>false</code> 
 	 */
-	protected boolean isPlayingRole(
+	protected static final boolean isPlayingRole(
 			CapacityContext callContext, 
 			Class<? extends Role> role,
 			GroupAddress group) {
@@ -1304,7 +1304,7 @@ extends CapacityImplementation {
 	 * an existing group, otherwise <code>false</code>
 	 * @GROUPAPI
 	 */
-	protected final boolean isGroup(
+	protected static final boolean isGroup(
 			CapacityContext callContext, 
 			GroupAddress group) {
 		GroupCapacityContext context = castContext(callContext);
@@ -1320,7 +1320,7 @@ extends CapacityImplementation {
 	 * @return <code>true</code> if a role is played, otherwise
 	 * <code>false</code> 
 	 */
-	protected final boolean isPlayedRole(
+	protected static final boolean isPlayedRole(
 			CapacityContext callContext,
 			Class<? extends Role> role) {
 		GroupCapacityContext context = castContext(callContext);
@@ -1337,7 +1337,7 @@ extends CapacityImplementation {
 	 * @return <code>true</code> if a role is played, otherwise
 	 * <code>false</code> 
 	 */
-	protected boolean isPlayedRole(
+	protected static final boolean isPlayedRole(
 			CapacityContext callContext,
 			Class<? extends Role> role,
 			GroupAddress group) {
@@ -1354,7 +1354,7 @@ extends CapacityImplementation {
 	 * @return <code>true</code> if the player in memeber of the group, otherwise
 	 * <code>false</code> 
 	 */
-	protected boolean isMemberOf(
+	protected static final boolean isMemberOf(
 			CapacityContext callContext,
 			GroupAddress group) {
 		GroupCapacityContext context = castContext(callContext);
@@ -1371,7 +1371,7 @@ extends CapacityImplementation {
 	 * @return <code>true</code> if the given player in memeber of the group, otherwise
 	 * <code>false</code> 
 	 */
-	protected boolean isMemberOf(
+	protected static final boolean isMemberOf(
 			CapacityContext callContext,
 			AgentAddress entity,
 			GroupAddress group) {

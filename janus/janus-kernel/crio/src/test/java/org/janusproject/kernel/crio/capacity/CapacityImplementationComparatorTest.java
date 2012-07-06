@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,17 +54,17 @@ public class CapacityImplementationComparatorTest extends TestCase {
 		super.tearDown();
 	}
 	
-	private void assertNegative(int value) {
+	private static void assertNegative(int value) {
 		if (value<0) return;
 		fail("negative value is expected; actual: "+value); //$NON-NLS-1$
 	}
 
-	private void assertPositive(int value) {
+	private static void assertPositive(int value) {
 		if (value>0) return;
 		fail("positive value is expected; actual: "+value); //$NON-NLS-1$
 	}
 
-	private void assertZero(int value) {
+	private static void assertZero(int value) {
 		if (value==0) return;
 		fail("zero value is expected; actual: "+value); //$NON-NLS-1$
 	}

@@ -669,21 +669,16 @@
 			<url>http://download.tuxfamily.org/arakhne/maven/</url>
 		</repository>
 
-		<repository>
+		<!-- <repository>
 			<id>org.codehaus-maven</id>
 			<name>Codehaus Snapshots</name>
 			<url>http://snapshots.repository.codehaus.org/</url>
-		</repository>
+		</repository> -->
 
-		<repository>
+		<!-- <repository>
 			<id>net.java</id>
 			<url>http://download.java.net/maven/2</url>
-		</repository>
-
-		<repository>
-			<id>Central</id>
-			<url>http://repo1.maven.org/maven2/</url>
-		</repository>
+		</repository> -->
 
 		<!-- Sonatype repository containing JXSE.jar for 2.7 -->
 
@@ -713,6 +708,14 @@
 			<id>org.arakhne-maven</id>
 			<name>Arakhnê.org Snapshots</name>
 			<url>http://download.tuxfamily.org/arakhne/maven/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>org.janus-project.maven</id>
+			<name>Janus Project Snapshots</name>
+			<url>http://www.janus-project.org/maven/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>

@@ -137,6 +137,10 @@ public abstract class Role extends
 	 * proceedPrivateBehaviour() for role release.
 	 */
 	private boolean leaveMe = false;
+	
+	/** Indicates if the role has migrated.
+	 */
+	private final boolean hasMigrated = false;
 
 	private RepositoryGroupWrapper groupEventWrapper = null;
 	
@@ -368,7 +372,7 @@ public abstract class Role extends
 	 *         <code>false</code>
 	 */
 	boolean hasMigrated() {
-		return false;
+		return this.hasMigrated;
 	}
 
 	/**
@@ -1386,10 +1390,9 @@ public abstract class Role extends
 		if (implementation == null || !(implementation instanceof CapacityImplementation))
 			throw new CapacityImplementationNotFoundException(capacity);
 
-		return this.crioContext
-				.get()
-				.getCapacityExecutor()
-				.execute(capacity, (CapacityImplementation)implementation, player, this.group.get(),
+		return CapacityExecutor
+				.executeImmediately(
+						capacity, (CapacityImplementation)implementation, player, this.group.get(),
 						this, parameters);
 	}
 

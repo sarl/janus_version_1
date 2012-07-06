@@ -57,7 +57,6 @@ public class RoleCapacityImplementationTest extends TestCase {
 	private KernelScopeGroup group;
 	private MembershipService membership;
 	private boolean distributed, persistent;
-	private RoleCapacityImplementation implementation;
 	private RolePlayer player1;
 	private RolePlayer player2;
 
@@ -80,7 +79,6 @@ public class RoleCapacityImplementationTest extends TestCase {
 		this.player2 = new RolePlayerStub(this.context);
 		this.group.requestRole(this.player1, RoleStub.class, null, null);
 		this.group.requestRole(this.player2, RoleStub.class, null, null);
-		this.implementation = new RoleCapacityImplementationStub();
 	}
 
 	/**
@@ -88,7 +86,6 @@ public class RoleCapacityImplementationTest extends TestCase {
 	 */
 	@Override
 	public void tearDown() throws Exception {
-		this.implementation = null;
 		this.player1 = null;
 		this.player2 = null;
 		this.group = null;
@@ -108,14 +105,14 @@ public class RoleCapacityImplementationTest extends TestCase {
 		context = new GroupCapacityContext(this.player1, this.group, this.group
 				.getPlayedRole(this.player1.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
-		assertNotNull(m1 = this.implementation.getMailbox(context));
-		assertSame(m1, this.implementation.getMailbox(context));
+		assertNotNull(m1 = RoleCapacityImplementation.getMailbox(context));
+		assertSame(m1, RoleCapacityImplementation.getMailbox(context));
 
 		context = new GroupCapacityContext(this.player2, this.group, this.group
 				.getPlayedRole(this.player2.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
-		assertNotNull(m2 = this.implementation.getMailbox(context));
-		assertSame(m2, this.implementation.getMailbox(context));
+		assertNotNull(m2 = RoleCapacityImplementation.getMailbox(context));
+		assertSame(m2, RoleCapacityImplementation.getMailbox(context));
 
 		assertNotSame(m1, m2);
 	}
@@ -130,17 +127,17 @@ public class RoleCapacityImplementationTest extends TestCase {
 				.getPlayedRole(this.player1.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
 
-		assertNotNull(m1 = this.implementation
+		assertNotNull(m1 = RoleCapacityImplementation
 				.getMessageTransportService(context));
-		assertSame(m1, this.implementation.getMessageTransportService(context));
+		assertSame(m1, RoleCapacityImplementation.getMessageTransportService(context));
 
 		context = new GroupCapacityContext(this.player2, this.group, this.group
 				.getPlayedRole(this.player2.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
 
-		assertNotNull(m2 = this.implementation
+		assertNotNull(m2 = RoleCapacityImplementation
 				.getMessageTransportService(context));
-		assertSame(m2, this.implementation.getMessageTransportService(context));
+		assertSame(m2, RoleCapacityImplementation.getMessageTransportService(context));
 
 		assertNotSame(m1, m2);
 	}
@@ -162,7 +159,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		context = new GroupCapacityContext(this.player1, this.group, this.group
 				.getPlayedRole(this.player1.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
-		this.implementation.sendMessage(context, RoleStub.class, this.player2
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player2
 				.getAddress(), msg);
 
 		Role role;
@@ -210,7 +207,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		Role r = this.group.getPlayedRole(this.player1.getAddress(), RoleStub.class);
 		
 		Message msg = new StringMessage("toto"); //$NON-NLS-1$
-		InteractionUtil.FACTORY.updateContext(msg, 
+		InteractionUtil.updateContext(msg, 
 				r.getAddress(),
 				new RoleAddress(this.group.getAddress(), RoleStub.class, this.player2.getAddress()),
 				1024);
@@ -222,7 +219,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 
 		context = new GroupCapacityContext(this.player1, this.group, r,
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
-		RoleAddress rAdr = this.implementation.forwardMessage(context, msg);
+		RoleAddress rAdr = RoleCapacityImplementation.forwardMessage(context, msg);
 		assertEquals(this.group.getAddress(), rAdr.getGroup());
 		assertEquals(RoleStub.class, rAdr.getRole());
 		assertEquals(this.player2.getAddress(), rAdr.getPlayer());
@@ -282,7 +279,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		context = new GroupCapacityContext(this.player1, this.group, this.group
 				.getPlayedRole(this.player1.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
-		this.implementation.forwardMessage(context, RoleStub.class,
+		RoleCapacityImplementation.forwardMessage(context, RoleStub.class,
 				this.player2.getAddress(), msg);
 
 		Role role;
@@ -339,7 +336,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		context = new GroupCapacityContext(this.player1, this.group, this.group
 				.getPlayedRole(this.player1.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
-		RoleAddress adr = this.implementation.sendMessage(context,
+		RoleAddress adr = RoleCapacityImplementation.sendMessage(context,
 				RoleStub.class, msg);
 		assertNotNull(adr);
 
@@ -404,7 +401,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		context = new GroupCapacityContext(this.player1, this.group, this.group
 				.getPlayedRole(this.player1.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
-		RoleAddress adr = this.implementation.forwardMessage(context,
+		RoleAddress adr = RoleCapacityImplementation.forwardMessage(context,
 				RoleStub.class, msg);
 		assertNotNull(adr);
 
@@ -466,7 +463,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		context = new GroupCapacityContext(this.player1, this.group, this.group
 				.getPlayedRole(this.player1.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
-		RoleAddress adr = this.implementation.sendMessage(context,
+		RoleAddress adr = RoleCapacityImplementation.sendMessage(context,
 				RoleStub.class, new PolicyStub(player3.getAddress()), msg);
 
 		assertNotNull(adr);
@@ -526,7 +523,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		context = new GroupCapacityContext(this.player1, this.group, this.group
 				.getPlayedRole(this.player1.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
-		RoleAddress adr = this.implementation.forwardMessage(context,
+		RoleAddress adr = RoleCapacityImplementation.forwardMessage(context,
 				RoleStub.class, new PolicyStub(player3.getAddress()), msg);
 
 		assertNotNull(adr);
@@ -585,7 +582,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		context = new GroupCapacityContext(this.player1, this.group, this.group
 				.getPlayedRole(this.player1.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
-		this.implementation.broadcastMessage(context, RoleStub.class, msg);
+		RoleCapacityImplementation.broadcastMessage(context, RoleStub.class, msg);
 
 		Role role;
 		Mailbox mb;
@@ -645,7 +642,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		context = new GroupCapacityContext(this.player1, this.group, this.group
 				.getPlayedRole(this.player1.getAddress(), RoleStub.class),
 				CapacityStub.class, CapacityImplementationType.DIRECT_ACTOMIC);
-		this.implementation.forwardBroadcastMessage(context, RoleStub.class,
+		RoleCapacityImplementation.forwardBroadcastMessage(context, RoleStub.class,
 				msg);
 
 		Role role;
@@ -708,20 +705,20 @@ public class RoleCapacityImplementationTest extends TestCase {
 		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 
-		assertNull(this.implementation.getMessage(context));
+		assertNull(RoleCapacityImplementation.getMessage(context));
 
-		this.implementation.sendMessage(context, RoleStub.class, this.player1
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player1
 				.getAddress(), m2);
-		this.implementation.sendMessage(context, RoleStub.class, this.player1
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player1
 				.getAddress(), m1);
 
-		Mailbox mb = this.implementation.getMailbox(context);
+		Mailbox mb = RoleCapacityImplementation.getMailbox(context);
 		if (mb instanceof BufferedMailbox) {
 			((BufferedMailbox) mb).synchronizeMessages();
 		}
 
-		assertSame(m1, this.implementation.getMessage(context));
-		assertSame(m2, this.implementation.getMessage(context));
+		assertSame(m1, RoleCapacityImplementation.getMessage(context));
+		assertSame(m2, RoleCapacityImplementation.getMessage(context));
 	}
 
 	/**
@@ -742,20 +739,20 @@ public class RoleCapacityImplementationTest extends TestCase {
 		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 
-		assertNull(this.implementation.peekMessage(context));
+		assertNull(RoleCapacityImplementation.peekMessage(context));
 
-		this.implementation.sendMessage(context, RoleStub.class, this.player1
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player1
 				.getAddress(), m2);
-		this.implementation.sendMessage(context, RoleStub.class, this.player1
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player1
 				.getAddress(), m1);
 
-		Mailbox mb = this.implementation.getMailbox(context);
+		Mailbox mb = RoleCapacityImplementation.getMailbox(context);
 		if (mb instanceof BufferedMailbox) {
 			((BufferedMailbox) mb).synchronizeMessages();
 		}
 
-		assertSame(m1, this.implementation.peekMessage(context));
-		assertSame(m1, this.implementation.peekMessage(context));
+		assertSame(m1, RoleCapacityImplementation.peekMessage(context));
+		assertSame(m1, RoleCapacityImplementation.peekMessage(context));
 	}
 
 	/**
@@ -777,21 +774,21 @@ public class RoleCapacityImplementationTest extends TestCase {
 		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 
-		iterator = this.implementation.getMessages(context);
+		iterator = RoleCapacityImplementation.getMessages(context);
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 
-		this.implementation.sendMessage(context, RoleStub.class, this.player1
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player1
 				.getAddress(), m2);
-		this.implementation.sendMessage(context, RoleStub.class, this.player1
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player1
 				.getAddress(), m1);
 
-		Mailbox mb = this.implementation.getMailbox(context);
+		Mailbox mb = RoleCapacityImplementation.getMailbox(context);
 		if (mb instanceof BufferedMailbox) {
 			((BufferedMailbox) mb).synchronizeMessages();
 		}
 
-		iterator = this.implementation.getMessages(context);
+		iterator = RoleCapacityImplementation.getMessages(context);
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -799,7 +796,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		assertSame(m2, iterator.next());
 		assertFalse(iterator.hasNext());
 
-		iterator = this.implementation.getMessages(context);
+		iterator = RoleCapacityImplementation.getMessages(context);
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 	}
@@ -823,21 +820,21 @@ public class RoleCapacityImplementationTest extends TestCase {
 		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
 		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
 
-		iterator = this.implementation.peekMessages(context);
+		iterator = RoleCapacityImplementation.peekMessages(context);
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 
-		this.implementation.sendMessage(context, RoleStub.class, this.player1
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player1
 				.getAddress(), m2);
-		this.implementation.sendMessage(context, RoleStub.class, this.player1
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player1
 				.getAddress(), m1);
 
-		Mailbox mb = this.implementation.getMailbox(context);
+		Mailbox mb = RoleCapacityImplementation.getMailbox(context);
 		if (mb instanceof BufferedMailbox) {
 			((BufferedMailbox) mb).synchronizeMessages();
 		}
 
-		iterator = this.implementation.peekMessages(context);
+		iterator = RoleCapacityImplementation.peekMessages(context);
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -845,7 +842,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		assertSame(m2, iterator.next());
 		assertFalse(iterator.hasNext());
 
-		iterator = this.implementation.peekMessages(context);
+		iterator = RoleCapacityImplementation.peekMessages(context);
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -869,22 +866,22 @@ public class RoleCapacityImplementationTest extends TestCase {
 						RoleStub.class), CapacityStub.class,
 				CapacityImplementationType.DIRECT_ACTOMIC);
 		{
-			Mailbox mb = this.implementation.getMailbox(context);
+			Mailbox mb = RoleCapacityImplementation.getMailbox(context);
 			if (mb instanceof BufferedMailbox) {
 				((BufferedMailbox) mb).synchronizeMessages();
 			}
 		}
-		assertFalse(this.implementation.hasMessage(context));
+		assertFalse(RoleCapacityImplementation.hasMessage(context));
 
-		this.implementation.sendMessage(context, RoleStub.class, this.player1
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player1
 				.getAddress(), new Message());
 		{
-			Mailbox mb = this.implementation.getMailbox(context);
+			Mailbox mb = RoleCapacityImplementation.getMailbox(context);
 			if (mb instanceof BufferedMailbox) {
 				((BufferedMailbox) mb).synchronizeMessages();
 			}
 		}
-		assertTrue(this.implementation.hasMessage(context));
+		assertTrue(RoleCapacityImplementation.hasMessage(context));
 	}
 
 	/**
@@ -902,50 +899,28 @@ public class RoleCapacityImplementationTest extends TestCase {
 						RoleStub.class), CapacityStub.class,
 				CapacityImplementationType.DIRECT_ACTOMIC);
 
-		assertEquals(0, this.implementation.getMailboxSize(context));
+		assertEquals(0, RoleCapacityImplementation.getMailboxSize(context));
 
-		this.implementation.sendMessage(context, RoleStub.class, this.player1
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player1
 				.getAddress(), new Message());
 		{
-			Mailbox mb = this.implementation.getMailbox(context);
+			Mailbox mb = RoleCapacityImplementation.getMailbox(context);
 			if (mb instanceof BufferedMailbox) {
 				((BufferedMailbox) mb).synchronizeMessages();
 			}
 		}
-		assertEquals(1, this.implementation.getMailboxSize(context));
+		assertEquals(1, RoleCapacityImplementation.getMailboxSize(context));
 
-		this.implementation.sendMessage(context, RoleStub.class, this.player1
+		RoleCapacityImplementation.sendMessage(context, RoleStub.class, this.player1
 				.getAddress(), new Message());
 
 		{
-			Mailbox mb = this.implementation.getMailbox(context);
+			Mailbox mb = RoleCapacityImplementation.getMailbox(context);
 			if (mb instanceof BufferedMailbox) {
 				((BufferedMailbox) mb).synchronizeMessages();
 			}
 		}
-		assertEquals(2, this.implementation.getMailboxSize(context));
-	}
-
-	/**
-	 * @author $Author: sgalland$
-	 * @version $FullVersion$
-	 * @mavengroupid $GroupId$
-	 * @mavenartifactid $ArtifactId$
-	 */
-	private static class RoleCapacityImplementationStub extends
-			RoleCapacityImplementation implements CapacityStub {
-
-		/**
-		 */
-		public RoleCapacityImplementationStub() {
-			super(CapacityImplementationType.DIRECT_ACTOMIC);
-		}
-
-		@Override
-		public void call(CapacityContext call) throws Exception {
-			//
-		}
-
+		assertEquals(2, RoleCapacityImplementation.getMailboxSize(context));
 	}
 
 	/**

@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ public class TreeCapacityContainerTest extends TestCase {
 		super.tearDown();
 	}
 	
-	private void assertContains(Iterator<?> iterator, Object... objects) {
+	private static void assertContains(Iterator<?> iterator, Object... objects) {
 		ArrayList<Object> objs = new ArrayList<>(Arrays.asList(objects));
 		assertNotNull(iterator);
 		while(iterator.hasNext()) {
@@ -74,7 +74,7 @@ public class TreeCapacityContainerTest extends TestCase {
 		assertTrue(objs.isEmpty());		
 	}
 	
-	private void assertEquals(Collection<?> expected, Collection<?> actual) {
+	private static void assertEquals(Collection<?> expected, Collection<?> actual) {
 		if (expected==actual) return;
 		if (expected!=null && actual!=null && expected.size()==actual.size()) {
 			try {

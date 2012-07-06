@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ public class KernelsTest extends TestCase {
 		super.tearDown();
 	}
 	
-	private void assertContains(Iterator<Kernel> iterator, AgentAddress... objects) {
+	private static void assertContains(Iterator<Kernel> iterator, AgentAddress... objects) {
 		ArrayList<AgentAddress> objs = new ArrayList<>(Arrays.asList(objects));
 		assertNotNull(iterator);
 		while(iterator.hasNext()) {
@@ -110,7 +110,7 @@ public class KernelsTest extends TestCase {
 	
 	/**
 	 */
-	public void testGetKernelCount() {
+	public static void testGetKernelCount() {
 		assertEquals(0, Kernels.getKernelCount());
 	}
 	
@@ -288,7 +288,7 @@ public class KernelsTest extends TestCase {
 
 	/**
 	 */
-	public void testGetAgentAddress() {
+	public static void testGetAgentAddress() {
 		KernelAgent h = new KernelAgent(new AgentActivator(), false, null, null);
 		assertSame(h.toKernel(), Kernels.get(h.getAddress()));
 		h.killMe();

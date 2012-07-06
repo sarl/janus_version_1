@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,8 @@ import junit.framework.TestCase;
  */
 public class TypeSelectorTest extends TestCase {
 
+	private TypeSelector<Number> selector;
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -41,19 +43,28 @@ public class TypeSelectorTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
+		this.selector = new TypeSelector<>(Number.class);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void tearDown() throws Exception {
+		this.selector = null;
+		super.tearDown();
 	}
 	
 	/**
 	 */
 	public void testIsSelected() {
-		TypeSelector<Number> selector = new TypeSelector<>(Number.class);
-		assertTrue(selector.isSelected((byte)4));
-		assertTrue(selector.isSelected((short)4));
-		assertTrue(selector.isSelected(4));
-		assertTrue(selector.isSelected(4l));
-		assertTrue(selector.isSelected(4f));
-		assertTrue(selector.isSelected(4.));
-		assertFalse(selector.isSelected("")); //$NON-NLS-1$
+		assertTrue(this.selector.isSelected((byte)4));
+		assertTrue(this.selector.isSelected((short)4));
+		assertTrue(this.selector.isSelected(4));
+		assertTrue(this.selector.isSelected(4l));
+		assertTrue(this.selector.isSelected(4f));
+		assertTrue(this.selector.isSelected(4.));
+		assertFalse(this.selector.isSelected("")); //$NON-NLS-1$
 	}
 
 }

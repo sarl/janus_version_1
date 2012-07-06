@@ -47,10 +47,8 @@ import org.janusproject.kernel.util.random.RandomNumber;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-class InteractionUtil {
+class InteractionUtil extends MessageContextFactory {
 
-	private static final Factory FACTORY = new Factory();
-	
 	private static boolean sendLocalMessage(
 			float creationDate,
 			Agent emitter, 
@@ -92,7 +90,7 @@ class InteractionUtil {
 			||
 			(!receiver.getAddress().equals(emitterAddress))) {
 			
-			FACTORY.updateContext(
+			updateContext(
 					date,
 					message, context, 
 					emitterAddress, 
@@ -117,7 +115,7 @@ class InteractionUtil {
 		KernelContext context = emitter.getKernelContext();
 		DistantKernelHandler distantKernel = context.getDistantKernelHandler();
 		if (distantKernel!=null) {
-			FACTORY.updateContext(creationDate, message, message.getContext(), emitter.getAddress(), receiverAddress, false);
+			updateContext(creationDate, message, message.getContext(), emitter.getAddress(), receiverAddress, false);
 			distantKernel.sendMessage(message);
 			return true;
 		}		
@@ -387,46 +385,30 @@ class InteractionUtil {
 			broadcastDistantMessage(emitter, message);
 		}
 	}
-
+	
 	/**
-	 * @author $Author: sgalland$
-	 * @version $FullVersion$
-	 * @mavengroupid $GroupId$
-	 * @mavenartifactid $ArtifactId$
+	 * Change emitter and receiver addresses for the given message.
+	 * 
+	 * @param updateDate is the date at which this update occurs.
+	 * @param message is the message to change.
+	 * @param context is the context of the message to change.
+	 * @param emitter is the emitter address to put inside the message.
+	 * @param receiver is the receiver address to put inside the message.
+	 * @param updateCreationDate indicates if the message creation date may be set, or not.
 	 */
-	private static class Factory extends MessageContextFactory {
-
-		/**
-		 */
-		public Factory() {
-			//
-		}
-		
-		/**
-		 * Change emitter and receiver addresses for the given message.
-		 * 
-		 * @param updateDate is the date at which this update occurs.
-		 * @param message is the message to change.
-		 * @param context is the context of the message to change.
-		 * @param emitter is the emitter address to put inside the message.
-		 * @param receiver is the receiver address to put inside the message.
-		 * @param updateCreationDate indicates if the message creation date may be set, or not.
-		 */
-		public void updateContext(
-				float updateDate,
-				Message message,
-				MessageContext context,
-				AgentAddress emitter,
-				AgentAddress receiver,
-				boolean updateCreationDate) {
-			MessageContext mc;
-			if (context==null || updateCreationDate)
-				mc = new MessageContext(emitter, receiver, updateDate);
-			else
-				mc = new MessageContext(emitter, receiver, context.getCreationDate());
-			setContext(message, mc);
-		}
-
+	private static void updateContext(
+			float updateDate,
+			Message message,
+			MessageContext context,
+			AgentAddress emitter,
+			AgentAddress receiver,
+			boolean updateCreationDate) {
+		MessageContext mc;
+		if (context==null || updateCreationDate)
+			mc = new MessageContext(emitter, receiver, updateDate);
+		else
+			mc = new MessageContext(emitter, receiver, context.getCreationDate());
+		setContext(message, mc);
 	}
 	
 }

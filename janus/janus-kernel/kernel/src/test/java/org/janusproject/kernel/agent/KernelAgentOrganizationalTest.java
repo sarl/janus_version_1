@@ -76,7 +76,7 @@ public class KernelAgentOrganizationalTest extends TestCase {
 
 	/**
 	 */
-	public void testProtectedOrganizationConstructor() {
+	public static void testProtectedOrganizationConstructor() {
 		AgentStub agent = new AgentStub(0);
 		
 		Kernel k = Kernels.get();

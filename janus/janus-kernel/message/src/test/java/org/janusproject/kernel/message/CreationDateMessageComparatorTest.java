@@ -34,6 +34,8 @@ import junit.framework.TestCase;
  */
 public class CreationDateMessageComparatorTest extends TestCase {
 
+	private CreationDateMessageComparator cmp = CreationDateMessageComparator.SINGLETON;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -46,7 +48,6 @@ public class CreationDateMessageComparatorTest extends TestCase {
 	/**
 	 */
 	public void testCompareMessageMessage() {
-		CreationDateMessageComparator cmp = CreationDateMessageComparator.SINGLETON;
 		
 		Message m1 = new MessageStub(1);
 		Message m2 = new MessageStub(2);
@@ -57,17 +58,17 @@ public class CreationDateMessageComparatorTest extends TestCase {
 		int cmpResult = id1.compareTo(id2);
 		int cmpResult2 = id2.compareTo(id1);
 		
-		assertEquals(0, cmp.compare(m1, m1));
-		assertEquals(-1, cmp.compare(m1, m2));
-		assertEquals(cmpResult, cmp.compare(m1, m3));		
+		assertEquals(0, this.cmp.compare(m1, m1));
+		assertEquals(-1, this.cmp.compare(m1, m2));
+		assertEquals(cmpResult, this.cmp.compare(m1, m3));		
 
-		assertEquals(1, cmp.compare(m2, m1));
-		assertEquals(0, cmp.compare(m2, m2));
-		assertEquals(1, cmp.compare(m2, m3));		
+		assertEquals(1, this.cmp.compare(m2, m1));
+		assertEquals(0, this.cmp.compare(m2, m2));
+		assertEquals(1, this.cmp.compare(m2, m3));		
 
-		assertEquals(cmpResult2, cmp.compare(m3, m1));
-		assertEquals(-1, cmp.compare(m3, m2));
-		assertEquals(0, cmp.compare(m3, m3));		
+		assertEquals(cmpResult2, this.cmp.compare(m3, m1));
+		assertEquals(-1, this.cmp.compare(m3, m2));
+		assertEquals(0, this.cmp.compare(m3, m3));		
 	}
 		
 }

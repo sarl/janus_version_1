@@ -974,7 +974,7 @@ public class RolePlayerTest extends TestCase {
 		this.group1.requestRole(player3, RoleStub.class, null, null);
 		this.group1.requestRole(player4, Role3Stub.class, null, null);
 		
-		InteractionUtil.FACTORY.updateContext(msg, 
+		InteractionUtil.updateContext(msg, 
 				r,
 				receiver,
 				1024);

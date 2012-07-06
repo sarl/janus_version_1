@@ -272,7 +272,7 @@ public class EcoTile extends AbstractNPuzzleAgent {
 	 * @param attacks
 	 * @return the attack clasification.
 	 */
-	protected Map<Class<? extends EcoAttack>, Set<EcoAttack>> classifyAttack(Set<EcoAttack> attacks) {
+	protected static Map<Class<? extends EcoAttack>, Set<EcoAttack>> classifyAttack(Set<EcoAttack> attacks) {
 		Map<Class<? extends EcoAttack>, Set<EcoAttack>> classif = new TreeMap<>();
 		Set<EcoAttack> currentInstances;
 		for (EcoAttack attack : attacks) {

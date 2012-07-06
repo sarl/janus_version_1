@@ -66,7 +66,7 @@ class ListenerStub implements AsynchronousThreadSafeCollectionListener<DataStub>
 		}
 	}
 	
-	private void fail(String s) {
+	private static void fail(String s) {
 		throw new AssertionFailedError(s);
 	}
 

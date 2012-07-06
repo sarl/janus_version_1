@@ -166,11 +166,9 @@ implements Activator<A> {
 	 * @return an iterator, never <code>null</code>.
 	 * @see #getExecutionPolicy(ActivationStage, Collection)
 	 */
-	protected SafeIterator<A> getExecutionPolicy(
+	protected abstract SafeIterator<A> getExecutionPolicy(
 			ActivationStage stage,
-			DirectAccessCollection<A> candidates) {
-		return candidates.iterator();
-	}
+			DirectAccessCollection<A> candidates);
 
 	/**
 	 * Replies a iterator of the given candidates for the
@@ -181,11 +179,9 @@ implements Activator<A> {
 	 * @return an iterator, never <code>null</code>.
 	 * @see #getExecutionPolicy(ActivationStage, DirectAccessCollection)
 	 */
-	protected Iterator<? extends A> getExecutionPolicy(
+	protected abstract Iterator<? extends A> getExecutionPolicy(
 			ActivationStage stage,
-			Collection<? extends A> candidates) {
-		return candidates.iterator();
-	}
+			Collection<? extends A> candidates);
 	
 	/** Synchronize the internal data structures.
 	 * All pending activable objects are put back

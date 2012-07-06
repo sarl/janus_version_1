@@ -84,9 +84,9 @@ public class JanusPropertiesTest extends TestCase {
 
 	/** 
 	 */
-	public void testGetRootConfigurationDirectory() {
+	public static void testGetRootConfigurationDirectory() {
 		File janusRoot = FileSystem.getUserConfigurationDirectoryFor("janus"); //$NON-NLS-1$
-		assertEquals(janusRoot, this.properties.getRootConfigurationDirectory());
+		assertEquals(janusRoot, JanusProperties.getRootConfigurationDirectory());
 	}
 
 	/** 
@@ -255,7 +255,7 @@ public class JanusPropertiesTest extends TestCase {
 
 	/**
 	 */
-	public void isReadOnly() {
+	public void testIsReadOnly() {
 		for(JanusProperty prop : JanusProperty.values()) {
 			assertEquals(
 					prop.isReadOnly(),
@@ -271,9 +271,9 @@ public class JanusPropertiesTest extends TestCase {
 	
 	/**
 	 */
-	public void isConstantProperty() {
+	public static void testIsConstantProperty() {
 		for(JanusProperty prop : JanusProperty.values()) {
-			if (this.properties.isConstantProperty(prop))
+			if (JanusProperties.isConstantProperty(prop))
 				assertTrue(prop.getPropertyName(), prop.isReadOnly());
 		}
 	}

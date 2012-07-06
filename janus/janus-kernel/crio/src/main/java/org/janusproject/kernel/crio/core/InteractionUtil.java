@@ -38,12 +38,8 @@ import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-class InteractionUtil {
+class InteractionUtil extends MessageContextFactory {
 
-	/** Singleton of the CRIO message factory.
-	 */
-	public static final Factory FACTORY = new Factory();
-	
 	/**
 	 * Send the specified <code>Message</code> to all the players of the given role,
 	 * except the sender if it is playing the role.
@@ -77,7 +73,7 @@ class InteractionUtil {
 			selectedSenderAddress = sender; 
 		}
 		
-		FACTORY.updateContext(
+		updateContext(
 				message,
 				selectedSenderAddress,
 				null,
@@ -129,7 +125,7 @@ class InteractionUtil {
 			selectedSenderAddress = sender; 
 		}
 		
-		FACTORY.updateContext(
+		updateContext(
 				message,
 				selectedSenderAddress,
 				receiver,
@@ -188,7 +184,7 @@ class InteractionUtil {
 		}
 		
 		receiver.setPlayer(receiverAddress);
-		FACTORY.updateContext(
+		updateContext(
 				message,
 				selectedSenderAddress,
 				receiver,
@@ -198,65 +194,47 @@ class InteractionUtil {
 	}
 
 	/**
-	 * Private utilities to enable interactions between roles.
+	 * Change emitter and receiver addresses for the given message.
 	 * 
-	 * @author $Author: sgalland$
-	 * @version $FullVersion$
-	 * @mavengroupid $GroupId$
-	 * @mavenartifactid $ArtifactId$
+	 * @param message is the message to change.
+	 * @param emitter is the emitter address to put inside the message.
+	 * @param receiver is the receiver address to put inside the message.
+	 * @param receiverRole is the role of the receiver.
+	 * @param creationDate is the creation date for the message.
 	 */
-	public static class Factory extends MessageContextFactory {
-
-		/**
-		 */
-		public Factory() {
-			//
-		}
-		
-		/**
-		 * Change emitter and receiver addresses for the given message.
-		 * 
-		 * @param message is the message to change.
-		 * @param emitter is the emitter address to put inside the message.
-		 * @param receiver is the receiver address to put inside the message.
-		 * @param receiverRole is the role of the receiver.
-		 * @param creationDate is the creation date for the message.
-		 */
-		public void updateContext(
-				Message message,
-				RoleAddress emitter,
-				AgentAddress receiver,
-				Class<? extends Role> receiverRole,
-				float creationDate) {
-			CRIOMessageContext mc = new CRIOMessageContext(
-					emitter.getPlayer(),
-					receiver,
-					creationDate);
-			mc.setEmitterReceiver(emitter, receiverRole, receiver);
-			setContext(message, mc);
-		}
-		
-		/**
-		 * Change emitter and receiver addresses for the given message.
-		 * 
-		 * @param message is the message to change.
-		 * @param emitter is the emitter address to put inside the message.
-		 * @param receiver is the receiver address to put inside the message.
-		 * @param creationDate is the creation date for the message.
-		 */
-		public void updateContext(
-				Message message,
-				RoleAddress emitter,
-				RoleAddress receiver,
-				float creationDate) {
-			CRIOMessageContext mc = new CRIOMessageContext(
-					emitter.getPlayer(),
-					receiver.getPlayer(),
-					creationDate);
-			mc.setEmitterReceiver(emitter, receiver);
-			setContext(message, mc);
-		}
-
+	static void updateContext(
+			Message message,
+			RoleAddress emitter,
+			AgentAddress receiver,
+			Class<? extends Role> receiverRole,
+			float creationDate) {
+		CRIOMessageContext mc = new CRIOMessageContext(
+				emitter.getPlayer(),
+				receiver,
+				creationDate);
+		mc.setEmitterReceiver(emitter, receiverRole, receiver);
+		setContext(message, mc);
+	}
+	
+	/**
+	 * Change emitter and receiver addresses for the given message.
+	 * 
+	 * @param message is the message to change.
+	 * @param emitter is the emitter address to put inside the message.
+	 * @param receiver is the receiver address to put inside the message.
+	 * @param creationDate is the creation date for the message.
+	 */
+	static void updateContext(
+			Message message,
+			RoleAddress emitter,
+			RoleAddress receiver,
+			float creationDate) {
+		CRIOMessageContext mc = new CRIOMessageContext(
+				emitter.getPlayer(),
+				receiver.getPlayer(),
+				creationDate);
+		mc.setEmitterReceiver(emitter, receiver);
+		setContext(message, mc);
 	}
 	
 }

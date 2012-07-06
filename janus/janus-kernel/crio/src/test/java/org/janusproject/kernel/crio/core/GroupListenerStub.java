@@ -57,7 +57,7 @@ class GroupListenerStub implements GroupListener {
 		}
 	}
 	
-	private void assertEvent(List<GroupEvent> list, GroupAddress address) {
+	private static void assertEvent(List<GroupEvent> list, GroupAddress address) {
 		Iterator<GroupEvent> iterator = list.iterator();
 		GroupEvent e;
 		while (iterator.hasNext()) {

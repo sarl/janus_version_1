@@ -471,7 +471,7 @@ public class Benchs {
 		}
 
 		@SuppressWarnings("synthetic-access")
-		public int compare(Class<?> c1, Class<?> c2) {
+		public static int compare(Class<?> c1, Class<?> c2) {
 			if (c1==c2) return 0;
 			if (c1==null) return Integer.MAX_VALUE;
 			if (c2==null) return Integer.MIN_VALUE;

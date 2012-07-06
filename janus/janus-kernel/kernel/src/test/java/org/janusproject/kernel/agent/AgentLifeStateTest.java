@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ public class AgentLifeStateTest extends TestCase {
 	
 	/**
 	 */
-	public void testNext() {
+	public static void testNext() {
 		assertSame(AgentLifeState.BORN, AgentLifeState.UNBORN.next());
 		assertSame(AgentLifeState.ALIVE, AgentLifeState.BORN.next());
 		assertSame(AgentLifeState.DYING, AgentLifeState.ALIVE.next());
@@ -69,7 +69,7 @@ public class AgentLifeStateTest extends TestCase {
 	
 	/**
 	 */
-	public void testPrevious() {
+	public static void testPrevious() {
 		assertSame(AgentLifeState.UNBORN, AgentLifeState.UNBORN.previous());
 		assertSame(AgentLifeState.UNBORN, AgentLifeState.BORN.previous());
 		assertSame(AgentLifeState.BORN, AgentLifeState.ALIVE.previous());
@@ -80,7 +80,7 @@ public class AgentLifeStateTest extends TestCase {
 	
 	/**
 	 */
-	public void testIsAlive() {
+	public static void testIsAlive() {
 		assertFalse(AgentLifeState.UNBORN.isAlive());
 		assertFalse(AgentLifeState.BORN.isAlive());
 		assertTrue(AgentLifeState.ALIVE.isAlive());
@@ -91,7 +91,7 @@ public class AgentLifeStateTest extends TestCase {
 
 	/**
 	 */
-	public void testIsLifless() {
+	public static void testIsLifless() {
 		assertTrue(AgentLifeState.UNBORN.isLifeless());
 		assertTrue(AgentLifeState.BORN.isLifeless());
 		assertFalse(AgentLifeState.ALIVE.isLifeless());
@@ -102,7 +102,7 @@ public class AgentLifeStateTest extends TestCase {
 
 	/**
 	 */
-	public void testIsPrenatal() {
+	public static void testIsPrenatal() {
 		assertTrue(AgentLifeState.UNBORN.isPrenatal());
 		assertTrue(AgentLifeState.BORN.isPrenatal());
 		assertFalse(AgentLifeState.ALIVE.isPrenatal());
@@ -113,7 +113,7 @@ public class AgentLifeStateTest extends TestCase {
 
 	/**
 	 */
-	public void testIsMortuary() {
+	public static void testIsMortuary() {
 		assertFalse(AgentLifeState.UNBORN.isMortuary());
 		assertFalse(AgentLifeState.BORN.isMortuary());
 		assertFalse(AgentLifeState.ALIVE.isMortuary());
@@ -124,7 +124,7 @@ public class AgentLifeStateTest extends TestCase {
 
 	/**
 	 */
-	public void testIsAliveLifless() {
+	public static void testIsAliveLifless() {
 		for(AgentLifeState state : AgentLifeState.values()) {
 			assertEquals(!state.isAlive(), state.isLifeless());
 			assertEquals(!state.isLifeless(), state.isAlive());

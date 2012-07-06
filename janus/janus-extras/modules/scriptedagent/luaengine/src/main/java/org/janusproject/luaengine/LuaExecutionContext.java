@@ -20,7 +20,11 @@
  */
 package org.janusproject.luaengine;
 
+import java.io.Reader;
+
+import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
 import org.janusproject.scriptedagent.ScriptedAgent;
@@ -121,6 +125,24 @@ public class LuaExecutionContext extends AbstractScriptExecutionContext {
 			//
 		}
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Object evaluate(ScriptEngine engine, Reader stream)
+			throws ScriptException {
+		return engine.eval(stream);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Object evaluate(ScriptEngine engine, String script)
+			throws ScriptException {
+		return engine.eval(script);
 	}
 
 }

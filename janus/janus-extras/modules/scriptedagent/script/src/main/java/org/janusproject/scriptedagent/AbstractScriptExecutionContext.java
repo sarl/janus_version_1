@@ -293,9 +293,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * @return the result of the evaluation.
 	 * @throws ScriptException 
 	 */
-	protected Object evaluate(ScriptEngine engine, Reader stream) throws ScriptException {
-		return engine.eval(stream);
-	}
+	protected abstract Object evaluate(ScriptEngine engine, Reader stream) throws ScriptException;
 	
 	/** Invoked to evaluate the script in the string.
 	 * <p>
@@ -308,9 +306,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	 * @return the result of the evaluation.
 	 * @throws ScriptException 
 	 */
-	protected Object evaluate(ScriptEngine engine, String script) throws ScriptException {
-		return engine.eval(script);
-	}
+	protected abstract Object evaluate(ScriptEngine engine, String script) throws ScriptException;
 
 	/**
 	 * {@inheritDoc}

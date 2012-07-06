@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2004-2011 Janus Core Developers
+ * Copyright (C) 2004-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ public abstract class CapacityImplementation {
 	 * @see #warning(CapacityContext,Object...)
 	 * @LOGGINGAPI
 	 */
-	protected final void print(CapacityContext call, Object... message) {
+	protected static final void print(CapacityContext call, Object... message) {
 		Logger logger = call.getLogger();
 		for(Object m : message) {
 			if (m!=null) logger.info(m.toString());
@@ -117,7 +117,7 @@ public abstract class CapacityImplementation {
 	 * @see #warning(CapacityContext,Object...)
 	 * @LOGGINGAPI
 	 */
-	protected final void debug(CapacityContext call, Object... message) {
+	protected static final void debug(CapacityContext call, Object... message) {
 		Logger logger = call.getLogger();
 		for(Object m : message) {
 			if (m!=null) logger.fine(m.toString());
@@ -136,7 +136,7 @@ public abstract class CapacityImplementation {
 	 * @see #warning(CapacityContext,Object...)
 	 * @LOGGINGAPI
 	 */
-	protected final void error(CapacityContext call, Object... message) {
+	protected static final void error(CapacityContext call, Object... message) {
 		Logger logger = call.getLogger();
 		for(Object m : message) {
 			if (m!=null) logger.fine(m.toString());
@@ -155,7 +155,7 @@ public abstract class CapacityImplementation {
 	 * @see #error(CapacityContext,Object...)
 	 * @LOGGINGAPI
 	 */
-	protected final void warning(CapacityContext call, Object... message) {
+	protected static final void warning(CapacityContext call, Object... message) {
 		Logger logger = call.getLogger();
 		for(Object m : message) {
 			if (m!=null) logger.warning(m.toString());

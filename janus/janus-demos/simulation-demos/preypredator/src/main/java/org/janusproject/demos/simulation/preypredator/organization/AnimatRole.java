@@ -82,7 +82,7 @@ public abstract class AnimatRole extends Role {
 	 * @param allowNoMove indicates if {@link MoveDirection#NONE} is allowed.
 	 * @return a random movement direction.
 	 */
-	protected MoveDirection computeMove(boolean allowNoMove) {
+	protected static MoveDirection computeMove(boolean allowNoMove) {
 		int tries = 0;
 		MoveDirection[] values = MoveDirection.values();
 		MoveDirection selected;

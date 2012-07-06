@@ -110,7 +110,7 @@ public class ScriptRepositoryTest extends TestCase {
 		assertEquals(0, this.repository.size());		
 	}
 	
-	private void assertEquals(Object[] expected, Iterator<?> actual) {
+	private static void assertEquals(Object[] expected, Iterator<?> actual) {
 		Collection<Object> col = new ArrayList<>();
 		col.addAll(Arrays.asList(expected));
 		while (actual.hasNext()) {

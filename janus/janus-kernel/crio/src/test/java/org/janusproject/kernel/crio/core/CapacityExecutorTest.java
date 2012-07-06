@@ -99,7 +99,7 @@ public class CapacityExecutorTest extends TestCase {
 	 * @throws Exception
 	 */
 	public void testExecute_success() throws Exception {
-		CapacityContext context = this.executor.execute(
+		CapacityContext context = CapacityExecutor.executeImmediately(
 				CapacityStub.class,
 				new CapacityImplementationStub(true, 0),
 				this.player,
@@ -122,7 +122,7 @@ public class CapacityExecutorTest extends TestCase {
 	 * @throws Exception
 	 */
 	public void testExecute_failure() throws Exception {
-		CapacityContext context = this.executor.execute(
+		CapacityContext context = CapacityExecutor.executeImmediately(
 				CapacityStub.class,
 				new CapacityImplementationStub(false, 0),
 				this.player,

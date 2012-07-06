@@ -190,7 +190,7 @@ abstract class JanusJXTAGroup extends JxtaGroup {
 		}
 	}
 
-	private net.jxta.endpoint.Message buildJxtaMessage(Message message, boolean isBroadcast) throws IOException {
+	private static net.jxta.endpoint.Message buildJxtaMessage(Message message, boolean isBroadcast) throws IOException {
 		net.jxta.endpoint.Message msg = new net.jxta.endpoint.Message();
 		if (isBroadcast) {
 			MessageUtils.addStringToMessage(msg, MSG_NAMESPACE_SENDING, MSG_ELEM_COMM_TYPE, COMM_TYPE_BROADCAST);

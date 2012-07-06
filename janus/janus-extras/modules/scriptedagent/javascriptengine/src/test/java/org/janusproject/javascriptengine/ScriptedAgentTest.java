@@ -64,7 +64,7 @@ public class ScriptedAgentTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testLiveOnly() throws Exception {
+	public static void testLiveOnly() throws Exception {
 		Kernel k = Kernels.get();
 
 		ScriptedTestingAgent agent = new ScriptedTestingAgent(AGENT1_SCRIPT);
@@ -82,7 +82,7 @@ public class ScriptedAgentTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testActivateLiveEnd_InvalidActivateParameter() throws Exception {
+	public static void testActivateLiveEnd_InvalidActivateParameter() throws Exception {
 		Kernel k = Kernels.get();
 		
 		ScriptedTestingAgent agent = new ScriptedTestingAgent(AGENT2_SCRIPT);
@@ -100,7 +100,7 @@ public class ScriptedAgentTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testActivateLiveEnd_Ok() throws Exception {
+	public static void testActivateLiveEnd_Ok() throws Exception {
 		Kernel k = Kernels.get();
 		
 		ScriptedTestingAgent agent = new ScriptedTestingAgent(AGENT2_SCRIPT);
@@ -118,7 +118,7 @@ public class ScriptedAgentTest extends TestCase {
 	/**
 	 * @throws Exception
 	 */
-	public void testInstances() throws Exception {
+	public static void testInstances() throws Exception {
 		// Create the agent and bind it to the kernel, but no launch
 		ScriptedTestingAgent agent = new ScriptedTestingAgent(THIS_SCRIPT);
 		KernelTestUtil.bind(agent);

@@ -206,16 +206,18 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected Object evaluate(ScriptEngine engine, String script) throws ScriptException {
-		return super.evaluate(engine, this.packageNameHeader+script);
+	protected Object evaluate(ScriptEngine engine, Reader stream)
+			throws ScriptException {
+		return engine.eval(new PrefixedReader(this.packageNameHeader, stream));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected Object evaluate(ScriptEngine engine, Reader stream) throws ScriptException {
-		return super.evaluate(engine, new PrefixedReader(this.packageNameHeader, stream));
+	protected Object evaluate(ScriptEngine engine, String script)
+			throws ScriptException {
+		return engine.eval(this.packageNameHeader+script);
 	}
 
 	/**

@@ -1,6 +1,0 @@
-bdi-market-simple
-Copyright (c) 2011-2011 Janus Core Developers
-
-This product is distributed under the license(s):
-GNU General Public License version 3.0
-

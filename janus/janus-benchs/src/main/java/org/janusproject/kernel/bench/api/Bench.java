@@ -26,7 +26,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.arakhne.vmutil.locale.Locale;
@@ -238,7 +237,7 @@ public abstract class Bench<R extends BenchRun> {
 		return this.runs;
 	}
 	
-	private String formatPercentage(float v) {
+	private static String formatPercentage(float v) {
 		StringBuilder sb = new StringBuilder();
 		sb.append((int)v);
 		while (sb.length()<3) {
@@ -394,8 +393,6 @@ public abstract class Bench<R extends BenchRun> {
 	 * @param benchFunctionName is the name of the group of benchs that have failed.
 	 * @param e is the error to log.
 	 */
-	protected void logError(Logger logger, String benchFunctionName, Throwable e) {
-		logger.log(Level.SEVERE, e.toString(), e);
-	}
+	public abstract void logError(Logger logger, String benchFunctionName, Throwable e);
 	
 }

@@ -67,7 +67,7 @@ public class LightAgentTest extends TestCase {
 	/**
 	 * @throws Throwable
 	 */
-	public void testReleaseAllRoles() throws Throwable {
+	public static void testReleaseAllRoles() throws Throwable {
 		PlayerAgent agent = new PlayerAgent();
 		Kernel k = Kernels.get();
 

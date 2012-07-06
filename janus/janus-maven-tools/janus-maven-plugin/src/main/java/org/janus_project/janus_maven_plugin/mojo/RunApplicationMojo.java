@@ -54,7 +54,7 @@ public class RunApplicationMojo extends AbstractJanusModuleMojo {
 	 * @return <code>true</code> if the property is forwadable,
 	 * otherwise <code>false</code>.
 	 */
-	protected boolean isForwardableProperty(String name) {
+	protected static boolean isForwardableProperty(String name) {
 		if (name!=null) {
 			return name.equals("JXTA_HOME") //$NON-NLS-1$
 				|| name.startsWith("janus.") //$NON-NLS-1$

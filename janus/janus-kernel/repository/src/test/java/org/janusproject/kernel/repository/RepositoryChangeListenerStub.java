@@ -60,7 +60,7 @@ class RepositoryChangeListenerStub implements RepositoryChangeListener {
 		fail("Unexpected event"); //$NON-NLS-1$
 	}
 	
-	private void fail(String s) {
+	private static void fail(String s) {
 		throw new AssertionFailedError(s);
 	}
 

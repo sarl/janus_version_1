@@ -27,6 +27,7 @@ import java.util.logging.Level;
 
 import org.janusproject.kernel.time.KernelTimeManager;
 import org.janusproject.kernel.address.Address;
+import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
 import org.janusproject.kernel.configuration.PrivilegedJanusPropertySetter;
 import org.janusproject.kernel.crio.core.CRIOContext.PrivilegedContext;
@@ -256,7 +257,7 @@ public class CRIOContextTest extends TestCase {
 			}
 			String currentValue = crioContext.getProperties().getProperty(prop);
 			if (prop.isReadOnly()) {
-				if (crioContext.getProperties().isConstantProperty(prop)) 
+				if (JanusProperties.isConstantProperty(prop)) 
 					assertEquals(prop.getPropertyName(), previousValue, currentValue);
 				else
 					assertEquals(prop.getPropertyName(), nValue, currentValue);

@@ -228,7 +228,7 @@ public class ScriptRepository {
 	 * 
 	 * @return the default directory.
 	 */
-	public File getDefaultLocalDirectory() {
+	public static File getDefaultLocalDirectory() {
 		try {
 			return FileSystem.getUserHomeDirectory();
 		}
@@ -242,7 +242,7 @@ public class ScriptRepository {
 	 * 
 	 * @return the default directory.
 	 */
-	public URL getDefaultDirectory() {
+	public static URL getDefaultDirectory() {
 		File file = getDefaultLocalDirectory();
 		return FileSystem.convertFileToURL(file);
 	}

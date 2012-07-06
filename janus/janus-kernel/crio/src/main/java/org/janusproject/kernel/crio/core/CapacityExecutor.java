@@ -131,6 +131,7 @@ public final class CapacityExecutor {
 	//------------------------------------------------
 		
 	/** Execute immediately the given capacity implementation.
+	 * For asynchronous execution, see {@link #submit(Class, CapacityImplementation, CapacityCaller, KernelScopeGroup, Role, Object...)}.
 	 * 
 	 * @param capacity is the invoked capacity.
 	 * @param capacityImplementation is the capacity to run.
@@ -141,7 +142,7 @@ public final class CapacityExecutor {
 	 * @return the execution context after execution.
 	 * @throws Exception 
 	 */
-	CapacityContext execute(
+	static CapacityContext executeImmediately(
 			Class<? extends Capacity> capacity,
 			CapacityImplementation capacityImplementation,
 			CapacityCaller caller,
@@ -175,6 +176,7 @@ public final class CapacityExecutor {
 
 	/** Put the given capacity implementation inside the execution
 	 * queue.
+	 * For synchronous execution, see {@link #executeImmediately(Class, CapacityImplementation, CapacityCaller, KernelScopeGroup, Role, Object...)}.
 	 * 
 	 * @param capacity is the invoked capacity.
 	 * @param capacityImplementation is the capacity to run.

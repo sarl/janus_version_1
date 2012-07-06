@@ -107,6 +107,10 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 */
 	private transient SoftReference<Logger> logger = null;
 
+	/** Credentials for the role player.
+	 */
+	private Credentials credentials = null;
+	
 	/**
 	 */
 	public RolePlayer() {
@@ -593,13 +597,20 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 
 	/**
 	 * Replies the credentials for this role player.
-	 * <p>
-	 * Subclasses may override this function to provide specific credentials.
 	 * 
-	 * @return <code>null</code>.
+	 * @return the credentials for this role player.
 	 */
 	public Credentials getCredentials() {
-		return null;
+		return this.credentials;
+	}
+
+	/**
+	 * Sets the credentials for this role player.
+	 * 
+	 * @param credentials are the credentials for the player.
+	 */
+	protected final void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
 	}
 
 	/**
@@ -1940,7 +1951,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 		if (implementation == null || !(implementation instanceof CapacityImplementation))
 			throw new CapacityImplementationNotFoundException(capacity);
 
-		return getCRIOContext().getCapacityExecutor().execute(capacity,
+		return CapacityExecutor.executeImmediately(capacity,
 				(CapacityImplementation)implementation, this, r.getKernelScopeGroup(), r,
 				parameters);
 	}

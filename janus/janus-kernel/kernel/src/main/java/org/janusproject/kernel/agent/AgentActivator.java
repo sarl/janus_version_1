@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.janusproject.kernel.schedule.AbstractActivator;
+import org.janusproject.kernel.schedule.ActivationStage;
 import org.janusproject.kernel.status.ExceptionStatus;
 import org.janusproject.kernel.status.KernelStatusConstants;
 import org.janusproject.kernel.status.MultipleStatus;
@@ -31,6 +32,8 @@ import org.janusproject.kernel.status.SingleStatus;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 import org.janusproject.kernel.status.StatusSeverity;
+import org.janusproject.kernel.util.directaccess.DirectAccessCollection;
+import org.janusproject.kernel.util.directaccess.SafeIterator;
 
 /**
  * Determine a execution policy among a set of agents.
@@ -226,6 +229,24 @@ extends AbstractActivator<Agent> {
 	 */
 	void removeAllAgents() {
 		removeAllActivableObjects();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected SafeIterator<Agent> getExecutionPolicy(ActivationStage stage,
+			DirectAccessCollection<Agent> candidates) {
+		return candidates.iterator();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Iterator<? extends Agent> getExecutionPolicy(
+			ActivationStage stage, Collection<? extends Agent> candidates) {
+		return candidates.iterator();
 	}
 
 }

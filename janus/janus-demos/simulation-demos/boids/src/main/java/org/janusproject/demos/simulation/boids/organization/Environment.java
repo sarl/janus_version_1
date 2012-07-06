@@ -219,7 +219,7 @@ public class Environment extends Role {
 	 * @param force is the force given by a boid.
 	 * @param b is the boid body to move.
 	 */
-	private void applyForce(Vector2d force, PerceivedBoidBody b) {
+	private static void applyForce(Vector2d force, PerceivedBoidBody b) {
 		// on borne la force appliquee.
 		if (force.length() > b.getGroup().maxForce) {
 			force.normalize();
@@ -256,7 +256,7 @@ public class Environment extends Role {
      * Update the position of the given body to lie in
      * the world.
      */
-	private void updateWorld(PerceivedBoidBody b) {
+	private static void updateWorld(PerceivedBoidBody b) {
             double posX;
             double posY;
 

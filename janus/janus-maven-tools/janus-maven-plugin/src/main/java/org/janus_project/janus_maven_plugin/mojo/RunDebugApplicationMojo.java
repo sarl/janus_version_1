@@ -102,7 +102,7 @@ public class RunDebugApplicationMojo extends AbstractJanusModuleMojo {
 
 	}
 
-	private String cmdsToString(Object... cms) {
+	private static String cmdsToString(Object... cms) {
 		StringBuilder buffer = new StringBuilder();
 		buffer.append("["); //$NON-NLS-1$
 		for(Object c : cms) {

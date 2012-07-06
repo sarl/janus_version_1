@@ -58,7 +58,7 @@ class RolePlayingListenerStub implements RolePlayingListener {
 		}
 	}
 	
-	private void assertEvent(List<RolePlayingEvent> list, Class<? extends Role> role, GroupAddress group, AgentAddress player) {
+	private static void assertEvent(List<RolePlayingEvent> list, Class<? extends Role> role, GroupAddress group, AgentAddress player) {
 		Iterator<RolePlayingEvent> iterator = list.iterator();
 		RolePlayingEvent e;
 		while (iterator.hasNext()) {

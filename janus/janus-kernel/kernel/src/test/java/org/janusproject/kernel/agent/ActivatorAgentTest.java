@@ -79,7 +79,7 @@ public class ActivatorAgentTest extends TestCase {
 		this.kernel.getKernelContext().getAgentRepository().add(h.getAddress(), h);
 	}
 
-	private void assertEquals(Collection<?> expected, Collection<?> actual) {
+	private static void assertEquals(Collection<?> expected, Collection<?> actual) {
 		if (expected==actual) return;
 		if (expected!=null && actual!=null && expected.size()==actual.size()) {
 			try {

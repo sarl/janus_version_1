@@ -74,7 +74,7 @@ public class DefaultActivatorTest extends TestCase {
 		super.tearDown();
 	}
 
-	private void assertSequence(Iterator<?> iterator, Object... objects) {
+	private static void assertSequence(Iterator<?> iterator, Object... objects) {
 		assertNotNull(iterator);
 		int i=0; 
 		while(i<objects.length && iterator.hasNext()) {
@@ -85,7 +85,7 @@ public class DefaultActivatorTest extends TestCase {
 		assertTrue(i==objects.length);		
 	}
 
-	private void assertEquals(Collection<?> c1, SafeIterator<?> c2) {
+	private static void assertEquals(Collection<?> c1, SafeIterator<?> c2) {
 		if (c1==c2) return;
 		if (c1!=null && c2!=null) {
 			try {
@@ -113,7 +113,7 @@ public class DefaultActivatorTest extends TestCase {
 				+((c2==null)?null:c2.toString()));
 	}
 
-	private void assertEmpty(SafeIterator<?> c1) {
+	private static void assertEmpty(SafeIterator<?> c1) {
 		if (c1!=null) {
 			if (!c1.hasNext()) return;
 			c1.release();
@@ -124,7 +124,7 @@ public class DefaultActivatorTest extends TestCase {
 		}
 	}
 
-	private void assertNotEmpty(SafeIterator<?> c1) {
+	private static void assertNotEmpty(SafeIterator<?> c1) {
 		if (c1!=null) {
 			if (c1.hasNext()) {
 				c1.release();

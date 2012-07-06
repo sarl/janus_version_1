@@ -118,7 +118,7 @@ public class RoleTest extends TestCase {
 		super.tearDown();
 	}
 
-	private void assertContains(Iterator<?> iterator, Object... objects) {
+	private static void assertContains(Iterator<?> iterator, Object... objects) {
 		ArrayList<Object> objs = new ArrayList<>(Arrays.asList(objects));
 		assertNotNull(iterator);
 		while (iterator.hasNext()) {
@@ -128,7 +128,7 @@ public class RoleTest extends TestCase {
 		assertTrue(objs.isEmpty());
 	}
 
-	private void assertOneOf(Object actualValue, Object... expectedValues) {
+	private static void assertOneOf(Object actualValue, Object... expectedValues) {
 		Object o;
 		StringBuilder buffer = new StringBuilder();
 		buffer.append("unexpected value. Expecting one of {"); //$NON-NLS-1$
@@ -1191,7 +1191,7 @@ public class RoleTest extends TestCase {
 
 		RoleAddress receiver = new RoleAddress(this.group.getAddress(), RoleStub.class, this.player2.getAddress());
 		
-		InteractionUtil.FACTORY.updateContext(msg, 
+		InteractionUtil.updateContext(msg, 
 				r,
 				receiver,
 				1024);

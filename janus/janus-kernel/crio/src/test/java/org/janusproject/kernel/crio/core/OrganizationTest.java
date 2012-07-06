@@ -67,7 +67,7 @@ public class OrganizationTest extends TestCase {
 		super.tearDown();
 	}
 	
-	private void assertEquals(Collection<?> c1, Collection<?> c2) {
+	private static void assertEquals(Collection<?> c1, Collection<?> c2) {
 		if (c1==c2) return;
 		if (c1!=null && c2!=null && c1.size()==c2.size()) {
 			try {
@@ -94,7 +94,7 @@ public class OrganizationTest extends TestCase {
 				+((c2==null)?null:c2.toString()));
 	}
 	
-	private void assertEmpty(Collection<?> c1) {
+	private static void assertEmpty(Collection<?> c1) {
 		if (c1!=null) {
 			if (c1.isEmpty()) return;
 			fail("collections is not empty"); //$NON-NLS-1$

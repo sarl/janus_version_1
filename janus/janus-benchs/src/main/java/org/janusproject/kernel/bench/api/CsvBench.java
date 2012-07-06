@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
@@ -85,8 +86,8 @@ public abstract class CsvBench<R extends BenchRun> extends Bench<R> {
 	/** {@inheritDoc}
 	 */
 	@Override
-	protected void logError(Logger logger, String benchFunctionName, Throwable e) {
-		super.logError(logger, benchFunctionName, e);
+	public void logError(Logger logger, String benchFunctionName, Throwable e) {
+		logger.log(Level.SEVERE, benchFunctionName.toLowerCase()+e.toString(), e);
 		StringBuilder filename = new StringBuilder();
 		filename.append(getClass().getSimpleName());
 		filename.append("#"); //$NON-NLS-1$

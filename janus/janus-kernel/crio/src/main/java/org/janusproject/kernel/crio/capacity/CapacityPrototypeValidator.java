@@ -87,10 +87,7 @@ extends PrototypeValidator<Capacity,CapacityPrototype> {
 	protected int getFirstOptionalValueIndex(PrototypeScope scope, CapacityPrototype prototype) {
 		switch(scope) {
 		case INPUT:
-			int index = prototype.optionalParameterAt();
-			// TODO: The next line is for ascendent compatability; remove when the deprecated function is removed.
-			if (index<0) index = prototype.optionalInputAt();
-			return index;
+			return prototype.optionalParameterAt();
 		case OUTPUT:
 			return prototype.optionalOutputAt();
 		}
@@ -108,17 +105,9 @@ extends PrototypeValidator<Capacity,CapacityPrototype> {
 		switch(scope) {
 		case INPUT:
 			types = prototype.fixedParameters();
-			// TODO: The next line is for ascendent compatability; remove when the deprecated function is removed.
-			if (types!=null && types.length==1 && CapacityPrototype.class.equals(types[0])) {
-				types = prototype.input();
-			}
 			break;
 		case OUTPUT:
 			types = prototype.fixedOutput();
-			// TODO: The next line is for ascendent compatability; remove when the deprecated function is removed.
-			if (types!=null && types.length==1 && CapacityPrototype.class.equals(types[0])) {
-				types = prototype.output();
-			}
 			break;
 		}
 		if (types!=null
@@ -140,17 +129,9 @@ extends PrototypeValidator<Capacity,CapacityPrototype> {
 		switch(scope) {
 		case INPUT:
 			type = prototype.variableParameters();
-			// TODO: The next line is for ascendent compatability; remove when the deprecated function is removed.
-			if (type!=null && CapacityPrototype.class.equals(type)) {
-				type = prototype.allInput();
-			}
 			break;
 		case OUTPUT:
 			type = prototype.variableOutput();
-			// TODO: The next line is for ascendent compatability; remove when the deprecated function is removed.
-			if (type!=null && CapacityPrototype.class.equals(type)) {
-				type = prototype.allOutput();
-			}
 			break;
 		}
 		if (type!=null

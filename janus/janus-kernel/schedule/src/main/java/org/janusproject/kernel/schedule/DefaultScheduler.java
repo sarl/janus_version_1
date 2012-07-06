@@ -26,6 +26,8 @@ import java.util.Iterator;
 import org.janusproject.kernel.status.ExceptionStatus;
 import org.janusproject.kernel.status.MultipleStatus;
 import org.janusproject.kernel.status.Status;
+import org.janusproject.kernel.util.directaccess.DirectAccessCollection;
+import org.janusproject.kernel.util.directaccess.SafeIterator;
 
 /**
  * Determine a sequential execution policy among a set of activators.
@@ -121,6 +123,24 @@ extends AbstractScheduler<A> {
 			}
 		}
 		return ms.pack(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected SafeIterator<A> getExecutionPolicy(ActivationStage stage,
+			DirectAccessCollection<A> candidates) {
+		return candidates.iterator();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Iterator<? extends A> getExecutionPolicy(ActivationStage stage,
+			Collection<? extends A> candidates) {
+		return candidates.iterator();
 	}
 
 }

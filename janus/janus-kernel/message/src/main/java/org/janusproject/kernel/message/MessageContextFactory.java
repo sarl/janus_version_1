@@ -30,13 +30,7 @@ import org.janusproject.kernel.address.AgentAddress;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public class MessageContextFactory {
-	
-	/**
-	 */
-	public MessageContextFactory() {
-		//
-	}
+public abstract class MessageContextFactory {
 	
 	/**
 	 * Set the context in the given message.
@@ -44,7 +38,7 @@ public class MessageContextFactory {
 	 * @param message is the message to change.
 	 * @param context is the context to put back in the given message.
 	 */
-	protected final void setContext(Message message, MessageContext context) {
+	protected static void setContext(Message message, MessageContext context) {
 		assert(message!=null);
 		message.context = context;
 	}
@@ -55,7 +49,7 @@ public class MessageContextFactory {
 	 * @param context is the context to change.
 	 * @param receiver is the address of the receiver.
 	 */
-	protected final void setReceiver(MessageContext context, AgentAddress receiver) {
+	protected static void setReceiver(MessageContext context, AgentAddress receiver) {
 		assert(context!=null);
 		context.receiver = receiver;
 	}
@@ -66,7 +60,7 @@ public class MessageContextFactory {
 	 * @param context is the context to change.
 	 * @param sender is the address of the sender.
 	 */
-	protected final void setSender(MessageContext context, AgentAddress sender) {
+	protected static void setSender(MessageContext context, AgentAddress sender) {
 		assert(context!=null);
 		context.sender = sender;
 	}

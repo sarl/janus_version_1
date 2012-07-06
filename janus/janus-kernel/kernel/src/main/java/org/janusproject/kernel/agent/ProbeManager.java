@@ -117,7 +117,7 @@ public class ProbeManager {
 		}
 	}
 
-	private void onCollectiveProbeReleased(CollectiveProbe probe) {
+	private static void onCollectiveProbeReleased(CollectiveProbe probe) {
 		if (probe!=null && probe.isAlive()) {
 			probe.releaseProbe();
 		}
@@ -125,7 +125,7 @@ public class ProbeManager {
 
 	/** Replies the list of probable attributes for the specified object.
 	 */
-	private Collection<Field> extractWatchableAttributesFrom(Class<?> probedObjectType) {
+	private static Collection<Field> extractWatchableAttributesFrom(Class<?> probedObjectType) {
 		assert(probedObjectType!=null);
 		
 		Map<String,Field> attributes = new TreeMap<>();

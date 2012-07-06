@@ -185,7 +185,7 @@ public abstract class AbstractRoleOperationPerSecondCsvBench<R extends Operation
 	 * @return the number of operations.
 	 * @throws Exception
 	 */
-	protected long waitForNbOperationsPerSecond(BenchMarkedRole role) throws Exception {
+	protected static long waitForNbOperationsPerSecond(BenchMarkedRole role) throws Exception {
 		long s = System.currentTimeMillis();
 		Thread.sleep(BenchConstants.PER_SECOND_BENCH_SLEEPING_DURATION);
 		long e = System.currentTimeMillis();
