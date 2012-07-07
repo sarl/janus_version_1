@@ -16,6 +16,10 @@
 	<version>0.5-SNAPSHOT</version>
 	<name>Boids Simulation demo</name>
 	<inceptionYear>2004</inceptionYear>
+	
+	<properties>
+		<mainClassname>org.janusproject.demos.simulation.boids.Launcher</mainClassname>
+	</properties>
 
 	<build>
 		<plugins>
@@ -45,7 +49,7 @@
 					<archive>
 						<manifestFile>${manifest.file}</manifestFile>
 						<manifest>
-							<mainClass>org.janusproject.demos.simulation.boids.Launcher</mainClass>
+							<mainClass>${mainClassname}</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -85,6 +89,30 @@
 						<phase>package</phase>
 						<goals>
 							<goal>zip</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+            			<descriptorRef>jar-with-dependencies</descriptorRef>
+          			</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>${mainClassname}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
 						</goals>
 					</execution>
 				</executions>
