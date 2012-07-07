@@ -43,9 +43,7 @@ import org.janusproject.kernel.util.random.RandomNumber;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-@AgentActivationPrototype(
-		fixedParameters={}
-)
+@AgentActivationPrototype()
 public class ForagerBot extends Agent {
 	
 	private static final long serialVersionUID = 7487218855639817552L;

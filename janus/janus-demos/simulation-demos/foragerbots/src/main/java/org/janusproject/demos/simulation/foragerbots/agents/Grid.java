@@ -119,7 +119,6 @@ public class Grid extends Agent {
 	@Override
 	public Status live() {
 		Status s = super.live();
-		boolean updateGUI = false;
 		Message m;
 		Mailbox mailbox = getMailbox();
 		m = mailbox.removeFirst();
@@ -142,13 +141,13 @@ public class Grid extends Agent {
 					sendMessage(ack, bot);
 					PerceptionMessage perception = new PerceptionMessage(cell);
 					sendMessage(perception, bot);
-					updateGUI = true;
 				}
 			}
 			else if (m instanceof MoveMessage) {
 				MoveMessage move = (MoveMessage)m;
 				AgentAddress bot = move.getContext().getSender();
 				Cell currentCell = this.agents.get(bot);
+				PerceptionMessage ack = null;
 				if (currentCell!=null) {
 					Direction d = move.getMoveDirection();
 					switch(d) {
@@ -158,9 +157,10 @@ public class Grid extends Agent {
 							this.agents.put(bot, newCell);
 							currentCell.removeBot();
 							newCell.addBot();
-							PerceptionMessage ack = new PerceptionMessage(newCell);
-							sendMessage(ack, bot);
-							updateGUI = true;
+							ack = new PerceptionMessage(newCell);
+						}
+						else {
+							ack = new PerceptionMessage(currentCell);
 						}
 						break;
 					case SOUTH:
@@ -169,9 +169,10 @@ public class Grid extends Agent {
 							this.agents.put(bot, newCell);
 							currentCell.removeBot();
 							newCell.addBot();
-							PerceptionMessage ack = new PerceptionMessage(newCell);
-							sendMessage(ack, bot);
-							updateGUI = true;
+							ack = new PerceptionMessage(newCell);
+						}
+						else {
+							ack = new PerceptionMessage(currentCell);
 						}
 						break;
 					case WEST:
@@ -180,9 +181,10 @@ public class Grid extends Agent {
 							this.agents.put(bot, newCell);
 							currentCell.removeBot();
 							newCell.addBot();
-							PerceptionMessage ack = new PerceptionMessage(newCell);
-							sendMessage(ack, bot);
-							updateGUI = true;
+							ack = new PerceptionMessage(newCell);
+						}
+						else {
+							ack = new PerceptionMessage(currentCell);
 						}
 						break;
 					case EAST:
@@ -191,25 +193,25 @@ public class Grid extends Agent {
 							this.agents.put(bot, newCell);
 							currentCell.removeBot();
 							newCell.addBot();
-							PerceptionMessage ack = new PerceptionMessage(newCell);
-							sendMessage(ack, bot);
-							updateGUI = true;
+							ack = new PerceptionMessage(newCell);
+						}
+						else {
+							ack = new PerceptionMessage(currentCell);
 						}
 						break;
 					case NONE:
-						PerceptionMessage ack = new PerceptionMessage(currentCell);
-						sendMessage(ack, bot);
+					default:
+						ack = new PerceptionMessage(currentCell);
 						break;
 					}
 				}
+				if (ack!=null) sendMessage(ack, bot);
 			}
 			m = mailbox.removeFirst();
 		}
 		
 		// Notify GUI about changes
-		if (updateGUI) {
-			fireGridEvent();
-		}
+		fireGridEvent();
 		return s;
 	}
 	

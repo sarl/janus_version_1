@@ -71,42 +71,4 @@ public class MathUtil {
 		return angle;
 	}
 
-	/** Compute the positive angle between two vectors which are not necessary unit vectors.
-	 * 
-	 * @param x1
-	 * @param y1
-	 * @param x2
-	 * @param y2
-	 * @return the angle between <code>0</code> and <code>PI</code>.
-	 */
-	public static double angle(double x1, double y1, double x2, double y2) {
-		double length1 = Math.sqrt(x1 * x1 + y1 * y1);
-		double length2 = Math.sqrt(x2 * x2 + y2 * y2);
-
-		if ((length1 == 0.) || (length2 == 0.))
-			return Double.NaN;
-
-		double cx1 = x1;
-		double cy1 = y1;
-		double cx2 = x2;
-		double cy2 = y2;
-		
-		// A and B are normalized
-		if (length1 != 1) {
-			cx1 /= length1;
-			cy1 /= length1;
-		}
-
-		if (length2 != 1) {
-			cx2 /= length2;
-			cy2 /= length2;
-		}
-
-		double dot = cx1*cx2 + cy1*cy2;
-		if (dot<-1.) dot = -1.;
-		else if (dot>1.) dot = 1.;
-		
-		return Math.acos(dot);
-	}
-
 }

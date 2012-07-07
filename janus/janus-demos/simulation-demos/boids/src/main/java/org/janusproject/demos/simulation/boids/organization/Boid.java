@@ -310,9 +310,9 @@ public class Boid extends Role {
 		if ( tmp.length() > distance )
 			return false;
 				
-		double angle = MathUtil.angle(this.orientation.x, this.orientation.y, tmp.x, tmp.y);
+		double angle = MathUtil.signedAngle(this.orientation.x, this.orientation.y, tmp.x, tmp.y);
 		
-		return ( angle <= this.group.visibleAngle);
+		return ( Math.abs(angle) <= this.group.visibleAngle);
 	}
 
 	/**

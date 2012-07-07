@@ -1203,7 +1203,7 @@ implements Activable, Holon, Serializable {
 	 * @since 0.5
 	 */
 	protected final <M extends Message> M getMessage(Class<M> type) {
-		return getMailbox().getFirst(new TypeSelector<>(type));
+		return getMailbox().removeFirst(new TypeSelector<>(type));
 	}
 
 	/**

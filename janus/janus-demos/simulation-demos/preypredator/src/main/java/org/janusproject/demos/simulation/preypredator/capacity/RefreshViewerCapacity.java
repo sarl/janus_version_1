@@ -43,10 +43,7 @@ import org.janusproject.kernel.crio.capacity.CapacityPrototype;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-@CapacityPrototype(
-		input={},
-		output={}
-)
+@CapacityPrototype()
 public interface RefreshViewerCapacity extends Capacity {
 	//
 }

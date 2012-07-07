@@ -31,10 +31,7 @@ import org.janusproject.kernel.crio.capacity.CapacityPrototype;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-@CapacityPrototype(
-		input={},
-		output={}
-)
+@CapacityPrototype()
 public interface EnvironmentRefreshCapacity extends Capacity
 {
 

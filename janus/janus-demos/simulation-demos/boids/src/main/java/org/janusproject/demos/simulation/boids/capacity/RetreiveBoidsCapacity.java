@@ -34,8 +34,7 @@ import org.janusproject.kernel.crio.capacity.CapacityPrototype;
  * @mavenartifactid $ArtifactId$
  */
 @CapacityPrototype(
-		input={},
-		output={Map.class,Integer.class}
+		fixedOutput={Map.class,Integer.class}
 )
 public interface RetreiveBoidsCapacity extends Capacity
 {
