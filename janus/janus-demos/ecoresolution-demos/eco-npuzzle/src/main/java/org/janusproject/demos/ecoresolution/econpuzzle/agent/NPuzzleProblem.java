@@ -43,10 +43,9 @@ import org.janusproject.ecoresolution.identity.NoIdentity;
 public class NPuzzleProblem extends AgentBasedEcoProblem {
 
 	/**
-	 * @param agentNumber
 	 */
-	public NPuzzleProblem(int agentNumber) {
-		super(agentNumber);
+	public NPuzzleProblem() {
+		super();
 	}
 
 	/**

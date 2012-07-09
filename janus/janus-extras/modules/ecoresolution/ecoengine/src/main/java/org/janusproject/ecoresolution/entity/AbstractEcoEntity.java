@@ -44,6 +44,7 @@ import org.janusproject.ecoresolution.message.EcoAcquaintanceMessage;
 import org.janusproject.ecoresolution.message.EcoAttackMessage;
 import org.janusproject.ecoresolution.message.EcoDependencyMessage;
 import org.janusproject.ecoresolution.message.EcoInitializationDoneMessage;
+import org.janusproject.ecoresolution.message.EcoProblemSolvedMessage;
 import org.janusproject.ecoresolution.message.EcoProblemSolverPresentationMessage;
 import org.janusproject.ecoresolution.message.EcoProblemSolvingStartMessage;
 import org.janusproject.ecoresolution.relation.EcoAttack;
@@ -159,6 +160,18 @@ public abstract class AbstractEcoEntity implements InitializableEcoEntity {
 			this.listeners.toArray(list);
 			for(EcoEntityListener listener : list) {
 				listener.problemSolvingStarted();
+			}
+		}
+	}
+
+	/** Fire the event to notify on the solving of the problem.
+	 */
+	protected final synchronized void fireProblemSolved() {
+		if (this.listeners!=null) {
+			EcoEntityListener[] list = new EcoEntityListener[this.listeners.size()];
+			this.listeners.toArray(list);
+			for(EcoEntityListener listener : list) {
+				listener.problemSolved();
 			}
 		}
 	}
@@ -521,9 +534,17 @@ public abstract class AbstractEcoEntity implements InitializableEcoEntity {
 					}
 				}
 			}
+			else if (msg instanceof EcoProblemSolvedMessage) {
+				fireProblemSolved();
+				doKill();
+			}
 		}
 		return changed;
 	}
+	
+	/** Invoked when the eco-entity should be destroyed.
+	 */
+	protected abstract void doKill();
 	
 	/**
 	 * {@inheritDoc}

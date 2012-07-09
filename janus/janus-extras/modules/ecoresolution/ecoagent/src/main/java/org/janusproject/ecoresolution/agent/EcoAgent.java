@@ -97,13 +97,10 @@ public abstract class EcoAgent extends Agent implements ChannelInteractable {
 	 */
 	@Override
 	public final Status live() {
-		Status s = super.live();
-		if (s.isSuccess()) {
-			if (this.ecoStateMachine.run()) {
-				this.ecoChannel.fireChannelChange();
-			}
+		if (this.ecoStateMachine.run()) {
+			this.ecoChannel.fireChannelChange();
 		}
-		return s;
+		return null;
 	}
 	
 	/** Replies the eco-identity associated to this agent.
@@ -420,8 +417,16 @@ public abstract class EcoAgent extends Agent implements ChannelInteractable {
 		 */
 		@SuppressWarnings("synthetic-access")
 		@Override
+		protected void doKill() {
+			EcoAgent.this.killMe();
+		}
+		
+		/** {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
 		protected Iterable<Message> getMessages() {
-			return EcoAgent.this.getMailbox();
+			return EcoAgent.this.getMessages();
 		}
 
 		/** {@inheritDoc}

@@ -54,6 +54,10 @@ implements Iterator<M> {
 		while (this.next==null && this.original.hasNext()) {
 			m = this.original.next();
 			if (m!=null) {
+				// Consume the message
+				// assuming that the internal iterator has stopped
+				// its iteration when found the next element
+				this.original.remove();
 				this.next = m;
 			}
 		}
@@ -74,10 +78,6 @@ implements Iterator<M> {
 	public M next() {
 		M n = this.next;
 		if (n==null) throw new NoSuchElementException();
-		// Consume the message
-		// assuming that the internal iterator has stopped
-		// its iteration when found the next element
-		this.original.remove();
 		searchNext();
 		return n;
 	}

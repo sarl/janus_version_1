@@ -25,8 +25,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.janusproject.ecoresolution.problem.EcoProblem;
+import org.janusproject.ecoresolution.problem.EcoProblemMonitor;
 import org.janusproject.ecoresolution.relation.EcoRelation;
 import org.janusproject.kernel.Kernel;
+import org.janusproject.kernel.KernelEvent;
+import org.janusproject.kernel.KernelListener;
+import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Kernels;
 
 /** This class defines an eco-resolution problem based on the use
@@ -43,17 +47,14 @@ public abstract class AgentBasedEcoProblem extends EcoProblem {
 	private final Set<EcoAgent> agents = new TreeSet<>(new Comparator<EcoAgent>() {
 		@Override
 		public int compare(EcoAgent o1, EcoAgent o2) {
-			return System.identityHashCode(o1) - System.identityHashCode(o2);
+			return o1.getUUID().compareTo(o2.getUUID());
 		}
 	});
 	
-	private final int ecoAgentCount;
-	
 	/**
-	 * @param ecoAgentCount is the number of agents awaited to solve the problem.
 	 */
-	public AgentBasedEcoProblem(int ecoAgentCount) {
-		this.ecoAgentCount = ecoAgentCount;
+	public AgentBasedEcoProblem() {
+		//
 	}
 	
 	/** Initialize the given eco-entity.
@@ -75,16 +76,90 @@ public abstract class AgentBasedEcoProblem extends EcoProblem {
 	/** {@inheritDoc}
 	 */
 	@Override
-	public final void solve() {
+	public final void solve(EcoProblemMonitor monitor) {
 		Kernel kernel = Kernels.get();
+
+		int nbAgents = this.agents.size();
+		LaunchingListener listener = new LaunchingListener(nbAgents);
+		kernel.addKernelListener(listener);
 		for(EcoAgent ag : this.agents) {
 			kernel.submitLightAgent(ag);
 		}
 		this.agents.clear();
 		kernel.launchDifferedExecutionAgents();
 		
-		EcoMonitorAgent monitor = new EcoMonitorAgent(this.ecoAgentCount);
-		kernel.launchHeavyAgent(monitor);
-	}
+		while (listener.isAllLaunched()) {
+			Thread.yield();
+		}
+		kernel.removeKernelListener(listener);
 		
+		EcoMonitorAgent monitorAgent = new EcoMonitorAgent(monitor, nbAgents);
+		kernel.launchHeavyAgent(monitorAgent);
+		
+		
+	}
+	
+	/** 
+	 * @author $Author: sgalland$
+	 * @version $Name$ $Revision$ $Date$
+	 * @mavengroupid $Groupid$
+	 * @mavenartifactid $ArtifactId$
+	 */
+	private static class LaunchingListener implements KernelListener {
+
+		private final int nb;
+		private Set<AgentAddress> launched = new TreeSet<>();
+		
+		/**
+		 * @param nb
+		 */
+		public LaunchingListener(int nb) {
+			this.nb = nb;
+		}
+		
+		public synchronized boolean isAllLaunched() {
+			if (this.launched.size()>=this.nb) {
+				this.launched.clear();
+				return true;
+			}
+			return false;
+		}
+
+		/** {@inheritDoc}
+		 */
+		@Override
+		public synchronized void agentLaunched(KernelEvent event) {
+			this.launched.add(event.getAgent());
+		}
+
+		/** {@inheritDoc}
+		 */
+		@Override
+		public void agentKilled(KernelEvent event) {
+			//
+		}
+
+		/** {@inheritDoc}
+		 */
+		@Override
+		public boolean exceptionUncatched(Throwable error) {
+			return true;
+		}
+
+		/** {@inheritDoc}
+		 */
+		@Override
+		public void kernelAgentLaunched(KernelEvent event) {
+			//
+		}
+
+		/** {@inheritDoc}
+		 */
+		@Override
+		public void kernelAgentKilled(KernelEvent event) {
+			//
+		}
+		
+	}
+	
 }

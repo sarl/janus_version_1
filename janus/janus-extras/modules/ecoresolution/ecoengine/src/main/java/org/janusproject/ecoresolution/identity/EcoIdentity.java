@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ import java.util.UUID;
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
-public abstract class EcoIdentity implements Serializable {
+public abstract class EcoIdentity implements Comparable<EcoIdentity>, Serializable {
 	
 	private static final long serialVersionUID = -1096914865807609257L;
 	
@@ -76,6 +76,15 @@ public abstract class EcoIdentity implements Serializable {
 	@Override
 	public int hashCode() {
 		return 31 + this.id.hashCode();
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(EcoIdentity o) {
+		if (o==null) return Integer.MAX_VALUE;
+		return this.id.compareTo(o.id);
 	}
 	
 	/** Replies a string-representation of this identity.

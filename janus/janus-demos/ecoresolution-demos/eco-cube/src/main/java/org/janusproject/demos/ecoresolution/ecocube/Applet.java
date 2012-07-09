@@ -65,7 +65,7 @@ public class Applet extends JApplet {
 		CubeAgent cubeC = new CubeAgent("C", cubeB.getEcoIdentity(), table); //$NON-NLS-1$
 		
 		// Initialize the problem
-		this.problem = new CubeEcoProblem(4); // 3 cubes + 1 table are in the problem
+		this.problem = new CubeEcoProblem(); // 3 cubes + 1 table are in the problem
 		this.problem.addUpDownRelation(cubeA, planeAgent);
 		this.problem.addUpDownRelation(cubeC, cubeA);
 		this.problem.addUpDownRelation(cubeB, cubeC);
@@ -83,7 +83,7 @@ public class Applet extends JApplet {
 	public void start() {
 		// Start solving
 		if (this.problem!=null) {
-			this.problem.solve();
+			this.problem.solve(null);
 			this.problem = null;
 		}
 	}

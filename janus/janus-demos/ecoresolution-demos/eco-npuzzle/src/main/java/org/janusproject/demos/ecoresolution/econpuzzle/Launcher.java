@@ -47,12 +47,11 @@ public class Launcher {
 	public static void main(String[] argv) throws Exception {
 		final int gridsize = 4;
 		final int placeNumber = gridsize * gridsize;
-		final int agentNumber = placeNumber + placeNumber + 1;// places+tiles+grid
 
 		// Grid initialization
 
 		// Problem initialization
-		NPuzzleProblem problem = new NPuzzleProblem(agentNumber);
+		NPuzzleProblem problem = new NPuzzleProblem();
 
 		// initialization of places
 		EcoPlace[] places = new EcoPlace[placeNumber];
@@ -167,7 +166,7 @@ public class Launcher {
 		NPuzzleFrame frame = new NPuzzleFrame(kernel,gridsize);
 		frame.setVisible(true);
 				
-		problem.solve();
+		problem.solve(null);
 	}
 
 }

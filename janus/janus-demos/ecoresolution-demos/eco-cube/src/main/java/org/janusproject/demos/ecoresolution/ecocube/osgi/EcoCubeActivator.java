@@ -85,7 +85,7 @@ public class EcoCubeActivator implements BundleActivator, JanusApplication {
 		CubeAgent cubeC = new CubeAgent("C", cubeB.getEcoIdentity(), table);  //$NON-NLS-1$
 		
 		// Initialize the problem
-		CubeEcoProblem problem = new CubeEcoProblem(4); // 3 cubes + 1 table are in the problem
+		CubeEcoProblem problem = new CubeEcoProblem(); // 3 cubes + 1 table are in the problem
 		problem.addUpDownRelation(cubeA, planeAgent);
 		problem.addUpDownRelation(cubeC, cubeA);
 		problem.addUpDownRelation(cubeB, cubeC);
@@ -95,7 +95,7 @@ public class EcoCubeActivator implements BundleActivator, JanusApplication {
 		frame.setVisible(true);
 		
 		// Start solving
-		problem.solve();
+		problem.solve(null);
 
 		return StatusFactory.ok(this);		
 	}

@@ -189,7 +189,7 @@ public class CubeWorldPanel extends JPanel implements ChannelInteractableListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (ACTION_FIRST_STATE.equals(e.getActionCommand())) {
-			synchronized(this) {
+			synchronized(getTreeLock()) {
 				int oldState = this.currentStateIndex;
 				this.currentStateIndex = 0;
 				if (this.currentStateIndex>=this.worldStates.size()) {
@@ -202,7 +202,7 @@ public class CubeWorldPanel extends JPanel implements ChannelInteractableListene
 			}
 		}
 		else if (ACTION_PREVIOUS_STATE.equals(e.getActionCommand())) {
-			synchronized(this) {
+			synchronized(getTreeLock()) {
 				int oldState = this.currentStateIndex;
 				--this.currentStateIndex;
 				if (this.currentStateIndex<0 || this.currentStateIndex>=this.worldStates.size()) {
@@ -215,7 +215,7 @@ public class CubeWorldPanel extends JPanel implements ChannelInteractableListene
 			}
 		}
 		else if (ACTION_NEXT_STATE.equals(e.getActionCommand())) {
-			synchronized(this) {
+			synchronized(getTreeLock()) {
 				int oldState = this.currentStateIndex;
 				++this.currentStateIndex;
 				if (this.currentStateIndex<0 || this.currentStateIndex>=this.worldStates.size()) {
@@ -228,7 +228,7 @@ public class CubeWorldPanel extends JPanel implements ChannelInteractableListene
 			}
 		}
 		else if (ACTION_LAST_STATE.equals(e.getActionCommand())) {
-			synchronized(this) {
+			synchronized(getTreeLock()) {
 				int oldState = this.currentStateIndex;
 				this.currentStateIndex = this.worldStates.size() - 1;
 				if (this.currentStateIndex<0 || this.currentStateIndex>=this.worldStates.size()) {
@@ -274,44 +274,44 @@ public class CubeWorldPanel extends JPanel implements ChannelInteractableListene
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void channelContentChanged() {
-		State state = new State();
-		EcoIdentity entity;
-		EcoIdentity previousEcoEntity;
-		
-		for(CubeEcoChannel channel : this.channels) {
-			if (channel.getAgentType()==AgentType.CUBE) {
-				entity = channel.getEcoEntity();
-				assert(entity!=null);
-				state.ecoStates.put(entity, channel.getEcoState());
-				for(EcoRelation relation : channel.getAcquaintances()) {
-					if (relation instanceof DownwardRelation) {
-						DownwardRelation dr = (DownwardRelation)relation;
-						if (dr.getMaster().equals(entity)) {
-							if (this.planeEntity.equals(dr.getSlave())) {
-								// on ground
-								if (!state.onGround.add(entity)) {
-									state.isInconsistent = true;
+	public void channelContentChanged() {
+		synchronized(getTreeLock()) {
+			State state = new State();
+			EcoIdentity entity;
+			EcoIdentity previousEcoEntity;
+			
+			for(CubeEcoChannel channel : this.channels) {
+				if (channel.getAgentType()==AgentType.CUBE) {
+					entity = channel.getEcoEntity();
+					assert(entity!=null);
+					state.ecoStates.put(entity, channel.getEcoState());
+					for(EcoRelation relation : channel.getAcquaintances()) {
+						if (relation instanceof DownwardRelation) {
+							DownwardRelation dr = (DownwardRelation)relation;
+							if (dr.getMaster().equals(entity)) {
+								if (this.planeEntity.equals(dr.getSlave())) {
+									// on ground
+									if (!state.onGround.add(entity)) {
+										state.isInconsistent = true;
+									}
 								}
-							}
-							else {
-								// on other
-								previousEcoEntity = state.map.put(dr.getSlave(), entity);
-								if (previousEcoEntity!=null && !entity.equals(previousEcoEntity)) {
-									state.isInconsistent = true;
+								else {
+									// on other
+									previousEcoEntity = state.map.put(dr.getSlave(), entity);
+									if (previousEcoEntity!=null && !entity.equals(previousEcoEntity)) {
+										state.isInconsistent = true;
+									}
 								}
 							}
 						}
 					}
+					state.isInitialization = state.isInitialization || channel.getEcoState().isInitializationState();
 				}
-				state.isInitialization = state.isInitialization || channel.getEcoState().isInitializationState();
 			}
-		}
-
-		if (!state.onGround.isEmpty()) {
-			State lastState = getLastState();
-			if (lastState==null || !lastState.equals(state)) {
-				synchronized(this) {
+	
+			if (!state.onGround.isEmpty()) {
+				State lastState = getLastState();
+				if (lastState==null || !lastState.equals(state)) {
 					this.worldStates.add(state);
 					int oldIndex = this.currentStateIndex;
 					if (this.currentStateIndex<0) {

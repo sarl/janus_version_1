@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,9 @@ public abstract class EcoProblem {
 	}
 	
 	/** Launch eco-resolution problem solving.
+	 * 
+	 * @param monitor is the monitor that checks if the problem is solved.
 	 */
-	public abstract void solve();
+	public abstract void solve(EcoProblemMonitor monitor);
 		
 }

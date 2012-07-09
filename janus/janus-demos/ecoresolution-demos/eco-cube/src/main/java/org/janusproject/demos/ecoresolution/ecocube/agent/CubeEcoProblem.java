@@ -35,10 +35,9 @@ import org.janusproject.ecoresolution.agent.EcoAgent;
 public class CubeEcoProblem extends AgentBasedEcoProblem {
 
 	/**
-	 * @param cubeCount is the number of cubes in the problem.
 	 */
-	public CubeEcoProblem(int cubeCount) {
-		super(cubeCount);
+	public CubeEcoProblem() {
+		//
 	}
 	
 	/** Add initial eco-resolution relationship.
