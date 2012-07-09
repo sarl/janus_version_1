@@ -13,7 +13,6 @@
 	<packaging>pom</packaging>
 	<groupId>org.janus-project.kernel</groupId>
 	<artifactId>janus-kernel</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<name>Janus Kernel</name>
 
 	<!-- CAUTION: theses modules have not the org.janus-project.kernel:janus-kernel 

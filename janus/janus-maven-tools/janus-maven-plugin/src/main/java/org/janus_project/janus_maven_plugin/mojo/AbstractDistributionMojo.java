@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2009-2011 Janus Core Developers
+ * Copyright (C) 2009-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -143,7 +143,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void detectEmbeddedArtifacts(Artifact a, Set<File> inputDirs) throws MojoExecutionException {
+	private void detectEmbeddedArtifacts(Set<File> inputDirs) throws MojoExecutionException {
 		MavenProject p = this.getMavenSession().getCurrentProject();
 
 		List<Dependency> odeps = p.getDependencies();
@@ -186,7 +186,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 
 			Set<File> inputDirs = new HashSet<>();
 			inputDirs.add(depFile);
-			detectEmbeddedArtifacts(artifact, inputDirs);
+			detectEmbeddedArtifacts(inputDirs);
 
 			// Zipping the folder
 			ZipUtils.zipDirectories(getLog(), inputDirs, outputJar);

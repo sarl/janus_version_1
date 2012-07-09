@@ -20,7 +20,6 @@
 
 	<groupId>org.janus-project.kernel</groupId>
 	<artifactId>agentmemory</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Agent memory</name>
 

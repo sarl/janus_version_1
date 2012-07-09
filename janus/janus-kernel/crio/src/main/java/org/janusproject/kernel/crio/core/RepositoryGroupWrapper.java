@@ -110,6 +110,7 @@ class RepositoryGroupWrapper implements RepositoryChangeListener {
 			fireDeletion(((KernelScopeGroup)evt.getOldValue()).toGroup(false));
 			break;
 		case UPDATE:
+		default:
 		}
 	}
 	

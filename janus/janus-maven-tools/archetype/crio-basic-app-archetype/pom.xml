@@ -8,9 +8,7 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.janus-project.maven</groupId>
 	<artifactId>crio-basic-app-archetype</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>maven-archetype</packaging>
 	<name>CRIO Application Archetype</name>
 	<description>Creates a simple Janus Application based on the CRIO meta-model</description>

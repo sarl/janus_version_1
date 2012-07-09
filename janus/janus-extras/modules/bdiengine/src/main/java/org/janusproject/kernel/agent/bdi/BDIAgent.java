@@ -416,6 +416,8 @@ public abstract class BDIAgent extends Agent implements BDIGoalSelector, BDIPlan
 					return BDIAgentState.PLAN_IN_PROGRESS;
 				case SUCCESSFUL:
 					return BDIAgentState.PLAN_SUCCESSFUL;
+				default:
+					throw new IllegalStateException();
 				}
 
 			} catch (Exception e) {

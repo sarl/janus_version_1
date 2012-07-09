@@ -7,9 +7,7 @@
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 
-	<groupId>org.janus-project.extras.modules.ecoresolution</groupId>
 	<artifactId>ecoengine</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<name>Generic EcoResolution Engine</name>
 
 

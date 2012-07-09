@@ -19,7 +19,6 @@
 
 	<groupId>org.janus-project.kernel</groupId>
 	<artifactId>logger</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<name>Logger Utilities</name>
 
 	<dependencies>

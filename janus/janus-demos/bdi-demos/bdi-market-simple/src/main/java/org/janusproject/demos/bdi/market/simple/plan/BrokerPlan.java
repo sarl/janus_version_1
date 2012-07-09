@@ -154,6 +154,8 @@ public class BrokerPlan extends BDIPlan{
 			break;
 		case BYE_BYE:
 			return new BDIPlanStatus(BDIPlanStatusType.SUCCESSFUL);
+		default:
+			throw new IllegalStateException();
 		}
 
 		BDIAction action = this.actions.get(actionIndex);

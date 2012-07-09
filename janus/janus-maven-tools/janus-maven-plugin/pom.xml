@@ -8,11 +8,9 @@
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 
-	<groupId>org.janus-project.maven</groupId>
 	<artifactId>janus-maven-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
 	<name>Janus Maven Plugin</name>
-	<version>0.5-SNAPSHOT</version>
 	<description>A Maven plugin to handle Janus Applications</description>
 
 	<build>

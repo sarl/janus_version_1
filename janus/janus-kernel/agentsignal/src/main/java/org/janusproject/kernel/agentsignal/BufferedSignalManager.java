@@ -74,6 +74,7 @@ public class BufferedSignalManager extends AbstractSignalManager {
 		case STORE_IN_QUEUE:
 			// Do nothing because the events were already stored in the queue.
 			break;
+		default:
 		}
 	}
 
@@ -102,6 +103,7 @@ public class BufferedSignalManager extends AbstractSignalManager {
 				}
 			}
 			break;
+		default:
 		}
 	}
 

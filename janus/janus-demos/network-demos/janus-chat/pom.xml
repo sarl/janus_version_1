@@ -11,10 +11,8 @@
 	</parent>
 
 	<packaging>pom</packaging>
-	<groupId>org.janus-project.demos.network</groupId>
 	<artifactId>janus-chat</artifactId>
 	<name>Janus Chat Rooms</name>
-	<version>0.5-SNAPSHOT</version>
 
 	<modules>
 		<module>janus-chat-model</module>

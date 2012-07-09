@@ -349,10 +349,8 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 				while (iterator.hasNext()) {
 					bu = iterator.next();
 					fu = FileSystem.join(bu, scriptBasename);
-					try {
-						InputStreamReader ios = new InputStreamReader(fu.openStream());
+					try (InputStreamReader ios = new InputStreamReader(fu.openStream())) {
 						ios.read();
-						ios.close();
 						return fu;
 					}
 					catch (Throwable e) {

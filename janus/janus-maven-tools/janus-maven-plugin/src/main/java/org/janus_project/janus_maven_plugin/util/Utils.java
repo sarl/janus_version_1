@@ -25,7 +25,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -126,8 +125,7 @@ public class Utils {
 	 * @return <code>true</code> if the given file is an OSGi bundle, otherwise <code>false</code>.
 	 */
 	public static boolean isOSGiBundle(File file) {
-		try {
-			JarFile jFile = new JarFile(file);
+		try (JarFile jFile = new JarFile(file)) {
 			// Get the manifest
 			Manifest manifest = jFile.getManifest();
 
@@ -156,14 +154,16 @@ public class Utils {
 				File manifestFile = new File(new File(file, "META-INF"), "MANIFEST.MF"); //$NON-NLS-1$ //$NON-NLS-2$
 				if (manifestFile.canRead()) {
 					// Get the manifest
-					Manifest manifest = new Manifest(new FileInputStream(manifestFile));
+					try (FileInputStream fis = new FileInputStream(manifestFile)) {
+						Manifest manifest = new Manifest(fis);
 
-					Attributes attrs = manifest.getMainAttributes();
-
-					String name = attrs.getValue(BUNDLE_SYM_NAME);
-
-					if (name != null) {
-						return true;
+						Attributes attrs = manifest.getMainAttributes();
+	
+						String name = attrs.getValue(BUNDLE_SYM_NAME);
+	
+						if (name != null) {
+							return true;
+						}
 					}
 				}
 			} catch (IOException e) {
@@ -193,37 +193,37 @@ public class Utils {
 			}
 		};
 
-		InputStream in;
 		int len;
 		byte[] buf = new byte[1024];
 
 		StringBuilder oldContent = new StringBuilder();
 		if (!eraseExistingContent && dst.exists()) {
-			in = new FileInputStream(dst);
-			while ((len = in.read(buf)) > 0) {
-				oldContent.append(new String(buf, 0, len));
+			try (FileInputStream in = new FileInputStream(dst)) {
+				while ((len = in.read(buf)) > 0) {
+					oldContent.append(new String(buf, 0, len));
+				}
 			}
-			in.close();
 			if (oldContent.length() > 0) {
 				oldContent.append("\n"); //$NON-NLS-1$
 			}
 		}
 
-		OutputStream out = new FileOutputStream(dst);
+		try (OutputStream out = new FileOutputStream(dst)) {
 
-		children = dir.list(filter);
-		Arrays.sort(children);
-
-		out.write(oldContent.toString().getBytes());
-
-		for (String child : children) {
-			in = new FileInputStream(new File(dir, child));
-			while ((len = in.read(buf)) > 0) {
-				out.write(buf, 0, len);
+			children = dir.list(filter);
+			Arrays.sort(children);
+	
+			out.write(oldContent.toString().getBytes());
+	
+			for (String child : children) {
+				try (FileInputStream in = new FileInputStream(new File(dir, child))) {
+					while ((len = in.read(buf)) > 0) {
+						out.write(buf, 0, len);
+					}
+				}
 			}
-		}
 
-		out.close();
+		}
 	}
 
 	/**
@@ -304,9 +304,9 @@ public class Utils {
 	 * @throws IOException
 	 */
 	public static void touchFile(File file) throws IOException {
-		FileOutputStream s = new FileOutputStream(file);
-		s.write(file.toString().getBytes());
-		s.close();
+		try (FileOutputStream s = new FileOutputStream(file)) {
+			s.write(file.toString().getBytes());
+		}
 	}
 
 }

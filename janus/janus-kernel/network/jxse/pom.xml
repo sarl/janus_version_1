@@ -17,7 +17,6 @@
 
 	<groupId>org.janus-project.kernel.network</groupId>
 	<artifactId>jxse</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>JXTA-JXSE Janus Kernel</name>
 	<build>

@@ -14,7 +14,6 @@
 	<artifactId>market-simple</artifactId>
 	<packaging>jar</packaging>
 	<name>Market MAS demo</name>
-	<version>0.5-SNAPSHOT</version>
 	<inceptionYear>2004</inceptionYear>
 
 	<build>

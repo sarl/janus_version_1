@@ -13,7 +13,6 @@
 	<groupId>org.janus-project.demos.ecoresolution</groupId>
 	<artifactId>ecoresolution-demos</artifactId>
 	<name>Janus Eco-resolution Demos</name>
-	<version>0.5-SNAPSHOT</version>
 	
 	<modules>
 		<module>eco-cube</module>

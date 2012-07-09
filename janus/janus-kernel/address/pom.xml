@@ -19,7 +19,6 @@
 
 	<groupId>org.janus-project.kernel</groupId>
 	<artifactId>address</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Addresses</name>
 

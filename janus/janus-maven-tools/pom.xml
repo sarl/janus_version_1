@@ -10,7 +10,6 @@
 	<groupId>org.janus-project.maven</groupId>
 	<artifactId>janus-maven-tools</artifactId>
 	<packaging>pom</packaging>
-	<version>0.5-SNAPSHOT</version>
 	<name>Janus Maven Tools</name>
 	<description>A set of Apache Maven tools to simplify the development of Janus Modules and Applications with maven.</description>
 

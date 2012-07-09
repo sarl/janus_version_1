@@ -318,6 +318,8 @@ public class NPuzzlePanel extends JPanel implements ChannelInteractableListener,
 				break;
 
 			case BLANK:break;
+			default:
+				throw new IllegalStateException();
 			}
 			state.isInitialization = state.isInitialization || channel.getEcoState().isInitializationState();
 		}

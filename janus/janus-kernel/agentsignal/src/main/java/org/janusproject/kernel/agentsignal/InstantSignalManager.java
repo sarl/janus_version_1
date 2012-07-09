@@ -87,6 +87,7 @@ public class InstantSignalManager extends AbstractSignalManager {
 				}
 			}
 			break;
+		default:
 		}
 	}
 

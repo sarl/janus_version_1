@@ -833,6 +833,7 @@ public class ScriptedAgent extends Agent {
 		 * 
 		 * @param context is the context to associate to this manager.
 		 */
+		@SuppressWarnings("resource")
 		public void preExecution(ScriptExecutionContext context) {
 			Writer w;
 			this.lastActivity = System.currentTimeMillis();

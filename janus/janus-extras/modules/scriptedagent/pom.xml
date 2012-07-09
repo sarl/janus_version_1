@@ -10,7 +10,6 @@
 
 	<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
 	<artifactId>scriptedagent</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>ScriptedAgent</name>
 	<inceptionYear>2011</inceptionYear>

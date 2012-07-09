@@ -44,6 +44,7 @@ class ValidatorStub extends PrototypeValidator<Object,PrototypeStub> {
 			return prototype.optionalInputAt();
 		case OUTPUT:
 			return prototype.optionalOutputAt();
+		default:
 		}
 		return -1;
 	}
@@ -61,6 +62,7 @@ class ValidatorStub extends PrototypeValidator<Object,PrototypeStub> {
 		case OUTPUT:
 			types = prototype.output();
 			break;
+		default:
 		}
 		if (types!=null
 			&& types.length==1
@@ -83,6 +85,7 @@ class ValidatorStub extends PrototypeValidator<Object,PrototypeStub> {
 		case OUTPUT:
 			type = prototype.allOutput();
 			break;
+		default:
 		}
 		if (type!=null
 			&& type == PrototypeStub.class) {

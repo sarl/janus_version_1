@@ -10,7 +10,6 @@
 
 	<groupId>org.janus-project.extras.modules.bdiengine</groupId>
 	<artifactId>bdiengine</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>BDI Engine</name>
 	<inceptionYear>2011</inceptionYear>

@@ -9,7 +9,6 @@
 
 	<groupId>org.janus-project.kernel</groupId>
 	<artifactId>janus-benchs</artifactId>
-	<version>0.5-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>

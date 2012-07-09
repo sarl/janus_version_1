@@ -14,7 +14,6 @@
 	<artifactId>contract-net-protocol</artifactId>
 	<packaging>jar</packaging>
 	<name>ContractNetProtocol ACL Janus demo</name>
-	<version>0.5-SNAPSHOT</version>
 	<inceptionYear>2012</inceptionYear>
 
 	<build>

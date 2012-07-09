@@ -127,6 +127,8 @@ public class ClientPlan extends BDIPlan {
 			return new BDIPlanStatus(BDIPlanStatusType.PAUSED);
 		case BYE_BYE:
 			return new BDIPlanStatus(BDIPlanStatusType.SUCCESSFUL);
+		default:
+			throw new IllegalStateException();
 		}
 
 		BDIAction action = this.actions.get(actionIndex);
@@ -212,6 +214,8 @@ public class ClientPlan extends BDIPlan {
 		case CONTACT_SELLER:
 			//FIXME: Something to do?
 			break;
+		default:
+			throw new IllegalStateException();
 		}
 	}
 	

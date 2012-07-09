@@ -11,7 +11,6 @@
 
 	<groupId>org.janus-project.demos</groupId>
 	<artifactId>eco-cube</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Eco-Resolution Cube Problem</name>
 	<inceptionYear>2011</inceptionYear>

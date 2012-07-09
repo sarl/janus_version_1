@@ -19,7 +19,6 @@
 
 	<groupId>org.janus-project.kernel</groupId>
 	<artifactId>configuration</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<name>Configuration</name>
 
 	<dependencies>

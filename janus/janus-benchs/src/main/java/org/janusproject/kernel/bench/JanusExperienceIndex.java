@@ -401,12 +401,10 @@ public class JanusExperienceIndex {
 
 			garbage();
 
-			{
-				ZipOutputStream zos = new ZipOutputStream(new ByteArrayOutputStream());
+			try (ZipOutputStream zos = new ZipOutputStream(new ByteArrayOutputStream())) {
 				s = System.nanoTime();
 				zos.putNextEntry(new ZipEntry("test.bin")); //$NON-NLS-1$
 				zos.write(buffer, 0, buffer.length);
-				zos.close();
 				e = System.nanoTime();
 				compressionDelay = e - s;
 			}
@@ -481,18 +479,16 @@ public class JanusExperienceIndex {
 				long e, s;
 					
 				s = System.nanoTime();
-				{
-					FileWriter fw = new FileWriter(tempFile);
+				try (FileWriter fw = new FileWriter(tempFile)) {
 					for(int i=0; i<1024*1024*20; ++i) {
 						fw.write('A');
 					}
 					fw.flush();
-					fw.close();
-					FileReader fr = new FileReader(tempFile);
+				}
+				try (FileReader fr = new FileReader(tempFile)) {
 					while (fr.read()!=-1) {
 						//
 					}
-					fr.close();
 				}
 				e = System.nanoTime();
 

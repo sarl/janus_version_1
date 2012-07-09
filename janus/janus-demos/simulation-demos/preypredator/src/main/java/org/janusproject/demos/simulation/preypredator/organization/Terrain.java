@@ -311,6 +311,8 @@ public class Terrain extends Role {
 			break;
 		case NONE:
 			break;
+		default:
+			throw new IllegalStateException();
 		}
 
 		if (((nx!=x)||(ny!=y))&&
@@ -352,6 +354,8 @@ public class Terrain extends Role {
 			break;
 		case NONE:
 			break;
+		default:
+			throw new IllegalStateException();
 		}
 
 		if (((nx!=x)||(ny!=y))&&

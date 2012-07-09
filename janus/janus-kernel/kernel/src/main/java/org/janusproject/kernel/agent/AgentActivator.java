@@ -143,6 +143,8 @@ extends AbstractActivator<Agent> {
 						KernelStatusConstants.UNEXPECTED_AGENT_STATE_DURING_DESTRUCTION);
 				killAgent(h);
 				break;
+			default:
+				s = new ExceptionStatus(new IllegalStateException());
 			}
 			if (s!=null) ms.addStatus(s);
 			Thread.yield();

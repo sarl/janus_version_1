@@ -10,7 +10,6 @@
 
 	<groupId>org.janus-project.extras.modules.ecoresolution</groupId>
 	<artifactId>ecoresolution</artifactId>
-	<version>0.5-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
 	<name>EcoResolution</name>

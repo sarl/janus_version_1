@@ -10,10 +10,8 @@
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 
-	<groupId>org.janus-project.demos.bdi</groupId>
 	<artifactId>bdi-market-simple</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5-SNAPSHOT</version>
 	<name>Simple BDI Agent demo</name>
 	<inceptionYear>2011</inceptionYear>
 

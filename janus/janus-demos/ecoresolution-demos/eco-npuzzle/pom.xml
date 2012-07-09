@@ -10,7 +10,6 @@
 
 	<groupId>org.janus-project.demos</groupId>
 	<artifactId>eco-npuzzle</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Eco-Resolution N-Puzzle Problem</name>
 	<inceptionYear>2011</inceptionYear>

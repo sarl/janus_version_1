@@ -10,7 +10,6 @@
 
 	<groupId>org.janus-project.demos</groupId>
 	<artifactId>jruby-shellagent</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>JRuby Shell Agent Demo</name>
 	<inceptionYear>2011</inceptionYear>

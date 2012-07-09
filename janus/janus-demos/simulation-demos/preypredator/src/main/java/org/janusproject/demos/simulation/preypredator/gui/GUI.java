@@ -430,19 +430,19 @@ public class GUI extends JPanel implements WorldStateChangeListener {
 			}
 			
 			if (this.moveStep>=0) {
-				drawMovingAgents(g2d, currentDim);
+				drawMovingAgents(g2d);
 			}
 			else {
-				drawAgents(g2d, currentDim);					
+				drawAgents(g2d);					
 			}
 			
 			drawGrid(g2d, currentDim);
 		}
 		
-		private void drawMovingAgents(Graphics2D g2d, Dimension currentDim) {
+		private void drawMovingAgents(Graphics2D g2d) {
 			if ((this.moveStep<0)||
 				(GUI.this.nextPositions==null)||
-				(GUI.this.positions==null)) drawAgents(g2d, currentDim);
+				(GUI.this.positions==null)) drawAgents(g2d);
 			
 			int x, y, deltaX, deltaY;
 			WorldState d;
@@ -489,7 +489,7 @@ public class GUI extends JPanel implements WorldStateChangeListener {
 			}
 		}
 		
-		private void drawAgents(Graphics2D g2d, Dimension currentDim) {
+		private void drawAgents(Graphics2D g2d) {
 			if (GUI.this.positions==null) return;
 			int x, y;
 			WorldState d;

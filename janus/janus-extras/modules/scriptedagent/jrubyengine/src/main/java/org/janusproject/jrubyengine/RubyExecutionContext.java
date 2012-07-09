@@ -169,6 +169,7 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("resource")
 	@Override
 	public boolean isFunction(String functionName) {
 		Writer old = getStandardError();

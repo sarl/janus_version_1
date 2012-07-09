@@ -12,7 +12,6 @@
 	<groupId>org.janus-project.demos</groupId>
 	<artifactId>foragerbots</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5-SNAPSHOT</version>
 	<name>Forager Bots</name>
 	<description>Simulation of Forager Bots</description>
 	<inceptionYear>2010</inceptionYear>

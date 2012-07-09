@@ -9,10 +9,8 @@
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 
-	<groupId>org.janus-project.demos.network</groupId>
 	<artifactId>janus-chat-swing</artifactId>
 	<name>Swing Chat Demo</name>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<inceptionYear>2010</inceptionYear>
 

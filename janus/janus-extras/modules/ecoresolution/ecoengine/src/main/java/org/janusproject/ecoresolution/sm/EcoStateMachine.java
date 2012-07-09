@@ -209,6 +209,8 @@ public class EcoStateMachine {
 					isRun = true;
 					break;
 				}
+				default:
+					throw new IllegalStateException();
 				}
 			} else if (this.state == EcoState.INITIALIZING && !goalChanged && e.isProblemSolvingParticipantReady()) {
 				updateState(EcoState.INITIALIZED);

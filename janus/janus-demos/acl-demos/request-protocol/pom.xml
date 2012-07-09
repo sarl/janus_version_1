@@ -14,7 +14,6 @@
 	<artifactId>request-protocol</artifactId>
 	<packaging>jar</packaging>
 	<name>Request Protocol ACL Janus demo</name>
-	<version>0.5-SNAPSHOT</version>
 	<inceptionYear>2012</inceptionYear>
 
 	<build>

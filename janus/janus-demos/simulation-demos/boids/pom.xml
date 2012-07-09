@@ -13,7 +13,6 @@
 	<groupId>org.janus-project.demos</groupId>
 	<artifactId>boids</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5-SNAPSHOT</version>
 	<name>Boids Simulation demo</name>
 	<inceptionYear>2004</inceptionYear>
 	

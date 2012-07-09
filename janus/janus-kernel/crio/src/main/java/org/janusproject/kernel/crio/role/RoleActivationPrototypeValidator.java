@@ -93,6 +93,7 @@ extends PrototypeValidator<Role,RoleActivationPrototype> {
 			return prototype.optionalParameterAt();
 		case OUTPUT:
 			return -1;
+		default:
 		}
 		return -1;
 	}
@@ -111,6 +112,7 @@ extends PrototypeValidator<Role,RoleActivationPrototype> {
 			break;
 		case OUTPUT:
 			break;
+		default:
 		}
 		if (types!=null
 			&& types.length==1
@@ -134,6 +136,7 @@ extends PrototypeValidator<Role,RoleActivationPrototype> {
 			break;
 		case OUTPUT:
 			break;
+		default:
 		}
 		if (type!=null
 			&& type == RoleActivationPrototype.class) {

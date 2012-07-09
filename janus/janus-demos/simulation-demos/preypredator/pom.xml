@@ -10,7 +10,6 @@
 
 	<groupId>org.janus-project.demos</groupId>
 	<artifactId>preypredator</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Prey-predator Demonstration</name>
 	<inceptionYear>2004</inceptionYear>

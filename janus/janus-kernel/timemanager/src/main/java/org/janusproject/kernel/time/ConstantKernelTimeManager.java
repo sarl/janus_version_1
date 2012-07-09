@@ -103,6 +103,7 @@ public class ConstantKernelTimeManager implements KernelTimeManager {
 			return this.time / 1e-3f;
 		case NANOSECONDS:
 			return this.time / 1e-6f;
+		default:
 		}
 		throw new IllegalArgumentException();
 	}

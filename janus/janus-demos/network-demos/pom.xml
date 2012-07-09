@@ -13,7 +13,6 @@
 	<groupId>org.janus-project.demos.network</groupId>
 	<artifactId>network-demos</artifactId>
 	<name>Janus Network Demos</name>
-	<version>0.5-SNAPSHOT</version>
 	
 	<modules>
 		<module>janus-chat</module>

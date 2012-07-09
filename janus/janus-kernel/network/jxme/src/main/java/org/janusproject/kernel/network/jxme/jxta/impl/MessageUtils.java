@@ -104,12 +104,13 @@ class MessageUtils {
 		byte[] buffer = data;
 		MimeMediaType mimeType = MimeMediaType.AOS;
 		if (compress) {
-			ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-			GZIPOutputStream gos = new GZIPOutputStream(outStream);
-			gos.write(data, 0, data.length);
-			gos.finish();
-			gos.close();
-			buffer = outStream.toByteArray();
+			try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
+				try (GZIPOutputStream gos = new GZIPOutputStream(outStream)) {
+					gos.write(data, 0, data.length);
+					gos.finish();
+				}
+				buffer = outStream.toByteArray();
+			}
 			mimeType = GZIP_MEDIA_TYPE;
 		}
 		message.addMessageElement(nameSpace, new ByteArrayMessageElement(
@@ -133,13 +134,13 @@ class MessageUtils {
 	 */
 	public static void addObjectToMessage(Message message, String nameSpace,
 			String elemName, Object object) throws IOException {
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ObjectOutputStream oos = new ObjectOutputStream(bos);
-		oos.writeObject(object);
-		oos.close();
-		bos.close();
-		addByteArrayToMessage(message, nameSpace, elemName, bos.toByteArray(),
-				false);
+		try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+			try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+				oos.writeObject(object);
+			}
+			addByteArrayToMessage(message, nameSpace, elemName, bos.toByteArray(),
+					false);
+		}
 	}
 
 	/**
@@ -216,8 +217,9 @@ class MessageUtils {
 		if (null == is) {
 			return null;
 		}
-		ObjectInputStream ois = new OSGIHelperObjectInputStream(is,helper);
-		return ois.readObject();
+		try (ObjectInputStream ois = new OSGIHelperObjectInputStream(is,helper)) {
+			return ois.readObject();
+		}
 	}
 
 

@@ -8,9 +8,7 @@
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 
-	<groupId>org.janus-project.demos.network</groupId>
 	<artifactId>janus-chat-android</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>apk</packaging>
 	<name>Android Chat Demo</name>
 	<description>Android Janus Chat</description>

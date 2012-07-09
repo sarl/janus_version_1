@@ -21,7 +21,6 @@
 	<groupId>org.janus-project.kernel</groupId>
 	<artifactId>util</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5-SNAPSHOT</version>
 	<name>General Utilities</name>
 
 	<dependencies>

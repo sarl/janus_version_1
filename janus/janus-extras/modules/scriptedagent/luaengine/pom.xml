@@ -8,9 +8,7 @@
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 
-	<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
 	<artifactId>luaengine</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<name>Lua Interpreter for Agents</name>
 
 	<!-- ======================================= -->

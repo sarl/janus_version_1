@@ -13,7 +13,6 @@
 	<groupId>org.janus-project.demos.scriptedagent.groovy</groupId>
 	<artifactId>groovy-demos</artifactId>
 	<name>Janus Groovy Scripted Agent Demos</name>
-	<version>0.5-SNAPSHOT</version>
 	
 	<modules>
 		<module>groovy-shellagent</module>

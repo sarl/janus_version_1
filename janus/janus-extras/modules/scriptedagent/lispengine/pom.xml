@@ -8,8 +8,6 @@
 	</parent>
 
 	<artifactId>lispengine</artifactId>
-	<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
-	<version>0.5-SNAPSHOT</version>
 	<name>Common Lisp Interpreter</name>
 
 	<!-- ======================================= -->

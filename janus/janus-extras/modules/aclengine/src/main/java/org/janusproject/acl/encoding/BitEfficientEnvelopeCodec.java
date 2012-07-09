@@ -52,25 +52,12 @@ public class BitEfficientEnvelopeCodec implements ACLMessageEnvelopeEncodingServ
 		
 		byte[] encodedEnvelope = null;
 		
-		try {
-			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); // Output flow
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream( byteArrayOutputStream ); // Objects flow
-			
-			try 
-			{
-				objectOutputStream.writeObject(envelope); // Serialization of the envelope
-				encodedEnvelope = byteArrayOutputStream.toByteArray(); // Envelope encoded in array of bytes
-				objectOutputStream.flush();
-			} 
-			finally 
-			{
-				try {
-					objectOutputStream.close();
-				} 
-				finally {
-					byteArrayOutputStream.close();
-				}
-			}
+		try (
+				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); // Output flow
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream( byteArrayOutputStream )) { // Objects flow
+			objectOutputStream.writeObject(envelope); // Serialization of the envelope
+			encodedEnvelope = byteArrayOutputStream.toByteArray(); // Envelope encoded in array of bytes
+			objectOutputStream.flush();
 		} 
 		catch(IOException ioe) {
 			ioe.printStackTrace();
@@ -88,25 +75,11 @@ public class BitEfficientEnvelopeCodec implements ACLMessageEnvelopeEncodingServ
 		
 		ACLMessage.Envelope decodedEnvelope = null;
 		
-		try 
-		{
-			ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(encodedEnvelope); // Input flow
-			ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream); // Objects flow
-			
-			try 
-			{	
-				// Unserialization of the envelope
-				decodedEnvelope = (ACLMessage.Envelope) objectInputStream.readObject(); 
-			} 
-			finally 
-			{
-				try {
-					objectInputStream.close();
-				} 
-				finally {
-					byteArrayInputStream.close();
-				}
-			}
+		try (
+				ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(encodedEnvelope); // Input flow
+				ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) { // Objects flow
+			// Unserialization of the envelope
+			decodedEnvelope = (ACLMessage.Envelope) objectInputStream.readObject(); 
 		} 
 		catch(IOException ioe) {
 			ioe.printStackTrace();

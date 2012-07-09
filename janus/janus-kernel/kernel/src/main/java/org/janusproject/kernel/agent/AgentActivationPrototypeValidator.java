@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,6 +92,7 @@ extends PrototypeValidator<Agent,AgentActivationPrototype> {
 			return prototype.optionalParameterAt();
 		case OUTPUT:
 			break;
+		default:
 		}
 		return -1;
 	}
@@ -110,6 +111,7 @@ extends PrototypeValidator<Agent,AgentActivationPrototype> {
 			break;
 		case OUTPUT:
 			break;
+		default:
 		}
 		if (types!=null
 			&& types.length==1
@@ -133,6 +135,7 @@ extends PrototypeValidator<Agent,AgentActivationPrototype> {
 			break;
 		case OUTPUT:
 			break;
+		default:
 		}
 		if (type!=null
 			&& type == AgentActivationPrototype.class) {

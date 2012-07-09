@@ -14,7 +14,6 @@
 	<groupId>org.janus-project.demos.simulation</groupId>
 	<artifactId>simulation-demos</artifactId>
 	<name>Janus Simulation Demos</name>
-	<version>0.5-SNAPSHOT</version>
 
 	<modules>
 		<module>boids</module>

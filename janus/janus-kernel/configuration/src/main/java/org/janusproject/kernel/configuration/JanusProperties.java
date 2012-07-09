@@ -611,6 +611,7 @@ public class JanusProperties extends Properties {
 		case JXTA_APPLICATION_ID:
 			// null default value
 			break;
+		default:
 		}
 		return getProperty(property, defVal);
 	}
@@ -660,6 +661,7 @@ public class JanusProperties extends Properties {
 		case JXTA_LEVEL:
 		case JXTA_LOGGING:
 			return new JanusProperty[0];
+		default:
 		}
 		throw new IllegalArgumentException(prop.toString());
 	}
@@ -706,6 +708,7 @@ public class JanusProperties extends Properties {
 		case JXTA_LEVEL:
 		case JXTA_LOGGING:
 			return getProperty(property.getPropertyName(), defaultValue);
+		default:
 		}
 		throw new IllegalArgumentException(property.toString());
 	}

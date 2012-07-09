@@ -110,6 +110,8 @@ public class SellerPlan extends BDIPlan {
 			break;
 		case GOOD_BYE:
 			break;
+		default:
+			throw new IllegalStateException();
 		}
 
 		BDIAction action = this.actions.get(actionIndex);
@@ -163,6 +165,8 @@ public class SellerPlan extends BDIPlan {
 		case RESPOND_TO_BUYER:
 			// FIXME: Something to do?
 			break;
+		default:
+			throw new IllegalStateException();
 		}
 	}
 	

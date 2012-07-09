@@ -9,10 +9,8 @@
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 
-	<groupId>org.janus-project.demos.network</groupId>
 	<artifactId>janus-chat-model</artifactId>
 	<name>Janus Chat Room Model</name>
-	<version>0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<inceptionYear>2010</inceptionYear>
 	<url>http://www.janus-project.org</url>

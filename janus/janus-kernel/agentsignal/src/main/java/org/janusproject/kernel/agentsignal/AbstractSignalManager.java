@@ -108,6 +108,7 @@ public abstract class AbstractSignalManager implements SignalManager, SignalList
 				return this.events.getFirstAvailableSignal();
 			}
 			break;
+		default:
 		}
 		return null;
 	}
@@ -125,6 +126,7 @@ public abstract class AbstractSignalManager implements SignalManager, SignalList
 				return this.events.getQueueSize()>0;
 			}
 			break;
+		default:
 		}
 		return false;
 	}

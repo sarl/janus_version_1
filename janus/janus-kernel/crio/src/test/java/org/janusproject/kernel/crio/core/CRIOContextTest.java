@@ -247,12 +247,12 @@ public class CRIOContextTest extends TestCase {
 			}
 			catch(Throwable e) {
 				StringWriter sw = new StringWriter();
-				PrintWriter pw = new PrintWriter(sw);
-				pw.print(prop.getPropertyName());
-				pw.print(": "); //$NON-NLS-1$
-				pw.println(e.toString());
-				e.printStackTrace(pw);
-				pw.close();
+				try (PrintWriter pw = new PrintWriter(sw)) {
+					pw.print(prop.getPropertyName());
+					pw.print(": "); //$NON-NLS-1$
+					pw.println(e.toString());
+					e.printStackTrace(pw);
+				}
 				fail(sw.toString());
 			}
 			String currentValue = crioContext.getProperties().getProperty(prop);

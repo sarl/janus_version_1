@@ -203,6 +203,8 @@ public class ForagerBot extends Agent {
 				}
 			}
 			break;
+		default:
+			throw new IllegalStateException();
 		}
 		return StatusFactory.ok(this);
 	}

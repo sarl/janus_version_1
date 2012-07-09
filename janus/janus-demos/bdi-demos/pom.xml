@@ -13,7 +13,6 @@
 	<groupId>org.janus-project.demos.bdi</groupId>
 	<artifactId>bdi-demos</artifactId>
 	<name>Janus BDI Demos</name>
-	<version>0.5-SNAPSHOT</version>
 	
 	<modules>
 		<module>bdi-market-simple</module>

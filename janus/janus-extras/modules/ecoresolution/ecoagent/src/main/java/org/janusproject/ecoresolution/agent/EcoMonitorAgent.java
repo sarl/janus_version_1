@@ -111,6 +111,8 @@ class EcoMonitorAgent extends Agent implements KernelListener {
 			killMe();
 			break;
 		}
+		default:
+			throw new IllegalStateException();
 		}
 		return StatusFactory.ok(this);
 	}

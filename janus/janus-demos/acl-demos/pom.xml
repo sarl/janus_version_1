@@ -14,7 +14,6 @@
 	<groupId>org.janus-project.demos.acl-demos</groupId>
 	<artifactId>acl-demos</artifactId>
 	<name>Janus ACL Demos</name>
-	<version>0.5-SNAPSHOT</version>
 
 	<modules>
 		<module>base</module>

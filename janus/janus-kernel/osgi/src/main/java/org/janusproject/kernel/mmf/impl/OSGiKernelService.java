@@ -492,7 +492,7 @@ public class OSGiKernelService implements KernelService, KernelListener,
 							"DEFAULT_AUTHORIZATION_STATUS")); //$NON-NLS-1$
 		}
 		return getKernelAuthority().authorizeKernelOperation(
-				KernelOperation.MODULE_START, cred, params);
+				op, cred, params);
 	}
 
 	// /// Modules methods

@@ -8,9 +8,7 @@
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 
-	<groupId>org.janus-project.extras.modules.ecoresolution</groupId>
 	<artifactId>ecoagent</artifactId>
-	<version>0.5-SNAPSHOT</version>
 	<name>EcoAgent Problem Solving</name>
 
 	<!-- ======================================= -->

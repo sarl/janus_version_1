@@ -127,7 +127,9 @@ public class ProviderPlan extends BDIPlan{
 			break;
 		case BYE_BYE:
 			return new BDIPlanStatus(BDIPlanStatusType.SUCCESSFUL);
-		}
+		default:
+			throw new IllegalStateException();
+	}
 	
 		BDIAction action = this.actions.get(actionIndex);
 		Object parameters[] = null;
@@ -189,6 +191,8 @@ public class ProviderPlan extends BDIPlan{
 		case SEND_PROPOSAL_TO_BROKER:
 			// FIXME: Something to do?
 			break;
+		default:
+			throw new IllegalStateException();
 		}
 	}
 	

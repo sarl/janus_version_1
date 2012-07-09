@@ -132,6 +132,7 @@ public enum StatusSeverity {
 		case INFO:
 			return Level.INFO;
 		case OK:
+		default:
 		}
 		return Level.OFF;
 	}

@@ -208,7 +208,12 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 	@Override
 	protected Object evaluate(ScriptEngine engine, Reader stream)
 			throws ScriptException {
-		return engine.eval(new PrefixedReader(this.packageNameHeader, stream));
+		try (PrefixedReader reader = new PrefixedReader(this.packageNameHeader, stream)) {
+			return engine.eval(reader);
+		}
+		catch (IOException e) {
+			throw new ScriptException(e);
+		}
 	}
 
 	/**

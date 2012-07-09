@@ -100,9 +100,9 @@ extends Formatter {
 		if (record.getThrown() != null) {
 		    try {
 		        StringWriter sw = new StringWriter();
-		        PrintWriter pw = new PrintWriter(sw);
-		        record.getThrown().printStackTrace(pw);
-		        pw.close();
+		        try (PrintWriter pw = new PrintWriter(sw)) {
+		        	record.getThrown().printStackTrace(pw);
+		        }
 				output.append(sw.toString());
 		    }
 			catch(AssertionError ae) {

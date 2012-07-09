@@ -7,11 +7,9 @@
 	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.janus-project.maven</groupId>
 	<artifactId>archetype</artifactId>
 	<packaging>pom</packaging>
 	<name>Janus Archetypes</name>
-	<version>0.5-SNAPSHOT</version>
 	<modules>
 		<module>crio-basic-app-archetype</module>
 	</modules>

@@ -90,6 +90,7 @@ extends PrototypeValidator<Capacity,CapacityPrototype> {
 			return prototype.optionalParameterAt();
 		case OUTPUT:
 			return prototype.optionalOutputAt();
+		default:
 		}
 		return -1;
 	}
@@ -109,6 +110,7 @@ extends PrototypeValidator<Capacity,CapacityPrototype> {
 		case OUTPUT:
 			types = prototype.fixedOutput();
 			break;
+		default:
 		}
 		if (types!=null
 			&& types.length==1
@@ -133,6 +135,7 @@ extends PrototypeValidator<Capacity,CapacityPrototype> {
 		case OUTPUT:
 			type = prototype.variableOutput();
 			break;
+		default:
 		}
 		if (type!=null
 			&& type == CapacityPrototype.class) {
