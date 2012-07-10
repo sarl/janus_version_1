@@ -550,7 +550,7 @@ public abstract class Role extends
 		Logger logger = (this.logger != null) ? this.logger.get() : null;
 		if (logger == null) {
 			logger = LoggerUtil.createRoleLogger(getClass(), getTimeManager(), getPlayer(), getClass().getSimpleName());
-			this.logger = new SoftReference<>(logger);
+			this.logger = new SoftReference<Logger>(logger);
 		}
 		return logger;
 	}
@@ -667,9 +667,9 @@ public abstract class Role extends
 
 		assert (RoleActivationPrototypeValidator.validateInputParameters(
 				getClass(), params));
-		this.crioContext = new WeakReference<>(context);
-		this.group = new WeakReference<>(group);
-		this.owner = new WeakReference<>(player);
+		this.crioContext = new WeakReference<CRIOContext>(context);
+		this.group = new WeakReference<KernelScopeGroup>(group);
+		this.owner = new WeakReference<RolePlayer>(player);
 		this.address = new RoleAddress(this);
 		this.leaveMe = false;
 		return activate(params);
@@ -1048,7 +1048,7 @@ public abstract class Role extends
 	 * @since 0.5
 	 */
 	protected final <T extends Message> Iterable<T> peekMessages(Class<T> type) {
-		return getMailbox().iterable(new TypeSelector<>(type), false);
+		return getMailbox().iterable(new TypeSelector<T>(type), false);
 	}
 
 	/**
@@ -2476,7 +2476,7 @@ public abstract class Role extends
 	 * @GROUPAPI
 	 */
 	protected final Collection<Class<? extends Role>> getExistingRoles() {
-		MultiCollection<Class<? extends Role>> multiCollection = new MultiCollection<>();
+		MultiCollection<Class<? extends Role>> multiCollection = new MultiCollection<Class<? extends Role>>();
 		GroupRepository repo = this.crioContext.get().getGroupRepository();
 		assert (repo != null);
 		for (KernelScopeGroup grp : repo.values()) {
@@ -2569,7 +2569,7 @@ public abstract class Role extends
 		@Override
 		public void addMemoryListener(MemoryListener listener) {
 			if (this.listeners == null)
-				this.listeners = new ArrayList<>();
+				this.listeners = new ArrayList<MemoryListener>();
 			this.listeners.add(listener);
 			if (!this.isListener) {
 				this.isListener = true;
@@ -2619,7 +2619,7 @@ public abstract class Role extends
 		@Override
 		public void onKnownledgeChanged(MemoryEvent event) {
 			if (this.events == null) {
-				this.events = new LinkedList<>();
+				this.events = new LinkedList<MemoryEvent>();
 			}
 			this.events.add(event);
 		}

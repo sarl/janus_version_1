@@ -46,14 +46,14 @@ extends AbstractRepository<ID,DATA> {
 	/**
 	 */
 	public ConcurrentHashRepository() {
-		this.content = new ConcurrentHashMap<>();
+		this.content = new ConcurrentHashMap<ID,DATA>();
 	}
 	
 	/**
      * @param initialCapacity is the initial capacity.
 	 */
 	public ConcurrentHashRepository(int initialCapacity) {
-		this.content = new ConcurrentHashMap<>(initialCapacity);
+		this.content = new ConcurrentHashMap<ID,DATA>(initialCapacity);
 	}
 
 	/**
@@ -61,7 +61,7 @@ extends AbstractRepository<ID,DATA> {
 	 */
 	@Override
 	protected SizedIterator<Entry<ID,DATA>> getEntryIterator() {
-		return new ModifiableCollectionSizedIterator<>(
+		return new ModifiableCollectionSizedIterator<Entry<ID,DATA>>(
 				this.content.entrySet(),
 				this);
 	}

@@ -58,8 +58,8 @@ public class ActivatorAgentTest extends TestCase {
 		LoggerUtil.setGlobalLevel(Level.OFF);
 		Kernels.shutdownNow();
 		this.kernel = new KernelAgent(new AgentActivator(), true, null, null);
-		this.agent = new ActivatorAgent<>(new AgentActivator());
-		this.agent.kernel = new WeakReference<>(this.kernel);
+		this.agent = new ActivatorAgent<AgentActivator>(new AgentActivator());
+		this.agent.kernel = new WeakReference<KernelAgent>(this.kernel);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class ActivatorAgentTest extends TestCase {
 	}
 
 	private void bindToKernel(Agent h) {
-		h.kernel = new WeakReference<>(this.kernel);
+		h.kernel = new WeakReference<KernelAgent>(this.kernel);
 		this.kernel.getKernelContext().getAgentRepository().add(h.getAddress(), h);
 	}
 
@@ -83,7 +83,7 @@ public class ActivatorAgentTest extends TestCase {
 		if (expected==actual) return;
 		if (expected!=null && actual!=null && expected.size()==actual.size()) {
 			try {
-				ArrayList<Object> obj = new ArrayList<>(actual);
+				ArrayList<Object> obj = new ArrayList<Object>(actual);
 				Iterator<?> iterator = expected.iterator();
 				boolean failure = false;
 				Object o1;

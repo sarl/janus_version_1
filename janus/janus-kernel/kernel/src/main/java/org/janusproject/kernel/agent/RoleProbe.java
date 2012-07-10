@@ -64,7 +64,7 @@ extends AbstractIndividualProbe {
 	 */
 	public RoleProbe(ProbeManager manager, AgentAddress watchedAgent, GroupAddress group, Class<? extends Role> role) {
 		super(watchedAgent);
-		this.manager = new WeakReference<>(manager);
+		this.manager = new WeakReference<ProbeManager>(manager);
 		this.groupAddress = group;
 		this.role = role;
 	}
@@ -75,7 +75,7 @@ extends AbstractIndividualProbe {
 			ProbeManager pm = (this.manager==null) ? null : this.manager.get();
 			if (pm!=null) {
 				r = pm.getRole(getWatchedObject(), this.groupAddress, this.role);
-				if (r!=null) this.probedRole = new WeakReference<>(r);
+				if (r!=null) this.probedRole = new WeakReference<Role>(r);
 			}
 		}
 		return r;

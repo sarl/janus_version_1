@@ -56,7 +56,7 @@ public class PrivateMessageDialog extends JDialog implements ActionListener {
 	/**
 	 * Receiver of the message.
 	 */
-	private JComboBox<AgentAddress> receiver;
+	private JComboBox receiver;
 
 	/**
 	 * The content of the message to send
@@ -84,7 +84,7 @@ public class PrivateMessageDialog extends JDialog implements ActionListener {
 			receiverNameLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 			topPane.add(receiverNameLabel);
 			
-			this.receiver = new JComboBox<>();
+			this.receiver = new JComboBox();
 			this.receiver.setEditable(false);
 			topPane.add(this.receiver);
 						

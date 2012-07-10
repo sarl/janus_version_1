@@ -93,11 +93,20 @@ public abstract class CsvBench<R extends BenchRun> extends Bench<R> {
 		filename.append("#"); //$NON-NLS-1$
 		filename.append(benchFunctionName);
 		filename.append(".log"); //$NON-NLS-1$
-		try (PrintWriter s = new PrintWriter(new FileWriter(new File(this.outputDirectory, filename.toString())))) {
-			s.println(e.toString());
-			e.printStackTrace(s);
+		try {
+			PrintWriter s = new PrintWriter(new FileWriter(new File(this.outputDirectory, filename.toString())));
+			try {
+				s.println(e.toString());
+				e.printStackTrace(s);
+			}
+			catch(Throwable _) {
+				//
+			}
+			finally {
+				s.close();
+			}
 		}
-		catch(Throwable _) {
+		catch(IOException _) {
 			//
 		}
 	}

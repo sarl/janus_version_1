@@ -60,7 +60,7 @@ public class RoleAddress implements Address {
 		this.group = role.getGroupAddress();
 		this.roleType = role.getClass();
 		this.player = role.getPlayer();
-		this.role = new WeakReference<>(role);
+		this.role = new WeakReference<Role>(role);
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class RoleAddress implements Address {
 		if (role==null)
 			this.role = null;
 		else
-			this.role = new WeakReference<>(role);
+			this.role = new WeakReference<Role>(role);
 	}
 
 	/** Replies the role associated to this address.

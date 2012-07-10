@@ -232,7 +232,7 @@ public class AbstractCollectiveProbeTest extends TestCase {
 					value = clazz.cast(Double.toString(Math.PI));
 				
 				if (value!=null) {
-					Map<AgentAddress, T> map = new HashMap<>();
+					Map<AgentAddress, T> map = new HashMap<AgentAddress,T>();
 					map.put(AbstractCollectiveProbeTest.this.adr, value);
 					return map;
 				}
@@ -245,7 +245,7 @@ public class AbstractCollectiveProbeTest extends TestCase {
 		public Map<AgentAddress,Object> getProbeValue(String probeName) {
 			if (A1.equals(probeName)) {
 				Object value = Integer.valueOf(3);
-				Map<AgentAddress,Object> map = new HashMap<>();
+				Map<AgentAddress,Object> map = new HashMap<AgentAddress,Object>();
 				map.put(AbstractCollectiveProbeTest.this.adr, value);
 				return map;
 			}

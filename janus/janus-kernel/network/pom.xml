@@ -21,6 +21,7 @@
 	<name>Networking Janus Kernels</name>
 
 	<modules>
+	<module>jxta-base</module>
 	<module>jxse</module>
 	<module>jxme</module>
 	</modules>

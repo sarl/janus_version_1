@@ -44,21 +44,28 @@ import org.janusproject.acl.ACLMessageEnvelope;
  */
 public class BitEfficientEnvelopeCodec implements ACLMessageEnvelopeEncodingService
 {
-	/* (non-Javadoc)
-	 * @see org.janusproject.acl.encoding.ACLMessageEnvelopeEncodingService#encode(org.janusproject.acl.ACLMessage.Envelope)
+	/** {@inheritDoc}
 	 */
 	@Override
 	public byte[] encode(Envelope envelope) {
 		
 		byte[] encodedEnvelope = null;
 		
-		try (
-				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); // Output flow
-				ObjectOutputStream objectOutputStream = new ObjectOutputStream( byteArrayOutputStream )) { // Objects flow
-			objectOutputStream.writeObject(envelope); // Serialization of the envelope
-			encodedEnvelope = byteArrayOutputStream.toByteArray(); // Envelope encoded in array of bytes
-			objectOutputStream.flush();
-		} 
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); // Output flow
+		try {
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream( byteArrayOutputStream );
+			try {
+				objectOutputStream.writeObject(envelope); // Serialization of the envelope
+				encodedEnvelope = byteArrayOutputStream.toByteArray(); // Envelope encoded in array of bytes
+				objectOutputStream.flush();
+			} 
+			catch(IOException ioe) {
+				ioe.printStackTrace();
+			}
+			finally {
+				objectOutputStream.close();
+			}
+		}
 		catch(IOException ioe) {
 			ioe.printStackTrace();
 		}
@@ -67,26 +74,33 @@ public class BitEfficientEnvelopeCodec implements ACLMessageEnvelopeEncodingServ
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see org.janusproject.acl.encoding.ACLMessageEnvelopeEncodingService#decode(byte[])
+	/** {@inheritDoc}
 	 */
 	@Override
 	public ACLMessageEnvelope decode(byte[] encodedEnvelope) {
 		
 		ACLMessage.Envelope decodedEnvelope = null;
 		
-		try (
-				ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(encodedEnvelope); // Input flow
-				ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) { // Objects flow
-			// Unserialization of the envelope
-			decodedEnvelope = (ACLMessage.Envelope) objectInputStream.readObject(); 
-		} 
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(encodedEnvelope); // Input flow
+		try {
+			ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+			try {
+				// Unserialization of the envelope
+				decodedEnvelope = (ACLMessage.Envelope) objectInputStream.readObject(); 
+			} 
+			catch(IOException ioe) {
+				ioe.printStackTrace();
+			} 
+			catch(ClassNotFoundException cnfe) {
+				cnfe.printStackTrace();
+			}
+			finally {
+				objectInputStream.close();
+			}
+		}
 		catch(IOException ioe) {
 			ioe.printStackTrace();
 		} 
-		catch(ClassNotFoundException cnfe) {
-			cnfe.printStackTrace();
-		}
 		
 		return decodedEnvelope;		
 	}

@@ -61,7 +61,7 @@ extends AbstractCollectiveProbe {
 	 */
 	public AgentGroupProbe(ProbeManager manager, AgentAddress[] watchedAgents) {
 		super(watchedAgents);
-		this.manager = new WeakReference<>(manager);
+		this.manager = new WeakReference<ProbeManager>(manager);
 	}
 	
 	private List<WeakReference<Agent>> getAgents() {
@@ -69,11 +69,11 @@ extends AbstractCollectiveProbe {
 			ProbeManager pm = (this.manager==null) ? null : this.manager.get();
 			if (pm!=null) {
 				AgentAddress[] adrs = getWatchedObjects();
-				this.probedAgents = new ArrayList<>(adrs.length);
+				this.probedAgents = new ArrayList<WeakReference<Agent>>(adrs.length);
 				for(AgentAddress adr : adrs) {
 					Agent a = pm.getAgent(adr);
 					if (a!=null && a.isAlive()) {
-						this.probedAgents.add(new WeakReference<>(a));
+						this.probedAgents.add(new WeakReference<Agent>(a));
 					}
 				}
 			}
@@ -97,7 +97,7 @@ extends AbstractCollectiveProbe {
 	 */
 	@Override
 	public <T> Map<AgentAddress,T> getProbeValue(String probeName, Class<T> clazz) {
-		Map<AgentAddress,T> map = new TreeMap<>();
+		Map<AgentAddress,T> map = new TreeMap<AgentAddress,T>();
 		if (isAlive()) {
 			ProbeManager pm = this.manager.get();
 			if (pm!=null) {
@@ -129,7 +129,7 @@ extends AbstractCollectiveProbe {
 	 */
 	@Override
 	public Map<AgentAddress,Object> getProbeValue(String probeName) {
-		Map<AgentAddress,Object> map = new TreeMap<>();
+		Map<AgentAddress,Object> map = new TreeMap<AgentAddress, Object>();
 		if (isAlive()) {
 			ProbeManager pm = this.manager.get();
 			if (pm!=null) {
@@ -162,7 +162,7 @@ extends AbstractCollectiveProbe {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> Map<AgentAddress,T[]> getProbeArray(String probeName, Class<T> clazz) {
-		Map<AgentAddress,T[]> map = new TreeMap<>();
+		Map<AgentAddress,T[]> map = new TreeMap<AgentAddress, T[]>();
 		if (isAlive()) {
 			ProbeManager pm = this.manager.get();
 			if (pm!=null) {
@@ -202,7 +202,7 @@ extends AbstractCollectiveProbe {
 	 */
 	@Override
 	public Set<String> getProbedValueNames() {
-		Set<String> theSet = new TreeSet<>();
+		Set<String> theSet = new TreeSet<String>();
 		if (isAlive()) {
 			ProbeManager pm = this.manager.get();
 			if (pm!=null) {

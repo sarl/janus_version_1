@@ -57,8 +57,8 @@ public class ChatRoomSelectionDialog extends JDialog implements ActionListener {
 	private static final String CANCEL_ACTION = "cancelAction"; //$NON-NLS-1$
 	
 	private GroupAddress selectedRoom = null;
-	private final DefaultListModel<GroupAddress> model;
-	private final JList<GroupAddress> list;
+	private final DefaultListModel model;
+	private final JList list;
 	
 	/**
 	 * @param rooms are the available rooms. 
@@ -70,8 +70,8 @@ public class ChatRoomSelectionDialog extends JDialog implements ActionListener {
 		setModal(true);
 		setTitle(Locale.getString(ChatRoomSelectionDialog.class, "TITLE")); //$NON-NLS-1$
 
-		this.model = new DefaultListModel<>();
-		this.list = new JList<>(this.model);
+		this.model = new DefaultListModel();
+		this.list = new JList(this.model);
 		this.list.setCellRenderer(new RoomRenderer());
 		JScrollPane scrollPane = new JScrollPane(this.list);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -104,7 +104,7 @@ public class ChatRoomSelectionDialog extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		if (OK_ACTION.equals(cmd)) {
-			this.selectedRoom = this.list.getSelectedValue();
+			this.selectedRoom = (GroupAddress)this.list.getSelectedValue();
 			setVisible(false);
 		}
 		else if (CANCEL_ACTION.equals(cmd)) {
@@ -141,7 +141,7 @@ public class ChatRoomSelectionDialog extends JDialog implements ActionListener {
 		 */
 		@Override
 		public Component getListCellRendererComponent(
-				JList<?> list, Object value,
+				JList list, Object value,
 				int index, boolean isSelected, boolean cellHasFocus) {
 			JLabel component = (JLabel)super.getListCellRendererComponent(
 					list, value, index, isSelected,

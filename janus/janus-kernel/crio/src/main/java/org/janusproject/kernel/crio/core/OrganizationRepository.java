@@ -123,7 +123,7 @@ extends TreeRepository<Class<? extends Organization>, Organization> {
 										organization.getCanonicalName()));
 					}
 					o = AccessController.doPrivileged(
-							new OrganizationInstanciator<>(context, organization, factory),
+							new OrganizationInstanciator<O>(context, organization, factory),
 							accessContext);
 					assert(o!=null);
 					repository.add(organization, o);

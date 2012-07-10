@@ -41,7 +41,7 @@ public class KernelTestUtil {
 	public static void bind(Agent a) {
 		Kernels.get();
 		KernelAgent ka = Kernels.getKernelAgent();
-		a.kernel = new WeakReference<>(ka);
+		a.kernel = new WeakReference<KernelAgent>(ka);
 	}
 
 }

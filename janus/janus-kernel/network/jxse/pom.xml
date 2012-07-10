@@ -36,8 +36,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>kernel</artifactId>
+			<groupId>org.janus-project.kernel.network</groupId>
+			<artifactId>jxta-base</artifactId>
 		</dependency>
 
 		<dependency>

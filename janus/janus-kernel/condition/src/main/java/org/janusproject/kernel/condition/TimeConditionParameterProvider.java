@@ -41,7 +41,7 @@ public class TimeConditionParameterProvider {
 	 * @param timeManager is the time manager to use to provide the parameters.
 	 */
 	public TimeConditionParameterProvider(KernelTimeManager timeManager) {
-		this.timeManager = new WeakReference<>(timeManager);
+		this.timeManager = new WeakReference<KernelTimeManager>(timeManager);
 	}
 
 	/** Replies the current time.

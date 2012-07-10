@@ -53,9 +53,9 @@ import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.message.MessageContext;
-import org.janusproject.kernel.network.jxme.api.NetworkAdapter;
-import org.janusproject.kernel.network.jxme.api.NetworkListener;
 import org.janusproject.kernel.network.jxme.jxta.JXTANetworkHandler;
+import org.janusproject.kernel.network.jxta.NetworkAdapter;
+import org.janusproject.kernel.network.jxta.NetworkListener;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 import org.janusproject.kernel.util.throwable.Throwables;
@@ -76,7 +76,7 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 	
 
 	private final ExecutorService executors;
-	private final Map<GroupAddress, JanusGroupJxtaGroup> groups = new ConcurrentHashMap<>();
+	private final Map<GroupAddress, JanusGroupJxtaGroup> groups = new ConcurrentHashMap<GroupAddress, JanusGroupJxtaGroup>();
 	
 	private AgentAddress kernelAddress = null;
 	private JanusProperties janusProperties = null;
@@ -90,13 +90,21 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 		this.executors = Executors.newCachedThreadPool();
 	}
 	
-	/** Notifies listeners about an uncatched error.
-	 * 
-	 * @param error
+	/** {@inheritDoc}
 	 */
-	protected void fireUncatchedError(Throwable error) {
+	@Override
+	public void fireUncatchedError(Throwable error) {
 		if (error!=null && this.listener!=null) {
 			this.listener.networkError(error);
+		}
+	}
+
+	/** {@inheritDoc}
+	 */
+	@Override
+	public void fireLogMessage(String message) {
+		if (message!=null && !message.isEmpty() && this.listener!=null) {
+			this.listener.networkLog(message);
 		}
 	}
 

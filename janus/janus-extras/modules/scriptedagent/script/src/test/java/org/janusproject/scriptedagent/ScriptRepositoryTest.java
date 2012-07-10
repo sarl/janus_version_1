@@ -111,7 +111,7 @@ public class ScriptRepositoryTest extends TestCase {
 	}
 	
 	private static void assertEquals(Object[] expected, Iterator<?> actual) {
-		Collection<Object> col = new ArrayList<>();
+		Collection<Object> col = new ArrayList<Object>();
 		col.addAll(Arrays.asList(expected));
 		while (actual.hasNext()) {
 			Object o = actual.next();

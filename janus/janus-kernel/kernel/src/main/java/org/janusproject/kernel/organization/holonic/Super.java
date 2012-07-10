@@ -133,7 +133,7 @@ public class Super extends Role {
 	}
 
 	private static <CT extends Capacity> RequestCapacityMessage<CT> newRequestCapaciyMessage(RequestCapacityInfluence<CT> inf) {
-		return new RequestCapacityMessage<>(
+		return new RequestCapacityMessage<CT>(
 				inf.getRequestedCapacity(),
 				inf.getRoleInfluenceSource(),
 				inf.getCallIdentifier(),

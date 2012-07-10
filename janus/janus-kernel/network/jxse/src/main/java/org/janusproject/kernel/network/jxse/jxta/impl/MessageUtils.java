@@ -99,12 +99,16 @@ class MessageUtils {
 		byte[] buffer = data;
 		MimeMediaType mimeType = MimeMediaType.AOS;
 		if (compress) {
-			try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
-				try (GZIPOutputStream gos = new GZIPOutputStream(outStream)) {
-					gos.write(data, 0, data.length);
-					gos.finish();
-				}
+			ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+			GZIPOutputStream gos = new GZIPOutputStream(outStream);
+			try {
+				gos.write(data, 0, data.length);
+				gos.finish();
 				buffer = outStream.toByteArray();
+			}
+			finally {
+				gos.close();
+				outStream.close();
 			}
 			mimeType = GZIP_MEDIA_TYPE;
 		}
@@ -129,12 +133,16 @@ class MessageUtils {
 	 */
 	public static void addObjectToMessage(Message message, String nameSpace,
 			String elemName, Object object) throws IOException {
-		try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-			try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
-				oos.writeObject(object);
-			}
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(bos);
+		try {
+			oos.writeObject(object);
 			addByteArrayToMessage(message, nameSpace, elemName, bos.toByteArray(),
 					false);
+		}
+		finally {
+			oos.close();
+			bos.close();
 		}
 	}
 
@@ -207,14 +215,22 @@ class MessageUtils {
 	public static Object getObjectFromMessage(Message message,
 			String nameSpace, String elemName) throws IOException,
 			ClassNotFoundException {
-		try (InputStream is = getInputStreamFromMessage(message, nameSpace, elemName)) {
-			if (null == is) {
-				return null;
+		InputStream is = getInputStreamFromMessage(message, nameSpace, elemName);
+		if (is!=null) {
+			try {
+				ObjectInputStream ois = new ObjectInputStream(is);
+				try {
+					return ois.readObject();
+				}
+				finally {
+					ois.close();
+				}
 			}
-			try (ObjectInputStream ois = new ObjectInputStream(is)) {
-				return ois.readObject();
+			finally {
+				is.close();
 			}
 		}
+		return null;
 	}
 
 

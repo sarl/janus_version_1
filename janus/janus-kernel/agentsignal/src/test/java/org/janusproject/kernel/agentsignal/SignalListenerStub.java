@@ -36,7 +36,7 @@ import junit.framework.Assert;
  */
 class SignalListenerStub implements SignalListener {
 
-	private final List<Signal> signals = new ArrayList<>();
+	private final List<Signal> signals = new ArrayList<Signal>();
 	
 	/**
 	 * {@inheritDoc}

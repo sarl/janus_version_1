@@ -101,7 +101,7 @@ public class ConsoleGUI extends JFrame implements AgentShellChannel.ResultListen
 		JButton button;
 		JLabel label;
 
-		this.agentChannel = new WeakReference<>(agentChannel);
+		this.agentChannel = new WeakReference<AgentShellChannel>(agentChannel);
 
 		Address owner = agentChannel.getChannelOwner();
 		assert (owner != null);

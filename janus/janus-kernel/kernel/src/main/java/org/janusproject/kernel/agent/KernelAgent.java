@@ -105,15 +105,15 @@ extends ActivatorAgent<AgentActivator> {
 	private final AtomicBoolean isNonKernelAgentLaunched = new AtomicBoolean(false);
 	private final AtomicBoolean isLaunch = new AtomicBoolean(false);
 	
-	private final Collection<DifferedLightAgentInfo> differedLightAgents = new LinkedList<>();
-	private final Collection<AgentThread> differedHeavyAgents = new LinkedList<>();
+	private final Collection<DifferedLightAgentInfo> differedLightAgents = new LinkedList<DifferedLightAgentInfo>();
+	private final Collection<AgentThread> differedHeavyAgents = new LinkedList<AgentThread>();
 	
 	/** This collection contains the agents that want to become heavy.
 	 * They are buffered to ensure that the agent activators had removed
 	 * the agents from their scheduling lists, before they are launched
 	 * as heavy.
 	 */
-	private final Collection<Agent> newHeavyAgents = new LinkedList<>();
+	private final Collection<Agent> newHeavyAgents = new LinkedList<Agent>();
 	
 	/**
 	 * Create a kernel agent with the default settings.
@@ -901,7 +901,7 @@ extends ActivatorAgent<AgentActivator> {
 		if (name!=null) adr.setName(name);
 		
 		this.context.getAgentRepository().add(adr, agent);
-		agent.kernel = new WeakReference<>(this);
+		agent.kernel = new WeakReference<KernelAgent>(this);
 		agent.creator = creator;
 		
 		AgentActivator currentActivator = activator;
@@ -1058,7 +1058,7 @@ extends ActivatorAgent<AgentActivator> {
 		if (name!=null) adr.setName(name);
 		
 		this.context.getAgentRepository().add(adr, agent);
-		agent.kernel = new WeakReference<>(this);
+		agent.kernel = new WeakReference<KernelAgent>(this);
 		agent.creator = creator;
 
 		if (initParameters!=null && initParameters.length>0)
@@ -1336,7 +1336,7 @@ extends ActivatorAgent<AgentActivator> {
 		 */
 		public void kill(Runnable listener) {
 			if (this.killingListeners==null) {
-				this.killingListeners = new ArrayList<>();
+				this.killingListeners = new ArrayList<Runnable>();
 			}
 			this.killingListeners.add(listener);
 			this.kill = true;
@@ -2118,7 +2118,7 @@ extends ActivatorAgent<AgentActivator> {
 		 * @param agent
 		 */
 		public KillAwaiter(KernelAgent agent) {
-			this.agent = new WeakReference<>(agent);
+			this.agent = new WeakReference<KernelAgent>(agent);
 		}
 		
 		/**

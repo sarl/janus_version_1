@@ -91,4 +91,19 @@ public interface JXTANetworkHandler extends EventListener {
 	 * @return the current Janus kernel address.
 	 */
 	public AgentAddress getKernelAddress();
+
+	/** Notifies listeners about an uncatched error.
+	 * 
+	 * @param error
+	 * @since 0.5
+	 */
+	public void fireUncatchedError(Throwable error);
+
+	/** Notifies listeners about the log of a message.
+	 * 
+	 * @param message
+	 * @since 0.5
+	 */
+	public void fireLogMessage(String message);
+
 }

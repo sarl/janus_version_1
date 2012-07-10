@@ -145,7 +145,7 @@ public abstract class AbstractMailbox implements Mailbox {
 	 */
 	@Override
 	public final <T extends Message> Iterator<T> iterator(Class<T> type) {
-		return iterator(new TypeSelector<>(type));
+		return iterator(new TypeSelector<T>(type));
 	}
 
 	/**
@@ -153,7 +153,7 @@ public abstract class AbstractMailbox implements Mailbox {
 	 */
 	@Override
 	public final <T extends Message> Iterable<T> iterable(Class<T> type) {
-		return iterable(new TypeSelector<>(type));
+		return iterable(new TypeSelector<T>(type));
 	}
 
 	/**

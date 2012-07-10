@@ -47,7 +47,7 @@ public class RepositoryChangeEventTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.repository = new HashRepository<>();
+		this.repository = new HashRepository<Object,Object>();
 		this.changedObject = new Object();
 		this.oldValue = new Object();
 		this.newValue = new Object();

@@ -54,7 +54,7 @@ public class JavaReflectionMemoryTest extends TestCase {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
 		this.referent = new ReflectionStub();
-		this.memory = new JavaReflectionMemory<>(this.referent);
+		this.memory = new JavaReflectionMemory<ReflectionStub>(this.referent);
 		this.listener = new MemoryListenerStub();
 		this.memory.addMemoryListener(this.listener);
 	}

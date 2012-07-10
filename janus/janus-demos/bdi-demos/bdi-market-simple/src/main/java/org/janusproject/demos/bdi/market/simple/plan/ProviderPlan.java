@@ -63,7 +63,7 @@ public class ProviderPlan extends BDIPlan{
 	 * Send TravelProposalMessage to Broker
 	 * Wait TravelSelectionMessage from Broker
 	 */
-	private static List<Class<? extends BDIAction>> actionList = new ArrayList<>();
+	private static List<Class<? extends BDIAction>> actionList = new ArrayList<Class<? extends BDIAction>>();
 	static {
 		actionList.add(SendMessageAction.class);
 		//actionList.add(WaitEventAction.class);

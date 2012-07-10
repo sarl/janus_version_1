@@ -72,8 +72,8 @@ public class ChatRoomPanel extends JPanel implements ActionListener, MouseListen
 
 	private final JEditorPane messagePane;
 	private final JTextField inputMessage;
-	private final DefaultListModel<AgentAddress> participants;
-	private final JList<AgentAddress> participantList;
+	private final DefaultListModel participants;
+	private final JList participantList;
 	
 	private final WeakReference<ChatChannel> chatChannel;
 
@@ -83,7 +83,7 @@ public class ChatRoomPanel extends JPanel implements ActionListener, MouseListen
 	 */
 	public ChatRoomPanel(GroupAddress chatroom, ChatChannel chatChannel) {
 		this.chatroom = chatroom;
-		this.chatChannel = new WeakReference<>(chatChannel);
+		this.chatChannel = new WeakReference<ChatChannel>(chatChannel);
 
 		this.chatChannel.get().addIncomingPrivateMessageListener(this);
 		
@@ -111,8 +111,8 @@ public class ChatRoomPanel extends JPanel implements ActionListener, MouseListen
 		sendBt.addActionListener(this);
 		sendToolPane.add(sendBt);
 		
-		this.participants = new DefaultListModel<>();
-		this.participantList = new JList<>(this.participants);
+		this.participants = new DefaultListModel();
+		this.participantList = new JList(this.participants);
 		this.participantList.setCellRenderer(new ParticipantRenderer());
 		this.participantList.addMouseListener(this);
 		scrollPane = new JScrollPane(this.participantList);
@@ -252,7 +252,7 @@ public class ChatRoomPanel extends JPanel implements ActionListener, MouseListen
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource()==this.participantList && e.getClickCount()==2) {
-			AgentAddress adr = this.participantList.getSelectedValue();
+			AgentAddress adr = (AgentAddress)this.participantList.getSelectedValue();
 			if (adr!=null) {
 				String n = adr.getName();
 				if (n==null || "".equals(n)) //$NON-NLS-1$
@@ -318,7 +318,7 @@ public class ChatRoomPanel extends JPanel implements ActionListener, MouseListen
 		 */
 		@Override
 		public Component getListCellRendererComponent(
-				JList<?> list, Object value,
+				JList list, Object value,
 				int index, boolean isSelected, boolean cellHasFocus) {
 			JLabel component = (JLabel)super.getListCellRendererComponent(
 					list, value, index, isSelected,

@@ -18,35 +18,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.janusproject.kernel.network.jxme.jxta.impl;
+package org.janusproject.kernel.network.jxta;
 
-import java.net.URI;
-
-import net.jxta.id.ID;
-import net.jxta.peergroup.PeerGroup;
-import net.jxta.platform.ModuleClassID;
 
 
 /**
  * A set of contants used to configure the Janus Network Module.
  * 
  * @author $Author: srodriguez$
- * @author $Author: jeremie.laval@gmail.com$
- * @author $Author: robin.geffroy@gmail.com$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-interface JanusNetworkConstants {
+public interface JanusJxtaConstants {
 
 	/**
 	 * The unique PeerGroupID for the World of Janus.
 	 */
 	public static final String PG_WORLD_OF_JANUS_ID = "urn:jxta:uuid-8B33E028B054497B8BF9A446A224B1FF02"; //$NON-NLS-1$
 
-	/** Identifier of the Janus features on JXTA.
+	/** Postfix for the identifier of the Janus features on JXTA.
 	 */
-	public static final ModuleClassID JANUS_ORG_CLASS = (ModuleClassID) ID.create(URI.create(PeerGroup.WK_ID_PREFIX + "0010000505")); //$NON-NLS-1$
+	public static final String JANUS_ORG_CLASS_ID_POSTFIX = "0010000505"; //$NON-NLS-1$
 	
 	/** Parameter name in an JXTA advertisement for the Janus features.
 	 */

@@ -61,7 +61,7 @@ class EcoMonitorAgent extends Agent implements KernelListener {
 	private final EcoProblemMonitor monitor;
 	private final int ecoAgentCount;
 	private State state;
-	private final Map<AgentAddress,EcoChannel> ecoAgents = new TreeMap<>();
+	private final Map<AgentAddress,EcoChannel> ecoAgents = new TreeMap<AgentAddress,EcoChannel>();
 	
 	/**
 	 * @param monitor is the monitor that checks if the problem is solved.
@@ -149,7 +149,7 @@ class EcoMonitorAgent extends Agent implements KernelListener {
 		if (this.monitor!=null) {
 			return this.monitor.isProblemSolved();
 		}
-		List<AgentAddress> newChannels = new LinkedList<>();
+		List<AgentAddress> newChannels = new LinkedList<AgentAddress>();
 		EcoChannel channel;
 		for(Entry<AgentAddress,EcoChannel> entry : this.ecoAgents.entrySet()) {
 			channel = entry.getValue();

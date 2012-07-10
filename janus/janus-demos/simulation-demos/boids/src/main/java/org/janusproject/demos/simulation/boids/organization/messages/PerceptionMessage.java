@@ -45,7 +45,7 @@ public class PerceptionMessage extends AbstractContentMessage<Map<AgentAddress,P
 	 * @param boids is the collection of perceived boids.
 	 */
 	public PerceptionMessage(Map<AgentAddress,PerceivedBoidBody> boids) {
-		this.otherBoids = new HashMap<>(boids);
+		this.otherBoids = new HashMap<AgentAddress,PerceivedBoidBody>(boids);
 	}
 
 	/** Replies the perceptions.

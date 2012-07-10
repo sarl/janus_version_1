@@ -68,12 +68,12 @@ implements Iterable<Class<? extends Role>> {
 	/**
 	 * The set of role classes defined on this organization
 	 */
-	private final Collection<Class<? extends Role>> definedRoles = new ArrayList<>();
+	private final Collection<Class<? extends Role>> definedRoles = new ArrayList<Class<? extends Role>>();
 
 	/**
 	 * The set of groups currently instianciated.
 	 */
-	private final TreeSet<GroupAddress> groups = new TreeSet<>();
+	private final TreeSet<GroupAddress> groups = new TreeSet<GroupAddress>();
 
 	/** CRIO execution context in which this organization is defined.
 	 */
@@ -95,7 +95,7 @@ implements Iterable<Class<? extends Role>> {
 	 */
 	protected Organization(CRIOContext crioContext) {
 		assert(crioContext!=null);
-		this.crioContext = new WeakReference<>(crioContext);
+		this.crioContext = new WeakReference<CRIOContext>(crioContext);
 	}
 	
 	private void checkSingleton() {
@@ -419,11 +419,11 @@ implements Iterable<Class<? extends Role>> {
 		checkSingleton();
 		Collection<? extends GroupCondition> oc = obtainConditions;
 		if (oc==null || oc.isEmpty()) {
-			oc = new ArrayList<>(getObtainConditions());
+			oc = new ArrayList<GroupCondition>(getObtainConditions());
 		}
 		Collection<? extends GroupCondition> lc = leaveConditions;
 		if (lc==null || lc.isEmpty()) {
-			lc = new ArrayList<>(getLeaveConditions());
+			lc = new ArrayList<GroupCondition>(getLeaveConditions());
 		}
 		GroupAddress ga = this.crioContext.get().getGroupRepository().newGroup(
 					id,
@@ -491,7 +491,7 @@ implements Iterable<Class<? extends Role>> {
 	 */
 	final synchronized List<GroupAddress> getGroups(){
 		checkSingleton();
-		return new ArrayList<>(this.groups); 
+		return new ArrayList<GroupAddress>(this.groups); 
 	}
 	/**
 	 * Replies if this organization is implementing by a group.
@@ -535,7 +535,7 @@ implements Iterable<Class<? extends Role>> {
 	 */
 	public synchronized final Iterator<GroupAddress> getGroupAddresses() {
 		checkSingleton();
-		return new ArrayList<>(this.groups).iterator();
+		return new ArrayList<GroupAddress>(this.groups).iterator();
 	}
 
 	/**
@@ -555,7 +555,7 @@ implements Iterable<Class<? extends Role>> {
 	protected boolean addObtainCondition(GroupCondition c) {
 		if (c==null) return false;
 		if (this.groupObtainConditions==null)
-			this.groupObtainConditions = new LinkedList<>();
+			this.groupObtainConditions = new LinkedList<GroupCondition>();
 		return this.groupObtainConditions.add(c);
 	}
 
@@ -571,7 +571,7 @@ implements Iterable<Class<? extends Role>> {
 	protected boolean addLeaveCondition(GroupCondition c) {
 		if (c==null) return false;
 		if (this.groupLeaveConditions==null)
-			this.groupLeaveConditions = new LinkedList<>();
+			this.groupLeaveConditions = new LinkedList<GroupCondition>();
 		return this.groupLeaveConditions.add(c);
 	}
 
@@ -586,7 +586,7 @@ implements Iterable<Class<? extends Role>> {
 		}
 		else {
 			if (this.groupLeaveConditions==null)
-				this.groupLeaveConditions = new LinkedList<>();
+				this.groupLeaveConditions = new LinkedList<GroupCondition>();
 			this.groupLeaveConditions.addAll(c);
 		}
 	}
@@ -602,7 +602,7 @@ implements Iterable<Class<? extends Role>> {
 		}
 		else {
 			if (this.groupObtainConditions==null)
-				this.groupObtainConditions = new LinkedList<>();
+				this.groupObtainConditions = new LinkedList<GroupCondition>();
 			this.groupObtainConditions.addAll(c);
 		}
 	}
@@ -678,7 +678,7 @@ implements Iterable<Class<? extends Role>> {
 		Logger logger = this.logger==null ? null : this.logger.get();
 		if (logger==null) {
 			logger = LoggerUtil.createOrganizationLogger(getClass(), getCRIOContext().getTimeManager());
-			this.logger = new SoftReference<>(logger);
+			this.logger = new SoftReference<Logger>(logger);
 		}
 		return logger;
 	}

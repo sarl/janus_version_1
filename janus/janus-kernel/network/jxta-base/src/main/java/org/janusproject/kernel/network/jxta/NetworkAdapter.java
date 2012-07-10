@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2011-2012 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.janusproject.kernel.network.jxme.api;
+package org.janusproject.kernel.network.jxta;
 
 import java.util.Collection;
 
@@ -38,6 +38,7 @@ import org.janusproject.kernel.status.Status;
  * 
  * @author $Author: srodriguez$
  * @author $Author: ngaud$
+ * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$

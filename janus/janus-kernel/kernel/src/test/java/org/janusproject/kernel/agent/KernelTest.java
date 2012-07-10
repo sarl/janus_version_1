@@ -221,7 +221,7 @@ public class KernelTest extends TestCase {
 		AgentStub2 a3 = new AgentStub2();
 		AgentStub2 a4 = new AgentStub2();
 		
-		List<Agent> tab = new ArrayList<>();
+		List<Agent> tab = new ArrayList<Agent>();
 		tab.add(a1);
 		tab.add(a2);
 		tab.add(a3);
@@ -437,8 +437,8 @@ public class KernelTest extends TestCase {
 	 */
 	private static class ChannelListenerStub implements ChannelInteractableListener {
 
-		private List<ChannelInteractable> launched = new ArrayList<>();
-		private List<ChannelInteractable> killed = new ArrayList<>();
+		private List<ChannelInteractable> launched = new ArrayList<ChannelInteractable>();
+		private List<ChannelInteractable> killed = new ArrayList<ChannelInteractable>();
 		
 		/**
 		 */
@@ -522,10 +522,10 @@ public class KernelTest extends TestCase {
 	 */
 	private static class KernelListenerStub implements KernelListener {
 
-		private List<KernelEvent> launchedAgents = new ArrayList<>();
-		private List<KernelEvent> killedAgents = new ArrayList<>();
-		private List<KernelEvent> launchedKernels = new ArrayList<>();
-		private List<KernelEvent> killedKernels = new ArrayList<>();
+		private List<KernelEvent> launchedAgents = new ArrayList<KernelEvent>();
+		private List<KernelEvent> killedAgents = new ArrayList<KernelEvent>();
+		private List<KernelEvent> launchedKernels = new ArrayList<KernelEvent>();
+		private List<KernelEvent> killedKernels = new ArrayList<KernelEvent>();
 		
 		/**
 		 */
@@ -685,7 +685,7 @@ public class KernelTest extends TestCase {
 	 */
 	private static class AgentLifeListenerStub implements AgentLifeStateListener {
 
-		private List<Pair<AgentAddress,AgentLifeState>> events = new ArrayList<>();
+		private List<Pair<AgentAddress,AgentLifeState>> events = new ArrayList<Pair<AgentAddress,AgentLifeState>>();
 		
 		/**
 		 */
@@ -725,7 +725,7 @@ public class KernelTest extends TestCase {
 		 */
 		@Override
 		public void agentLifeChanged(AgentAddress agent, AgentLifeState state) {
-			this.events.add(new Pair<>(agent, state));
+			this.events.add(new Pair<AgentAddress,AgentLifeState>(agent, state));
 		}
 		
 	}

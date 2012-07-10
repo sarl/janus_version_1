@@ -78,7 +78,7 @@ public class ArrayListMailbox extends AbstractMailbox {
 	public ArrayListMailbox(Comparator<? super Message> comparator) {
 		if (comparator==null) this.messageComparator = CreationDateMessageComparator.SINGLETON;
 		else this.messageComparator = comparator;
-		this.inbox = new ArrayList<>();
+		this.inbox = new ArrayList<Message>();
 	}
 	
 	/**
@@ -276,7 +276,7 @@ public class ArrayListMailbox extends AbstractMailbox {
 	@Override
 	public Iterator<Message> iterator(boolean consumeMails) {
 		if (consumeMails)
-			return new AutoremoveIterator<>(this.inbox.iterator());
+			return new AutoremoveIterator<Message>(this.inbox.iterator());
 		return this.inbox.iterator();
 	}
 
@@ -286,9 +286,9 @@ public class ArrayListMailbox extends AbstractMailbox {
 	@Override
 	public <T extends Message> Iterator<T> iterator(Selector<T> selector, boolean consumeMails) {
 		if (consumeMails)
-			return new AutoremoveSelectorIterator<>(
+			return new AutoremoveSelectorIterator<T>(
 					selector, this.inbox.iterator());
-		return new SelectorIterator<>(
+		return new SelectorIterator<T>(
 				selector, this.inbox.iterator());
 	}
 

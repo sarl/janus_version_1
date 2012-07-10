@@ -47,7 +47,7 @@ public class UnmodifiableDirectAccessCollectionTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.original = new ArrayList<>();
+		this.original = new ArrayList<Integer>();
 		this.m1 = 1;
 		this.m2 = 10;
 		this.m3 = 5;
@@ -58,7 +58,7 @@ public class UnmodifiableDirectAccessCollectionTest extends TestCase {
 		this.original.add(this.m2);
 		this.original.add(this.m3);
 		this.original.add(this.m4);
-		this.collection = new UnmodifiableDirectAccessCollection<>(this.original);
+		this.collection = new UnmodifiableDirectAccessCollection<Integer>(this.original);
 	}
 	
 	/**
@@ -198,17 +198,17 @@ public class UnmodifiableDirectAccessCollectionTest extends TestCase {
     /**
      */
     public void testContainsAll() {
-    	List<Integer> l = new ArrayList<>();
+    	List<Integer> l = new ArrayList<Integer>();
     	l.add(this.m1);
     	l.add(this.m2);
     	assertTrue(this.collection.containsAll(l));
 
-    	l = new ArrayList<>();
+    	l = new ArrayList<Integer>();
     	l.add(this.m1);
     	l.add(this.m5);
     	assertTrue(this.collection.containsAll(l));
 
-    	l = new ArrayList<>();
+    	l = new ArrayList<Integer>();
     	l.add(this.m1);
     	l.add(this.m6);
     	assertFalse(this.collection.containsAll(l));

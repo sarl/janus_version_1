@@ -56,7 +56,7 @@ public class OrderEnabledAsynchronousThreadSafeCollectionTest extends TestCase {
 
 		this.comparator = new DataStubComparator();
 
-		this.collection = new AsynchronousThreadSafeCollection<>(DataStub.class, this.comparator);
+		this.collection = new AsynchronousThreadSafeCollection<DataStub>(DataStub.class, this.comparator);
 		this.collection.setSetBehaviorEnabled(false);
 		
 		this.listener = new ListenerStub();

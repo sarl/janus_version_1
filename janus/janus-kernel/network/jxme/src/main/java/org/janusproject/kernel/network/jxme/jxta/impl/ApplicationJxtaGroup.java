@@ -21,7 +21,6 @@
 package org.janusproject.kernel.network.jxme.jxta.impl;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -42,7 +41,7 @@ import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.network.jxme.jxta.JXTANetworkHandler;
-import org.janusproject.kernel.util.throwable.Throwables;
+import org.janusproject.kernel.network.jxta.JanusJxtaConstants;
 
 /**
  * JXTA group associated to a whole application.
@@ -73,7 +72,7 @@ class ApplicationJxtaGroup extends JanusJXTAGroup implements DiscoveryListener {
 			join();
 		}
 		catch (Exception e) {
-			getLogger().severe(Throwables.toString(e));			
+			this.networkHandler.fireUncatchedError(e);			
 		}
 
 	}
@@ -96,8 +95,8 @@ class ApplicationJxtaGroup extends JanusJXTAGroup implements DiscoveryListener {
 			String janusGId = null;
 			String janusGroupName = null;
 
-			Collection<GroupCondition> obtainConditions = new HashSet<>();
-			Collection<GroupCondition> leaveConditions = new HashSet<>();
+			Collection<GroupCondition> obtainConditions = new HashSet<GroupCondition>();
+			Collection<GroupCondition> leaveConditions = new HashSet<GroupCondition>();
 			MembershipService membership = null;
 			GroupCondition condition;
 
@@ -105,95 +104,95 @@ class ApplicationJxtaGroup extends JanusJXTAGroup implements DiscoveryListener {
 			ObjectInputStream ois;
 
 			PeerGroupAdvertisement advertisement = (PeerGroupAdvertisement) ads.nextElement();
-			StructuredDocument sd = advertisement.getServiceParam(JanusNetworkConstants.JANUS_ORG_CLASS);
+			StructuredDocument sd = advertisement.getServiceParam(Utils.JANUS_ORG_CLASS);
 			Enumeration<LiteXMLElement> ee = sd.getChildren();
 			Object obj;
 			while (ee.hasMoreElements()) {
 				LiteXMLElement xmle = ee.nextElement();
-				if (JanusNetworkConstants.TAG_JANUS_ORG.equals(xmle.getKey())) {
+				if (JanusJxtaConstants.TAG_JANUS_ORG.equals(xmle.getKey())) {
 					obj = xmle.getValue();
 					janusorg = (obj==null) ? null : obj.toString();
 				}
-				else if (JanusNetworkConstants.TAG_JANUS_GROUP_ID.equals(xmle.getKey())) {
+				else if (JanusJxtaConstants.TAG_JANUS_GROUP_ID.equals(xmle.getKey())) {
 					obj = xmle.getValue();
 					janusGId = (obj==null) ? null : obj.toString();
 				}
-				else if(JanusNetworkConstants.TAG_JANUS_GROUP_NAME.equals(xmle.getKey())) {
+				else if(JanusJxtaConstants.TAG_JANUS_GROUP_NAME.equals(xmle.getKey())) {
 					obj = xmle.getValue();
 					janusGroupName = (obj==null) ? null : obj.toString();
 				}
-				else if (JanusNetworkConstants.TAG_JANUS_OBTAIN_CONDITIONS.equals(xmle.getKey())) {// obtain conditions deserialization
+				else if (JanusJxtaConstants.TAG_JANUS_OBTAIN_CONDITIONS.equals(xmle.getKey())) {// obtain conditions deserialization
 
 					Enumeration<LiteXMLElement> eObtainConditions = xmle.getChildren();
 					LiteXMLElement eObtainCondition;
 					while (eObtainConditions.hasMoreElements()) {
 						eObtainCondition = eObtainConditions.nextElement();
-						if (JanusNetworkConstants.TAG_JANUS_CONDITION.equals(eObtainCondition.getKey())) {
+						if (JanusJxtaConstants.TAG_JANUS_CONDITION.equals(eObtainCondition.getKey())) {
 							in = new ByteArrayInputStream(eObtainCondition.getValue().toString().getBytes());
 							try {
 								ois = new ObjectInputStream(in);
 								condition = (GroupCondition) ois.readObject();
 								obtainConditions.add(condition);
 							}
-							catch (IOException e) {
-								getLogger().fine(Throwables.toString(e));
+							catch (AssertionError e) {
+								throw e;
 							}
-							catch (ClassNotFoundException e) {
-								getLogger().fine(Throwables.toString(e));
+							catch (Throwable e) {
+								this.networkHandler.fireUncatchedError(e);
 							}
 						}
 					}
 
 				}
-				else if (JanusNetworkConstants.TAG_JANUS_LEAVE_CONDITIONS.equals(xmle.getKey())) {// leave conditions deserialization
+				else if (JanusJxtaConstants.TAG_JANUS_LEAVE_CONDITIONS.equals(xmle.getKey())) {// leave conditions deserialization
 
 					Enumeration<LiteXMLElement> eLeaveConditions = xmle.getChildren();
 					LiteXMLElement eLeaveCondition;
 					while (eLeaveConditions.hasMoreElements()) {
 						eLeaveCondition = eLeaveConditions.nextElement();
-						if (JanusNetworkConstants.TAG_JANUS_CONDITION.equals(eLeaveCondition.getKey())) {
+						if (JanusJxtaConstants.TAG_JANUS_CONDITION.equals(eLeaveCondition.getKey())) {
 							in = new ByteArrayInputStream(eLeaveCondition.getValue().toString().getBytes());
 							try {
 								ois = new ObjectInputStream(in);
 								condition = (GroupCondition) ois.readObject();
 								leaveConditions.add(condition);
 							}
-							catch (IOException e) {
-								getLogger().fine(Throwables.toString(e));
+							catch (AssertionError e) {
+								throw e;
 							}
-							catch (ClassNotFoundException e) {
-								getLogger().fine(Throwables.toString(e));
+							catch (Throwable e) {
+								this.networkHandler.fireUncatchedError(e);
 							}
 						}
 					}
 
 				}
-				else if (JanusNetworkConstants.TAG_JANUS_MEMBERSHIPSERVICE.equals(xmle.getKey())) {// Membership deserialization
+				else if (JanusJxtaConstants.TAG_JANUS_MEMBERSHIPSERVICE.equals(xmle.getKey())) {// Membership deserialization
 					in = new ByteArrayInputStream(xmle.getValue().toString().getBytes());
 					try {
 						ois = new ObjectInputStream(in);
 						membership = (MembershipService) ois.readObject();
 					}
-					catch (IOException e) {
-						getLogger().severe(Throwables.toString(e));
+					catch (AssertionError e) {
+						throw e;
 					}
-					catch (ClassNotFoundException e) {
-						getLogger().severe(Throwables.toString(e));
+					catch (Throwable e) {
+						this.networkHandler.fireUncatchedError(e);
 					}
 				}
 			}
 
-			getLogger().finer(Locale.getString(ApplicationJxtaGroup.class,
+			this.networkHandler.fireLogMessage(Locale.getString(ApplicationJxtaGroup.class,
 					"GROUP_DISCOVERED", //$NON-NLS-1$
 					janusorg, janusGId, advertisement.getName()));
 			try {
 				this.networkHandler.informDistantGroupDiscovered(janusorg, UUID.fromString(janusGId), janusGroupName,obtainConditions, leaveConditions, membership, advertisement);
 			}
-			catch (AssertionError ae) {
-				throw ae;
+			catch (AssertionError e) {
+				throw e;
 			}
-			catch (ClassNotFoundException e) {
-				getLogger().severe(Throwables.toString(e));
+			catch (Throwable e) {
+				this.networkHandler.fireUncatchedError(e);
 			}
 
 		}
@@ -233,11 +232,12 @@ class ApplicationJxtaGroup extends JanusJXTAGroup implements DiscoveryListener {
 				PeerGroupUtil.discoverAdvs(getPeerGroup(), null, ApplicationJxtaGroup.this);
 				try {
 					Thread.sleep(1000);
-				} catch (AssertionError ae) {
-					throw ae;
 				}
-				catch (InterruptedException e) {
-					getLogger().severe(Throwables.toString(e));
+				catch (AssertionError e) {
+					throw e;
+				}
+				catch (Throwable e) {
+					//
 				}
 			}
 		}

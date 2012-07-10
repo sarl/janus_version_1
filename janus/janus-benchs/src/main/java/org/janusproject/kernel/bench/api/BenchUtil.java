@@ -50,11 +50,11 @@ public class BenchUtil {
 	 * @return the runs.
 	 */
 	public static SizedIterator<AgentNumberBenchRun> makeRuns(String name, int start, int end, int step) {
-		List<AgentNumberBenchRun> list = new ArrayList<>();
+		List<AgentNumberBenchRun> list = new ArrayList<AgentNumberBenchRun>();
 		for(int i=start; i<=end; i+=step) {
 			list.add(new AgentNumberBenchRun(name+"#"+i, i)); //$NON-NLS-1$
 		}
-		return new UnmodifiableCollectionSizedIterator<>(list);
+		return new UnmodifiableCollectionSizedIterator<AgentNumberBenchRun>(list);
 	}
 
 	/** Create a collection of bench run in which the number of agents
@@ -83,7 +83,7 @@ public class BenchUtil {
 	 * @throws Exception
 	 */
 	public static <RR extends AgentNumberBenchRun> SizedIterator<RR> makeRunsPerInterval(Class<RR> type, String name, int start, int... intervals) throws Exception {
-		List<RR> list = new ArrayList<>();
+		List<RR> list = new ArrayList<RR>();
 		int s = start;
 		Constructor<RR> cons = type.getConstructor(String.class, int.class);
 		for(int i=0; i<intervals.length; i+=2) {
@@ -100,7 +100,7 @@ public class BenchUtil {
 			}
 			s = e;
 		}
-		return new UnmodifiableCollectionSizedIterator<>(list);
+		return new UnmodifiableCollectionSizedIterator<RR>(list);
 	}
 	
 	/** Create a collection of bench run in which the number of agents

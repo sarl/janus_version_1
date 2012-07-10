@@ -54,7 +54,7 @@ public class Provider extends Role {
 	private GroupAddress contractGroup;
 	private Object contractDescription;
 	
-	private final LastSignalAdapter<ContractTerminationSignal> signalListener = new LastSignalAdapter<>(ContractTerminationSignal.class);
+	private final LastSignalAdapter<ContractTerminationSignal> signalListener = new LastSignalAdapter<ContractTerminationSignal>(ContractTerminationSignal.class);
 	
 	/**
 	 * {@inheritDoc}

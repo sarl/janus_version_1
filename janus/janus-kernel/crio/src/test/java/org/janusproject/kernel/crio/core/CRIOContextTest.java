@@ -247,11 +247,15 @@ public class CRIOContextTest extends TestCase {
 			}
 			catch(Throwable e) {
 				StringWriter sw = new StringWriter();
-				try (PrintWriter pw = new PrintWriter(sw)) {
+				PrintWriter pw = new PrintWriter(sw);
+				try {
 					pw.print(prop.getPropertyName());
 					pw.print(": "); //$NON-NLS-1$
 					pw.println(e.toString());
 					e.printStackTrace(pw);
+				}
+				finally {
+					pw.close();
 				}
 				fail(sw.toString());
 			}

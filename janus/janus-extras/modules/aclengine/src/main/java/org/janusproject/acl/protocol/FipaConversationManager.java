@@ -75,7 +75,7 @@ public class FipaConversationManager {
 	 */
 	public FipaConversationManager(final ACLAgent agent) {
 		this.agent = agent;
-		this.conversations = new ArrayList<>();
+		this.conversations = new ArrayList<AbstractFipaProtocol>();
 	}
 	
 	/**

@@ -58,7 +58,7 @@ implements Repository<ID,DATA>, ModifiableCollectionSizedIteratorOwner<Entry<ID,
 	@Override
 	public void addRepositoryChangeListener(RepositoryChangeListener listener) {
 		if (this.listeners==null)
-			this.listeners = new ListenerCollection<>();
+			this.listeners = new ListenerCollection<RepositoryChangeListener>();
 		this.listeners.add(RepositoryChangeListener.class, listener);		
 	}
 

@@ -133,7 +133,7 @@ extends ActivatorAgent<Scheduler<A>> {
 	 * @param commitSuicide indicates if this agent is able to commit suicide or not
 	 */
 	public SchedulerAgent(Class<A> type, Boolean commitSuicide) {
-		this(new DefaultScheduler<>(type), commitSuicide);
+		this(new DefaultScheduler<A>(type), commitSuicide);
 	}
 
 	/**
@@ -142,7 +142,7 @@ extends ActivatorAgent<Scheduler<A>> {
 	 * @param type is the type of the activators which are scheduled by this agent.
 	 */
 	public SchedulerAgent(Class<A> type) {
-		this(new DefaultScheduler<>(type));
+		this(new DefaultScheduler<A>(type));
 	}
 
 	/**
@@ -153,7 +153,7 @@ extends ActivatorAgent<Scheduler<A>> {
 	 * @param commitSuicide indicates if this agent is able to commit suicide or not
 	 */
 	public SchedulerAgent(Class<A> type, CapacityContainer capacityContainer, Boolean commitSuicide) {
-		this(new DefaultScheduler<>(type), capacityContainer, commitSuicide);
+		this(new DefaultScheduler<A>(type), capacityContainer, commitSuicide);
 	}
 
 	/**
@@ -163,7 +163,7 @@ extends ActivatorAgent<Scheduler<A>> {
 	 * @param capacityContainer is the container of capacities.
 	 */
 	public SchedulerAgent(Class<A> type, CapacityContainer capacityContainer) {
-		this(new DefaultScheduler<>(type), capacityContainer);
+		this(new DefaultScheduler<A>(type), capacityContainer);
 	}
 
 	/**
@@ -173,7 +173,7 @@ extends ActivatorAgent<Scheduler<A>> {
 	 * @param address is a precomputed address to give to this agent.
 	 */
 	public SchedulerAgent(Class<A> type, AgentAddress address) {
-		this(new DefaultScheduler<>(type), address);
+		this(new DefaultScheduler<A>(type), address);
 	}
 
 	/**
@@ -184,7 +184,7 @@ extends ActivatorAgent<Scheduler<A>> {
 	 * @param commitSuicide indicates if this agent is able to commit suicide or not
 	 */
 	public SchedulerAgent(Class<A> type, AgentAddress address, Boolean commitSuicide) {
-		this(new DefaultScheduler<>(type), address, commitSuicide);
+		this(new DefaultScheduler<A>(type), address, commitSuicide);
 	}
 
 	/**
@@ -196,7 +196,7 @@ extends ActivatorAgent<Scheduler<A>> {
 	 * @param commitSuicide indicates if this agent is able to commit suicide or not
 	 */
 	public SchedulerAgent(Class<A> type, AgentAddress address, CapacityContainer capacityContainer, Boolean commitSuicide) {
-		this(new DefaultScheduler<>(type), address, capacityContainer, commitSuicide);
+		this(new DefaultScheduler<A>(type), address, capacityContainer, commitSuicide);
 	}
 
 	/**
@@ -207,7 +207,7 @@ extends ActivatorAgent<Scheduler<A>> {
 	 * @param capacityContainer is the container of capacities.
 	 */
 	public SchedulerAgent(Class<A> type, AgentAddress address, CapacityContainer capacityContainer) {
-		this(new DefaultScheduler<>(type), address, capacityContainer);
+		this(new DefaultScheduler<A>(type), address, capacityContainer);
 	}
 
 }

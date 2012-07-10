@@ -298,7 +298,7 @@ public class HeavyAgentTest extends TestCase {
 		
 		/** Errors.
 		 */
-		public final List<Throwable> errors = new LinkedList<>();
+		public final List<Throwable> errors = new LinkedList<Throwable>();
 		
 		/**
 		 */

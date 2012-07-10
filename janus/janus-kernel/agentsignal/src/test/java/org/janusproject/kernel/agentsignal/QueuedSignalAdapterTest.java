@@ -44,7 +44,7 @@ public class QueuedSignalAdapterTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.adapter = new QueuedSignalAdapter<>(Signal.class);
+		this.adapter = new QueuedSignalAdapter<Signal>(Signal.class);
 	}
 	
 	/**

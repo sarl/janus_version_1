@@ -44,7 +44,7 @@ import org.janusproject.kernel.agent.Kernels;
  */
 public abstract class AgentBasedEcoProblem extends EcoProblem {
 
-	private final Set<EcoAgent> agents = new TreeSet<>(new Comparator<EcoAgent>() {
+	private final Set<EcoAgent> agents = new TreeSet<EcoAgent>(new Comparator<EcoAgent>() {
 		@Override
 		public int compare(EcoAgent o1, EcoAgent o2) {
 			return o1.getUUID().compareTo(o2.getUUID());
@@ -108,7 +108,7 @@ public abstract class AgentBasedEcoProblem extends EcoProblem {
 	private static class LaunchingListener implements KernelListener {
 
 		private final int nb;
-		private Set<AgentAddress> launched = new TreeSet<>();
+		private Set<AgentAddress> launched = new TreeSet<AgentAddress>();
 		
 		/**
 		 * @param nb

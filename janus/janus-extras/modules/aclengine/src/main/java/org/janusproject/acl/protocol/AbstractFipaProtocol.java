@@ -120,7 +120,7 @@ public abstract class AbstractFipaProtocol {
 	public AbstractFipaProtocol(ACLAgent agent) {
 		this.logger = Logger.getAnonymousLogger();
 		setRefAclAgent(agent);
-		this.participants = new ArrayList<>();
+		this.participants = new ArrayList<AgentAddress>();
 	}
 	
 	/**

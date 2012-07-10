@@ -71,7 +71,7 @@ public class OrganizationTest extends TestCase {
 		if (c1==c2) return;
 		if (c1!=null && c2!=null && c1.size()==c2.size()) {
 			try {
-				ArrayList<Object> obj = new ArrayList<>(c2);
+				ArrayList<Object> obj = new ArrayList<Object>(c2);
 				Iterator<?> iterator = c1.iterator();
 				boolean failure = false;
 				Object o1;
@@ -197,10 +197,10 @@ public class OrganizationTest extends TestCase {
 	/**
 	 */
 	public void testCreateGroupCollectionCollection() {
-		Collection<? extends GroupCondition> obtain1 = new ArrayList<>();
-		Collection<? extends GroupCondition> leave1 = new ArrayList<>();
-		Collection<? extends GroupCondition> obtain2 = new ArrayList<>();
-		Collection<? extends GroupCondition> leave2 = new ArrayList<>();
+		Collection<? extends GroupCondition> obtain1 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> leave1 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> obtain2 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> leave2 = new ArrayList<GroupCondition>();
 		
 		GroupAddress g1 = this.organization.createGroup(obtain1, leave1);
 		GroupAddress g2 = this.organization.createGroup(obtain2, leave2);
@@ -231,10 +231,10 @@ public class OrganizationTest extends TestCase {
 	public void testCreateGroupCollectionCollectionString() {
 		String gName1 = "TheGroup~1"; //$NON-NLS-1$
 		String gName2 = "TheGroup~2"; //$NON-NLS-1$
-		Collection<? extends GroupCondition> obtain1 = new ArrayList<>();
-		Collection<? extends GroupCondition> leave1 = new ArrayList<>();
-		Collection<? extends GroupCondition> obtain2 = new ArrayList<>();
-		Collection<? extends GroupCondition> leave2 = new ArrayList<>();
+		Collection<? extends GroupCondition> obtain1 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> leave1 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> obtain2 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> leave2 = new ArrayList<GroupCondition>();
 		
 		GroupAddress g1 = this.organization.createGroup(obtain1, leave1, gName1);
 		GroupAddress g2 = this.organization.createGroup(obtain2, leave2, gName2);
@@ -269,10 +269,10 @@ public class OrganizationTest extends TestCase {
 		String gName2 = "TheGroup~2"; //$NON-NLS-1$
 		MembershipService member1 = new MembershipServiceStub();
 		MembershipService member2 = new MembershipServiceStub();
-		Collection<? extends GroupCondition> obtain1 = new ArrayList<>();
-		Collection<? extends GroupCondition> leave1 = new ArrayList<>();
-		Collection<? extends GroupCondition> obtain2 = new ArrayList<>();
-		Collection<? extends GroupCondition> leave2 = new ArrayList<>();
+		Collection<? extends GroupCondition> obtain1 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> leave1 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> obtain2 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> leave2 = new ArrayList<GroupCondition>();
 		
 		GroupAddress g1 = this.organization.createGroup(obtain1, leave1, member1, true, false, gName1);
 		GroupAddress g2 = this.organization.createGroup(obtain2, leave2, member2, false, true, gName2);
@@ -318,10 +318,10 @@ public class OrganizationTest extends TestCase {
 		String gName2 = "TheGroup~2"; //$NON-NLS-1$
 		MembershipService member1 = new MembershipServiceStub();
 		MembershipService member2 = new MembershipServiceStub();
-		Collection<? extends GroupCondition> obtain1 = new ArrayList<>();
-		Collection<? extends GroupCondition> leave1 = new ArrayList<>();
-		Collection<? extends GroupCondition> obtain2 = new ArrayList<>();
-		Collection<? extends GroupCondition> leave2 = new ArrayList<>();
+		Collection<? extends GroupCondition> obtain1 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> leave1 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> obtain2 = new ArrayList<GroupCondition>();
+		Collection<? extends GroupCondition> leave2 = new ArrayList<GroupCondition>();
 		
 		GroupAddress g1 = this.organization.createGroup(id1, obtain1, leave1, member1, true, false, gName1);
 		GroupAddress g2 = this.organization.createGroup(id2, obtain2, leave2, member2, false, true, gName2);

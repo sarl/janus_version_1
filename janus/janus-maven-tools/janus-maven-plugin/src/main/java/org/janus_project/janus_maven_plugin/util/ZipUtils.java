@@ -93,7 +93,8 @@ public class ZipUtils {
 	 */
 	public static final void zipDirectories(Log log, Set<File> directories, File zip, String zipBaseDir)
 			throws IOException {
-		try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zip))) {
+		ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zip));
+		try {
 			File d;
 			for(File directory : directories) {
 				if (directory.isDirectory())
@@ -102,6 +103,9 @@ public class ZipUtils {
 					d = directory.getParentFile();
 				zip(log, d, d.getAbsolutePath(), zos, zipBaseDir);
 			}
+		}
+		finally {
+			zos.close();
 		}
 	}
 	
@@ -134,12 +138,16 @@ public class ZipUtils {
 						
 						String entryName = mergeNames(innerBaseDir, fullPath);
 						
-						try (FileInputStream in = new FileInputStream(subfile)) {
+						FileInputStream in = new FileInputStream(subfile);
+						try {
 							ZipEntry entry = new ZipEntry(entryName);
 							zos.putNextEntry(entry);
 							while ((len = in.read(buffer))>0) {
 								zos.write(buffer, 0, len);
 							}
+						}
+						finally {
+							in.close();
 						}
 					}
 				}

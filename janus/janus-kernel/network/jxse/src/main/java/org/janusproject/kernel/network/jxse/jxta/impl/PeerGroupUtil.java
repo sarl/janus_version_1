@@ -92,6 +92,7 @@ import net.jxta.protocol.PeerGroupAdvertisement;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
+import org.janusproject.kernel.network.jxta.JanusJxtaConstants;
 import org.janusproject.kernel.util.throwable.Throwables;
 
 /**
@@ -111,7 +112,7 @@ class PeerGroupUtil {
 	public static final String MEMBERSHIP_ID = "myjxtauser"; //$NON-NLS-1$
 
 	private static final long MILLISECONDS_IN_A_WEEK = 7 * 24 * 60 * 60 * 1000;
-
+	
 	/**
 	 * Create a new PeerGroupAdvertisment from which a new PeerGroup will be
 	 * created.
@@ -223,11 +224,11 @@ class PeerGroupUtil {
 		}
 
 		StructuredTextDocument orgClass = (StructuredTextDocument) StructuredDocumentFactory.newStructuredDocument(MimeMediaType.XMLUTF8, "Param"); //$NON-NLS-1$
-		orgClass.appendChild(orgClass.createElement(JanusNetworkConstants.TAG_JANUS_ORG, janusGroupAddress.getOrganization().getName()));
-		orgClass.appendChild(orgClass.createElement(JanusNetworkConstants.TAG_JANUS_GROUP_ID, janusGroupAddress.getUUID().toString()));
+		orgClass.appendChild(orgClass.createElement(JanusJxtaConstants.TAG_JANUS_ORG, janusGroupAddress.getOrganization().getName()));
+		orgClass.appendChild(orgClass.createElement(JanusJxtaConstants.TAG_JANUS_GROUP_ID, janusGroupAddress.getUUID().toString()));
 
 		if (janusGroupAddress.getName() != null) {
-			orgClass.appendChild(orgClass.createElement(JanusNetworkConstants.TAG_JANUS_GROUP_NAME, janusGroupAddress.getName()));
+			orgClass.appendChild(orgClass.createElement(JanusJxtaConstants.TAG_JANUS_GROUP_NAME, janusGroupAddress.getName()));
 		}
 
 		ByteArrayOutputStream out;
@@ -235,14 +236,14 @@ class PeerGroupUtil {
 
 		// obtain conditions serialization
 		if (obtainConditions != null && obtainConditions.size() > 0) {
-			Element eObtainConditions = orgClass.createElement(JanusNetworkConstants.TAG_JANUS_OBTAIN_CONDITIONS);
+			Element eObtainConditions = orgClass.createElement(JanusJxtaConstants.TAG_JANUS_OBTAIN_CONDITIONS);
 			Element obtainCondition;
 			for (GroupCondition obtain : obtainConditions) {
 				out = new ByteArrayOutputStream();
 				oos = new ObjectOutputStream(out);
 				oos.writeObject(obtain);
 				oos.close();
-				obtainCondition = orgClass.createElement(JanusNetworkConstants.TAG_JANUS_CONDITION, new String(out.toByteArray()));
+				obtainCondition = orgClass.createElement(JanusJxtaConstants.TAG_JANUS_CONDITION, new String(out.toByteArray()));
 				eObtainConditions.appendChild(obtainCondition);
 			}
 			orgClass.appendChild(eObtainConditions);
@@ -250,14 +251,14 @@ class PeerGroupUtil {
 
 		// leave conditions serialization
 		if (leaveConditions != null && leaveConditions.size() > 0) {
-			Element eLeaveConditions = orgClass.createElement(JanusNetworkConstants.TAG_JANUS_LEAVE_CONDITIONS);
+			Element eLeaveConditions = orgClass.createElement(JanusJxtaConstants.TAG_JANUS_LEAVE_CONDITIONS);
 			Element leaveCondition;
 			for (GroupCondition leave : leaveConditions) {
 				out = new ByteArrayOutputStream();
 				oos = new ObjectOutputStream(out);
 				oos.writeObject(leave);
 				oos.close();
-				leaveCondition = orgClass.createElement(JanusNetworkConstants.TAG_JANUS_CONDITION, new String(out.toByteArray()));
+				leaveCondition = orgClass.createElement(JanusJxtaConstants.TAG_JANUS_CONDITION, new String(out.toByteArray()));
 				eLeaveConditions.appendChild(leaveCondition);
 			}
 			orgClass.appendChild(eLeaveConditions);
@@ -269,9 +270,9 @@ class PeerGroupUtil {
 			oos = new ObjectOutputStream(out);
 			oos.writeObject(membership);
 			oos.close();
-			orgClass.appendChild(orgClass.createElement(JanusNetworkConstants.TAG_JANUS_MEMBERSHIPSERVICE, new String(out.toByteArray())));
+			orgClass.appendChild(orgClass.createElement(JanusJxtaConstants.TAG_JANUS_MEMBERSHIPSERVICE, new String(out.toByteArray())));
 		}
-		pga.putServiceParam(JanusNetworkConstants.JANUS_ORG_CLASS, orgClass);
+		pga.putServiceParam(Utils.JANUS_ORG_CLASS, orgClass);
 
 		DiscoveryService ds = parentGroup.getDiscoveryService();
 
@@ -289,7 +290,7 @@ class PeerGroupUtil {
 	 */
 	public static List<PeerGroupAdvertisement> getJanusGroupAdvs(PeerGroup pg, UUID groupId) {
 		assert (groupId != null);
-		List<PeerGroupAdvertisement> p = new ArrayList<>();
+		List<PeerGroupAdvertisement> p = new ArrayList<PeerGroupAdvertisement>();
 
 		try {
 			for (Enumeration<Advertisement> gas = pg.getDiscoveryService().getLocalAdvertisements(DiscoveryService.GROUP, "Name", groupId.toString()); gas //$NON-NLS-1$
@@ -300,9 +301,11 @@ class PeerGroupUtil {
 					p.add((PeerGroupAdvertisement) o);
 				}
 			}
-		} catch (AssertionError ae) {
+		}
+		catch (AssertionError ae) {
 			throw ae;
-		} catch (IOException ioe) {
+		}
+		catch (IOException ioe) {
 			// FIXME do something in case of exception
 		}
 
@@ -316,7 +319,7 @@ class PeerGroupUtil {
 	 * @return the list of advertisement associated to the specified JXTA group
 	 */
 	public static List<PeerGroupAdvertisement> getAdvs(PeerGroup pg, String name) {
-		List<PeerGroupAdvertisement> p = new ArrayList<>();
+		List<PeerGroupAdvertisement> p = new ArrayList<PeerGroupAdvertisement>();
 
 		try {
 			for (Enumeration<Advertisement> gas = pg.getDiscoveryService().getLocalAdvertisements(DiscoveryService.GROUP, name != null ? "Name" : null, name); gas //$NON-NLS-1$
@@ -327,7 +330,8 @@ class PeerGroupUtil {
 					p.add((PeerGroupAdvertisement) o);
 				}
 			}
-		} catch (AssertionError ae) {
+		}
+		catch (AssertionError ae) {
 			throw ae;
 		}
 		catch (IOException ioe) {

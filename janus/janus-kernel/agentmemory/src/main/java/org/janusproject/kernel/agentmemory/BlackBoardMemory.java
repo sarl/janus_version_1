@@ -36,7 +36,7 @@ import java.util.TreeMap;
  */
 public class BlackBoardMemory extends AbstractMemory {
 
-	private final Map<String,Object> blackBoard = new TreeMap<>();
+	private final Map<String,Object> blackBoard = new TreeMap<String,Object>();
 	
 	/**
 	 * Create an empty black board.

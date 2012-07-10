@@ -23,11 +23,16 @@ package org.janusproject.kernel.network.jxme.jxta.impl;
 
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import net.jxta.id.ID;
 import net.jxta.id.IDFactory;
+import net.jxta.peergroup.PeerGroup;
 import net.jxta.peergroup.PeerGroupID;
+
+import org.janusproject.kernel.network.jxta.JanusJxtaConstants;
 
 /** Several utilities dedicated to the JXTA support in Janus.
  * 
@@ -43,6 +48,9 @@ class Utils {
 
 	private static final String SEED = "JanusPlatformDefaultSeed"; //$NON-NLS-1$
 
+	/** Identifier of the Janus features on JXTA.
+	 */
+	public static final ID JANUS_ORG_CLASS = ID.create(URI.create(PeerGroup.WK_ID_PREFIX + JanusJxtaConstants.JANUS_ORG_CLASS_ID_POSTFIX));
 
 	/**
 	 * Given a group name generates a Peer Group ID who's value is chosen based

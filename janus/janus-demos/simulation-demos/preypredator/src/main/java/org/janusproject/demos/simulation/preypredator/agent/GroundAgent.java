@@ -65,7 +65,7 @@ public class GroundAgent extends Agent implements GUIWorldState {
 	private static final long serialVersionUID = 6872690216031788260L;
 	
 	private final int awaitingAgents;
-	private final ListenerCollection<WorldStateChangeListener> listeners = new ListenerCollection<>();
+	private final ListenerCollection<WorldStateChangeListener> listeners = new ListenerCollection<WorldStateChangeListener>();
 	private volatile boolean stop = false;
 	
 	/**
@@ -125,7 +125,7 @@ public class GroundAgent extends Agent implements GUIWorldState {
 		Memory memory = getMemory();
 		assert(memory!=null);
 		Map<AgentAddress,WorldState> m = (Map<AgentAddress,WorldState>)memory.getMemorizedData(Terrain.POSITIONS);
-		Map<AgentAddress,WorldState> r = new TreeMap<>();
+		Map<AgentAddress,WorldState> r = new TreeMap<AgentAddress, WorldState>();
 		for(Entry<AgentAddress,WorldState> entry : m.entrySet()) {
 			r.put(entry.getKey(), entry.getValue().clone());
 		}

@@ -41,8 +41,8 @@ import org.janusproject.kernel.crio.organization.Group;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.network.jxme.api.NetworkAdapter;
-import org.janusproject.kernel.network.jxme.api.NetworkListener;
+import org.janusproject.kernel.network.jxta.NetworkAdapter;
+import org.janusproject.kernel.network.jxta.NetworkListener;
 import org.janusproject.kernel.repository.RepositoryChangeEvent;
 import org.janusproject.kernel.repository.RepositoryChangeEvent.ChangeType;
 import org.janusproject.kernel.repository.RepositoryChangeListener;
@@ -204,6 +204,13 @@ public class JxtaJxmeKernelAgent extends KernelAgent implements RepositoryChange
 		if (fireUncatchedException(e)) {
 			getLogger().log(Level.SEVERE, e.toString(), e);
 		}
+	}
+
+	/** {@inheritDoc}
+	 */
+	@Override
+	public void networkLog(String message) {
+		getLogger().fine(message);
 	}
 
 	/**

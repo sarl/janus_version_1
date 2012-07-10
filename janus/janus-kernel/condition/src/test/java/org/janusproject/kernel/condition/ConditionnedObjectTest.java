@@ -45,7 +45,7 @@ public class ConditionnedObjectTest extends TestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		this.cond = new ConditionnedObject<>();
+		this.cond = new ConditionnedObject<Object,Condition<Object>>();
 	}
 	
 	/**

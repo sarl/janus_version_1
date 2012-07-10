@@ -80,7 +80,7 @@ public class ChatRoomFrame extends JFrame implements ActionListener {
 	 */
 	public ChatRoomFrame(ChatChannel chatChannel) {
 		assert(chatChannel!=null);
-		this.chatChannel = new WeakReference<>(chatChannel);
+		this.chatChannel = new WeakReference<ChatChannel>(chatChannel);
 
 		Address owner = chatChannel.getChannelOwner();
 		assert(owner!=null);
@@ -158,7 +158,7 @@ public class ChatRoomFrame extends JFrame implements ActionListener {
 			if (channel!=null) {
 				Collection<GroupAddress> myRooms = channel.getParticipatingChatrooms();
 				Collection<GroupAddress> rooms = channel.getAllChatrooms();			
-				List<GroupAddress> notParticipatingRooms = new ArrayList<>();
+				List<GroupAddress> notParticipatingRooms = new ArrayList<GroupAddress>();
 				notParticipatingRooms.addAll(rooms);
 				notParticipatingRooms.removeAll(myRooms);
 				ChatRoomSelectionDialog dialog = new ChatRoomSelectionDialog(notParticipatingRooms);
@@ -200,7 +200,7 @@ public class ChatRoomFrame extends JFrame implements ActionListener {
 		} else if (SEND_PRIVATE_MESSAGE_ACTION.equals(cmd)) {
 			ChatChannel channel = this.chatChannel.get();
 			if (channel!=null) {
-				Collection<AgentAddress> participants = new TreeSet<>();
+				Collection<AgentAddress> participants = new TreeSet<AgentAddress>();
 				for(GroupAddress room : channel.getParticipatingChatrooms()) {
 					Iterator<AgentAddress> iterator = channel.getChatroomParticipants(room);
 					while (iterator.hasNext()) {

@@ -240,7 +240,7 @@ public class StringACLCodecHelper {
 
 	private static ArrayList<String> getMatches( String str, String pattern, int group ){
 		Matcher m = Pattern.compile( pattern ).matcher( str );
-		ArrayList<String> list = new ArrayList<>();
+		ArrayList<String> list = new ArrayList<String>();
 		
 		while (m.find()) {
 		    list.add( m.group( group ) );

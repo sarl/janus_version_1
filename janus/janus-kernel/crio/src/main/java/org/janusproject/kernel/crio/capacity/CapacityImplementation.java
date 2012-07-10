@@ -73,7 +73,7 @@ public abstract class CapacityImplementation {
 		Collection<Class<? extends Capacity>> collection = this.implementedCapacities==null ? null : this.implementedCapacities.get();
 		if (collection==null) {
 			collection = ReflectionUtil.getAllDirectInterfaces(getClass(), CapacityImplementation.class, Capacity.class);
-			this.implementedCapacities = new SoftReference<>(collection);
+			this.implementedCapacities = new SoftReference<Collection<Class<? extends Capacity>>>(collection);
 		}
 		return collection;
 	}

@@ -68,19 +68,19 @@ public class GroovyAgentShell extends GroovyAgent implements ChannelInteractable
 
 	/** Buffer for the next command to run.
 	 */
-	private final List<String> command = new LinkedList<>();
+	private final List<String> command = new LinkedList<String>();
 	
 	/** Buffer for the next command to run.
 	 */
-	private final Collection<ResultListener> listeners = new LinkedList<>();
+	private final Collection<ResultListener> listeners = new LinkedList<ResultListener>();
 	
 	/** Buffer for the next script to run.
 	 */
-	private final List<File> scripts = new LinkedList<>();
+	private final List<File> scripts = new LinkedList<File>();
 
 	/** Listeners on log events.
 	 */
-	private final ListenerCollection<LogListener> logListeners = new ListenerCollection<>();
+	private final ListenerCollection<LogListener> logListeners = new ListenerCollection<LogListener>();
 	
 	/**
 	 * Default constructor
@@ -108,7 +108,7 @@ public class GroovyAgentShell extends GroovyAgent implements ChannelInteractable
 		if (s.isSuccess()) {
 			String r;
 			
-			List<String> results = new ArrayList<>();
+			List<String> results = new ArrayList<String>();
 			
 			Iterator<String> commandIterator = this.command.iterator();
 			while (commandIterator.hasNext()) {

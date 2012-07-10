@@ -54,7 +54,7 @@ public class BufferedArrayListMailbox extends ArrayListMailbox implements Buffer
 	 * Create mailbox manager.
 	 */
 	public BufferedArrayListMailbox() {
-		this.buffer = new LinkedList<>();
+		this.buffer = new LinkedList<Message>();
 	}
 
 	/**

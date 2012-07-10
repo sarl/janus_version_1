@@ -147,7 +147,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 		MavenProject p = this.getMavenSession().getCurrentProject();
 
 		List<Dependency> odeps = p.getDependencies();
-		List<Dependency> deps = new ArrayList<>(odeps == null ? Collections.<Dependency> emptyList() : odeps);
+		List<Dependency> deps = new ArrayList<Dependency>(odeps == null ? Collections.<Dependency> emptyList() : odeps);
 		File artifactFile;
 		Dependency dep;
 		org.sonatype.aether.artifact.Artifact depArtifact;
@@ -184,7 +184,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 			if (outputJar.exists())
 				FileUtils.forceDelete(outputJar);
 
-			Set<File> inputDirs = new HashSet<>();
+			Set<File> inputDirs = new HashSet<File>();
 			inputDirs.add(depFile);
 			detectEmbeddedArtifacts(inputDirs);
 
@@ -217,7 +217,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 	 * @throws ProjectBuildingException
 	 */
 	protected void distributeDebugeableBundles(File outDir, Layout layout) throws MojoExecutionException, ArtifactResolutionException, ArtifactNotFoundException, IOException, MojoFailureException, ProjectBuildingException {
-		Set<File> deps = new HashSet<>();
+		Set<File> deps = new HashSet<File>();
 		Iterator<Artifact> i = this.artifacts.iterator();
 		Artifact a;
 		File depFile;

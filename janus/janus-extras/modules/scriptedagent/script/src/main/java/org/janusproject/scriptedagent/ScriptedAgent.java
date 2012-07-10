@@ -121,7 +121,7 @@ public class ScriptedAgent extends Agent {
 			ScriptEngineManager manager = (sharedManager==null) ? null : sharedManager.get();
 			if (manager==null) {
 				manager = new ScriptEngineManager();
-				sharedManager = new SoftReference<>(manager);
+				sharedManager = new SoftReference<ScriptEngineManager>(manager);
 			}
 			return manager;
 		}

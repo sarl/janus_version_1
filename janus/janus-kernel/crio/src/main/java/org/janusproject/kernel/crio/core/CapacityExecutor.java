@@ -82,7 +82,7 @@ public final class CapacityExecutor {
 	
 	private ExecutorService executionService = null;
 	
-	private final Map<UUID,DifferedCapacityInvocation> results = new TreeMap<>();
+	private final Map<UUID,DifferedCapacityInvocation> results = new TreeMap<UUID,DifferedCapacityInvocation>();
 	
 	/**
 	 */

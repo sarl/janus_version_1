@@ -75,7 +75,7 @@ public class ClientAgent extends BDIAgent {
 	
 	@Override
 	public Status activate(Object... parameters) {
-		this.environment = new WeakReference<>((Environment)parameters[0]);
+		this.environment = new WeakReference<Environment>((Environment)parameters[0]);
 		return StatusFactory.ok(this);
 	}
 

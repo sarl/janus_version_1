@@ -82,7 +82,7 @@ public class LuaJavaClassUtil {
 	}
 
 	private static List<Class<?>> getClassHierarchy(Class<?> type) {
-		List<Class<?>> list = new LinkedList<>();
+		List<Class<?>> list = new LinkedList<Class<?>>();
 		list.add(type);
 		Class<?> t = type.getSuperclass();
 		while (t!=null && !Object.class.equals(t)) {
@@ -95,7 +95,7 @@ public class LuaJavaClassUtil {
 	@SuppressWarnings("unchecked")
 	private static void loadFields(JavaClass javaClass, JavaClass previousJavaClass) {
 		if (javaClass.fields==null) {
-			Map<LuaValue,Field> m = new HashMap<>();
+			Map<LuaValue,Field> m = new HashMap<LuaValue, Field>();
 			if (previousJavaClass!=null && previousJavaClass.fields!=null) {
 				m.putAll(previousJavaClass.fields);
 			}
@@ -114,25 +114,25 @@ public class LuaJavaClassUtil {
 	@SuppressWarnings("unchecked")
 	private static void loadMethods(JavaClass javaClass, JavaClass previousJavaClass) {
 		if (javaClass.methods==null) {
-			Map<LuaValue, Object> map = new HashMap<>();
+			Map<LuaValue, Object> map = new HashMap<LuaValue, Object>();
 			if (previousJavaClass!=null && previousJavaClass.methods!=null) {
 				map.putAll(previousJavaClass.methods);
 			}
 
-			Map<String,List<JavaMethod>> namedlists = new HashMap<>();
+			Map<String,List<JavaMethod>> namedlists = new HashMap<String, List<JavaMethod>>();
 			for(Method method : ((Class<?>)javaClass.m_instance).getDeclaredMethods()) {
 				if (Modifier.isPublic(method.getModifiers())
 						||Modifier.isProtected(method.getModifiers())) {
 					String name = method.getName();
 					List<JavaMethod> list = namedlists.get(name);
 					if ( list == null )
-						namedlists.put(name, list = new ArrayList<>());
+						namedlists.put(name, list = new ArrayList<JavaMethod>());
 					list.add( JavaMethod.forMethod(method) );
 					method.setAccessible(true);
 				}
 			}
 
-			List<JavaConstructor> list = new ArrayList<>();
+			List<JavaConstructor> list = new ArrayList<JavaConstructor>();
 			for(Constructor<?> constructor : ((Class<?>)javaClass.m_instance).getDeclaredConstructors()) { 
 				if (Modifier.isPublic(constructor.getModifiers())
 						||Modifier.isProtected(constructor.getModifiers())) {

@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class OperationAgentNumberBenchRun extends AgentNumberBenchRun {
 
-	private List<Long> nbOperations = new ArrayList<>();
+	private List<Long> nbOperations = new ArrayList<Long>();
 	private long standardDeviation = -1;
 	private long means = -1;
 	

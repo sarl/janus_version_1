@@ -34,7 +34,7 @@ import java.util.TreeSet;
  */
 public class MemoryAdapter implements MemoryListener {
 
-	private final Set<String> eventBuffer = new TreeSet<>();
+	private final Set<String> eventBuffer = new TreeSet<String>();
 	
 	/**
 	 */

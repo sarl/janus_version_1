@@ -56,7 +56,7 @@ public class PBroker extends Role {
 	private State state;
 	private AgentAddress provider;
 	private GroupAddress contractGroup;
-	private final LastSignalAdapter<RequestSignal> signalListener = new LastSignalAdapter<>(RequestSignal.class);
+	private final LastSignalAdapter<RequestSignal> signalListener = new LastSignalAdapter<RequestSignal>(RequestSignal.class);
 	
 	/**
 	 */

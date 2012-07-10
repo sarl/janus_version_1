@@ -70,7 +70,7 @@ public class Utils {
 	 * @return a list of file correspodning to the dependencies of the specfied set of artifacts
 	 */
 	public static Set<File> getOsgiDependencyFiles(Log log, Set<Artifact> artifacts, List<String> excludedArtifacts) {
-		Set<File> result = new HashSet<>();
+		Set<File> result = new HashSet<File>();
 		Iterator<Artifact> i = artifacts.iterator();
 		Artifact a;
 		
@@ -125,18 +125,28 @@ public class Utils {
 	 * @return <code>true</code> if the given file is an OSGi bundle, otherwise <code>false</code>.
 	 */
 	public static boolean isOSGiBundle(File file) {
-		try (JarFile jFile = new JarFile(file)) {
-			// Get the manifest
-			Manifest manifest = jFile.getManifest();
-
-			Attributes attrs = manifest.getMainAttributes();
-
-			String name = attrs.getValue(BUNDLE_SYM_NAME);
-
-			if (name != null) {
-				return true;
+		try {
+			JarFile jFile = new JarFile(file);
+			try {
+				// Get the manifest
+				Manifest manifest = jFile.getManifest();
+	
+				Attributes attrs = manifest.getMainAttributes();
+	
+				String name = attrs.getValue(BUNDLE_SYM_NAME);
+	
+				if (name != null) {
+					return true;
+				}
 			}
-		} catch (IOException e) {
+			catch (IOException e) {
+				//
+			}
+			finally {
+				jFile.close();
+			}
+		}
+		catch (IOException e) {
 			//
 		}
 		return false;
@@ -154,7 +164,8 @@ public class Utils {
 				File manifestFile = new File(new File(file, "META-INF"), "MANIFEST.MF"); //$NON-NLS-1$ //$NON-NLS-2$
 				if (manifestFile.canRead()) {
 					// Get the manifest
-					try (FileInputStream fis = new FileInputStream(manifestFile)) {
+					FileInputStream fis = new FileInputStream(manifestFile);
+					try {
 						Manifest manifest = new Manifest(fis);
 
 						Attributes attrs = manifest.getMainAttributes();
@@ -164,6 +175,9 @@ public class Utils {
 						if (name != null) {
 							return true;
 						}
+					}
+					finally {
+						fis.close();
 					}
 				}
 			} catch (IOException e) {
@@ -198,17 +212,22 @@ public class Utils {
 
 		StringBuilder oldContent = new StringBuilder();
 		if (!eraseExistingContent && dst.exists()) {
-			try (FileInputStream in = new FileInputStream(dst)) {
+			FileInputStream in = new FileInputStream(dst);
+			try {
 				while ((len = in.read(buf)) > 0) {
 					oldContent.append(new String(buf, 0, len));
 				}
+			}
+			finally {
+				in.close();
 			}
 			if (oldContent.length() > 0) {
 				oldContent.append("\n"); //$NON-NLS-1$
 			}
 		}
 
-		try (OutputStream out = new FileOutputStream(dst)) {
+		OutputStream out = new FileOutputStream(dst);
+		try {
 
 			children = dir.list(filter);
 			Arrays.sort(children);
@@ -216,13 +235,20 @@ public class Utils {
 			out.write(oldContent.toString().getBytes());
 	
 			for (String child : children) {
-				try (FileInputStream in = new FileInputStream(new File(dir, child))) {
+				FileInputStream in = new FileInputStream(new File(dir, child));
+				try {
 					while ((len = in.read(buf)) > 0) {
 						out.write(buf, 0, len);
 					}
 				}
+				finally {
+					in.close();
+				}
 			}
 
+		}
+		finally {
+			out.close();
 		}
 	}
 
@@ -304,8 +330,12 @@ public class Utils {
 	 * @throws IOException
 	 */
 	public static void touchFile(File file) throws IOException {
-		try (FileOutputStream s = new FileOutputStream(file)) {
+		FileOutputStream s = new FileOutputStream(file);
+		try {
 			s.write(file.toString().getBytes());
+		}
+		finally {
+			s.close();
 		}
 	}
 

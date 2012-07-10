@@ -53,7 +53,7 @@ public class CBroker extends Role {
 	private Object contractDescription;
 	private GroupAddress contractGroup;
 	private AgentAddress contractProvider;
-	private LastSignalAdapter<TransfertSignal> signalListener = new LastSignalAdapter<>(TransfertSignal.class);
+	private LastSignalAdapter<TransfertSignal> signalListener = new LastSignalAdapter<TransfertSignal>(TransfertSignal.class);
 	
 	@Override
 	public Status activate(Object... parameters) {

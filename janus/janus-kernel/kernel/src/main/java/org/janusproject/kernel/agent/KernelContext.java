@@ -211,7 +211,7 @@ public class KernelContext extends CRIOContext {
 	 * @since 0.4
 	 */
 	public final SizedIterator<AgentAddress> getLocalAgents() {
-		return new UnmodifiableSizedIterator<>(this.agents.sizedIterator());
+		return new UnmodifiableSizedIterator<AgentAddress>(this.agents.sizedIterator());
 	}
 
 	/**

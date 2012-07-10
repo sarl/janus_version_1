@@ -59,13 +59,13 @@ import org.janusproject.kernel.util.sizediterator.UnmodifiableCollectionSizedIte
 public class ProbeManager {
 	
 	private final Map<Class<?>, Collection<Field>> watchableFields = 
-		new TreeMap<>(GenericComparator.SINGLETON);
+		new TreeMap<Class<?>, Collection<Field>>(GenericComparator.SINGLETON);
 	
 	private final Map<AgentAddress,Collection<IndividualProbe>> individualProbes = 
-		new TreeMap<>(GenericComparator.SINGLETON);
+		new TreeMap<AgentAddress, Collection<IndividualProbe>>(GenericComparator.SINGLETON);
 	
 	private final Set<CollectiveProbe> collectiveProbes = 
-			new TreeSet<>(GenericComparator.SINGLETON);
+			new TreeSet<CollectiveProbe>(GenericComparator.SINGLETON);
 
 	private final WeakReference<KernelContext> context;
 	
@@ -73,7 +73,7 @@ public class ProbeManager {
 	 * @param context
 	 */
 	ProbeManager(KernelContext context) {
-		this.context = new WeakReference<>(context);
+		this.context = new WeakReference<KernelContext>(context);
 	}
 	
 	/** Release any resource owned by this manager.
@@ -128,7 +128,7 @@ public class ProbeManager {
 	private static Collection<Field> extractWatchableAttributesFrom(Class<?> probedObjectType) {
 		assert(probedObjectType!=null);
 		
-		Map<String,Field> attributes = new TreeMap<>();
+		Map<String,Field> attributes = new TreeMap<String, Field>();
 		String attrName;
 		
 		Class<?> type = probedObjectType;
@@ -152,7 +152,7 @@ public class ProbeManager {
 			finalLevel = false;
 		}
 		
-		List<Field> fields = new ArrayList<>(attributes.size());
+		List<Field> fields = new ArrayList<Field>(attributes.size());
 		fields.addAll(attributes.values());
 		attributes.clear();
 		return fields;
@@ -305,7 +305,7 @@ public class ProbeManager {
 	 * @return the list of the probed attributes. 
 	 */
 	public synchronized Set<String> getWatchableNames(Class<?> probedObjectType) {	
-		Set<String> list = new TreeSet<>();
+		Set<String> list = new TreeSet<String>();
 		if (probedObjectType!=null) {
 			Collection<Field> collection = getWatchableAttributes(probedObjectType);
 			Iterator<Field> iterator = collection.iterator();
@@ -382,7 +382,7 @@ public class ProbeManager {
 		
 		Collection<IndividualProbe> agentProbes = this.individualProbes.get(probedAgent);
 		if (agentProbes==null) {
-			agentProbes = new ArrayList<>();
+			agentProbes = new ArrayList<IndividualProbe>();
 			this.individualProbes.put(probedAgent, agentProbes);
 		}
 		agentProbes.add(probeInstance);
@@ -449,7 +449,7 @@ public class ProbeManager {
 		
 		Collection<IndividualProbe> agentProbes = this.individualProbes.get(probedAgent);
 		if (agentProbes==null) {
-			agentProbes = new ArrayList<>();
+			agentProbes = new ArrayList<IndividualProbe>();
 			this.individualProbes.put(probedAgent, agentProbes);
 		}
 		agentProbes.add(probeInstance);
@@ -541,7 +541,7 @@ public class ProbeManager {
 			}
 			Collection<IndividualProbe> agentProbes = this.individualProbes.get(probedAgent);
 			if (agentProbes==null) {
-				agentProbes = new ArrayList<>();
+				agentProbes = new ArrayList<IndividualProbe>();
 				this.individualProbes.put(probedAgent, agentProbes);
 			}
 			agentProbes.add(probeInstance);
@@ -577,7 +577,7 @@ public class ProbeManager {
 	public synchronized Iterator<IndividualProbe> getProbes(AgentAddress entity) {
 		Collection<IndividualProbe> declaredProbes = this.individualProbes.get(entity);
 		if (declaredProbes!=null)
-			return new UnmodifiableCollectionSizedIterator<>(declaredProbes);
+			return new UnmodifiableCollectionSizedIterator<IndividualProbe>(declaredProbes);
 		return EmptyIterator.singleton();
 	}
 

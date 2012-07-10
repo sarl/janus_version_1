@@ -45,7 +45,7 @@ public class SafeIterator4Test extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.collection = new AsynchronousThreadSafeCollection<>(Integer.class);
+		this.collection = new AsynchronousThreadSafeCollection<Integer>(Integer.class);
 		this.collection.setAutoApplyEnabled(false);
 		this.m1 = 1;
 		this.m2 = 10;
@@ -56,7 +56,7 @@ public class SafeIterator4Test extends TestCase {
 		this.collection.add(this.m3);
 		this.collection.add(this.m4);
 		this.collection.applyChanges(true);
-		this.iterator = new SafeIterator<>(this.collection, this.collection.iterator());
+		this.iterator = new SafeIterator<Integer>(this.collection, this.collection.iterator());
 	}
 	
 	/**

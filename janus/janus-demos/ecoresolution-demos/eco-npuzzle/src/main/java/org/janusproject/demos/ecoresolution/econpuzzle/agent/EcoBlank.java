@@ -76,7 +76,7 @@ public class EcoBlank extends EcoTile {
 	@Override
 	protected Set<EcoAttack> selectEscapingIntruder(Set<EcoAttack> attacks) {
 		// atack celui qui empeche la fuite
-		Set<EcoAttack> attackToForward = new HashSet<>();
+		Set<EcoAttack> attackToForward = new HashSet<EcoAttack>();
 		
 		Map<Class<? extends EcoAttack>, Set<EcoAttack>> attackClassification = classifyAttack(attacks);
 
@@ -167,7 +167,7 @@ public class EcoBlank extends EcoTile {
 		}
 		defenderHosted = new Hosted(target, getPlace());
 
-		Collection<EcoRelation> newTargetAcquaintances = new LinkedList<>();
+		Collection<EcoRelation> newTargetAcquaintances = new LinkedList<EcoRelation>();
 		newTargetAcquaintances.add(defenderUp);
 		newTargetAcquaintances.add(defenderDown);
 		newTargetAcquaintances.add(defenderRight);
@@ -190,13 +190,13 @@ public class EcoBlank extends EcoTile {
 	 */
 	private final Set<ManhattanDistanceAttack> manageManhattanAttack(Set<EcoAttack> attacks) throws BadAcquaintancesException {
 
-		Set<ManhattanDistanceAttack> manhattanAttacks = new HashSet<>();
+		Set<ManhattanDistanceAttack> manhattanAttacks = new HashSet<ManhattanDistanceAttack>();
 
 		// Source of attack, distance from source, list of neighbor having the same distance
-		this.sourceDistAndNeighbors = new TreeMap<>();
+		this.sourceDistAndNeighbors = new TreeMap<EcoIdentity, TreeMap<Integer, List<EcoIdentity>>>();
 
 		// Manage the list of my neighbors that haven't sent the attack from the corresponding source, map<attack source, where to forward it>
-		Map<EcoIdentity, List<EcoIdentity>> sourcePlaceAndAttackForwarders = new HashMap<>();
+		Map<EcoIdentity, List<EcoIdentity>> sourcePlaceAndAttackForwarders = new HashMap<EcoIdentity, List<EcoIdentity>>();
 
 		List<EcoIdentity> neighboors = getNeighboorsAsList();
 
@@ -218,8 +218,8 @@ public class EcoBlank extends EcoTile {
 
 				distAndNeighbors = this.sourceDistAndNeighbors.get(currentOrigin);
 				if (distAndNeighbors == null) {
-					distAndNeighbors = new TreeMap<>();
-					currentListOfNeighborHavingTheSameDist = new LinkedList<>();
+					distAndNeighbors = new TreeMap<Integer, List<EcoIdentity>>();
+					currentListOfNeighborHavingTheSameDist = new LinkedList<EcoIdentity>();
 				} else {
 					currentListOfNeighborHavingTheSameDist = distAndNeighbors.get(attackDist);
 
@@ -234,7 +234,7 @@ public class EcoBlank extends EcoTile {
 					attackForwarders.remove(neighboor);
 					sourcePlaceAndAttackForwarders.put(currentOrigin, attackForwarders);
 				} else {
-					attackForwarders = new LinkedList<>(neighboors);
+					attackForwarders = new LinkedList<EcoIdentity>(neighboors);
 					attackForwarders.remove(neighboor);
 					sourcePlaceAndAttackForwarders.put(currentOrigin, attackForwarders);
 				}

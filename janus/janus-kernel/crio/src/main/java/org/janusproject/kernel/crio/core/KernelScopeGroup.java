@@ -121,13 +121,13 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 	/**
 	 * Role-Agent pairs.
 	 */
-	private final Map<Class<? extends Role>, RoleDescriptor> playersPerRole = new TreeMap<>(
+	private final Map<Class<? extends Role>, RoleDescriptor> playersPerRole = new TreeMap<Class<? extends Role>, RoleDescriptor>(
 			GenericComparator.SINGLETON);
 
 	/**
 	 * Agent-Role pairs.
 	 */
-	private final Map<AgentAddress, Collection<Class<? extends Role>>> rolesPerPlayer = new TreeMap<>();
+	private final Map<AgentAddress, Collection<Class<? extends Role>>> rolesPerPlayer = new TreeMap<AgentAddress, Collection<Class<? extends Role>>>();
 
 	/**
 	 * Use to synchronize internal data structures.
@@ -171,7 +171,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 			MembershipService membership) {
 		assert (organization != null);
 		assert (address != null);
-		this.organization = new WeakReference<>(organization);
+		this.organization = new WeakReference<Organization>(organization);
 		this.address = address;
 		this.address.bind(this);
 		this.isDistributed = distributed;
@@ -187,7 +187,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 	 */
 	public synchronized void addRolePlayingListener(RolePlayingListener listener) {
 		if (this.eventListeners==null)
-			this.eventListeners = new ListenerCollection<>();
+			this.eventListeners = new ListenerCollection<EventListener>();
 		this.eventListeners.add(RolePlayingListener.class, listener);
 	}
 
@@ -333,7 +333,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 					.get(player.getAddress());
 			if (roles != null) {
 				// Copy the roles to avoid concurrent modification exception
-				List<Class<? extends Role>> copy = new ArrayList<>(
+				List<Class<? extends Role>> copy = new ArrayList<Class<? extends Role>>(
 						roles);
 				boolean released = false;
 				for (Class<? extends Role> role : copy) {
@@ -631,7 +631,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 							Collection<Class<? extends Role>> playedRoles = this.rolesPerPlayer
 									.get(adr);
 							if (playedRoles == null) {
-								playedRoles = new TreeSet<>(
+								playedRoles = new TreeSet<Class<? extends Role>>(
 										GenericComparator.SINGLETON);
 								this.rolesPerPlayer.put(adr, playedRoles);
 							}
@@ -942,7 +942,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 			logger = LoggerUtil.createGroupLogger(getClass(),
 					getOrganization().getCRIOContext().getTimeManager(),
 					getAddress());
-			this.logger = new SoftReference<>(logger);
+			this.logger = new SoftReference<Logger>(logger);
 		}
 		return logger;
 
@@ -1019,7 +1019,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 	public SizedIterator<RoleAddress> getRoleAddresses() {
 		this.internalStructureLock.lock();
 		try {
-			MultiSizedIterator<RoleAddress> iterators = new MultiSizedIterator<>();
+			MultiSizedIterator<RoleAddress> iterators = new MultiSizedIterator<RoleAddress>();
 			for(RoleDescriptor desc : this.playersPerRole.values()) {
 				iterators.addIterator(desc.getRoleAddresses());
 			}
@@ -1147,7 +1147,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 	public SizedIterator<Class<? extends Role>> getPlayedRoles() {
 		this.internalStructureLock.lock();
 		try {
-			return new UnmodifiableMapKeySizedIterator<>(
+			return new UnmodifiableMapKeySizedIterator<Class<? extends Role>>(
 					this.playersPerRole);
 		}
 		finally {
@@ -1182,7 +1182,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		try {
 			Collection<Class<? extends Role>> roles = this.rolesPerPlayer.get(player);
 			if (roles!=null) {
-				return new RoleIterator(player, new ArrayList<>(roles));
+				return new RoleIterator(player, new ArrayList<Class<? extends Role>>(roles));
 			}
 			return EmptyIterator.singleton();
 		}
@@ -1342,7 +1342,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		this.internalStructureLock.lock();
 		try {
 			if (this.publicUserData==null) {
-				this.publicUserData = new TreeMap<>();
+				this.publicUserData = new TreeMap<String,Object>();
 			}
 			return this.publicUserData.put(key, userData);
 		}
@@ -1440,12 +1440,12 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 				if (noLocal && noRemote)
 					return EmptyIterator.singleton();
 				if (noRemote)
-					return new UnmodifiableMapKeySizedIterator<>(
+					return new UnmodifiableMapKeySizedIterator<AgentAddress>(
 							this.localEntities);
 				if (noLocal)
-					return new UnmodifiableCollectionSizedIterator<>(
+					return new UnmodifiableCollectionSizedIterator<AgentAddress>(
 							this.remoteEntities);
-				return new DoubleSizedIterator<>(
+				return new DoubleSizedIterator<AgentAddress>(
 						this.localEntities.keySet(), this.remoteEntities);
 			}
 			finally {
@@ -1484,12 +1484,12 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 				if (noLocal && noRemote)
 					return UnmodifiableDirectAccessCollection.empty();
 				if (noRemote)
-					return new UnmodifiableDirectAccessSet<>(
+					return new UnmodifiableDirectAccessSet<AgentAddress>(
 							this.localEntities.keySet());
 				if (noLocal)
-					return new UnmodifiableDirectAccessSet<>(
+					return new UnmodifiableDirectAccessSet<AgentAddress>(
 							this.remoteEntities);
-				return new UnmodifiableDirectAccessSetSet<>(
+				return new UnmodifiableDirectAccessSetSet<AgentAddress>(
 						this.localEntities.keySet(), this.remoteEntities);
 			}
 			finally {
@@ -1513,7 +1513,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 			try {
 				return policy.selectEntity(
 						exceptFor,
-						new UnmodifiableDirectAccessSetSet<>(
+						new UnmodifiableDirectAccessSetSet<AgentAddress>(
 								this.localEntities.keySet(), this.remoteEntities));	
 			}
 			finally {
@@ -1594,7 +1594,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 			KernelScopeGroup.this.internalStructureLock.lock();
 			try {
 				if (this.localEntities == null)
-					this.localEntities = new TreeMap<>();
+					this.localEntities = new TreeMap<AgentAddress,Role>();
 				this.localEntities.put(entity, role);
 				return true;
 			}
@@ -1897,7 +1897,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		private final SizedIterator<Role> roles;
 		
 		public RoleAddressIterator(Collection<Role> roles) {
-			this.roles = new UnmodifiableCollectionSizedIterator<>(roles);
+			this.roles = new UnmodifiableCollectionSizedIterator<Role>(roles);
 		}
 
 		public RoleAddressIterator(SizedIterator<Role> roles) {
@@ -1965,7 +1965,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		
 		public RoleIterator(AgentAddress adr, Collection<Class<? extends Role>> roles) {
 			this.adr = adr;
-			this.roleTypes = new ModifiableCollectionSizedIterator<>(roles);
+			this.roleTypes = new ModifiableCollectionSizedIterator<Class<? extends Role>>(roles);
 			this.rest = this.roleTypes.totalSize();
 			searchNext();
 		}

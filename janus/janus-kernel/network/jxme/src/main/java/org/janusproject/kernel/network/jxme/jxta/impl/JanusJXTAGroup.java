@@ -75,28 +75,12 @@ abstract class JanusJXTAGroup extends JxtaGroup {
 	private Boolean joined = false;
 	
 	/**
-	 * The logger associated to this class
-	 */
-	private Logger log = null;
-
-
-	/**
 	 * @param adapter is the JXTA network handler supporting this Janus JXTA group.
 	 * @param peerGroup is the JXTA group.
 	 * @param parent the the parent JXTA group.
 	 */
 	public JanusJXTAGroup(JXTANetworkHandler adapter, PeerGroup peerGroup, JxtaGroup parent) {
 		super(adapter,peerGroup,parent);
-	}
-	
-	/** Replies the logger.
-	 * 
-	 * @return the logger, never <code>null</code>
-	 */
-	protected Logger getLogger() {
-		if (this.log == null)
-			this.log = Logger.getLogger(ApplicationJxtaGroup.class.getName());
-		return this.log;
 	}
 	
 	/**

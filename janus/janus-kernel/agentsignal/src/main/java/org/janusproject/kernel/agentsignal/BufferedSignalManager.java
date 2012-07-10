@@ -85,13 +85,13 @@ public class BufferedSignalManager extends AbstractSignalManager {
 			break;
 		case FIRE_SIGNAL:
 			if (this.events == null) {
-				this.events = new QueuedSignalAdapter<>(Signal.class);
+				this.events = new QueuedSignalAdapter<Signal>(Signal.class);
 			}
 			this.events.onSignal(signal);
 			break;
 		case STORE_IN_QUEUE:
 			if (this.events == null) {
-				this.events = new QueuedSignalAdapter<>(Signal.class);
+				this.events = new QueuedSignalAdapter<Signal>(Signal.class);
 			}
 			this.events.onSignal(signal);
 			

@@ -110,6 +110,7 @@ import org.janusproject.kernel.bench.organization.signal.CRIOSignalSendingBench;
  * @mavenartifactid $ArtifactId$
  * @since 0.5
  */
+@SuppressWarnings("unchecked")
 public class Benchs {
 
 	/**
@@ -195,9 +196,8 @@ public class Benchs {
 		System.exit(0);
 	}
 
-	@SafeVarargs
 	private static List<Class<? extends Bench<?>>> selectBenchs(Class<? extends Bench<?>>... benchs) {
-		List<Class<? extends Bench<?>>> benchsToRun = new ArrayList<>();
+		List<Class<? extends Bench<?>>> benchsToRun = new ArrayList<Class<? extends Bench<?>>>();
 		SelectionGUI gui = new SelectionGUI(benchs);
 		gui.setVisible(true);
 		if (gui.isJei()) {
@@ -210,7 +210,6 @@ public class Benchs {
 		return benchsToRun;
 	}
 
-	@SafeVarargs
 	private static void run(Class<? extends Bench<?>>... benchs) throws Exception {
 		List<Class<? extends Bench<?>>> benchsToRun = selectBenchs(benchs);
 
@@ -353,22 +352,21 @@ public class Benchs {
 
 		private static final long serialVersionUID = 5475408361451706102L;
 
-		private DefaultListModel<Class<? extends Bench<?>>> model;
-		private JList<Class<? extends Bench<?>>> list;
+		private DefaultListModel model;
+		private JList list;
 		private boolean isBench = false;
 		private boolean isJei = false;
 
 		/**
 		 * @param benchs
 		 */
-		@SafeVarargs
 		public SelectionGUI(Class<? extends Bench<?>>... benchs) {
 			super((Window)null, Locale.getString(Benchs.class, "SELECT_BENCHS")); //$NON-NLS-1$
 			setPreferredSize(new Dimension(600, 600));
 			setLayout(new BorderLayout());
 			setModal(true);
-			this.model = new DefaultListModel<>();
-			this.list = new JList<>(this.model);
+			this.model = new DefaultListModel();
+			this.list = new JList(this.model);
 			add(BorderLayout.CENTER, new JScrollPane(this.list));
 			this.list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			this.list.setCellRenderer(new SelectionRenderer());
@@ -416,7 +414,7 @@ public class Benchs {
 		public int getSelectionBenchs(List<Class<? extends Bench<?>>> list) {
 			int nb = 0;
 			for(int i : this.list.getSelectedIndices()) {
-				list.add(this.model.get(i));
+				list.add((Class<? extends Bench<?>>)this.model.get(i));
 				++nb;
 			}
 			return nb;
@@ -457,7 +455,7 @@ public class Benchs {
 			int cmpR;
 			while (l>=f) {
 				c = (f+l)/2;
-				d = this.model.get(c);
+				d = (Class<? extends Bench<?>>)this.model.get(c);
 				cmpR = compare(data, d);
 				if (cmpR==0) return;
 				if (cmpR<0) {
@@ -505,7 +503,7 @@ public class Benchs {
 		 */
 		@SuppressWarnings("synthetic-access")
 		@Override
-		public Component getListCellRendererComponent(JList<?> list, Object value,
+		public Component getListCellRendererComponent(JList list, Object value,
 				int index, boolean isSelected, boolean cellHasFocus) {
 			JLabel label = (JLabel)super.getListCellRendererComponent(list, value, index, isSelected,
 					cellHasFocus);

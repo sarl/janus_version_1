@@ -71,13 +71,13 @@ public abstract class AbstractEcoEntity implements InitializableEcoEntity {
 	private EcoIdentity monitor = null;
 	
 	private EcoRelation goal = null;
-	private final Set<EcoIdentity> dependencies = new TreeSet<>(EcoIdentityComparator.SINGLETON);
-	private Set<EcoAttack> attacks = new HashSet<>();
-	private final Set<EcoRelation> acquaintances = new HashSet<>();
+	private final Set<EcoIdentity> dependencies = new TreeSet<EcoIdentity>(EcoIdentityComparator.SINGLETON);
+	private Set<EcoAttack> attacks = new HashSet<EcoAttack>();
+	private final Set<EcoRelation> acquaintances = new HashSet<EcoRelation>();
 	
 	private EcoRelation bufferedGoal = null;
-	private final Set<EcoRelation> bufferedAddedAcquaintances = new HashSet<>();
-	private final Set<EcoRelation> bufferedRemovedAcquaintances = new HashSet<>();
+	private final Set<EcoRelation> bufferedAddedAcquaintances = new HashSet<EcoRelation>();
+	private final Set<EcoRelation> bufferedRemovedAcquaintances = new HashSet<EcoRelation>();
 	
 	/**
 	 * @param identity is the identity of the entity.
@@ -118,7 +118,7 @@ public abstract class AbstractEcoEntity implements InitializableEcoEntity {
 	@Override
 	public final synchronized void addEcoEntityListener(EcoEntityListener listener) {
 		if (this.listeners==null)
-			this.listeners = new ArrayList<>();
+			this.listeners = new ArrayList<EcoEntityListener>();
 		this.listeners.add(listener);
 	}
 
@@ -317,7 +317,7 @@ public abstract class AbstractEcoEntity implements InitializableEcoEntity {
 	protected void clearAttacks() {
 		if (!this.attacks.isEmpty()) {
 			Collection<EcoAttack> removedAttacks = this.attacks;
-			this.attacks = new HashSet<>();
+			this.attacks = new HashSet<EcoAttack>();
 			fireAttackRemoval(removedAttacks);
 		}
 	}
@@ -426,7 +426,7 @@ public abstract class AbstractEcoEntity implements InitializableEcoEntity {
 			changed = removeConflictingAcquaintances(this.bufferedAddedAcquaintances);
 			
 			// Add new relations
-			Collection<EcoRelation> addedAquaintances = new LinkedList<>();
+			Collection<EcoRelation> addedAquaintances = new LinkedList<EcoRelation>();
 			for(EcoRelation newAcquaintance : this.bufferedAddedAcquaintances) {
 				if (this.acquaintances.add(newAcquaintance)) {
 					changed = true;
@@ -441,7 +441,7 @@ public abstract class AbstractEcoEntity implements InitializableEcoEntity {
 
 		if (!this.bufferedRemovedAcquaintances.isEmpty()) {
 			// Remove relations
-			Collection<EcoRelation> removedAquaintances = new LinkedList<>();
+			Collection<EcoRelation> removedAquaintances = new LinkedList<EcoRelation>();
 			for(EcoRelation oldAcquaintance : this.bufferedRemovedAcquaintances) {
 				if (this.acquaintances.remove(oldAcquaintance)) {
 					changed = true;

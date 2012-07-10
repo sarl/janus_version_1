@@ -78,7 +78,7 @@ public abstract class AbstractCRIOAgentMessageSendingBench extends AbstractRoleO
 	protected org.janusproject.kernel.bench.api.AbstractRoleOperationPerSecondCsvBench.BenchMarkedAgent launchAgents(
 			OperationAgentNumberBenchRun run, Kernel kernel,
 			AtomicInteger launchFlag) {
-		List<AgentAddress> addr = new ArrayList<>();
+		List<AgentAddress> addr = new ArrayList<AgentAddress>();
 		
 		for(int i=0; i<run.getNumberOfAgents()-1; ++i) {
 			addr.add(kernel.submitLightAgent(new IddleAgent(launchFlag, BenchOrganization.class, true)));

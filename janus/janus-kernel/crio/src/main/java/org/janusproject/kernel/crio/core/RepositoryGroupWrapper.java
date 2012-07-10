@@ -39,7 +39,7 @@ import org.janusproject.kernel.util.event.ListenerCollection;
  */
 class RepositoryGroupWrapper implements RepositoryChangeListener {
 
-	private final ListenerCollection<GroupListener> listeners = new ListenerCollection<>();
+	private final ListenerCollection<GroupListener> listeners = new ListenerCollection<GroupListener>();
 	
 	/**
 	 */

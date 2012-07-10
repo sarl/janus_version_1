@@ -48,7 +48,7 @@ public class ScriptRepository {
 	/**
 	 * The folder supported by this repository.
 	 */
-	private final SortedSet<URL> directories = new TreeSet<>(new Comparator<URL>() {
+	private final SortedSet<URL> directories = new TreeSet<URL>(new Comparator<URL>() {
 		@Override
 		public int compare(URL o1, URL o2) {
 			if (o1==o2) return 0;
@@ -177,7 +177,7 @@ public class ScriptRepository {
 			if (defaultDirectory!=null && filter.accept(defaultDirectory)) {
 				return Collections.singleton(defaultDirectory).iterator();
 			}
-			return Collections.emptyIterator();
+			return Collections.<File>emptyList().iterator();
 		}
 		return new FileIterator(filter, this.directories.iterator());
 	}
@@ -218,7 +218,7 @@ public class ScriptRepository {
 			if (defaultDirectory!=null && filter.accept(defaultDirectory)) {
 				return Collections.singleton(defaultDirectory).iterator();
 			}
-			return Collections.emptyIterator();
+			return Collections.<URL>emptyList().iterator();
 		}
 		return new URLIterator(filter, this.directories.iterator());
 	}

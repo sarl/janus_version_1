@@ -105,7 +105,7 @@ public class StringACLCodec implements ACLMessageContentEncodingService
 			}
 			// RECEIVERS
 			else if( StringACLCodecHelper.isReceiver( str ) ){
-				Collection<AgentAddress> receivers = new ArrayList<>();
+				Collection<AgentAddress> receivers = new ArrayList<AgentAddress>();
 				
 				for(String agentId : StringACLCodecHelper.getReceiversList( str ) ){
 					receivers.add( AddressUtil.createAgentAddress( UUID.fromString( agentId )) );

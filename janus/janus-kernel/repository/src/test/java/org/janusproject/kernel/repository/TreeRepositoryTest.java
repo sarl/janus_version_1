@@ -49,7 +49,7 @@ public class TreeRepositoryTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.repository = new TreeRepository<>();
+		this.repository = new TreeRepository<ComparableStub,Object>();
 		this.listener = new RepositoryChangeListenerStub();
 		this.repository.addRepositoryChangeListener(this.listener);
 	}
@@ -179,7 +179,7 @@ public class TreeRepositoryTest extends TestCase {
 		Iterator<Entry<ComparableStub,Object>> iterator = this.repository.getEntryIterator();
 		assertNotNull(iterator);
 		
-		ArrayList<ComparableStub> l = new ArrayList<>();
+		ArrayList<ComparableStub> l = new ArrayList<ComparableStub>();
 		while (iterator.hasNext()) {
 			l.add(iterator.next().getKey());
 		}
@@ -300,7 +300,7 @@ public class TreeRepositoryTest extends TestCase {
 		Collection<ComparableStub> identifiers = this.repository.identifiers();
 		assertNotNull(identifiers);
 		
-		ArrayList<ComparableStub> l = new ArrayList<>(identifiers);
+		ArrayList<ComparableStub> l = new ArrayList<ComparableStub>(identifiers);
 		
 		assertEquals(3, l.size());
 		assertTrue(l.remove(k1));
@@ -350,7 +350,7 @@ public class TreeRepositoryTest extends TestCase {
 		Collection<Object> values = this.repository.values();
 		assertNotNull(values);
 		
-		ArrayList<Object> l = new ArrayList<>(values);
+		ArrayList<Object> l = new ArrayList<Object>(values);
 		
 		assertEquals(3, l.size());
 		assertTrue(l.remove(v1));

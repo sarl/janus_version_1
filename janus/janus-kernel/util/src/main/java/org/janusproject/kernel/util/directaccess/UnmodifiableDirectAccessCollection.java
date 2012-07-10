@@ -38,7 +38,7 @@ implements DirectAccessCollection<M> {
 
 	/** Singleton for an unmodifiable direct access collection.
 	 */
-	private static final UnmodifiableDirectAccessCollection<Object> SINGLETON = new UnmodifiableDirectAccessCollection<>();
+	private static final UnmodifiableDirectAccessCollection<Object> SINGLETON = new UnmodifiableDirectAccessCollection<Object>();
 	
 	/** Singleton for an unmodifiable direct access collection.
 	 * 
@@ -134,8 +134,8 @@ implements DirectAccessCollection<M> {
 		if (this.originalCollection!=null)
 			return this.originalCollection.iterator();
 		if (this.originalList!=null)
-			return new SafeIterator<>(this.originalList.iterator());
-		return new SafeIterator<>();
+			return new SafeIterator<M>(this.originalList.iterator());
+		return new SafeIterator<M>();
 	}
 
 	/**

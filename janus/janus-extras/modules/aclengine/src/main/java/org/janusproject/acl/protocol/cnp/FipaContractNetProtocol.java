@@ -206,7 +206,7 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 			if (isInitiator() && (getState() == ContractNetProtocolState.WAITING_ALL_PROPOSALS)) {
 				
 				if (this.proposals == null) {
-					this.proposals = new ArrayList<>();
+					this.proposals = new ArrayList<ProtocolResult>();
 					this.nbExpectedProposal = getParticipants().size();
 				}
 				
@@ -258,7 +258,7 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 		
 		if (isInitiator() && (getState() == ContractNetProtocolState.SENDING_ALL_PROPOSAL_ANSWERS)) {
 			
-			this.selectedParticipants = new ArrayList<>();
+			this.selectedParticipants = new ArrayList<AgentAddress>();
 			this.selectedParticipants.add(selectedAuthor);
 			this.nbExpectedResults = 1;
 			
@@ -465,7 +465,7 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 			if( isInitiator() && (getState() == ContractNetProtocolState.WAITING_ALL_RESULTS) || getState() == ContractNetProtocolState.CANCELING) {  
 	
 				if (this.results == null) {
-					this.results = new ArrayList<>();
+					this.results = new ArrayList<ProtocolResult>();
 				}
 				
 				ACLMessage aMsg = getRefAclAgent().getACLMessageForConversationId( getConversationId() );

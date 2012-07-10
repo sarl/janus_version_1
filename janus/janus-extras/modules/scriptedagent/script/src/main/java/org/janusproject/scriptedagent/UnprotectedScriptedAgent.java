@@ -21,7 +21,6 @@
 package org.janusproject.scriptedagent;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
@@ -46,13 +45,13 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 
 	private static final long serialVersionUID = -5142920607712732405L;
 
-	private static final Map<String, Collection<Method>> methodDeclarations = new TreeMap<>();
+	private static final Map<String, Collection<Method>> methodDeclarations = new TreeMap<String, Collection<Method>>();
 	
 	private static Collection<Method> getDeclaredMethods(String name, Class<?> type) {
 		synchronized(methodDeclarations) {
 			Collection<Method> methods = methodDeclarations.get(name);
 			if (methods==null) {
-				methods = new ArrayList<>();
+				methods = new ArrayList<Method>();
 				methodDeclarations.put(name, methods);
 
 				Class<?> t = type;
@@ -94,7 +93,7 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 						&&mathesParameters(declaredMethod, parameters)) {
 						Collection<Method> methods = methodDeclarations.get(name);
 						if (methods==null) {
-							methods = new ArrayList<>();
+							methods = new ArrayList<Method>();
 							methodDeclarations.put(name, methods);
 						}
 						methods.add(declaredMethod);
@@ -167,9 +166,7 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 				try {
 					return method.invoke(this, parameters);
 				}
-				catch (IllegalAccessException
-					    | IllegalArgumentException
-						| InvocationTargetException e) {
+				catch (Throwable e) {
 					throw new ScriptRuntimeException(e);
 				}
 			}
@@ -180,9 +177,7 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 			try {
 				return method.invoke(this, parameters);
 			}
-			catch (IllegalAccessException
-				    | IllegalArgumentException
-					| InvocationTargetException e) {
+			catch (Throwable e) {
 				throw new ScriptRuntimeException(e);
 			}
 		}
@@ -208,9 +203,7 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 				try {
 					return method.invoke(this);
 				}
-				catch (IllegalAccessException
-					    | IllegalArgumentException
-						| InvocationTargetException e) {
+				catch (Throwable e) {
 					throw new ScriptRuntimeException(e);
 				}
 			}
@@ -221,9 +214,7 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 			try {
 				return method.invoke(this);
 			}
-			catch (IllegalAccessException
-				    | IllegalArgumentException
-					| InvocationTargetException e) {
+			catch (Throwable e) {
 				throw new ScriptRuntimeException(e);
 			}
 		}

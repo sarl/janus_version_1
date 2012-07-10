@@ -198,7 +198,7 @@ class InteractionUtil extends MessageContextFactory {
 		if (agents.size()>1) {
 			// Random selection of the receiver
 			int n;
-			Set<Integer> invalidValues = new TreeSet<>();
+			Set<Integer> invalidValues = new TreeSet<Integer>();
 			
 			do {
 				invalidValues.clear();

@@ -87,7 +87,7 @@ public class CRIOMessageSendingBench extends CsvBench<AgentNumberBenchRun> {
 		LoggerUtil.setLoggingEnable(false);
 		Kernel kernel = Kernels.create();
 
-		List<AgentAddress> addr = new ArrayList<>();
+		List<AgentAddress> addr = new ArrayList<AgentAddress>();
 
 		for(int i=0; i<run.getNumberOfAgents()-1; ++i) {
 			addr.add(kernel.launchLightAgent(new IddleAgent(null, BenchOrganization.class, true)));

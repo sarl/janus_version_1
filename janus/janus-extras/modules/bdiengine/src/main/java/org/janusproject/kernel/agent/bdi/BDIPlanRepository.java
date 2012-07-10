@@ -46,7 +46,7 @@ public final class BDIPlanRepository {
 	 * Several plans can manage a goal, but a plan can only manage one goal.
 	 */
 	private Map<Class<? extends BDIGoal>, List<Class<? extends BDIPlan>>> plans = 
-				new HashMap<>();
+				new HashMap<Class<? extends BDIGoal>, List<Class<? extends BDIPlan>>>();
 	
 	/**
 	 * Create the plan repository
@@ -88,7 +88,7 @@ public final class BDIPlanRepository {
 			this.plans.get(goal).add(plan);
 		}
 		else {
-			List<Class <? extends BDIPlan>> listPlans = new LinkedList<>();
+			List<Class <? extends BDIPlan>> listPlans = new LinkedList<Class<? extends BDIPlan>>();
 			listPlans.add(plan);
 			this.plans.put(goal, listPlans);
 		}

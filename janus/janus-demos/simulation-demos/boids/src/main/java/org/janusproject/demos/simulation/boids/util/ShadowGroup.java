@@ -58,7 +58,7 @@ public class ShadowGroup {
 			Map<AgentAddress,PerceivedBoidBody> bodies,
 			Population group) {
 		assert(groupSize>=1);
-		this.members = new ArrayList<>();
+		this.members = new ArrayList<AgentAddress>();
 		this.position.set(groupPosition);
 		this.orientation.set(groupOrientation);
 		

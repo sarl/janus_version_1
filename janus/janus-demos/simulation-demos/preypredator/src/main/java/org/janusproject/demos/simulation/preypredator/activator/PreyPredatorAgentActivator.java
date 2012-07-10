@@ -62,8 +62,8 @@ public class PreyPredatorAgentActivator extends AgentActivator {
 	protected Iterator<? extends Agent> getExecutionPolicy(
 			ActivationStage stage, Collection<? extends Agent> candidates) {
 		if (stage!=ActivationStage.DESTRUCTION) {
-			List<Agent> terrains = new LinkedList<>();
-			List<Agent> animats = new LinkedList<>();
+			List<Agent> terrains = new LinkedList<Agent>();
+			List<Agent> animats = new LinkedList<Agent>();
 			
 			// Search for terrain
 			for(Agent animat : candidates) {
@@ -91,8 +91,8 @@ public class PreyPredatorAgentActivator extends AgentActivator {
 	protected SafeIterator<Agent> getExecutionPolicy(ActivationStage stage,
 			DirectAccessCollection<Agent> candidates) {
 		if (stage!=ActivationStage.DESTRUCTION) {
-			List<Agent> terrains = new LinkedList<>();
-			List<Agent> animats = new LinkedList<>();
+			List<Agent> terrains = new LinkedList<Agent>();
+			List<Agent> animats = new LinkedList<Agent>();
 			
 			// Search for terrain
 			Agent animat;
@@ -115,10 +115,10 @@ public class PreyPredatorAgentActivator extends AgentActivator {
 			animats.addAll(terrains);
 			terrains.clear();
 			
-			return new SafeIterator<>(animats.iterator());
+			return new SafeIterator<Agent>(animats.iterator());
 		}
 		
-		return new SafeIterator<>(candidates.iterator());
+		return new SafeIterator<Agent>(candidates.iterator());
 	}
 	
 }

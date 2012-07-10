@@ -95,7 +95,7 @@ public abstract class AbstractMemory implements Memory {
 	@Override
 	public void addMemoryListener(MemoryListener listener) {
 		if (this.listeners==null) 
-			this.listeners = new ListenerCollection<>();
+			this.listeners = new ListenerCollection<MemoryListener>();
 		this.listeners.add(MemoryListener.class, listener);
 	}
 

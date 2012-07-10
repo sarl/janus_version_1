@@ -39,7 +39,6 @@ import org.janusproject.kernel.KernelListener;
 import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.network.jxme.agent.JxtaJxmeKernelAgentFactory;
-import org.osgi.framework.BundleContext;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -657,8 +656,7 @@ public class ChatActivity extends Activity {
 			ChatActivity a = this.activity.get();
 			Listener l = this.listener.get();
 			if (a!=null && l!=null) {
-				BundleContext bundleContext = null; // no osgi
-				JxtaJxmeKernelAgentFactory factory = new JxtaJxmeKernelAgentFactory(bundleContext);
+				JxtaJxmeKernelAgentFactory factory = new JxtaJxmeKernelAgentFactory();
 				Kernels.create(factory, l);
 			}
 		}

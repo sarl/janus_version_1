@@ -23,15 +23,19 @@ package org.janusproject.kernel.network.jxse.jxta.impl;
 
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
 import net.jxta.id.IDFactory;
+import net.jxta.peergroup.PeerGroup;
 import net.jxta.peergroup.PeerGroupID;
+import net.jxta.platform.ModuleClassID;
 import net.jxta.platform.NetworkManager.ConfigMode;
 
 import org.janusproject.kernel.configuration.JanusProperty;
+import org.janusproject.kernel.network.jxta.JanusJxtaConstants;
 
 /** Several utilities dedicated to the JXTA support in Janus.
  * 
@@ -45,6 +49,9 @@ class Utils {
 
 	private static final String SEED = "JanusPlatformDefaultSeed"; //$NON-NLS-1$
 
+	/** Identifier of the Janus features on JXTA.
+	 */
+	public static final ModuleClassID JANUS_ORG_CLASS = ModuleClassID.create(URI.create(PeerGroup.WK_ID_PREFIX + JanusJxtaConstants.JANUS_ORG_CLASS_ID_POSTFIX));
 
 	/** Replies the JXTA mode from the given set of properties.
 	 * 

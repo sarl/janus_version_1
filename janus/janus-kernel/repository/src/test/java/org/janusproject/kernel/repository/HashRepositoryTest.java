@@ -49,7 +49,7 @@ public class HashRepositoryTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.repository = new HashRepository<>();
+		this.repository = new HashRepository<Object,Object>();
 		this.listener = new RepositoryChangeListenerStub();
 		this.repository.addRepositoryChangeListener(this.listener);
 	}
@@ -178,7 +178,7 @@ public class HashRepositoryTest extends TestCase {
 		Iterator<Entry<Object,Object>> iterator = this.repository.getEntryIterator();
 		assertNotNull(iterator);
 		
-		ArrayList<Object> l = new ArrayList<>();
+		ArrayList<Object> l = new ArrayList<Object>();
 		while (iterator.hasNext()) {
 			l.add(iterator.next().getKey());
 		}
@@ -303,7 +303,7 @@ public class HashRepositoryTest extends TestCase {
 		Collection<Object> identifiers = this.repository.identifiers();
 		assertNotNull(identifiers);
 		
-		ArrayList<Object> l = new ArrayList<>(identifiers);
+		ArrayList<Object> l = new ArrayList<Object>(identifiers);
 		
 		assertEquals(3, l.size());
 		assertTrue(l.remove(k1));
@@ -329,7 +329,7 @@ public class HashRepositoryTest extends TestCase {
 		Collection<Object> values = this.repository.values();
 		assertNotNull(values);
 		
-		ArrayList<Object> l = new ArrayList<>(values);
+		ArrayList<Object> l = new ArrayList<Object>(values);
 		
 		assertEquals(3, l.size());
 		assertTrue(l.remove(v1));

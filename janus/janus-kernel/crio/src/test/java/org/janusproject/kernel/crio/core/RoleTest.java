@@ -119,7 +119,7 @@ public class RoleTest extends TestCase {
 	}
 
 	private static void assertContains(Iterator<?> iterator, Object... objects) {
-		ArrayList<Object> objs = new ArrayList<>(Arrays.asList(objects));
+		ArrayList<Object> objs = new ArrayList<Object>(Arrays.asList(objects));
 		assertNotNull(iterator);
 		while (iterator.hasNext()) {
 			Object obj = iterator.next();

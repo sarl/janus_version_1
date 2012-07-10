@@ -48,8 +48,8 @@ public class MultiSizedIteratorTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.collection1 = new ArrayList<>();
-		this.collection2 = new ArrayList<>();
+		this.collection1 = new ArrayList<DataStub>();
+		this.collection2 = new ArrayList<DataStub>();
 		this.m1 = new DataStub(1);
 		this.m2 = new DataStub(10);
 		this.m3 = new DataStub(5);
@@ -58,9 +58,9 @@ public class MultiSizedIteratorTest extends TestCase {
 		this.collection2.add(this.m2);
 		this.collection1.add(this.m3);
 		this.collection2.add(this.m4);
-		this.iterator = new MultiSizedIterator<>();
-		this.iterator.addIterator(new UnmodifiableCollectionSizedIterator<>(this.collection1));
-		this.iterator.addIterator(new UnmodifiableCollectionSizedIterator<>(this.collection2));
+		this.iterator = new MultiSizedIterator<DataStub>();
+		this.iterator.addIterator(new UnmodifiableCollectionSizedIterator<DataStub>(this.collection1));
+		this.iterator.addIterator(new UnmodifiableCollectionSizedIterator<DataStub>(this.collection2));
 	}
 	
 	/**

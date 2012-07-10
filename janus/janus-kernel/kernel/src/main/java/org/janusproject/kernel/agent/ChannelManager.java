@@ -53,7 +53,7 @@ import org.janusproject.kernel.util.event.ListenerCollection;
 public class ChannelManager {
 
 	private final WeakReference<KernelContext> context;
-	private final ListenerCollection<? extends EventListener> listeners = new ListenerCollection<>();
+	private final ListenerCollection<? extends EventListener> listeners = new ListenerCollection<EventListener>();
 	
 	private Listener groupListener = null;
 	
@@ -62,7 +62,7 @@ public class ChannelManager {
 	 */
 	ChannelManager(KernelContext context) {
 		assert(context!=null);
-		this.context = new WeakReference<>(context);
+		this.context = new WeakReference<KernelContext>(context);
 		Kernel k = context.getKernel();
 		if (k!=null) {
 			this.groupListener = new Listener();

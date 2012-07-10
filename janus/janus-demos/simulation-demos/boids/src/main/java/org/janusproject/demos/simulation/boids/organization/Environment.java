@@ -60,7 +60,7 @@ import org.janusproject.kernel.status.StatusFactory;
 )
 public class Environment extends Role {
 	
-	private Set<AgentAddress> waitingBoids = new TreeSet<>();
+	private Set<AgentAddress> waitingBoids = new TreeSet<AgentAddress>();
 	
 	/**
 	 * The current state of the environment behavior
@@ -70,6 +70,7 @@ public class Environment extends Role {
 
 	/**
 	 */
+	@SuppressWarnings("unchecked")
 	public Environment() {
 		addObtainCondition(new HasAllRequiredCapacitiesCondition(
 				Arrays.asList(

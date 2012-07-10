@@ -65,7 +65,7 @@ public class HashCapacityContainerTest extends TestCase {
 	}	
 	
 	private static void assertContains(Iterator<?> iterator, Object... objects) {
-		ArrayList<Object> objs = new ArrayList<>(Arrays.asList(objects));
+		ArrayList<Object> objs = new ArrayList<Object>(Arrays.asList(objects));
 		assertNotNull("iterator is null", iterator); //$NON-NLS-1$
 		while(iterator.hasNext()) {
 			Object obj = iterator.next();
@@ -78,7 +78,7 @@ public class HashCapacityContainerTest extends TestCase {
 		if (expected==actual) return;
 		if (expected!=null && actual!=null && expected.size()==actual.size()) {
 			try {
-				ArrayList<Object> obj = new ArrayList<>(actual);
+				ArrayList<Object> obj = new ArrayList<Object>(actual);
 				Iterator<?> iterator = expected.iterator();
 				boolean failure = false;
 				Object o1;

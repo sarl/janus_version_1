@@ -99,7 +99,7 @@ public class KernelsTest extends TestCase {
 	}
 	
 	private static void assertContains(Iterator<Kernel> iterator, AgentAddress... objects) {
-		ArrayList<AgentAddress> objs = new ArrayList<>(Arrays.asList(objects));
+		ArrayList<AgentAddress> objs = new ArrayList<AgentAddress>(Arrays.asList(objects));
 		assertNotNull(iterator);
 		while(iterator.hasNext()) {
 			Object obj = iterator.next();
@@ -375,7 +375,7 @@ public class KernelsTest extends TestCase {
 
 		/**
 		 */
-		public final Map<AgentAddress,AgentLifeState> states = new ConcurrentHashMap<>();
+		public final Map<AgentAddress,AgentLifeState> states = new ConcurrentHashMap<AgentAddress,AgentLifeState>();
 		
 		/**
 		 */

@@ -63,7 +63,7 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 			JanusJRubyEngineFactory manager = (sharedManager==null) ? null : sharedManager.get();
 			if (manager==null) {
 				manager = new JanusJRubyEngineFactory();
-				sharedManager = new SoftReference<>(manager);
+				sharedManager = new SoftReference<JanusJRubyEngineFactory>(manager);
 			}
 			return manager;
 		}

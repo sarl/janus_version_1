@@ -56,7 +56,7 @@ public class Client extends Role {
 	private State state;
 	private TravelSelectionCritera critera;
 	private TravelDestination travelDestination;
-	private LastSignalAdapter<ContractTerminationInfluence> signalListener = new LastSignalAdapter<>(ContractTerminationInfluence.class);
+	private LastSignalAdapter<ContractTerminationInfluence> signalListener = new LastSignalAdapter<ContractTerminationInfluence>(ContractTerminationInfluence.class);
 
 	@Override
 	public Status activate(Object... parameters) {

@@ -75,8 +75,8 @@ public class AbstractMailboxTest extends TestCase {
 	/**
 	 */
 	public void testGetFirstSelectorLong() {
-		assertSame(this.m1, this.mailbox.getFirst(new TypeSelector<>(MessageStub.class), 500));
-		assertNull(this.mailbox.getFirst(new TypeSelector<>(MessageStub2.class), 500));
+		assertSame(this.m1, this.mailbox.getFirst(new TypeSelector<MessageStub>(MessageStub.class), 500));
+		assertNull(this.mailbox.getFirst(new TypeSelector<MessageStub2>(MessageStub2.class), 500));
 	}
 
 	/**
@@ -88,8 +88,8 @@ public class AbstractMailboxTest extends TestCase {
 	/**
 	 */
 	public void testRemoveFirstSelectorLong() {
-		assertNull(this.mailbox.removeFirst(new TypeSelector<>(MessageStub2.class), 500));
-		assertSame(this.m1, this.mailbox.removeFirst(new TypeSelector<>(MessageStub.class), 500));
+		assertNull(this.mailbox.removeFirst(new TypeSelector<MessageStub2>(MessageStub2.class), 500));
+		assertSame(this.m1, this.mailbox.removeFirst(new TypeSelector<MessageStub>(MessageStub.class), 500));
 	}
 
 	/**
@@ -179,7 +179,7 @@ public class AbstractMailboxTest extends TestCase {
 		/**
 		 * {@inheritDoc}
 		 */
-		@SuppressWarnings("synthetic-access")
+		@SuppressWarnings({ "synthetic-access", "unchecked" })
 		@Override
 		public <T extends Message> Iterator<T> iterator(Selector<T> selector, boolean ignored) {
 			if (this.removed)

@@ -46,7 +46,7 @@ public class MultipleStatus implements MultiStatus {
 	/** 
 	 * List of child statuses.
 	 */
-	private List<Status> children = new ArrayList<>(2);
+	private List<Status> children = new ArrayList<Status>(2);
 	
 	/** Indicates is the status want to be silent.
 	 */
@@ -340,7 +340,7 @@ public class MultipleStatus implements MultiStatus {
     	if (!this.children.isEmpty()) {
     		
         	Status packedChild;
-	    	List<Status> packedChildren = new ArrayList<>(this.children.size());
+	    	List<Status> packedChildren = new ArrayList<Status>(this.children.size());
 	    	Status successStatus = null;
 	    	
 	    	for(Status child : this.children) {

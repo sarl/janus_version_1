@@ -22,6 +22,7 @@ package org.janusproject.scriptedagent;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
@@ -148,7 +149,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	@Override
 	public synchronized final void addScriptErrorListener(ScriptErrorListener listener) {
 		if (this.listeners==null)
-			this.listeners = new ListenerCollection<>();
+			this.listeners = new ListenerCollection<ScriptErrorListener>();
 		this.listeners.add(ScriptErrorListener.class, listener);
 	}
 	
@@ -349,16 +350,26 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 				while (iterator.hasNext()) {
 					bu = iterator.next();
 					fu = FileSystem.join(bu, scriptBasename);
-					try (InputStreamReader ios = new InputStreamReader(fu.openStream())) {
-						ios.read();
-						return fu;
-					}
-					catch (Throwable e) {
+					try {
+						InputStreamReader ios = new InputStreamReader(fu.openStream());
+						try {
+							ios.read();
+							return fu;
+						}
+						catch (Throwable e) {
+							if (firstThrowable==null) {
+								firstThrowable = e;
+							}
+						}
+						finally {
+							ios.close();
+						}
+					}					
+					catch (IOException e) {
 						if (firstThrowable==null) {
 							firstThrowable = e;
 						}
 					}
-					
 				}
 			}
 		}

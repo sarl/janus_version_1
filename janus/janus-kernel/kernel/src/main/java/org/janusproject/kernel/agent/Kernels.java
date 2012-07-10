@@ -41,7 +41,7 @@ import org.janusproject.kernel.time.KernelTimeManager;
  */
 public final class Kernels {
 
-	private static final Map<AgentAddress,KernelAgent> kernelAgents = new TreeMap<>();
+	private static final Map<AgentAddress,KernelAgent> kernelAgents = new TreeMap<AgentAddress,KernelAgent>();
 	
 	private static KernelAgentFactory defaultKernelFactory = null;
 	

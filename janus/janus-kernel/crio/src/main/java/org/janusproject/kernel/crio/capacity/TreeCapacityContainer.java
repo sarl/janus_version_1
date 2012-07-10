@@ -52,7 +52,7 @@ extends AbstractCapacityContainer {
 	/**
 	 */
 	public TreeCapacityContainer() {
-		this.content = new TreeMap<>(GenericComparator.SINGLETON);
+		this.content = new TreeMap<Class<? extends Capacity>,Collection<CapacityImplementation>>(GenericComparator.SINGLETON);
 	}
 	
 	/**
@@ -60,7 +60,7 @@ extends AbstractCapacityContainer {
 	 */
 	public TreeCapacityContainer(Comparator<? super Class<? extends Capacity>> comparator) {
 		assert(comparator!=null);
-		this.content = new TreeMap<>(comparator);
+		this.content = new TreeMap<Class<? extends Capacity>,Collection<CapacityImplementation>>(comparator);
 	}
 
 	/**
@@ -100,7 +100,7 @@ extends AbstractCapacityContainer {
 		for(Class<? extends Capacity> type : capacity.getCapacities()) {
 			implementations = this.content.get(type);
 			if (implementations==null) {
-				implementations = new TreeSet<>(CapacityImplementationComparator.SINGLETON);
+				implementations = new TreeSet<CapacityImplementation>(CapacityImplementationComparator.SINGLETON);
 				this.content.put(type, implementations);
 			}
 			implementations.add(capacity);
@@ -117,7 +117,7 @@ extends AbstractCapacityContainer {
 		for(Class<? extends Capacity> capacity : container) {
 			implementations = this.content.get(capacity);
 			if (implementations==null) {
-				implementations = new TreeSet<>(CapacityImplementationComparator.SINGLETON);
+				implementations = new TreeSet<CapacityImplementation>(CapacityImplementationComparator.SINGLETON);
 				this.content.put(capacity, implementations);
 			}
 			implementations.addAll(container.get(capacity));
@@ -163,7 +163,7 @@ extends AbstractCapacityContainer {
 	 */
 	@Override
 	public Iterator<Class<? extends Capacity>> iterator() {
-		return new UnmodifiableIterator<>(this.content.keySet());
+		return new UnmodifiableIterator<Class<? extends Capacity>>(this.content.keySet());
 	}
 
 	/**
@@ -171,7 +171,7 @@ extends AbstractCapacityContainer {
 	 */
 	@Override
 	public SizedIterator<Class<? extends Capacity>> sizedIterator() {
-		return new UnmodifiableMapKeySizedIterator<>(this.content);
+		return new UnmodifiableMapKeySizedIterator<Class<? extends Capacity>>(this.content);
 	}
 
 	/**

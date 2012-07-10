@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.janusproject.kernel.network.jxse.api;
+package org.janusproject.kernel.network.jxta;
 
 import java.util.Collection;
 import java.util.EventListener;
@@ -84,5 +84,12 @@ public interface NetworkListener extends EventListener {
 	 * @param e
 	 */
 	public void networkError(Throwable e);
+
+	/**
+	 * Invoked when a message should be logged.
+	 * 
+	 * @param message
+	 */
+	public void networkLog(String message);
 
 }

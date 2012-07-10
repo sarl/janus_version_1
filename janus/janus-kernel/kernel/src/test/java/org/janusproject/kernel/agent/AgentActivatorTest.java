@@ -90,7 +90,7 @@ public class AgentActivatorTest extends TestCase {
 	private static void assertEquals(Collection<?> c1, Agent[] c2) {
 		if (c1!=null && c2!=null) {
 			try {
-				ArrayList<Object> obj = new ArrayList<>(c1);
+				ArrayList<Object> obj = new ArrayList<Object>(c1);
 				boolean failure = false;
 				Object o1;
 				for(int i=0; i<c2.length&&!failure; ++i) {

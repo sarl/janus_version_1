@@ -64,7 +64,7 @@ public class ClientPlan extends BDIPlan {
 	 * Send ContractFinalizationMessage to Seller
 	 * Wait ContractFinalizationMessage from Seller
 	 */
-	private static List<Class<? extends BDIAction>> actionList = new ArrayList<>();
+	private static List<Class<? extends BDIAction>> actionList = new ArrayList<Class<? extends BDIAction>>();
 	static {
 		actionList.add(SendMessageAction.class);
 		//actionList.add(WaitEventAction.class);

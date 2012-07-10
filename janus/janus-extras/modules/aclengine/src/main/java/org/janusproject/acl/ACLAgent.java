@@ -194,7 +194,7 @@ public class ACLAgent extends Agent {
 	 */
 	protected final Iterable<ACLMessage> getACLMessages() {
 
-		LinkedList<ACLMessage> resultList = new LinkedList<>();
+		LinkedList<ACLMessage> resultList = new LinkedList<ACLMessage>();
 
 		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
 			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
@@ -223,7 +223,7 @@ public class ACLAgent extends Agent {
 	 */
 	protected final Iterator<ACLMessage> getACLMessages(Performative performative) {
 
-		LinkedList<ACLMessage> resultList = new LinkedList<>();
+		LinkedList<ACLMessage> resultList = new LinkedList<ACLMessage>();
 
 		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
 			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
@@ -270,7 +270,7 @@ public class ACLAgent extends Agent {
 	 */
 	protected final Iterator<ACLMessage> peekACLMessages() {
 
-		LinkedList<ACLMessage> resultList = new LinkedList<>();
+		LinkedList<ACLMessage> resultList = new LinkedList<ACLMessage>();
 
 		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
 			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;

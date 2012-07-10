@@ -20,7 +20,15 @@
  */
 package org.janusproject.kernel.network.jxse.jxta.impl;
 
-import net.jxta.document.*;
+import net.jxta.document.Advertisement;
+import net.jxta.document.AdvertisementFactory;
+import net.jxta.document.Document;
+import net.jxta.document.Element;
+import net.jxta.document.MimeMediaType;
+import net.jxta.document.StructuredDocument;
+import net.jxta.document.StructuredDocumentFactory;
+import net.jxta.document.StructuredDocumentUtils;
+import net.jxta.document.XMLElement;
 import net.jxta.id.IDFactory;
 import net.jxta.peergroup.PeerGroup;
 import net.jxta.platform.ModuleClassID;
@@ -76,7 +84,7 @@ class StdPeerGroupParamAdv {
      *     {@link net.jxta.protocol.ModuleImplAdvertisement}.</li>
      * </ul>
      */
-    private final Map<ModuleClassID, Object> services = new HashMap<>();
+    private final Map<ModuleClassID, Object> services = new HashMap<ModuleClassID, Object>();
 
     /**
      * The protocols (message transports) which will be loaded for this peer
@@ -88,7 +96,7 @@ class StdPeerGroupParamAdv {
      *     {@link net.jxta.protocol.ModuleImplAdvertisement}.</li>
      * </ul>
      */
-    private final Map<ModuleClassID, Object> transports = new HashMap<>();
+    private final Map<ModuleClassID, Object> transports = new HashMap<ModuleClassID, Object>();
 
     /**
      * The applications which will be loaded for this peer group.
@@ -99,7 +107,7 @@ class StdPeerGroupParamAdv {
      *     {@link net.jxta.protocol.ModuleImplAdvertisement}.</li>
      * </ul>
      */
-    private final Map<ModuleClassID, Object> apps = new HashMap<>();
+    private final Map<ModuleClassID, Object> apps = new HashMap<ModuleClassID, Object>();
 
     /**
      * Private constructor for new instances.

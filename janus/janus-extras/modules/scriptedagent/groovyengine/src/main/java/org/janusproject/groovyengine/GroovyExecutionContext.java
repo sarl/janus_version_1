@@ -93,7 +93,6 @@ public class GroovyExecutionContext extends AbstractScriptExecutionContext {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("resource")
 	@Override
 	public boolean isFunction(String functionName) {
 		GroovyScriptEngineImpl engine = (GroovyScriptEngineImpl)getScriptEngine();

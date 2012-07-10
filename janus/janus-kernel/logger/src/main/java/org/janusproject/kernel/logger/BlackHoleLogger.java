@@ -68,7 +68,7 @@ extends Logger {
      * {@inheritDoc}
      */
     @Override
-    public void setFilter(Filter newFilter) throws SecurityException {
+    public synchronized void setFilter(Filter newFilter) throws SecurityException {
     	//
     }
 
@@ -76,7 +76,7 @@ extends Logger {
      * {@inheritDoc}
      */
     @Override
-    public Filter getFilter() {
+    public synchronized Filter getFilter() {
     	return null;
     }
 

@@ -71,13 +71,14 @@ public class PBroker extends Role {
 	private State state;
 	private AgentAddress provider;
 	private GroupAddress contractGroup;
-	private final LastSignalAdapter<TravelRequestInfluence> signalListener = new LastSignalAdapter<>(TravelRequestInfluence.class);
-	private final List<Proposal> proposals = new ArrayList<>();
+	private final LastSignalAdapter<TravelRequestInfluence> signalListener = new LastSignalAdapter<TravelRequestInfluence>(TravelRequestInfluence.class);
+	private final List<Proposal> proposals = new ArrayList<Proposal>();
 
-	private Set<AgentAddress> providersReady = new HashSet<>();
+	private Set<AgentAddress> providersReady = new HashSet<AgentAddress>();
 
 	/**
 	 */
+	@SuppressWarnings("unchecked")
 	public PBroker() {
 		addObtainCondition(new HasAllRequiredCapacitiesCondition(Arrays.asList(FindLowestCostProposalCapacity.class, FindShortestTimeProposalCapacity.class)));
 	}

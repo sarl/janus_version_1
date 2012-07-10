@@ -59,7 +59,7 @@ public class MultiCollectionTest extends TestCase {
 		this.c2 = Arrays.asList(this.m3);
 		this.c3 = Arrays.asList(this.m4);
 
-		this.collection = new MultiCollection<>();
+		this.collection = new MultiCollection<DataStub>();
 		
 		this.collection.addCollection(this.c1);
 		this.collection.addCollection(this.c2);

@@ -103,7 +103,7 @@ public class ContractNetRequester extends Role {
 					if (this.proposals.size() == 0) // nobody has accepted the task
 						return State.REFUSED;
 					
-					this.selectedParticipants = new ArrayList<>();
+					this.selectedParticipants = new ArrayList<AgentAddress>();
 					this.selectedParticipants.add(this.proposals.get(0).getAuthor()); // arbitrary, need to use capacity
 					
 					this.contractNetProtocol.acceptProposals(this.selectedParticipants, Locale.getString("ACCEPT")); //$NON-NLS-1$

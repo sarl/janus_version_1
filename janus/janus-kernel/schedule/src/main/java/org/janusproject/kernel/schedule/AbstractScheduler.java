@@ -65,7 +65,7 @@ implements Scheduler<A> {
 	@Override
 	public void setLoggerProvider(LoggerProvider loggerProvider) {
 		if (loggerProvider==null) this.loggerProvider = null;
-		else this.loggerProvider = new SoftReference<>(loggerProvider);
+		else this.loggerProvider = new SoftReference<LoggerProvider>(loggerProvider);
 	}
 	
 	/**

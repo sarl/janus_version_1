@@ -56,9 +56,9 @@ public class SchedulerAgentTest extends TestCase {
 		LoggerUtil.setGlobalLevel(Level.OFF);
 		Kernels.shutdownNow();
 		this.kernel = new KernelAgent(new AgentActivator(), true, null, null);
-		this.agent = new SchedulerAgent<>(
-				new DefaultScheduler<>(AgentActivator.class));
-		this.agent.kernel = new WeakReference<>(this.kernel);
+		this.agent = new SchedulerAgent<AgentActivator>(
+				new DefaultScheduler<AgentActivator>(AgentActivator.class));
+		this.agent.kernel = new WeakReference<KernelAgent>(this.kernel);
 	}
 	
 	/**
@@ -77,7 +77,7 @@ public class SchedulerAgentTest extends TestCase {
 		if (expected==actual) return;
 		if (expected!=null && actual!=null && expected.size()==actual.size()) {
 			try {
-				ArrayList<Object> obj = new ArrayList<>(actual);
+				ArrayList<Object> obj = new ArrayList<Object>(actual);
 				Iterator<?> iterator = expected.iterator();
 				boolean failure = false;
 				Object o1;

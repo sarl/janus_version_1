@@ -95,7 +95,7 @@ public class GroupAddress extends AbstractAddress {
 		if (group==null)
 			this.group = null;
 		else
-			this.group = new WeakReference<>(group);
+			this.group = new WeakReference<KernelScopeGroup>(group);
 	}
 
 	/** {@inheritDoc}
@@ -142,7 +142,7 @@ public class GroupAddress extends AbstractAddress {
 		if (group==null)
 			this.group = null;
 		else
-			this.group = new WeakReference<>(group);
+			this.group = new WeakReference<KernelScopeGroup>(group);
 	}
 
 	/** Replies the group associated to this address.

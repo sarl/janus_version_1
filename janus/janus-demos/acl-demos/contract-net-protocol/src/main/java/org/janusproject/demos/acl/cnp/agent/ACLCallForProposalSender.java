@@ -66,7 +66,7 @@ public class ACLCallForProposalSender extends ACLAgent {
 		
 		SizedIterator<AgentAddress> agents = getLocalAgents();	
 		
-		ArrayList<AgentAddress> participants = new ArrayList<>();		
+		ArrayList<AgentAddress> participants = new ArrayList<AgentAddress>();		
 		while (agents.hasNext()) 
 		{
 			AgentAddress participant = agents.next();			

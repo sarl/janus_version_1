@@ -44,7 +44,7 @@ public class MailTypeSelectorTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		LoggerUtil.setGlobalLevel(Level.OFF);
-		this.selector = new TypeSelector<>(MessageStub.class);
+		this.selector = new TypeSelector<MessageStub>(MessageStub.class);
 	}
 	
 	/**

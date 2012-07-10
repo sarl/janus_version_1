@@ -85,7 +85,7 @@ public class OSGiKernelService implements KernelService, KernelListener,
 
 	private KernelAuthority kernelAuthority = null;
 
-	private final ListenerCollection<KernelServiceListener> listeners = new ListenerCollection<>();
+	private final ListenerCollection<KernelServiceListener> listeners = new ListenerCollection<KernelServiceListener>();
 
 	private final OSGiModuleService moduleService;
 

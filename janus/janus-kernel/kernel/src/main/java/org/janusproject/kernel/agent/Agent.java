@@ -713,7 +713,7 @@ implements Activable, Holon, Serializable {
 				obtainConditions,
 				leaveConditions);
 		this.mergingOrganization = null;
-		this.internalOrganizations = new ArrayList<>();
+		this.internalOrganizations = new ArrayList<GroupAddress>();
 		return true;
 	}
 
@@ -1203,7 +1203,7 @@ implements Activable, Holon, Serializable {
 	 * @since 0.5
 	 */
 	protected final <M extends Message> M getMessage(Class<M> type) {
-		return getMailbox().removeFirst(new TypeSelector<>(type));
+		return getMailbox().removeFirst(new TypeSelector<M>(type));
 	}
 
 	/**
@@ -1239,7 +1239,7 @@ implements Activable, Holon, Serializable {
 	 * @since 0.5
 	 */
 	protected final <M extends Message> M peekMessage(Class<M> type) {
-		return getMailbox().getFirst(new TypeSelector<>(type));
+		return getMailbox().getFirst(new TypeSelector<M>(type));
 	}
 
 	/**
@@ -1279,7 +1279,7 @@ implements Activable, Holon, Serializable {
 	 * @since 0.5
 	 */
 	protected final <M extends Message> Iterable<M> getMessages(Class<M> type) {
-		return getMailbox().iterable(new TypeSelector<>(type), true);
+		return getMailbox().iterable(new TypeSelector<M>(type), true);
 	}
 
 	/**
@@ -1319,7 +1319,7 @@ implements Activable, Holon, Serializable {
 	 * @since 0.5
 	 */
 	protected final <M extends Message> Iterable<M> peekMessages(Class<M> type) {
-		return getMailbox().iterable(new TypeSelector<>(type), false);
+		return getMailbox().iterable(new TypeSelector<M>(type), false);
 	}
 
 	/** Indicates if the agent mailbox contains a message or not.

@@ -63,8 +63,8 @@ extends CapacityContext {
 			CapacityImplementationType type,
 			Object... input) {
 		super(caller, invokedCapacity, type, input);
-		this.group = new WeakReference<>(group);
-		this.role = new WeakReference<>(role);
+		this.group = new WeakReference<KernelScopeGroup>(group);
+		this.role = new WeakReference<Role>(role);
 	}
 
 	/**
@@ -86,8 +86,8 @@ extends CapacityContext {
 			UUID identifier,
 			Object... input) {
 		super(caller, invokedCapacity, type, identifier, input);
-		this.group = new WeakReference<>(group);
-		this.role = new WeakReference<>(role);
+		this.group = new WeakReference<KernelScopeGroup>(group);
+		this.role = new WeakReference<Role>(role);
 	}
 	
 	/** Replies the group in which this capacity invocation lies.
