@@ -1227,7 +1227,7 @@ extends ActivatorAgent<AgentActivator> {
 	 * @return <code>true</code> if the given error may
 	 * be sent to logger, <code>false</code> otherwise.
 	 */
-	boolean fireUncatchedException(Throwable error) {
+	protected boolean fireUncatchedException(Throwable error) {
 		boolean sentToLogger = true;
 		for(KernelListener listener : getEventListeners(KernelListener.class)) {
 			if (!listener.exceptionUncatched(error))

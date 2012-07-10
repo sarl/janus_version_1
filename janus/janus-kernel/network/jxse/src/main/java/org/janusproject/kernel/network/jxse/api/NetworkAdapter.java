@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@ import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.status.Status;
-import org.osgi.framework.BundleContext;
 
 /**
  * Handles relations with known distant kernels.
@@ -39,6 +38,7 @@ import org.osgi.framework.BundleContext;
  * 
  * @author $Author: srodriguez$
  * @author $Author: ngaud$
+ * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
@@ -49,11 +49,10 @@ public interface NetworkAdapter extends DistantKernelHandler {
 	 * Initialize all required resources.
 	 * 
 	 * @param kernelAddress 
-	 * @param context 
 	 * @param properties 
 	 * @throws Exception 
 	 */
-	public void initializeNetwork(AgentAddress kernelAddress, BundleContext context, JanusProperties properties) throws Exception;
+	public void initializeNetwork(AgentAddress kernelAddress, JanusProperties properties) throws Exception;
 
 	/**
 	 * Shutdown the network adapter, release all related resources, etc.

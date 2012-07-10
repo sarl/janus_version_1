@@ -29,7 +29,6 @@ import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.status.Status;
-import org.osgi.framework.BundleContext;
 
 /**
  * Handles relations with known distant kernels.
@@ -49,11 +48,10 @@ public interface NetworkAdapter extends DistantKernelHandler {
 	 * Initialize all required resources.
 	 * 
 	 * @param kernelAddress 
-	 * @param context 
 	 * @param properties 
 	 * @throws Exception 
 	 */
-	public void initializeNetwork(AgentAddress kernelAddress, BundleContext context, JanusProperties properties) throws Exception;
+	public void initializeNetwork(AgentAddress kernelAddress, JanusProperties properties) throws Exception;
 
 	/**
 	 * Shutdown the network adapter, release all related resources, etc.

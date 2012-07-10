@@ -78,4 +78,11 @@ public interface NetworkListener extends EventListener {
 	 */
 	public AgentAddress receiveAgentAgentDistantMessage(Message message, boolean isBroadcast);
 
+	/**
+	 * Invoked when an error occurs in the network layer.
+	 * 
+	 * @param e
+	 */
+	public void networkError(Throwable e);
+
 }

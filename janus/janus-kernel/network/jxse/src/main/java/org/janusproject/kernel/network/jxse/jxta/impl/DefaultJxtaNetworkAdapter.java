@@ -53,7 +53,8 @@ public class DefaultJxtaNetworkAdapter extends AbstractJxtaNetworkAdapter implem
 	/** {@inheritDoc}
 	 */
 	@Override
-	public void doInitializeNetwork(AgentAddress kernelAddress, JanusProperties properties) throws Exception {
+	public void initializeNetwork(AgentAddress kernelAddress,
+			JanusProperties properties) throws Exception {
 		setKernelAddress(kernelAddress);
 		File home = new File(properties.getProperty(JanusProperty.JXTA_HOME));
 				

@@ -42,7 +42,6 @@ import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.network.jxse.jxta.JXTANetworkHandler;
-import org.janusproject.kernel.network.jxse.utils.OSGiHelper;
 import org.janusproject.kernel.util.throwable.Throwables;
 
 /**
@@ -62,10 +61,9 @@ class ApplicationJxtaGroup extends JanusJXTAGroup implements DiscoveryListener {
 	 * @param adapter is the network adapter to use.
 	 * @param peerGroup is the associated peer group.
 	 * @param parent is the parent JXTA group.
-	 * @param osgiHelper is the OSGi helper to use in this group.
 	 */
-	public ApplicationJxtaGroup(JXTANetworkHandler adapter, PeerGroup peerGroup, JxtaGroup parent, OSGiHelper osgiHelper) {
-		super(adapter, peerGroup, parent,osgiHelper);
+	public ApplicationJxtaGroup(JXTANetworkHandler adapter, PeerGroup peerGroup, JxtaGroup parent) {
+		super(adapter, peerGroup, parent);
 
 		getPeerGroup().getRendezVousService().setAutoStart(true, 12000);
 

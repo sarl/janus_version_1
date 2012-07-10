@@ -40,6 +40,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
 import java.util.prefs.Preferences;
 
 import org.arakhne.vmutil.FileSystem;
@@ -197,8 +198,8 @@ public class JanusProperties extends Properties {
 	 * <p>
 	 * Value: <code>SEVERE</code>.
 	 */
-	public static final String DEFAULT_LOGGING_LEVEL = "ERROR"; //$NON-NLS-1$
-
+	public static final String DEFAULT_LOGGING_LEVEL = Level.SEVERE.getName();
+	
 	/** Indicates the default signal management policy 
 	 * for role players and roles.
 	 * <p>
@@ -404,7 +405,7 @@ public class JanusProperties extends Properties {
 		
 		if (key instanceof UnprotectedPropertyName) {
 			Object v = super.put(name, strValue);
-			if (v!=null && this.systemPropertySynchronization.get()) {
+			if (this.systemPropertySynchronization.get()) {
 				Properties sysProps = System.getProperties();
 				if (sysProps!=null && sysProps!=this) { // this != System properties
 					UnprotectedPropertyName unprotect = (UnprotectedPropertyName)key;

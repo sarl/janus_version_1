@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.EventListener;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.arakhne.vmutil.locale.Locale;
@@ -48,7 +49,6 @@ import org.janusproject.kernel.repository.RepositoryChangeEvent.ChangeType;
 import org.janusproject.kernel.repository.RepositoryChangeListener;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.util.throwable.Throwables;
-import org.osgi.framework.BundleContext;
 
 /**
  * Agent that represents and run the kernel of the Janus platform.
@@ -92,10 +92,8 @@ public class JxtaJxseKernelAgent extends KernelAgent implements RepositoryChange
 	 *            is the name of the application supported by this kernel.
 	 * @param networkAdapter
 	 *            is the adapter used by this kernel to be connected through a network.
-	 * @param context
-	 *            is the current OSGi context, which may be used by the kernel agent.
 	 */
-	JxtaJxseKernelAgent(AgentActivator activator, Boolean commitSuicide, EventListener startUpListener, String applicationName, NetworkAdapter networkAdapter, BundleContext context) {
+	JxtaJxseKernelAgent(AgentActivator activator, Boolean commitSuicide, EventListener startUpListener, String applicationName, NetworkAdapter networkAdapter) {
 		super(activator, commitSuicide, null, startUpListener, networkAdapter, applicationName);
 		getAddress().setName(Locale.getString(JxtaJxseKernelAgent.class, "NAME")); //$NON-NLS-1$
 		this.adapter = networkAdapter;
@@ -107,7 +105,7 @@ public class JxtaJxseKernelAgent extends KernelAgent implements RepositoryChange
 		this.adapter.setJanusProperties(prop);
 
 		try {
-			this.adapter.initializeNetwork(getKernelContext().getKernelAgent(), context, getKernelContext().getProperties());
+			this.adapter.initializeNetwork(getKernelContext().getKernelAgent(), getKernelContext().getProperties());
 		}
 		catch (AssertionError ae) {
 			throw ae;
@@ -202,6 +200,15 @@ public class JxtaJxseKernelAgent extends KernelAgent implements RepositoryChange
 		Address a = forwardMessage(message);
 		assert(a instanceof AgentAddress);
 		return (AgentAddress)a;
+	}
+
+	/** {@inheritDoc}
+	 */
+	@Override
+	public void networkError(Throwable e) {
+		if (fireUncatchedException(e)) {
+			getLogger().log(Level.SEVERE, e.toString(), e);
+		}
 	}
 
 	/**

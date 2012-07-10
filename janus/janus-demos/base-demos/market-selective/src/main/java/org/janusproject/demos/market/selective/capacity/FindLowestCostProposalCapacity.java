@@ -40,8 +40,8 @@ import org.janusproject.kernel.crio.capacity.CapacityPrototype;
  * @mavenartifactid $ArtifactId$
  */
 @CapacityPrototype(
-		allInput=Proposal.class,
-		output=Proposal.class
+		variableParameters=Proposal.class,
+		fixedOutput=Proposal.class
 )
 public interface FindLowestCostProposalCapacity extends Capacity
 {

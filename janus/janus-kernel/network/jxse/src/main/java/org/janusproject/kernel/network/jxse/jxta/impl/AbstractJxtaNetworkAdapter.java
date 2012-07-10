@@ -31,7 +31,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.jxta.peergroup.PeerGroup;
@@ -57,11 +56,9 @@ import org.janusproject.kernel.message.MessageContext;
 import org.janusproject.kernel.network.jxse.api.NetworkAdapter;
 import org.janusproject.kernel.network.jxse.api.NetworkListener;
 import org.janusproject.kernel.network.jxse.jxta.JXTANetworkHandler;
-import org.janusproject.kernel.network.jxse.utils.OSGiHelper;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 import org.janusproject.kernel.util.throwable.Throwables;
-import org.osgi.framework.BundleContext;
 
 /**
  * @author $Author: srodriguez$
@@ -81,11 +78,9 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 	private final ExecutorService executors;
 	private final Map<GroupAddress, JanusGroupJxtaGroup> groups = new ConcurrentHashMap<>();
 	
-	private Logger logger = null;
 	private AgentAddress kernelAddress = null;
 	private JanusProperties janusProperties = null;
 	private NetworkListener listener = null;
-	private OSGiHelper osgiHelper = null;
 	private RendezVousService rendezvousNPG = null;
 	private ApplicationJxtaGroup applicationGroup = null;
 
@@ -95,17 +90,16 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 		this.executors = Executors.newCachedThreadPool();
 	}
 	
-	/** Replies the logger for this adapter.
+	/** Notifies listeners about an uncatched error.
 	 * 
-	 * @return the logger for this adapter.
+	 * @param error
 	 */
-	protected Logger getLogger() {
-		if (this.logger==null) {
-			this.logger = Logger.getLogger(getKernelAddress().toString());
+	protected void fireUncatchedError(Throwable error) {
+		if (error!=null && this.listener!=null) {
+			this.listener.networkError(error);
 		}
-		return this.logger;
 	}
-
+	
 	/**
 	 * Replies the executors supported by this network adapter.
 	 * 
@@ -186,23 +180,6 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 	/** {@inheritDoc}
 	 */
 	@Override
-	public final void initializeNetwork(AgentAddress kernelAddress, BundleContext context, JanusProperties properties) throws Exception {
-		this.osgiHelper = new OSGiHelper(context);
-		doInitializeNetwork(kernelAddress, properties);
-	}
-
-	/**
-	 * Invoked to initialize the network connection.
-	 * 
-	 * @param kernelAddress is the address of the kernel agent supporting the network.
-	 * @param properties are the Janus properties to use.
-	 * @throws Exception
-	 */
-	protected abstract void doInitializeNetwork(AgentAddress kernelAddress, JanusProperties properties) throws Exception;
-
-	/** {@inheritDoc}
-	 */
-	@Override
 	public Status informLocalGroupRemoved(GroupAddress ga) {
 		//FIXME Do something here
 		return StatusFactory.cancel(this);
@@ -227,13 +204,11 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 		PeerGroupAdvertisement pga = PeerGroupUtil.createJXTA(
 				ppg, 
 				janusAppName, 
-				Locale.getString(ApplicationJxtaGroup.class,
-						"GROUP_NAME", janusAppName), //$NON-NLS-1$
-						Locale.getString(ApplicationJxtaGroup.class,
-						"GROUP_DESCRIPTION", janusAppName), //$NON-NLS-1$
+				Locale.getString("GROUP_NAME", janusAppName), //$NON-NLS-1$
+				null, // TODO: set the JXTA password
 				0,
 				(appID == null ? null : PeerGroupID.create(new URI(appID))));
-		return new ApplicationJxtaGroup(this, ppg.newGroup(pga), parent, this.osgiHelper);		
+		return new ApplicationJxtaGroup(this, ppg.newGroup(pga), parent);		
 	}
 
 	/**
@@ -260,7 +235,7 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 					ppg, ga.getDescription(), null, 0, 
 					(peerGroupId == null ? null : PeerGroupID.create(new URI(peerGroupId))), 
 					ga, obtainConditions, leaveConditions, membership);
-			g = new JanusGroupJxtaGroup(this, ppg.newGroup(pga), this.applicationGroup, ga, this.osgiHelper);			
+			g = new JanusGroupJxtaGroup(this, ppg.newGroup(pga), this.applicationGroup, ga);			
 			this.groups.put(ga, g);
 		}
 		return g;
@@ -271,9 +246,9 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 	 * 
 	 * @param event
 	 */
+	@SuppressWarnings("static-method")
 	public void rendezvousEvent(RendezvousEvent event) {
 		if (event.getType() == RendezvousEvent.RDVCONNECT || event.getType() == RendezvousEvent.RDVRECONNECT || event.getType() == RendezvousEvent.BECAMERDV) {
-			getLogger().finest(event.toString());
 			synchronized (networkConnectLock) {
 				networkConnectLock.notify();
 			}
@@ -340,7 +315,7 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 	@Override
 	public void informDistantGroupDiscovered(String organizationClass, UUID uuid, String groupName, Collection<? extends GroupCondition> obtainConditions, Collection<? extends GroupCondition> leaveConditions, MembershipService membership, PeerGroupAdvertisement advertisement) throws ClassNotFoundException {
 		if (this.listener!=null) {
-			Class<? extends Organization> org = (Class<? extends Organization>) this.osgiHelper.findClass(organizationClass);
+			Class<? extends Organization> org = (Class<? extends Organization>)Class.forName(organizationClass);
 			this.listener.distantGroupDiscovered(org, uuid, obtainConditions, leaveConditions, membership, Boolean.valueOf(this.janusProperties.getProperty(JanusProperty.GROUP_PERSISTENCE)), groupName);
 		}
 	}
@@ -357,7 +332,7 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 				return g.sendMessage(message);
 			}
 			catch (IOException e) {
-				getLogger().log(Level.SEVERE, Throwables.toString(e), e);
+				fireUncatchedError(e);
 			}
 			return null;
 		}
@@ -367,7 +342,7 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 			return this.applicationGroup.sendMessage(message);
 		}
 		catch (IOException e) {
-			getLogger().log(Level.SEVERE, Throwables.toString(e), e);
+			fireUncatchedError(e);
 			return null;
 		}			
 	}
@@ -399,7 +374,7 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 			throw ae;
 		}
 		catch (Throwable e) {
-			getLogger().severe(Throwables.toString(e));
+			fireUncatchedError(e);
 		}
 
 	}
@@ -443,7 +418,7 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 				g.broadcastMessage(message);
 			}
 			catch (IOException e) {
-				getLogger().log(Level.SEVERE, Throwables.toString(e), e);
+				fireUncatchedError(e);
 			}
 		}
 		else {
@@ -452,7 +427,7 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 				this.applicationGroup.broadcastMessage(message);
 			}
 			catch (IOException e) {
-				getLogger().log(Level.SEVERE, Throwables.toString(e), e);
+				fireUncatchedError(e);
 			}
 		}
 	}

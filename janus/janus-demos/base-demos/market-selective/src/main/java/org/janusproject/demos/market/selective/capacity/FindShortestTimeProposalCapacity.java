@@ -40,8 +40,8 @@ import org.janusproject.kernel.crio.capacity.CapacityPrototype;
  * @see Proposal
  */
 @CapacityPrototype(
-		allInput=Proposal.class,
-		output=Proposal.class
+		variableOutput=Proposal.class,
+		fixedOutput=Proposal.class
 )
 public interface FindShortestTimeProposalCapacity extends Capacity
 {

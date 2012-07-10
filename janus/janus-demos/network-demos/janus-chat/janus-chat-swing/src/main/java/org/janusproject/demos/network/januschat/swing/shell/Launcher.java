@@ -26,7 +26,9 @@ import org.janusproject.demos.network.januschat.ChatUtil;
 import org.janusproject.demos.network.januschat.ChatterListener;
 import org.janusproject.demos.network.januschat.swing.ui.ChatRoomFrame;
 import org.janusproject.kernel.address.AgentAddress;
+import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.logger.LoggerUtil;
+import org.janusproject.kernel.network.jxse.agent.JxtaJxseKernelAgentFactory;
 
 /** 
  * SIMPLE CHAT DEMO.
@@ -45,6 +47,7 @@ public class Launcher {
 	 */	
 	public static void main(String[] argv) throws Exception {
 		LoggerUtil.setGlobalLevel(Level.SEVERE);
+		Kernels.setPreferredKernelFactory(new JxtaJxseKernelAgentFactory());
 		ChatUtil.addChatterListener(new Listener());
 		ChatUtil.createChatter();
 	}

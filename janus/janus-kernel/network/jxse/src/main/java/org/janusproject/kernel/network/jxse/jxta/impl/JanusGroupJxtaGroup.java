@@ -29,7 +29,6 @@ import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.core.Role;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.network.jxse.jxta.JXTANetworkHandler;
-import org.janusproject.kernel.network.jxse.utils.OSGiHelper;
 
 /**
  * Implementation of a JXTA group for a Janus Group.
@@ -49,10 +48,9 @@ class JanusGroupJxtaGroup extends JanusJXTAGroup {
 	 * @param peerGroup is the peer group associated to this group.
 	 * @param parent is the JXTA parent group.
 	 * @param janusGroup is the Janus group associated to this group.
-	 * @param osgiHelper is the OSGi helper to use.
 	 */
-	public JanusGroupJxtaGroup(JXTANetworkHandler adapter, PeerGroup peerGroup, JxtaGroup parent, GroupAddress janusGroup, OSGiHelper osgiHelper) {
-		super(adapter, peerGroup, parent, osgiHelper);
+	public JanusGroupJxtaGroup(JXTANetworkHandler adapter, PeerGroup peerGroup, JxtaGroup parent, GroupAddress janusGroup) {
+		super(adapter, peerGroup, parent);
 		this.janusGroupAddress = janusGroup;
 	}
 

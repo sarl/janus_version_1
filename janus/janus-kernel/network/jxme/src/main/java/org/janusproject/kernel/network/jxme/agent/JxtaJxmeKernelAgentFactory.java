@@ -26,12 +26,9 @@ import org.janusproject.kernel.agent.AgentActivator;
 import org.janusproject.kernel.agent.KernelAgent;
 import org.janusproject.kernel.agent.KernelAgentFactory;
 import org.janusproject.kernel.network.jxme.jxta.impl.DefaultJxtaNetworkAdapter;
-import org.osgi.framework.BundleContext;
 
 /**
  * Creates a networking enabled kernel.
- * <p>
- * If your kernel is running on top of an OSGi framework you need to provided the {@link BundleContext} of your application in order to locate your classes. Otherwise just pass null.
  * 
  * @author $Author: srodriguez$
  * @version $FullVersion$
@@ -40,14 +37,10 @@ import org.osgi.framework.BundleContext;
  */
 public class JxtaJxmeKernelAgentFactory implements KernelAgentFactory {
 
-	private final BundleContext context;
-
 	/**
-	 * 
-	 * @param context is the bundle context used to initialize this agent factory
 	 */
-	public JxtaJxmeKernelAgentFactory(BundleContext context) {
-		this.context = context;
+	public JxtaJxmeKernelAgentFactory() {
+		//
 	}
 
 	/**
@@ -58,8 +51,7 @@ public class JxtaJxmeKernelAgentFactory implements KernelAgentFactory {
 		return new JxtaJxmeKernelAgent(
 				activator, commitSuicide, startUpListener, 
 				applicationName, 
-				new DefaultJxtaNetworkAdapter(),
-				this.context);
+				new DefaultJxtaNetworkAdapter());
 	}
 
 }

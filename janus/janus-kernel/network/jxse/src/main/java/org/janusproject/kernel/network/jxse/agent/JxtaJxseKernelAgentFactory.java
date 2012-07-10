@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,9 @@ import org.janusproject.kernel.agent.AgentActivator;
 import org.janusproject.kernel.agent.KernelAgent;
 import org.janusproject.kernel.agent.KernelAgentFactory;
 import org.janusproject.kernel.network.jxse.jxta.impl.DefaultJxtaNetworkAdapter;
-import org.osgi.framework.BundleContext;
 
 /**
  * Creates a JXTA/JXSE networking enabled kernel.
- * <p>
- * If your kernel is running on top of an OSGi framework you need to provided the {@link BundleContext} of your application in order to locate your classes. Otherwise just pass null.
  * 
  * @author $Author: srodriguez$
  * @version $FullVersion$
@@ -40,14 +37,10 @@ import org.osgi.framework.BundleContext;
  */
 public class JxtaJxseKernelAgentFactory implements KernelAgentFactory {
 
-	private final BundleContext context;
-
 	/**
-	 * 
-	 * @param context is the bundle context used to initialize this agent factory
 	 */
-	public JxtaJxseKernelAgentFactory(BundleContext context) {
-		this.context = context;
+	public JxtaJxseKernelAgentFactory() {
+		//
 	}
 
 	/**
@@ -58,8 +51,7 @@ public class JxtaJxseKernelAgentFactory implements KernelAgentFactory {
 		return new JxtaJxseKernelAgent(
 				activator, commitSuicide, startUpListener, 
 				applicationName, 
-				new DefaultJxtaNetworkAdapter(),
-				this.context);
+				new DefaultJxtaNetworkAdapter());
 	}
 
 }

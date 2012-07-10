@@ -36,8 +36,7 @@ import org.janusproject.kernel.crio.core.GroupAddress;
  * @mavenartifactid $ArtifactId$
  */
 @CapacityPrototype(
-		input={GroupAddress.class, AgentAddress.class, String.class},
-		output={}
+		fixedParameters={GroupAddress.class, AgentAddress.class, String.class}
 )
 public interface SendToUserCapacity extends Capacity {
 	

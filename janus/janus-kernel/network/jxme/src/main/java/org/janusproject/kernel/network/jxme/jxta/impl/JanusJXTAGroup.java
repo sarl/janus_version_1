@@ -41,7 +41,6 @@ import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.network.jxme.jxta.JXTANetworkHandler;
-import org.janusproject.kernel.network.jxme.utils.OSGiHelper;
 import org.janusproject.kernel.util.random.RandomNumber;
 import org.janusproject.kernel.util.throwable.Throwables;
 
@@ -73,8 +72,6 @@ abstract class JanusJXTAGroup extends JxtaGroup {
 	
 	private final static int MAX_SEND_MESSAGE_RETRY = 10;
 	
-	private final OSGiHelper osgiHelper;
-	
 	private Boolean joined = false;
 	
 	/**
@@ -87,11 +84,9 @@ abstract class JanusJXTAGroup extends JxtaGroup {
 	 * @param adapter is the JXTA network handler supporting this Janus JXTA group.
 	 * @param peerGroup is the JXTA group.
 	 * @param parent the the parent JXTA group.
-	 * @param osgiHelper is the helper to be connected to OSGi.
 	 */
-	public JanusJXTAGroup(JXTANetworkHandler adapter, PeerGroup peerGroup, JxtaGroup parent, OSGiHelper osgiHelper) {
+	public JanusJXTAGroup(JXTANetworkHandler adapter, PeerGroup peerGroup, JxtaGroup parent) {
 		super(adapter,peerGroup,parent);
-		this.osgiHelper = osgiHelper;
 	}
 	
 	/** Replies the logger.
@@ -102,14 +97,6 @@ abstract class JanusJXTAGroup extends JxtaGroup {
 		if (this.log == null)
 			this.log = Logger.getLogger(ApplicationJxtaGroup.class.getName());
 		return this.log;
-	}
-	
-	/** Replies the OSGi helper for this group.
-	 * 
-	 * @return the OSGi helper, never <code>null</code>
-	 */
-	protected OSGiHelper getOSGiHelper() {
-		return this.osgiHelper;
 	}
 	
 	/**
@@ -327,8 +314,7 @@ abstract class JanusJXTAGroup extends JxtaGroup {
 				Message janusMessage = (Message) MessageUtils.getObjectFromMessage(
 						message, 
 						JanusJXTAGroup.MSG_NAMESPACE_SENDING, 
-						JanusJXTAGroup.MSG_ELEM_OBJ, 
-						getOSGiHelper());
+						JanusJXTAGroup.MSG_ELEM_OBJ);
 				boolean isBroadcast = COMM_TYPE_BROADCAST.equals(MessageUtils.getStringFromMessage(message, MSG_NAMESPACE_SENDING, MSG_ELEM_COMM_TYPE));
 				
 
@@ -414,8 +400,7 @@ abstract class JanusJXTAGroup extends JxtaGroup {
 				this.responseAddress = (AgentAddress) MessageUtils.getObjectFromMessage(
 						message, 
 						JanusJXTAGroup.MSG_NAMESPACE_SENDING, 
-						JanusJXTAGroup.MSG_ELEM_REVEICER_RETURN_ADDRESS, 
-						getOSGiHelper());
+						JanusJXTAGroup.MSG_ELEM_REVEICER_RETURN_ADDRESS);
 				synchronized (this.responseLock) {
 					this.responseLock.notifyAll();
 				}

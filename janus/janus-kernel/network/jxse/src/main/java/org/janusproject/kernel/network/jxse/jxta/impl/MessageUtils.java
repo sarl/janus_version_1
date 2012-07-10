@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,9 +33,6 @@ import net.jxta.endpoint.ByteArrayMessageElement;
 import net.jxta.endpoint.Message;
 import net.jxta.endpoint.MessageElement;
 import net.jxta.endpoint.StringMessageElement;
-
-import org.janusproject.kernel.network.jxse.utils.OSGIHelperObjectInputStream;
-import org.janusproject.kernel.network.jxse.utils.OSGiHelper;
 
 /**
  * A simple and re-usable example of manipulating JXATA Messages. Included
@@ -200,7 +197,6 @@ class MessageUtils {
 	 *            The name space of the element containing the object.
 	 * @param elemName
 	 *            The name of the element containing the object.
-	 * @param helper is the OSGi helper to use.
 	 * @return The Object or {@code null} if the Message contained no such
 	 *         element.
 	 * @throws IOException
@@ -209,13 +205,13 @@ class MessageUtils {
 	 *             if an object could not constructed from the message element
 	 */
 	public static Object getObjectFromMessage(Message message,
-			String nameSpace, String elemName, OSGiHelper helper) throws IOException,
+			String nameSpace, String elemName) throws IOException,
 			ClassNotFoundException {
 		try (InputStream is = getInputStreamFromMessage(message, nameSpace, elemName)) {
 			if (null == is) {
 				return null;
 			}
-			try (ObjectInputStream ois = new OSGIHelperObjectInputStream(is,helper)) {
+			try (ObjectInputStream ois = new ObjectInputStream(is)) {
 				return ois.readObject();
 			}
 		}

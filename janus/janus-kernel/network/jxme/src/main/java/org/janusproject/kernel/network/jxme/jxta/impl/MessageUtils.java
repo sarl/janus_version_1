@@ -34,9 +34,6 @@ import net.jxta.endpoint.Message;
 import net.jxta.endpoint.MessageElement;
 import net.jxta.endpoint.StringMessageElement;
 
-import org.janusproject.kernel.network.jxme.utils.OSGIHelperObjectInputStream;
-import org.janusproject.kernel.network.jxme.utils.OSGiHelper;
-
 /**
  * A simple and re-usable example of manipulating JXATA Messages. Included
  * in this tutorial are:
@@ -202,7 +199,6 @@ class MessageUtils {
 	 *            The name space of the element containing the object.
 	 * @param elemName
 	 *            The name of the element containing the object.
-	 * @param helper is the OSGi helper to use.
 	 * @return The Object or {@code null} if the Message contained no such
 	 *         element.
 	 * @throws IOException
@@ -211,13 +207,13 @@ class MessageUtils {
 	 *             if an object could not constructed from the message element
 	 */
 	public static Object getObjectFromMessage(Message message,
-			String nameSpace, String elemName, OSGiHelper helper) throws IOException,
+			String nameSpace, String elemName) throws IOException,
 			ClassNotFoundException {
 		InputStream is = getInputStreamFromMessage(message, nameSpace, elemName);
 		if (null == is) {
 			return null;
 		}
-		try (ObjectInputStream ois = new OSGIHelperObjectInputStream(is,helper)) {
+		try (ObjectInputStream ois = new ObjectInputStream(is)) {
 			return ois.readObject();
 		}
 	}

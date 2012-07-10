@@ -31,102 +31,18 @@
 					</thirdPartyLicenses>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<extensions>true</extensions>
-				<configuration>
-					<instructions>
-						<Export-Package>org.janusproject.kernel.network.jxse*;version="${project.version}"</Export-Package>
-						<Embed-Dependency>
-							*;scope=compile|runtime;inline=false;artifactId=!osgi|netty
-							<!-- Do not excluse JXSE, since the orginal bundle of JXSE doesn't embed bouncy castle and when osgi try to load him it fails, so our bundle is loaded first and it is thus consider as the main provider of jxse and bouncy castle classes and it works -->
-						</Embed-Dependency>
-						<Include-Resource>
-							{maven-resources}, {maven-dependencies},
-							META-INF/license=target/classes/META-INF/license,
-							META-INF/AUTHORS.janus.txt=target/classes/META-INF/AUTHORS.janus.txt,
-							META-INF/NOTICE.janus.txt=target/classes/META-INF/NOTICE.janus.txt,
-						</Include-Resource>
-						<Import-Package>
-							org.janusproject.kernel*;version="${project.version}",
-						</Import-Package>
-						<DynamicImport-Package>*</DynamicImport-Package>
-					</instructions>
-					<supportedProjectTypes>
-						<supportedProjectType>jar</supportedProjectType>
-						<supportedProjectType>bundle</supportedProjectType>
-						<supportedProjectType>war</supportedProjectType>
-					</supportedProjectTypes>
-				</configuration>
-				<executions>
-					<execution>
-						<id>executionGenerateManifest</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>manifest</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>executionGenerateBundle</id>
-						<phase>package</phase>
-						<goals>
-							<goal>bundle</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- keytool -genkey -alias janus -keystore signing-jar.keystore -storepass 
-				janusproject -keypass janusproject -dname "CN=janusproject.org -->
-			<!-- signin jar for trying to solve bouncy castle problem -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jarsigner-plugin</artifactId>
-				<configuration>
-					<keystore>src/main/keystore/signing-jar.keystore</keystore>
-					<alias>janus</alias>
-					<storepass>janusproject</storepass>
-					<verify>true</verify>
-				</configuration>
-				<executions>
-					<execution>
-						<id>sign</id>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>verify</id>
-						<goals>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
 		</plugins>
 	</build>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>osgi</artifactId>
+			<artifactId>kernel</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>com.kenai.jxse</groupId>
 			<artifactId>jxse</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>bouncycastle</groupId>
-			<artifactId>bcprov-jdk15</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jboss.netty</groupId>
-			<artifactId>netty</artifactId>
-		</dependency>
-
 	</dependencies>
 </project>
