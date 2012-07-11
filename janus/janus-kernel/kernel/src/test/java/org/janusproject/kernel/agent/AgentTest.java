@@ -46,7 +46,6 @@ import org.janusproject.kernel.mailbox.BufferedMailbox;
 import org.janusproject.kernel.mailbox.LinkedListMailbox;
 import org.janusproject.kernel.mailbox.Mailbox;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.message.MessageContext;
 import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
 import org.janusproject.kernel.message.StringMessage;
 import org.janusproject.kernel.status.Status;
@@ -455,8 +454,10 @@ public class AgentTest extends TestCase {
 	public void testGetMessage() throws Exception {
 		bindToKernel(this.agent);
 
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
 		assertNull(this.agent.getMessage());
 		
@@ -482,8 +483,10 @@ public class AgentTest extends TestCase {
 	public void testPeekMessage() throws Exception {
 		bindToKernel(this.agent);
 
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 		
 		assertNull(this.agent.peekMessage());
 		
@@ -510,8 +513,10 @@ public class AgentTest extends TestCase {
 		bindToKernel(this.agent);
 
 		Iterator<Message> iterator;
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 		
 		iterator = this.agent.getMessages().iterator();
 		assertNotNull(iterator);
@@ -549,8 +554,10 @@ public class AgentTest extends TestCase {
 		bindToKernel(this.agent);
 
 		Iterator<Message> iterator;
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 		
 		iterator = this.agent.peekMessages().iterator();
 		assertNotNull(iterator);
@@ -751,7 +758,7 @@ public class AgentTest extends TestCase {
 		assertTrue(agent1.getMailbox().isEmpty());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertTrue(agent3.getMailbox().isEmpty());
 		assertTrue(agent4.getMailbox().isEmpty());
 
@@ -780,14 +787,14 @@ public class AgentTest extends TestCase {
 		if (isAgent2) {
 			assertFalse(agent2.getMailbox().isEmpty());
 			assertSame(msg, agent2.getMailbox().removeFirst());
-			assertEquals(agent1.getAddress(), msg.getContext().getSender());
+			assertEquals(agent1.getAddress(), msg.getSender());
 			assertTrue(agent3.getMailbox().isEmpty());
 		}
 		else {
 			assertTrue(agent2.getMailbox().isEmpty());
 			assertFalse(agent3.getMailbox().isEmpty());
 			assertSame(msg, agent3.getMailbox().removeFirst());
-			assertEquals(agent1.getAddress(), msg.getContext().getSender());
+			assertEquals(agent1.getAddress(), msg.getSender());
 		}
 		assertTrue(agent4.getMailbox().isEmpty());
 	}
@@ -832,7 +839,7 @@ public class AgentTest extends TestCase {
 		assertTrue(agent1.getMailbox().isEmpty());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertTrue(agent3.getMailbox().isEmpty());
 		assertTrue(agent4.getMailbox().isEmpty());
 	}
@@ -873,16 +880,16 @@ public class AgentTest extends TestCase {
 
 		assertFalse(agent1.getMailbox().isEmpty());
 		assertSame(msg, agent1.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertFalse(agent3.getMailbox().isEmpty());
 		assertSame(msg, agent3.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertFalse(agent4.getMailbox().isEmpty());
 		assertSame(msg, agent4.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 
 		msg = new StringMessage("titi"); //$NON-NLS-1$
 		agent1.broadcastMessage(msg, agent1.getAddress(), agent2.getAddress(), agent3.getAddress());
@@ -902,13 +909,13 @@ public class AgentTest extends TestCase {
 
 		assertFalse(agent1.getMailbox().isEmpty());
 		assertSame(msg, agent1.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertFalse(agent3.getMailbox().isEmpty());
 		assertSame(msg, agent3.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertTrue(agent4.getMailbox().isEmpty());
 	}
 
@@ -948,16 +955,16 @@ public class AgentTest extends TestCase {
 
 		assertFalse(agent1.getMailbox().isEmpty());
 		assertSame(msg, agent1.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertFalse(agent3.getMailbox().isEmpty());
 		assertSame(msg, agent3.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertFalse(agent4.getMailbox().isEmpty());
 		assertSame(msg, agent4.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 
 		msg = new StringMessage("titi"); //$NON-NLS-1$
 		agent1.broadcastMessage(msg, Arrays.asList(agent1.getAddress(), agent2.getAddress(), agent3.getAddress()));
@@ -977,13 +984,13 @@ public class AgentTest extends TestCase {
 
 		assertFalse(agent1.getMailbox().isEmpty());
 		assertSame(msg, agent1.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertFalse(agent3.getMailbox().isEmpty());
 		assertSame(msg, agent3.getMailbox().removeFirst());
-		assertEquals(agent1.getAddress(), msg.getContext().getSender());
+		assertEquals(agent1.getAddress(), msg.getSender());
 		assertTrue(agent4.getMailbox().isEmpty());
 	}
 
@@ -1060,7 +1067,7 @@ public class AgentTest extends TestCase {
 		assertTrue(agent1.getMailbox().isEmpty());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertTrue(agent3.getMailbox().isEmpty());
 		assertTrue(agent4.getMailbox().isEmpty());
 	}
@@ -1102,7 +1109,7 @@ public class AgentTest extends TestCase {
 		}
 		agent1.getMailbox().clear();
 
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		adr = agent1.forwardMessage(msg, agent1.getAddress(), agent2.getAddress());
 
 		if (mb1 instanceof BufferedMailbox) {
@@ -1124,7 +1131,7 @@ public class AgentTest extends TestCase {
 		assertTrue(agent1.getMailbox().isEmpty());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertTrue(agent3.getMailbox().isEmpty());
 		assertTrue(agent4.getMailbox().isEmpty());
 
@@ -1147,7 +1154,7 @@ public class AgentTest extends TestCase {
 		agent2.getMailbox().clear();
 		agent3.getMailbox().clear();
 
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		adr = agent1.forwardMessage(msg, agent1.getAddress(), agent2.getAddress(), agent3.getAddress());
 
 		if (mb1 instanceof BufferedMailbox) {
@@ -1176,14 +1183,14 @@ public class AgentTest extends TestCase {
 		if (isAgent2) {
 			assertFalse(agent2.getMailbox().isEmpty());
 			assertSame(msg, agent2.getMailbox().removeFirst());
-			assertEquals(agent0.getAddress(), msg.getContext().getSender());
+			assertEquals(agent0.getAddress(), msg.getSender());
 			assertTrue(agent3.getMailbox().isEmpty());
 		}
 		else {
 			assertTrue(agent2.getMailbox().isEmpty());
 			assertFalse(agent3.getMailbox().isEmpty());
 			assertSame(msg, agent3.getMailbox().removeFirst());
-			assertEquals(agent0.getAddress(), msg.getContext().getSender());
+			assertEquals(agent0.getAddress(), msg.getSender());
 		}
 		assertTrue(agent4.getMailbox().isEmpty());
 	}
@@ -1229,7 +1236,7 @@ public class AgentTest extends TestCase {
 		}
 		agent1.getMailbox().clear();
 				
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		adr = agent1.forwardMessage(msg, Arrays.asList(agent1.getAddress(), agent2.getAddress()));
 
 		if (mb0 instanceof BufferedMailbox) {
@@ -1254,7 +1261,7 @@ public class AgentTest extends TestCase {
 		assertTrue(agent1.getMailbox().isEmpty());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertTrue(agent3.getMailbox().isEmpty());
 		assertTrue(agent4.getMailbox().isEmpty());
 
@@ -1278,7 +1285,7 @@ public class AgentTest extends TestCase {
 		}
 		agent1.getMailbox().clear();
 		
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		adr = agent1.forwardMessage(msg, Arrays.asList(agent1.getAddress(), agent2.getAddress(), agent3.getAddress()));
 
 		if (mb0 instanceof BufferedMailbox) {
@@ -1310,14 +1317,14 @@ public class AgentTest extends TestCase {
 		if (isAgent2) {
 			assertFalse(agent2.getMailbox().isEmpty());
 			assertSame(msg, agent2.getMailbox().removeFirst());
-			assertEquals(agent0.getAddress(), msg.getContext().getSender());
+			assertEquals(agent0.getAddress(), msg.getSender());
 			assertTrue(agent3.getMailbox().isEmpty());
 		}
 		else {
 			assertTrue(agent2.getMailbox().isEmpty());
 			assertFalse(agent3.getMailbox().isEmpty());
 			assertSame(msg, agent3.getMailbox().removeFirst());
-			assertEquals(agent0.getAddress(), msg.getContext().getSender());
+			assertEquals(agent0.getAddress(), msg.getSender());
 		}
 		assertTrue(agent4.getMailbox().isEmpty());
 	}
@@ -1361,7 +1368,7 @@ public class AgentTest extends TestCase {
 		}
 		agent1.getMailbox().clear();
 				
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		agent1.forwardBroadcastMessage(msg);
 
 		if (mb0 instanceof BufferedMailbox) {
@@ -1382,19 +1389,19 @@ public class AgentTest extends TestCase {
 		
 		assertFalse(agent0.getMailbox().isEmpty());
 		assertSame(msg, agent0.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertFalse(agent1.getMailbox().isEmpty());
 		assertSame(msg, agent1.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertFalse(agent3.getMailbox().isEmpty());
 		assertSame(msg, agent3.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertFalse(agent4.getMailbox().isEmpty());
 		assertSame(msg, agent4.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 
 		msg = new StringMessage("titi"); //$NON-NLS-1$
 		agent0.sendMessage(msg, agent1.getAddress());
@@ -1416,7 +1423,7 @@ public class AgentTest extends TestCase {
 		}
 		agent1.getMailbox().clear();
 				
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		agent1.forwardBroadcastMessage(msg, agent2.getAddress(), agent3.getAddress());
 
 		if (mb0 instanceof BufferedMailbox) {
@@ -1439,10 +1446,10 @@ public class AgentTest extends TestCase {
 		assertTrue(agent1.getMailbox().isEmpty());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertFalse(agent3.getMailbox().isEmpty());
 		assertSame(msg, agent3.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertTrue(agent4.getMailbox().isEmpty());
 	}
 
@@ -1486,7 +1493,7 @@ public class AgentTest extends TestCase {
 		}
 		agent1.getMailbox().clear();
 
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		agent1.forwardBroadcastMessage(msg, Collections.<AgentAddress>emptyList());
 
 		if (mb0 instanceof BufferedMailbox) {
@@ -1507,19 +1514,19 @@ public class AgentTest extends TestCase {
 		
 		assertFalse(agent0.getMailbox().isEmpty());
 		assertSame(msg, agent0.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertFalse(agent1.getMailbox().isEmpty());
 		assertSame(msg, agent1.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertFalse(agent3.getMailbox().isEmpty());
 		assertSame(msg, agent3.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertFalse(agent4.getMailbox().isEmpty());
 		assertSame(msg, agent4.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 
 		msg = new StringMessage("titi"); //$NON-NLS-1$
 		agent0.sendMessage(msg, agent1.getAddress());
@@ -1540,7 +1547,7 @@ public class AgentTest extends TestCase {
 		}
 		agent1.getMailbox().clear();
 				
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		agent1.forwardBroadcastMessage(msg, Arrays.asList(agent2.getAddress(), agent3.getAddress()));
 
 		if (mb0 instanceof BufferedMailbox) {
@@ -1564,10 +1571,10 @@ public class AgentTest extends TestCase {
 		assertTrue(agent1.getMailbox().isEmpty());
 		assertFalse(agent2.getMailbox().isEmpty());
 		assertSame(msg, agent2.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertFalse(agent3.getMailbox().isEmpty());
 		assertSame(msg, agent3.getMailbox().removeFirst());
-		assertEquals(agent0.getAddress(), msg.getContext().getSender());
+		assertEquals(agent0.getAddress(), msg.getSender());
 		assertTrue(agent4.getMailbox().isEmpty());
 	}
 	

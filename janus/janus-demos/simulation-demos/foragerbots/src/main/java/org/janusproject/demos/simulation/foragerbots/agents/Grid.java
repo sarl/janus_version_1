@@ -125,7 +125,7 @@ public class Grid extends Agent {
 		while (m!=null) {
 			if (m instanceof RegistrationMessage) {
 				RegistrationMessage reg = (RegistrationMessage)m;
-				AgentAddress bot = reg.getContext().getSender();
+				AgentAddress bot = (AgentAddress)reg.getSender();
 				if (!this.agents.containsKey(bot)) {
 					int baseIndex = RandomNumber.nextInt(this.bases.length/2);
 					int baseX = this.bases[baseIndex*2];
@@ -145,7 +145,7 @@ public class Grid extends Agent {
 			}
 			else if (m instanceof MoveMessage) {
 				MoveMessage move = (MoveMessage)m;
-				AgentAddress bot = move.getContext().getSender();
+				AgentAddress bot = (AgentAddress)move.getSender();
 				Cell currentCell = this.agents.get(bot);
 				PerceptionMessage ack = null;
 				if (currentCell!=null) {

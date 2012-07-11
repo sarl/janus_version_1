@@ -491,8 +491,8 @@ public class KernelScopeGroupTest extends TestCase {
 		assertNull(this.group.getPlayedRole(player.getAddress(), RoleStub.class));
 		assertNull(this.group.getPlayedRole(player.getAddress(), Role2Stub.class));
 		assertNull(this.group.getPlayedRole(player.getAddress(), Role3Stub.class));
-	}	
-
+	}
+	
 	/**
 	 */
 	public void testSendMessageMessageBoolean_discartSender() {
@@ -502,7 +502,7 @@ public class KernelScopeGroupTest extends TestCase {
 		RolePlayer player4 = new RolePlayerStub(this.context);
 
 		Message msg = new StringMessage("toto"); //$NON-NLS-1$
-		InteractionUtil.updateContext(
+		InteractionUtilStub.updateContext(
 				msg,
 				new RoleAddress(this.group.getAddress(), RoleStub.class, player1.getAddress()),
 				new RoleAddress(this.group.getAddress(), RoleStub.class, player2.getAddress()),
@@ -559,7 +559,7 @@ public class KernelScopeGroupTest extends TestCase {
 		RolePlayer player4 = new RolePlayerStub(this.context);
 
 		Message msg = new StringMessage("toto"); //$NON-NLS-1$
-		InteractionUtil.updateContext(
+		InteractionUtilStub.updateContext(
 				msg,
 				new RoleAddress(this.group.getAddress(), RoleStub.class, player1.getAddress()),
 				new RoleAddress(this.group.getAddress(), RoleStub.class, player2.getAddress()),
@@ -616,7 +616,7 @@ public class KernelScopeGroupTest extends TestCase {
 		RolePlayer player4 = new RolePlayerStub(this.context);
 
 		Message msg = new StringMessage("toto"); //$NON-NLS-1$
-		InteractionUtil.updateContext(
+		InteractionUtilStub.updateContext(
 				msg,
 				new RoleAddress(this.group.getAddress(), RoleStub.class, player1.getAddress()),
 				new RoleAddress(this.group.getAddress(), RoleStub.class, null),
@@ -674,7 +674,7 @@ public class KernelScopeGroupTest extends TestCase {
 		RolePlayer player4 = new RolePlayerStub(this.context);
 
 		Message msg = new StringMessage("toto"); //$NON-NLS-1$
-		InteractionUtil.updateContext(
+		InteractionUtilStub.updateContext(
 				msg,
 				new RoleAddress(this.group.getAddress(), RoleStub.class, player1.getAddress()),
 				new RoleAddress(this.group.getAddress(), RoleStub.class, null),

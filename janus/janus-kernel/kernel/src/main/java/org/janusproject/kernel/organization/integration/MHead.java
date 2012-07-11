@@ -22,6 +22,7 @@ package org.janusproject.kernel.organization.integration;
 
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.core.Role;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.organization.holonic.message.RequestIntegrationMessage;
 import org.janusproject.kernel.organization.holonic.message.ResultIntegrationMessage;
@@ -89,7 +90,8 @@ public class MHead extends Role {
 			//Automatically accepted
 		case 2:
 			debug("MHead got a integration request"); //$NON-NLS-1$
-			sendMessage(StandAlone.class, this.m.getContext().getSender(),
+			RoleAddress adr = (RoleAddress)this.m.getSender();
+			sendMessage(StandAlone.class, adr.getPlayer(),
 						new ResultIntegrationMessage(this.holonicGroup));
 			return 0;
 		default:

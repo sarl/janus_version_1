@@ -624,7 +624,10 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 					if (roleDescriptor.containsLocalPlayer(adr)) {
 						player.getLogger().warning(
 								Locale.getString(KernelScopeGroup.class,
-										"INVALID_DOUBLE_ROLE_TAKING")); //$NON-NLS-1$
+										"INVALID_DOUBLE_ROLE_TAKING", //$NON-NLS-1$
+										role,
+										myAdr,
+										adr));
 					} else {
 						assigned = roleDescriptor.playLocalRole(adr, roleToTake);
 						if (assigned) {
@@ -722,8 +725,6 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 	 * message was not sent.
 	 */
 	protected RoleAddress sendMessageToRemoteKernel(Message msg) {
-		assert(msg.getContext(CRIOMessageContext.class)!=null) : "not a message in CRIO context"; //$NON-NLS-1$
-		assert(msg.getContext(CRIOMessageContext.class).getGroup().equals(this.address)) : "not a message for the current group"; //$NON-NLS-1$
 		DistantCRIOContextHandler distantKernel = getDistantCRIOContextHandler();
 		if (distantKernel!=null) {
 			Address adr = distantKernel.sendMessage(msg);
@@ -750,12 +751,14 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		this.internalStructureLock.lock();
 		try {
 			assert (message != null);
-			CRIOMessageContext context = message
-					.getContext(CRIOMessageContext.class);
-			assert (context != null);
-	
-			Class<? extends Role> receiverRole = context.getReceiverRole();
-			assert (receiverRole != null);
+			assert (message.getSender() instanceof RoleAddress);
+			assert (message.getReceiver() instanceof RoleAddress);
+			RoleAddress senderAddress = (RoleAddress)message.getSender();
+			RoleAddress receiverAddress = (RoleAddress)message.getReceiver();
+			
+			Class<? extends Role> receiverRole = receiverAddress.getRole();
+			assert(receiverRole!=null);
+			
 			Organization orga = this.organization.get();
 			assert (orga != null);
 	
@@ -774,12 +777,9 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		
 				if (roleDescriptor != null) {
 		
-					assert(context.getGroup().equals(getAddress()));
+					assert(senderAddress.getGroup().equals(getAddress()));
 		
-					AgentAddress sender = context.getSender();
-					assert (sender != null);
-					Class<? extends Role> senderRole = context.getSenderRole();
-					assert (senderRole != null);
+					assert (senderAddress.getRole() != null);
 		
 					// local broadcast
 					if (includeSender) {
@@ -789,8 +789,8 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 					}
 					else {
 						for (Role r : roleDescriptor.getLocalRoles()) {
-							if ((!sender.equals(r.getPlayer()))
-								|| (!senderRole.equals(r.getClass()))) {
+							if ((!senderAddress.getPlayer().equals(r.getPlayer()))
+								|| (!senderAddress.getRole().equals(r.getClass()))) {
 								r.getMailbox().add(message);
 							}
 						}
@@ -804,14 +804,12 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 		
 				if (isDistributed()) {
 		
-					RoleDescriptor senderRoleDescriptor = this.playersPerRole.get(context
-							.getSenderRole());
+					RoleDescriptor senderRoleDescriptor = this.playersPerRole.get(senderAddress.getRole());
 					// if senderRoleDescriptor == null no local players are here so it
 					// is a distant message => DONT LOOP
 					// check if the sender is local or not
 					if (senderRoleDescriptor != null
-							&& senderRoleDescriptor.containsLocalPlayer(message.getContext()
-									.getSender())) {
+							&& senderRoleDescriptor.containsLocalPlayer(senderAddress.getPlayer())) {
 						DistantCRIOContextHandler distantKernel = getDistantCRIOContextHandler();
 						if (distantKernel!=null) {
 							distantKernel.broadcastMessage(message);
@@ -837,13 +835,13 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 	 *         was found, <code>null</code> else.
 	 */
 	public RoleAddress sendMessage(Message message, boolean includeSender) {
-		assert (message != null);
-		CRIOMessageContext context = message
-				.getContext(CRIOMessageContext.class);
-		assert (context != null);
 		this.internalStructureLock.lock();
 		try {
-			RoleAddress receiverAddress = context.getReceivingRoleAddress();
+			assert (message != null);
+			assert (message.getSender() instanceof RoleAddress);
+			assert (message.getReceiver() instanceof RoleAddress);
+			RoleAddress senderAddress = (RoleAddress)message.getSender();
+			RoleAddress receiverAddress = (RoleAddress)message.getReceiver();
 			
 			Role receivingRole = receiverAddress.getRoleObject();
 			
@@ -854,30 +852,25 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 				receiverAddress.unbind(); // Force to be unbind
 				receivingRole = null;
 				
-				AgentAddress sender = context.getSender();
-				assert (sender != null);
-				Class<? extends Role> senderRole = context.getSenderRole();
-				assert (senderRole != null);
 				Organization orga = this.organization.get();
 				assert (orga != null);
-				Iterator<Class<? extends Role>> roles = orga.iterator(context.getReceiverRole());
+				Iterator<Class<? extends Role>> roles = orga.iterator(receiverAddress.getRole());
 				assert(roles!=null);
 				if (!roles.hasNext())
-					throw new UndefinedRoleException(orga.getClass(), context.getReceiverRole());
+					throw new UndefinedRoleException(orga.getClass(), receiverAddress.getRole());
 
 				Class<? extends Role> candidateRole;
-				
-				while (receivingRole==null && roles.hasNext()) {
-					candidateRole = roles.next();
-					
-					if (includeSender
-						|| (!sender.equals(context.getReceiver()))
-						|| (!senderRole.equals(context.getReceiverRole()))) {
 
+				if (includeSender
+					|| (!senderAddress.equals(receiverAddress))) {
+
+					while (receivingRole==null && roles.hasNext()) {
+						candidateRole = roles.next();
+	
 						RoleDescriptor roleDescriptor = this.playersPerRole.get(candidateRole);
-						
+	
 						if (roleDescriptor != null) {
-							Role r = roleDescriptor.getLocalRole(context.getReceiver());
+							Role r = roleDescriptor.getLocalRole(receiverAddress.getPlayer());
 							if (r != null) {
 								receivingRole = r;
 							}
@@ -891,19 +884,19 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 								getLogger().warning(
 										Locale.getString(KernelScopeGroup.class,
 												"MAILBOX_NOT_FOUND", //$NON-NLS-1$
-												context.getSendingRoleAddress().toString(),
-												context.getReceivingRoleAddress().toString()));
+												senderAddress.toString(),
+												receiverAddress.toString()));
 							}
 						}
 						else {
 							getLogger().warning(
 									Locale.getString(KernelScopeGroup.class,
 											"RECEIVER_NOT_FOUND", //$NON-NLS-1$
-											context.getSendingRoleAddress().toString(),
-											context.getReceivingRoleAddress().toString()));
+											senderAddress.toString(),
+											receiverAddress.toString()));
 						}
-
-					}					
+					}
+					
 				}
 				
 				receiverAddress.bind(receivingRole);
@@ -921,7 +914,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 					Locale.getString(KernelScopeGroup.class,
 							"NO_RECEIVER_FOUND", //$NON-NLS-1$
 							message,
-							context.getSendingRoleAddress().toString()
+							senderAddress.toString()
 					));
 			
 			return null;

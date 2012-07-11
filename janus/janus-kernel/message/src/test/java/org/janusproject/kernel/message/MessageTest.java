@@ -49,7 +49,9 @@ public class MessageTest extends TestCase {
 		this.emitter = new AgentAddressStub();
 		this.receiver = new AgentAddressStub();
 		this.message = new MessageStub(1);
-		this.message.context = new MessageContext(this.emitter, this.receiver, this.initial);
+		this.message.sender = this.emitter;
+		this.message.receiver = this.receiver;
+		this.message.creationDate = this.initial;
 	}
 	
 	/**
@@ -60,16 +62,6 @@ public class MessageTest extends TestCase {
 		this.message = null;
 		this.emitter = this.receiver = null;
 		super.tearDown();
-	}
-
-	/**
-	 */
-	public void testGetContext() {
-		MessageContext mc = this.message.getContext();
-		assertNotNull(mc);
-		assertSame(this.receiver, mc.getReceiver());
-		assertSame(this.emitter, mc.getSender());
-		assertEquals(this.initial, mc.getCreationDate());
 	}
 
 	/**
@@ -90,15 +82,4 @@ public class MessageTest extends TestCase {
 		assertEquals(this.initial, this.message.getCreationDate());
 	}
 
-	/**
-	 * @throws UnspecifiedMessageContextException 
-	 */
-	public void testGetContextClass() throws UnspecifiedMessageContextException {
-		MessageContext mc = this.message.getContext(MessageContext.class);
-		assertNotNull(mc);
-		assertSame(this.receiver, mc.getReceiver());
-		assertSame(this.emitter, mc.getSender());
-		assertEquals(this.initial, mc.getCreationDate());
-	}
-	
 }

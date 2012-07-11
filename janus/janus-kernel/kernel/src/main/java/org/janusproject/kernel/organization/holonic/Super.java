@@ -23,8 +23,8 @@ package org.janusproject.kernel.organization.holonic;
 import org.janusproject.kernel.agentsignal.Signal;
 import org.janusproject.kernel.agentsignal.SignalListener;
 import org.janusproject.kernel.crio.capacity.Capacity;
-import org.janusproject.kernel.crio.core.CRIOMessageContext;
 import org.janusproject.kernel.crio.core.Role;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.message.StringMessage;
 import org.janusproject.kernel.organization.holonic.influence.RequestCapacityInfluence;
@@ -111,9 +111,11 @@ public class Super extends Role {
 			this.m = getMailbox().getFirst();
 			if (this.m instanceof ResultCapacityMessage<?>) {
 				
+				RoleAddress adr = (RoleAddress)this.m.getSender();
+				
 				sendMessage(
-							this.m.getContext(CRIOMessageContext.class).getSenderRole(), 
-							this.m.getContext().getSender(),
+							adr.getRole(), 
+							adr.getPlayer(),
 							new StringMessage("OK"));//ACK to Part //$NON-NLS-1$
 				setResult((ResultCapacityMessage<?>)this.m);
 				

@@ -1118,14 +1118,9 @@ public abstract class Role extends
 	 */
 	protected final RoleAddress replyToMessage(Message messageToReplyTo, Message message) {
 		assert(messageToReplyTo!=null);
-		CRIOMessageContext crioContext = messageToReplyTo.getContext(CRIOMessageContext.class);
-		if (crioContext!=null) {
-			return getMessageTransportService()
-					.sendMessage(
-							crioContext.getSenderRole(),
-							crioContext.getSender(), message);
-		}
-		return null;
+		assert(messageToReplyTo.getSender() instanceof RoleAddress);
+		RoleAddress newReceiver = (RoleAddress)messageToReplyTo.getSender();
+		return getMessageTransportService().sendMessage(newReceiver, message);
 	}
 
 	/**
@@ -2781,13 +2776,8 @@ public abstract class Role extends
 		 */
 		public RoleAddress forwardMessage(Message message) {
 			assert (message != null);
-			CRIOMessageContext context = message
-					.getContext(CRIOMessageContext.class);
-			assert (context != null);
-			assert (context.getReceiverRole() != null);
-			RoleAddress receiver = context.getReceivingRoleAddress();
-			if (receiver==null)
-				receiver = new RoleAddress(Role.this.getGroupAddress(), context.getReceiverRole(), context.getReceiver());
+			assert (message.getReceiver() instanceof RoleAddress);
+			RoleAddress receiver = (RoleAddress)message.getReceiver();
 			return InteractionUtil.sendMessage(
 					Role.this.getTimeManager().getCurrentTime(),
 					Role.this.getAddress(),

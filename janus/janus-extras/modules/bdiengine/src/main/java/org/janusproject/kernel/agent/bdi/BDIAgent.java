@@ -115,9 +115,16 @@ public abstract class BDIAgent extends Agent implements BDIGoalSelector, BDIPlan
 		this.newBeliefs = new LinkedList<BDIBelief>();
 		this.planExecutor = new BDIPlanExecutor(this);
 		this.waitingGoals = new HashSet<BDIGoal>();
+	}
+	
+	/** {@inheritDoc}
+	 */
+	@Override
+	public Status activate(Object... parameters) {
 		initActionFactory();
 		addSignalListener(this.signalListener);
 		addSignalListener(this.planExecutor.getEventListener());
+		return null;
 	}
 
 	/**

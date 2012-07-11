@@ -107,7 +107,7 @@ public class ForagerBot extends Agent {
 			{
 				RegistrationAckMessage ack = getMessage(RegistrationAckMessage.class);
 				if (ack!=null) {
-					this.gridAgent = ack.getContext().getSender();
+					this.gridAgent = (AgentAddress)ack.getSender();
 					this.baseX = ack.getBaseX();
 					this.baseY = ack.getBaseY();
 					this.resource = 0;

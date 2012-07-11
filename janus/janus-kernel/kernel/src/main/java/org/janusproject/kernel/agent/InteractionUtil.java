@@ -26,12 +26,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.crio.core.PrivilegedPlayerAddressService;
 import org.janusproject.kernel.crio.core.RolePlayer;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.message.MessageContext;
-import org.janusproject.kernel.message.MessageContextFactory;
+import org.janusproject.kernel.message.MessageFactory;
 import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
 import org.janusproject.kernel.message.UnspecifiedReceiverAddressMessageException;
 import org.janusproject.kernel.message.UnspecifiedSelectionPolicyMessageException;
@@ -47,7 +47,7 @@ import org.janusproject.kernel.util.random.RandomNumber;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-class InteractionUtil extends MessageContextFactory {
+class InteractionUtil extends MessageFactory {
 
 	private static boolean sendLocalMessage(
 			float creationDate,
@@ -62,9 +62,7 @@ class InteractionUtil extends MessageContextFactory {
 		if (receiver==null)
 			throw new UnspecifiedReceiverAddressMessageException(message);
 		
-		MessageContext context = message.getContext();
-		
-		float date = (context!=null) ? context.getCreationDate() : creationDate;
+		float date = message.getCreationDate();
 		if (Float.isNaN(date)) date = creationDate;
 
 		// Make sure message's fields are correctly set
@@ -73,14 +71,12 @@ class InteractionUtil extends MessageContextFactory {
 			emitterAddress = emitter.getAddress();
 		}
 		else {
-			if (context==null) {
-				emitterAddress = emitter.getAddress();
+			Address sender = message.getSender();
+			if (sender instanceof AgentAddress) {
+				emitterAddress = (AgentAddress)sender;
 			}
 			else {
-				emitterAddress = context.getSender();
-				if (emitterAddress==null) {
-					emitterAddress = emitter.getAddress();
-				}
+				emitterAddress = emitter.getAddress();
 			}
 		}
 		
@@ -90,12 +86,9 @@ class InteractionUtil extends MessageContextFactory {
 			||
 			(!receiver.getAddress().equals(emitterAddress))) {
 			
-			updateContext(
-					date,
-					message, context, 
-					emitterAddress, 
-					receiverAddress, 
-					forceEmitter);
+			setCreationDate(message, date);
+			setSender(message, emitterAddress);
+			setReceiver(message, receiverAddress);
 	
 			// Put message in mail box
 			return receiver.getMailbox().add(message);
@@ -115,7 +108,10 @@ class InteractionUtil extends MessageContextFactory {
 		KernelContext context = emitter.getKernelContext();
 		DistantKernelHandler distantKernel = context.getDistantKernelHandler();
 		if (distantKernel!=null) {
-			updateContext(creationDate, message, message.getContext(), emitter.getAddress(), receiverAddress, false);
+			setCreationDate(message, creationDate);
+			setSender(message, emitter.getAddress());
+			setReceiver(message, receiverAddress);
+			
 			distantKernel.sendMessage(message);
 			return true;
 		}		
@@ -384,31 +380,6 @@ class InteractionUtil extends MessageContextFactory {
 		if (distantBroadcast) {
 			broadcastDistantMessage(emitter, message);
 		}
-	}
-	
-	/**
-	 * Change emitter and receiver addresses for the given message.
-	 * 
-	 * @param updateDate is the date at which this update occurs.
-	 * @param message is the message to change.
-	 * @param context is the context of the message to change.
-	 * @param emitter is the emitter address to put inside the message.
-	 * @param receiver is the receiver address to put inside the message.
-	 * @param updateCreationDate indicates if the message creation date may be set, or not.
-	 */
-	private static void updateContext(
-			float updateDate,
-			Message message,
-			MessageContext context,
-			AgentAddress emitter,
-			AgentAddress receiver,
-			boolean updateCreationDate) {
-		MessageContext mc;
-		if (context==null || updateCreationDate)
-			mc = new MessageContext(emitter, receiver, updateDate);
-		else
-			mc = new MessageContext(emitter, receiver, context.getCreationDate());
-		setContext(message, mc);
 	}
 	
 }

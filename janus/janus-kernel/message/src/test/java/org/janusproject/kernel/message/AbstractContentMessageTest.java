@@ -48,7 +48,9 @@ public class AbstractContentMessageTest extends TestCase {
 		this.emitter = new AgentAddressStub();
 		this.receiver = new AgentAddressStub();
 		this.message = new MessageStub(1);
-		this.message.context = new MessageContext(this.emitter, this.receiver, 1024f);
+		this.message.sender = this.emitter;
+		this.message.receiver = this.receiver;
+		this.message.creationDate = 1024f;
 	}
 	
 	/**

@@ -61,12 +61,7 @@ implements Comparator<Message> {
 		assert(o1!=null);
 		assert(o2!=null);
 		
-		MessageContext mc1 = o1.getContext();
-		MessageContext mc2 = o2.getContext();
-		assert(mc1!=null);
-		assert(mc2!=null);
-		
-		int cmp = Float.compare(mc1.getCreationDate(), mc2.getCreationDate());
+		int cmp = Float.compare(o1.getCreationDate(), o2.getCreationDate());
 		if (cmp!=0) return cmp;
 		
 		UUID id1 = o1.getIdentifier();

@@ -45,7 +45,6 @@ import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.mailbox.BufferedMailbox;
 import org.janusproject.kernel.mailbox.Mailbox;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.message.MessageContext;
 import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
 import org.janusproject.kernel.organization.holonic.HolonicOrganization;
 import org.janusproject.kernel.organization.integration.IntegrationOrganization;
@@ -1363,11 +1362,11 @@ implements Activable, Holon, Serializable {
 	 */
 	protected final AgentAddress replyToMessage(Message messageToReplyTo, Message message) {
 		assert(messageToReplyTo!=null);
-		MessageContext context = messageToReplyTo.getContext();
-		if (context!=null) {
+		Address adr = messageToReplyTo.getSender();
+		if (adr instanceof AgentAddress) {
 			return getMessageTransportService().sendMessage(
 					message,
-					context.getSender());
+					(AgentAddress)adr);
 		}
 		return null;
 	}

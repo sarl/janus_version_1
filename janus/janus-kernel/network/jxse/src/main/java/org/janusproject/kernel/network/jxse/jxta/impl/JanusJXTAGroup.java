@@ -162,10 +162,13 @@ abstract class JanusJXTAGroup extends JxtaGroup {
 		net.jxta.endpoint.Message msg = new net.jxta.endpoint.Message();
 		if (isBroadcast) {
 			MessageUtils.addStringToMessage(msg, MSG_NAMESPACE_SENDING, MSG_ELEM_COMM_TYPE, COMM_TYPE_BROADCAST);
-		} else {
-			if (message.getContext().getReceiver() == null) {
+		}
+		else {
+			Address adr = message.getReceiver();
+			if (adr == null) {
 				MessageUtils.addStringToMessage(msg, MSG_NAMESPACE_SENDING, MSG_ELEM_COMM_TYPE, COMM_TYPE_DIRECT_RANDOM);
-			} else {
+			}
+			else {
 				MessageUtils.addStringToMessage(msg, MSG_NAMESPACE_SENDING, MSG_ELEM_COMM_TYPE, COMM_TYPE_DIRECT_SPECIFIED);
 			}
 		}

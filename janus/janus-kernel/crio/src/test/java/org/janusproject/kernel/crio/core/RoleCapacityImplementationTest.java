@@ -35,7 +35,6 @@ import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.mailbox.BufferedMailbox;
 import org.janusproject.kernel.mailbox.Mailbox;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.message.MessageContext;
 import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
 import org.janusproject.kernel.message.StringMessage;
 import org.janusproject.kernel.util.directaccess.DirectAccessCollection;
@@ -207,7 +206,7 @@ public class RoleCapacityImplementationTest extends TestCase {
 		Role r = this.group.getPlayedRole(this.player1.getAddress(), RoleStub.class);
 		
 		Message msg = new StringMessage("toto"); //$NON-NLS-1$
-		InteractionUtil.updateContext(msg, 
+		InteractionUtilStub.updateContext(msg, 
 				r.getAddress(),
 				new RoleAddress(this.group.getAddress(), RoleStub.class, this.player2.getAddress()),
 				1024);
@@ -702,8 +701,10 @@ public class RoleCapacityImplementationTest extends TestCase {
 						RoleStub.class), CapacityStub.class,
 				CapacityImplementationType.DIRECT_ACTOMIC);
 
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
 		assertNull(RoleCapacityImplementation.getMessage(context));
 
@@ -736,8 +737,10 @@ public class RoleCapacityImplementationTest extends TestCase {
 						RoleStub.class), CapacityStub.class,
 				CapacityImplementationType.DIRECT_ACTOMIC);
 
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
 		assertNull(RoleCapacityImplementation.peekMessage(context));
 
@@ -771,8 +774,10 @@ public class RoleCapacityImplementationTest extends TestCase {
 				CapacityImplementationType.DIRECT_ACTOMIC);
 
 		Iterator<Message> iterator;
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
 		iterator = RoleCapacityImplementation.getMessages(context);
 		assertNotNull(iterator);
@@ -817,8 +822,10 @@ public class RoleCapacityImplementationTest extends TestCase {
 				CapacityImplementationType.DIRECT_ACTOMIC);
 
 		Iterator<Message> iterator;
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
 		iterator = RoleCapacityImplementation.peekMessages(context);
 		assertNotNull(iterator);

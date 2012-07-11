@@ -49,6 +49,7 @@ import org.janusproject.ecoresolution.message.EcoProblemSolverPresentationMessag
 import org.janusproject.ecoresolution.message.EcoProblemSolvingStartMessage;
 import org.janusproject.ecoresolution.relation.EcoAttack;
 import org.janusproject.ecoresolution.relation.EcoRelation;
+import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.message.Message;
 
 /** Default implementation of an eco-entity in eco-resolution problem solving.
@@ -462,7 +463,7 @@ public abstract class AbstractEcoEntity implements InitializableEcoEntity {
 		for(Message msg : getMessages()) {
 			if (msg instanceof EcoProblemSolverPresentationMessage) {
 				if (this.monitor==null) {
-					this.monitor = new AgentIdentity(msg.getSender());
+					this.monitor = new AgentIdentity((AgentAddress)msg.getSender());
 					changed = true;
 				}
 			}

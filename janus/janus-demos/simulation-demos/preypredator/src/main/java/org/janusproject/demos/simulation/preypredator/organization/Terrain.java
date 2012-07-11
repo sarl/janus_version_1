@@ -40,6 +40,7 @@ import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agentmemory.Memory;
 import org.janusproject.kernel.crio.core.HasAllRequiredCapacitiesCondition;
 import org.janusproject.kernel.crio.core.Role;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.role.RoleActivationPrototype;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.status.ExceptionStatus;
@@ -146,10 +147,10 @@ public class Terrain extends Role {
 					GameMessage gmsg = (GameMessage)message;
 					switch(gmsg.getType()) {
 					case I_AM_PREDATOR:
-						addPredator(gmsg.getContext().getSender());
+						addPredator(((RoleAddress)gmsg.getSender()).getPlayer());
 						break;
 					case I_AM_PREY:
-						addPrey(gmsg.getContext().getSender());
+						addPrey(((RoleAddress)gmsg.getSender()).getPlayer());
 						break;
 					case END_OF_GAME:
 						leaveMe();
@@ -174,13 +175,13 @@ public class Terrain extends Role {
 		}
 		else {
 			for(Message message : getMailbox()) {
-				if ((!this.awaitingMessages.containsKey(message.getContext().getSender()))&&
+				if ((!this.awaitingMessages.containsKey(message.getSender()))&&
 					(message instanceof GameMessage)&&
 					(((GameMessage)message).getType()==GameMessageType.MOVE)) {
-					this.awaitingMessages.put(message.getContext().getSender(), ((GameMessage)message).getContent());
+					this.awaitingMessages.put(((RoleAddress)message.getSender()).getPlayer(), ((GameMessage)message).getContent());
 				}
 				else {
-					warning(Locale.getString(Terrain.class, "SKIP_MESSAGE", message.getContext().getSender().toString())); //$NON-NLS-1$
+					warning(Locale.getString(Terrain.class, "SKIP_MESSAGE", (((RoleAddress)message.getSender()).getPlayer()).toString())); //$NON-NLS-1$
 				}
 			}
 			

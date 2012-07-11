@@ -20,13 +20,13 @@
  */
 package org.janusproject.kernel.crio.core;
 
+import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.crio.interaction.UnspecifiedGroupMessageException;
 import org.janusproject.kernel.crio.interaction.UnspecifiedReceiverRoleMessageException;
 import org.janusproject.kernel.crio.interaction.UnspecifiedSenderRoleMessageException;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.message.MessageContext;
-import org.janusproject.kernel.message.MessageContextFactory;
+import org.janusproject.kernel.message.MessageFactory;
 import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
 
 
@@ -38,7 +38,7 @@ import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-class InteractionUtil extends MessageContextFactory {
+class InteractionUtil extends MessageFactory {
 
 	/**
 	 * Send the specified <code>Message</code> to all the players of the given role,
@@ -63,24 +63,23 @@ class InteractionUtil extends MessageContextFactory {
 		if (receiverRole==null) throw new UnspecifiedReceiverRoleMessageException(message);
 
 		assert(message!=null);
-		MessageContext mc = message.getContext();
-		CRIOMessageContext cmc = (mc instanceof CRIOMessageContext) ? (CRIOMessageContext)mc : null;
-		float date = (mc!=null) ? mc.getCreationDate() : creationDate; 
+		float date = message.getCreationDate();
 		if (Float.isNaN(date)) date = creationDate;
 		
-		RoleAddress selectedSenderAddress = (cmc==null) ? null : cmc.getSendingRoleAddress();
+		Address msgSender = message.getSender();
+		RoleAddress selectedSenderAddress = (msgSender instanceof RoleAddress) ? (RoleAddress)msgSender : null;
 		if (changeSender || selectedSenderAddress==null) {
 			selectedSenderAddress = sender; 
 		}
 		
-		updateContext(
-				message,
-				selectedSenderAddress,
-				null,
-				receiverRole,
-				date);
+		KernelScopeGroup groupInstance = sender.getGroupObject();
+		assert(groupInstance!=null);
+		
+		setCreationDate(message, date);
+		setSender(message, selectedSenderAddress);
+		setReceiver(message, new RoleAddress(groupInstance.getAddress(), receiverRole, null));
 
-		sender.getGroupObject().broadcastMessage(message, includeSender);
+		groupInstance.broadcastMessage(message, includeSender);
 	}
 
 	/**
@@ -115,21 +114,18 @@ class InteractionUtil extends MessageContextFactory {
 		
 		assert(message!=null);
 
-		MessageContext mc = message.getContext();
-		CRIOMessageContext cmc = (mc instanceof CRIOMessageContext) ? (CRIOMessageContext)mc : null;
-		float date = (mc!=null) ? mc.getCreationDate() : creationDate; 
+		float date = message.getCreationDate(); 
 		if (Float.isNaN(date)) date = creationDate;
 		
-		RoleAddress selectedSenderAddress = (cmc==null) ? null : cmc.getSendingRoleAddress();
+		Address msgSender = message.getSender();
+		RoleAddress selectedSenderAddress = (msgSender instanceof RoleAddress) ? (RoleAddress)msgSender : null;
 		if (changeSender || selectedSenderAddress==null) {
 			selectedSenderAddress = sender; 
 		}
 		
-		updateContext(
-				message,
-				selectedSenderAddress,
-				receiver,
-				date);
+		setCreationDate(message, date);
+		setSender(message, selectedSenderAddress);
+		setReceiver(message, receiver);
 
 		return sender.getGroupObject().sendMessage(message, includeSender);
 	}
@@ -161,9 +157,7 @@ class InteractionUtil extends MessageContextFactory {
 
 		assert(message!=null);
 
-		MessageContext mc = message.getContext();
-		CRIOMessageContext cmc = (mc instanceof CRIOMessageContext) ? (CRIOMessageContext)mc : null;
-		float date = (mc!=null) ? mc.getCreationDate() : creationDate; 
+		float date = message.getCreationDate(); 
 		if (Float.isNaN(date)) date = creationDate;
 
 		MessageReceiverSelectionPolicy pol = policy;
@@ -178,63 +172,18 @@ class InteractionUtil extends MessageContextFactory {
 				group.getRolePlayers(receiver.getRole()));
 		if (receiverAddress==null) return null;
 		
-		RoleAddress selectedSenderAddress = (cmc==null) ? null : cmc.getSendingRoleAddress();
+		Address msgSender = message.getSender();
+		RoleAddress selectedSenderAddress = (msgSender instanceof RoleAddress) ? (RoleAddress)msgSender : null;
 		if (changeSender || selectedSenderAddress==null) {
 			selectedSenderAddress = sender; 
 		}
 		
 		receiver.setPlayer(receiverAddress);
-		updateContext(
-				message,
-				selectedSenderAddress,
-				receiver,
-				date);
+		setCreationDate(message, date);
+		setSender(message, selectedSenderAddress);
+		setReceiver(message, receiver);
 
 		return sender.getGroupObject().sendMessage(message, includeSender);
-	}
-
-	/**
-	 * Change emitter and receiver addresses for the given message.
-	 * 
-	 * @param message is the message to change.
-	 * @param emitter is the emitter address to put inside the message.
-	 * @param receiver is the receiver address to put inside the message.
-	 * @param receiverRole is the role of the receiver.
-	 * @param creationDate is the creation date for the message.
-	 */
-	static void updateContext(
-			Message message,
-			RoleAddress emitter,
-			AgentAddress receiver,
-			Class<? extends Role> receiverRole,
-			float creationDate) {
-		CRIOMessageContext mc = new CRIOMessageContext(
-				emitter.getPlayer(),
-				receiver,
-				creationDate);
-		mc.setEmitterReceiver(emitter, receiverRole, receiver);
-		setContext(message, mc);
-	}
-	
-	/**
-	 * Change emitter and receiver addresses for the given message.
-	 * 
-	 * @param message is the message to change.
-	 * @param emitter is the emitter address to put inside the message.
-	 * @param receiver is the receiver address to put inside the message.
-	 * @param creationDate is the creation date for the message.
-	 */
-	static void updateContext(
-			Message message,
-			RoleAddress emitter,
-			RoleAddress receiver,
-			float creationDate) {
-		CRIOMessageContext mc = new CRIOMessageContext(
-				emitter.getPlayer(),
-				receiver.getPlayer(),
-				creationDate);
-		mc.setEmitterReceiver(emitter, receiver);
-		setContext(message, mc);
 	}
 	
 }

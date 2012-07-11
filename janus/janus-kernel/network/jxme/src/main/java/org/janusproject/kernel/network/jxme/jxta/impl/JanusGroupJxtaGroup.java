@@ -24,9 +24,9 @@ import net.jxta.peergroup.PeerGroup;
 
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
-import org.janusproject.kernel.crio.core.CRIOMessageContext;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.core.Role;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.network.jxme.jxta.JXTANetworkHandler;
 
@@ -62,8 +62,9 @@ class JanusGroupJxtaGroup extends JanusJXTAGroup {
 	@Override
 	protected Address processIncomingMessage(Message janusMessage, boolean isBroadcast) {
 		Class<? extends Role> receiverRole = null;
-		if (janusMessage.getContext() instanceof CRIOMessageContext) {
-			receiverRole = ((CRIOMessageContext) janusMessage.getContext()).getReceiverRole();
+		Address adr = janusMessage.getSender();
+		if (adr instanceof RoleAddress) {
+			receiverRole = ((RoleAddress)janusMessage.getReceiver()).getRole();
 			return JanusGroupJxtaGroup.this.networkHandler.receiveOrganizationalDistantMessage(JanusGroupJxtaGroup.this.janusGroupAddress, receiverRole, janusMessage, isBroadcast);
 		}
 		return JanusGroupJxtaGroup.this.networkHandler.receiveAgentAgentDistantMessage(janusMessage, isBroadcast);		

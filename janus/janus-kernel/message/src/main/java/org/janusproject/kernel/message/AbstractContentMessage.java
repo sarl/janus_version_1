@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.janusproject.kernel.message;
+
 
 /**
  * This class defines a message which is containing a single type of data.
@@ -45,9 +46,11 @@ extends Message {
 	 * Create a message with the given context.
 	 * 
 	 * @param context is the context to put inside this message.
+	 * @deprecated no replacement
 	 */
+	@Deprecated
 	protected AbstractContentMessage(MessageContext context) {
-		super(context);
+		super();
 	}
 
 	/** Replies the content of this message.

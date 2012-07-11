@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,12 +36,12 @@ class MessageStub extends AbstractContentMessage<Object> {
 	 * @param date
 	 */
 	public MessageStub(float date) {
-		this.context = new MessageContext(null, null, date);
+		this.creationDate = date;
 	}
 	
 	@Override
 	public String toString() {
-		return Long.toString(Float.valueOf(this.context.creationDate).longValue());
+		return Long.toString(Float.valueOf(this.creationDate).longValue());
 	}
 
 	/**
@@ -49,7 +49,7 @@ class MessageStub extends AbstractContentMessage<Object> {
 	 */
 	@Override
 	public Object getContent() {
-		return Float.valueOf(this.context.creationDate).longValue();
+		return Float.valueOf(this.creationDate).longValue();
 	}
 	
 }

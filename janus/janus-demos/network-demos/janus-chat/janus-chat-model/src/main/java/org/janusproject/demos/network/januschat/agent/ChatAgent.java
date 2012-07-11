@@ -102,7 +102,7 @@ public class ChatAgent extends Agent implements ChannelInteractable, RolePlaying
 				for (Message m : getMailbox()) {
 					if (m instanceof StringMessage) {
 						for (IncomingPrivateMessageListener listener : pmlist) {
-							listener.incomingPrivateMessage(m.getSender(), ((StringMessage) m).getContent());
+							listener.incomingPrivateMessage((AgentAddress)m.getSender(), ((StringMessage) m).getContent());
 						}
 					}
 				}

@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ implements Selector<Message> {
 	@Override
 	public boolean isSelected(Object msg) {
 		return msg instanceof Message &&
-				(((Message)msg).getContext().getCreationDate()%2)==1;
+				(((Message)msg).getCreationDate()%2)==1;
 	}
 
 	/**

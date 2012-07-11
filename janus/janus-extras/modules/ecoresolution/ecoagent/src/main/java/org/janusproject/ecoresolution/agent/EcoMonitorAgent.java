@@ -101,7 +101,7 @@ class EcoMonitorAgent extends Agent implements KernelListener {
 			EcoChannel channel;
 			for(Message msg : getMailbox()) {
 				if (msg instanceof EcoInitializationDoneMessage) {
-					ecoAgent = msg.getSender();
+					ecoAgent = (AgentAddress)msg.getSender();
 					channel = getKernelContext().getChannelManager().getChannel(ecoAgent, EcoChannel.class);
 					this.ecoAgents.put(ecoAgent, channel);
 				}

@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2004-2011 Janus Core Developers
+ * Copyright (C) 2004-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ package org.janusproject.kernel.message;
 import java.io.Serializable;
 import java.util.UUID;
 
-import org.janusproject.kernel.address.AgentAddress;
+import org.janusproject.kernel.address.Address;
 
 /**
  * This class precises the minimal set of attributes required by a message to be send and receive.
@@ -51,31 +51,43 @@ import org.janusproject.kernel.address.AgentAddress;
 public class Message
 implements Serializable, Cloneable {
 	
-	private static final long serialVersionUID = -5530480533820540883L;
+	private static final long serialVersionUID = 8380395067046323895L;
 
 	/**
 	 * Unique Id for the message.
 	 */
 	private final UUID id = UUID.randomUUID();
 
-	/** Message context.
+	/**
+	 * Address of the sender entity.
 	 */
-	MessageContext context;
+	Address sender = null;
 	
 	/**
-	 * Create a message without embedded information.
+	 * Address of the Receiver entity.
+	 */
+	Address receiver = null;
+	
+	/**
+	 * Message creation date
+	 */
+	float creationDate = Float.NaN;
+
+	/**
 	 */
 	public Message() {
-		this.context = null;
+		//
 	}
 	
 	/**
 	 * Create a message with the given context.
 	 * 
 	 * @param context is the context to put inside this message.
+	 * @deprecated no replacement
 	 */
+	@Deprecated
 	public Message(MessageContext context) {
-		this.context = context;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -91,16 +103,22 @@ implements Serializable, Cloneable {
 	 * Replies the context of the message.
 	 * 
 	 * @return the context of the message.
+	 * @deprecated no replacement
 	 */
+	@SuppressWarnings("static-method")
+	@Deprecated
 	public final MessageContext getContext() {
-		if (this.context==null) {
-			this.context = new MessageContext();
-		}
-		return this.context;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
 	 * Replies the address of the receiver.
+	 * <p>
+	 * The replied address will be an
+	 * {@code AgentAddress} in an agent context,
+	 * or a {@code RoleAddress} in an organizational
+	 * context. No other type of address will be
+	 * returned.
      * <p>
      * If the replied address is <code>null</code>
      * it means that the message was not sent to
@@ -109,21 +127,26 @@ implements Serializable, Cloneable {
 	 * @return the address of the receiver, or <code>null</code> if
 	 * the receiver is not known.
 	 */
-	public final AgentAddress getReceiver() {
-		MessageContext context = getContext();
-		assert(context!=null);
-		return context.getReceiver();
+	@SuppressWarnings("unchecked")
+	public final <A extends Address> A getReceiver() {
+		return (A)this.receiver;
 	}
-
+	
 	/**
 	 * Replies the address of the sender.
+	 * <p>
+	 * The replied address will be an
+	 * {@code AgentAddress} in an agent context,
+	 * or a {@code RoleAddress} in an organizational
+	 * context. No other type of address will be
+	 * returned.
 	 * 
+	 * @param <A> is the type of the address.
 	 * @return the address of the sender.
 	 */
-	public final AgentAddress getSender() {
-		MessageContext context = getContext();
-		assert(context!=null);
-		return context.getSender();
+	@SuppressWarnings("unchecked")
+	public final <A extends Address> A getSender() {
+		return (A)this.sender;
 	}
 
 	/**
@@ -132,9 +155,7 @@ implements Serializable, Cloneable {
 	 * @return the creation date.
 	 */
 	public final float getCreationDate() {
-		MessageContext context = getContext();
-		assert(context!=null);
-		return context.getCreationDate();
+		return this.creationDate;
 	}
 
 	/**
@@ -147,13 +168,12 @@ implements Serializable, Cloneable {
 	 * @param type is the type of the replied context.
 	 * @return the context of the message, never <code>null</code>.
 	 * @throws UnspecifiedMessageContextException when the message does not containing a valid context.
+	 * @deprecated no replacement
 	 */
+	@SuppressWarnings("static-method")
+	@Deprecated
 	public final <LC extends MessageContext> LC getContext(Class<LC> type) throws UnspecifiedMessageContextException {
-		
-		assert(type!=null);
-		if (this.context!=null && type.isInstance(this.context))
-			return type.cast(this.context);
-		throw new UnspecifiedMessageContextException(this);
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -169,7 +189,6 @@ implements Serializable, Cloneable {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (this.context==null) return false;
 		if (o instanceof Message) {
 			Message m = (Message)o;
 			return (this.id.equals(m.id));

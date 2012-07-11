@@ -120,7 +120,7 @@ public class BrokerAgent extends BDIAgent {
 							this.critera, 
 							BeliefType.BROKER_CRITERA)));
 
-					this.client = cqm.getContext().getSender();
+					this.client = cqm.getSender();
 					fireSignal(new BDIBeliefEvent(new BDIBelief(
 							this.client, 
 							BeliefType.BROKER_CLIENT)));

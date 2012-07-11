@@ -40,6 +40,7 @@ import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.crio.capacity.CapacityContext;
 import org.janusproject.kernel.crio.core.HasAllRequiredCapacitiesCondition;
 import org.janusproject.kernel.crio.core.Role;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.role.RoleActivationPrototype;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.status.ExceptionStatus;
@@ -115,7 +116,7 @@ public class Environment extends Role {
 					BoidArrivalMessage bam = (BoidArrivalMessage)msg;
 					hasOneBoid = addBoid(
 							boids,
-							bam.getContext().getSender(),
+							((RoleAddress)bam.getSender()).getPlayer(),
 							bam.getInitialPosition(),
 							bam.getInitialSpeed(),
 							bam.getPopulation())
@@ -147,7 +148,7 @@ public class Environment extends Role {
 					BoidArrivalMessage bam = (BoidArrivalMessage)msg;
 					addBoid(
 							boids,
-							bam.getContext().getSender(),
+							((RoleAddress)bam.getSender()).getPlayer(),
 							bam.getInitialPosition(),
 							bam.getInitialSpeed(),
 							bam.getPopulation());
@@ -199,7 +200,7 @@ public class Environment extends Role {
 	private void consumeActionMessage(Map<AgentAddress,PerceivedBoidBody> boids, ActionMessage message) {
 		PerceivedBoidBody body;
 		
-		AgentAddress actor = message.getContext().getSender();
+		AgentAddress actor = ((RoleAddress)message.getSender()).getPlayer();
 				
 		print(Locale.getString(Environment.class,
 				"ENVIRONMENT_RECEIVED_INFLUENCE", actor)); //$NON-NLS-1$

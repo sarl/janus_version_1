@@ -41,7 +41,6 @@ import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.mailbox.BufferedMailbox;
 import org.janusproject.kernel.mailbox.Mailbox;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.message.MessageContext;
 import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
 import org.janusproject.kernel.message.StringMessage;
 import org.janusproject.kernel.time.KernelTimeManager;
@@ -518,8 +517,10 @@ public class RolePlayerTest extends TestCase {
 	 * @throws Exception
 	 */
 	public void testGetMessage() throws Exception {
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
 		assertNull(this.player1.getMessage(this.group1.getAddress(),
 				RoleStub.class));
@@ -545,8 +546,10 @@ public class RolePlayerTest extends TestCase {
 	 * @throws Exception
 	 */
 	public void testPeekMessage() throws Exception {
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
 		assertNull(this.player1.peekMessage(this.group1.getAddress(),
 				RoleStub.class));
@@ -573,8 +576,10 @@ public class RolePlayerTest extends TestCase {
 	 */
 	public void testGetMessages() throws Exception {
 		Iterator<Message> iterator;
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
 		iterator = this.player1.getMessages(this.group1.getAddress(),
 				RoleStub.class).iterator();
@@ -616,8 +621,10 @@ public class RolePlayerTest extends TestCase {
 	 */
 	public void testPeekMessages() throws Exception {
 		Iterator<Message> iterator;
-		Message m1 = new StringMessage("m1", new MessageContext(1024f)); //$NON-NLS-1$
-		Message m2 = new StringMessage("m2", new MessageContext(1026f)); //$NON-NLS-1$
+		Message m1 = new StringMessage("m1"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m1, null, null, 1024f);
+		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
+		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
 		iterator = this.player1.peekMessages(this.group1.getAddress(),
 				RoleStub.class).iterator();
@@ -974,7 +981,7 @@ public class RolePlayerTest extends TestCase {
 		this.group1.requestRole(player3, RoleStub.class, null, null);
 		this.group1.requestRole(player4, Role3Stub.class, null, null);
 		
-		InteractionUtil.updateContext(msg, 
+		InteractionUtilStub.updateContext(msg, 
 				r,
 				receiver,
 				1024);

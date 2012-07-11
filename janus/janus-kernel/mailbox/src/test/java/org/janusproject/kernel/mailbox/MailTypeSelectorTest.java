@@ -23,6 +23,8 @@ package org.janusproject.kernel.mailbox;
 import java.util.logging.Level;
 
 import org.janusproject.kernel.logger.LoggerUtil;
+import org.janusproject.kernel.message.MessageStub;
+import org.janusproject.kernel.message.MessageStub2;
 import org.janusproject.kernel.util.selector.TypeSelector;
 
 import junit.framework.TestCase;

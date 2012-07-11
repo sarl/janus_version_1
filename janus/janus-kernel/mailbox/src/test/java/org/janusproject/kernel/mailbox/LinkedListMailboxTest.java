@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@ import junit.framework.TestCase;
 
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.message.Message;
+import org.janusproject.kernel.message.MessageStub;
+import org.janusproject.kernel.message.MessageStub2;
 import org.janusproject.kernel.util.selector.TypeSelector;
 
 

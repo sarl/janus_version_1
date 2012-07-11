@@ -155,7 +155,7 @@ public class SellerPlan extends BDIPlan {
 					
 					if (msg instanceof ContractFinalizationMessage) {
 						this.receivers.clear();
-						this.receivers.add(msg.getSender());
+						this.receivers.add((AgentAddress)msg.getSender());
 						this.state = this.state.nextState();
 					}
 				}

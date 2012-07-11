@@ -154,14 +154,12 @@ extends CapacityImplementation {
 			Message message) {
 		assert(message!=null);
 		GroupCapacityContext context = castContext(callContext);
-		CRIOMessageContext msgContext = message.getContext(CRIOMessageContext.class);
-		assert(msgContext!=null);
-		assert(msgContext.getReceiver()!=null);
-		assert(msgContext.getReceiverRole()!=null);
+		assert(message.getReceiver() instanceof RoleAddress);
+		RoleAddress receiver = (RoleAddress)message.getReceiver();
 		return InteractionUtil.sendMessage(
 				context.getTimeManager().getCurrentTime(),
 				context.getRoleAddress(),
-				new RoleAddress(context.getGroupAddress(), msgContext.getReceiverRole(), message.getReceiver()),
+				receiver,
 				message,
 				false,
 				getMessageTransportService(callContext).isForwardMessageFeedBack());

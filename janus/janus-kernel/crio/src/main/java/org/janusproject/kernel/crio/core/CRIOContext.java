@@ -244,9 +244,9 @@ public class CRIOContext {
 		 */
 		@Override
 		public boolean forwardBroadcastMessage(Message message) {
-			CRIOMessageContext context = message.getContext(CRIOMessageContext.class);
-			if (context!=null) {
-				GroupAddress group = context.getGroup();
+			Address sender = message.getSender();
+			if (sender instanceof RoleAddress) {
+				GroupAddress group = ((RoleAddress)sender).getGroup();
 				if (group!=null) {
 					GroupRepository repo = getGroupRepository();
 					assert(repo!=null);
@@ -265,9 +265,9 @@ public class CRIOContext {
 		 */
 		@Override
 		public Address forwardMessage(Message message) {
-			CRIOMessageContext context = message.getContext(CRIOMessageContext.class);
-			if (context!=null) {
-				GroupAddress group = context.getGroup();
+			Address sender = message.getSender();
+			if (sender instanceof RoleAddress) {
+				GroupAddress group = ((RoleAddress)sender).getGroup();
 				if (group!=null) {
 					GroupRepository repo = getGroupRepository();
 					assert(repo!=null);

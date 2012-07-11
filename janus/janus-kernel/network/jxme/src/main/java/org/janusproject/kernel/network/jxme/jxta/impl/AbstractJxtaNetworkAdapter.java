@@ -41,10 +41,10 @@ import net.jxta.rendezvous.RendezVousService;
 import net.jxta.rendezvous.RendezvousEvent;
 
 import org.arakhne.vmutil.locale.Locale;
+import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
-import org.janusproject.kernel.crio.core.CRIOMessageContext;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.core.Organization;
 import org.janusproject.kernel.crio.core.Role;
@@ -52,7 +52,6 @@ import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.message.MessageContext;
 import org.janusproject.kernel.network.jxme.jxta.JXTANetworkHandler;
 import org.janusproject.kernel.network.jxta.NetworkAdapter;
 import org.janusproject.kernel.network.jxta.NetworkListener;
@@ -339,9 +338,9 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 	 */
 	@Override
 	public AgentAddress sendMessage(Message message) {
-		MessageContext m = message.getContext(); 
-		if (m instanceof CRIOMessageContext) {
-			JanusGroupJxtaGroup g = this.groups.get(((CRIOMessageContext)m).getGroup());
+		Address adr = message.getSender();
+		if (adr instanceof RoleAddress) {
+			JanusGroupJxtaGroup g = this.groups.get(((RoleAddress)adr).getGroup());
 			try {
 				return g.sendMessage(message);
 			}
@@ -425,9 +424,9 @@ public abstract class AbstractJxtaNetworkAdapter implements NetworkAdapter, JXTA
 	 */
 	@Override
 	public void broadcastMessage(Message message) {
-		MessageContext m =message.getContext();
-		if (m instanceof CRIOMessageContext) {
-			JanusGroupJxtaGroup g = this.groups.get(((CRIOMessageContext)m).getGroup());
+		Address adr = message.getSender();
+		if (adr instanceof RoleAddress) {
+			JanusGroupJxtaGroup g = this.groups.get(((RoleAddress)adr).getGroup());
 			try {
 				g.broadcastMessage(message);
 			}

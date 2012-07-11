@@ -52,9 +52,9 @@ import org.janusproject.kernel.channels.ChannelInteractableListener;
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
 import org.janusproject.kernel.crio.core.CRIOContext;
-import org.janusproject.kernel.crio.core.CRIOMessageContext;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.core.Organization;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.interaction.PrivilegedMessageTransportService;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.GroupListener;
@@ -63,7 +63,6 @@ import org.janusproject.kernel.crio.organization.OrganizationFactory;
 import org.janusproject.kernel.crio.organization.PrivilegedPersistentGroupCleanerService;
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.message.MessageContext;
 import org.janusproject.kernel.repository.Repository;
 import org.janusproject.kernel.schedule.Activable;
 import org.janusproject.kernel.status.ExceptionStatus;
@@ -379,8 +378,8 @@ extends ActivatorAgent<AgentActivator> {
 	 */
 	protected final Address forwardMessage(Message message) {
 		assert(message!=null);
-		MessageContext context = message.getContext();
-		if (context instanceof CRIOMessageContext) {
+		Address adr = message.getSender();
+		if (adr instanceof RoleAddress) {
 			// Forward the message in the organizational context
 			//
 			// The privileged message transport service must be used.
@@ -390,10 +389,11 @@ extends ActivatorAgent<AgentActivator> {
 		}
 
 		// Forward the message in the agent context
-		AgentAddress receiver = context.getReceiver();
-		if (receiver==null)
-			return forwardMessage(message, (AgentAddress[])null);
-		return forwardMessage(message, context.getReceiver());
+		adr = message.getReceiver();
+		if (adr instanceof AgentAddress) {
+			return forwardMessage(message, (AgentAddress)adr);
+		}
+		return forwardMessage(message, (AgentAddress[])null);
 	}
 
 	/**
@@ -407,8 +407,8 @@ extends ActivatorAgent<AgentActivator> {
 	 */
 	protected final void forwardBroadcastMessage(Message message) {
 		assert(message!=null);
-		MessageContext context = message.getContext();
-		if (context instanceof CRIOMessageContext) {
+		Address adr = message.getSender();
+		if (adr instanceof RoleAddress) {
 			//
 			// The privileged message transport service must be used.
 			PrivilegedMessageTransportService pmts = getKernelContext().getPrivilegedMessageTransportService();

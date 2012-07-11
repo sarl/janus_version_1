@@ -213,7 +213,7 @@ public class BrokerPlan extends BDIPlan{
 					
 					if (msg instanceof ReadyToStartMessage) {
 						System.out.println("Broker: ReadyToStartMessage received from Provider"); //$NON-NLS-1$
-						this.providersReady.add(msg.getSender());
+						this.providersReady.add((AgentAddress)msg.getSender());
 						if (this.providersReady.size() == ProviderAgent.providerCount) {
 							this.state = this.state.nextState();
 						}

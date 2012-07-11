@@ -27,8 +27,8 @@ import java.util.Map;
 
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.crio.capacity.Capacity;
-import org.janusproject.kernel.crio.core.CRIOMessageContext;
 import org.janusproject.kernel.crio.core.Role;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.message.ObjectMessage;
 import org.janusproject.kernel.message.StringMessage;
@@ -113,9 +113,10 @@ public class Head extends Role {
 		case 3:
 			++this.partDone;
 			debug("Got a message of referencement"); //$NON-NLS-1$
+			RoleAddress adr = (RoleAddress)this.m.getSender();
 			referenceCapacities(
 					(List<Class<? extends Capacity>>) ((ObjectMessage) this.m)
-							.getContent(), this.m.getContext().getSender());
+							.getContent(), adr.getPlayer());
 			if (this.partDone == this.nbPartMember) {
 				debug(
 						"Head : All part are referenced");//$NON-NLS-1$
@@ -128,7 +129,8 @@ public class Head extends Role {
 				// over the various part owning the requested capacity.
 			debug(
 					"Got a message of RequestCapacity"); //$NON-NLS-1$
-			sendMessage(this.m.getContext(CRIOMessageContext.class).getSenderRole(), this.m.getContext().getSender(),
+			adr = (RoleAddress)this.m.getSender();
+			sendMessage(adr.getRole(), adr.getPlayer(),
 					new StringMessage("OK"));// ACK to Super //$NON-NLS-1$
 			List<AgentAddress> candidates = this.availableCapacities
 			.get(((RequestCapacityMessage<?>) this.m)

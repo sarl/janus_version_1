@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,9 +43,11 @@ public class DoubleMessage extends AbstractContentMessage<Double> {
 	/**
 	 * @param o the content of the message.
 	 * @param context is the context to put inside this message.
+	 * @deprecated no replacement
 	 */
+	@Deprecated
 	public DoubleMessage(double o, MessageContext context) {
-		super(context);
+		super();
 		this.content = o;
 	}
 

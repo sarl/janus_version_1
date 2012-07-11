@@ -32,7 +32,9 @@ import org.janusproject.kernel.message.MessageContext;
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
+ * @deprecated no replacement
  */
+@Deprecated
 public class CRIOMessageContext
 extends MessageContext {
 	
