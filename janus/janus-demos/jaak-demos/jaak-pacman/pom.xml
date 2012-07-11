@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.janus-project.demos.jaak</groupId>
+		<artifactId>jaak-demos</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jaak-pacman</artifactId>
+	<name>Pacman Demo with Jaak</name>
+
+	<properties>
+		<mainClassname>org.janusproject.jaak.demo.pacman.Launcher</mainClassname>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<index>false</index>
+						<manifest>
+							<mainClass>${mainClassname}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>${mainClassname}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.janus-project.extras.modules.jaak</groupId>
+			<artifactId>jaak-environmentinterface</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.janus-project.extras.modules.jaak</groupId>
+			<artifactId>jaak-turtle</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.janus-project.extras.modules.jaak</groupId>
+			<artifactId>jaak-spawner</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.janus-project.extras.modules.jaak</groupId>
+			<artifactId>jaak-kernel</artifactId>
+		</dependency>
+
+	</dependencies>
+
+</project>
