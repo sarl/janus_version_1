@@ -19,5 +19,6 @@
 		<module>bdiengine</module>
 		<module>aclengine</module>
 		<module>scriptedagent</module>
+		<module>jaak</module>
 	</modules>
 </project>

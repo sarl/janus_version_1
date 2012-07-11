@@ -22,5 +22,6 @@
 		<module>bdi-demos</module>
 		<module>acl-demos</module>
 		<module>scriptedagent-demos</module>
+		<module>jaak-demos</module>
 	</modules>
 </project>

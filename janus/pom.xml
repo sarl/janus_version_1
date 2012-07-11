@@ -15,7 +15,7 @@
 	<properties>
 		<year>2012</year>
 		<copyrighters>Janus Core Developers</copyrighters>
-		<felix.main.version>4.0.2</felix.main.version>
+		<felix.main.version>4.0.3</felix.main.version>
 	</properties>
 
 	<!-- ======================================= -->
@@ -168,7 +168,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.3.2</version>
+					<version>2.5.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -183,7 +183,8 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.4</version>
+					<!-- version 2.4 is not compatible with m2e under certain usages -->
+					<version>2.3.2</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -198,37 +199,22 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>3.0</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-scm-plugin</artifactId>
-					<version>1.6</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-deploy-plugin</artifactId>
-					<version>2.7</version>
+					<version>3.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.arakhne.afc</groupId>
 					<artifactId>tag-replacer</artifactId>
-					<version>2.3-SNAPSHOT</version>
+					<version>2.3</version>
 				</plugin>
 				<plugin>
 					<groupId>org.arakhne.afc</groupId>
 					<artifactId>license-installer</artifactId>
-					<version>2.3-SNAPSHOT</version>
+					<version>2.3</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-plugin-plugin</artifactId>
-					<version>2.9</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-project-info-reports-plugin</artifactId>
-					<version>2.4</version>
+					<version>3.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.archetype</groupId>
@@ -258,6 +244,7 @@
 				<plugin>
 					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
+					<!-- For Android 3.2 -->
 					<version>3.2.0</version>
 				</plugin>
 
@@ -492,6 +479,36 @@
 				<artifactId>aclengine</artifactId>
 				<version>0.5-SNAPSHOT</version>
 			</dependency>
+			<dependency>
+				<groupId>org.janus-project.extras.modules.jaak</groupId>
+				<artifactId>jaak-util</artifactId>
+				<version>0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.janus-project.extras.modules.jaak</groupId>
+				<artifactId>jaak-environmentinterface</artifactId>
+				<version>0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.janus-project.extras.modules.jaak</groupId>
+				<artifactId>jaak-turtle</artifactId>
+				<version>0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.janus-project.extras.modules.jaak</groupId>
+				<artifactId>jaak-environment</artifactId>
+				<version>0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.janus-project.extras.modules.jaak</groupId>
+				<artifactId>jaak-spawner</artifactId>
+				<version>0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.janus-project.extras.modules.jaak</groupId>
+				<artifactId>jaak-kernel</artifactId>
+				<version>0.1-SNAPSHOT</version>
+			</dependency>
 
 			<!-- ********** ** JANUS DEMOS ** ********** -->
 			<dependency>
@@ -509,16 +526,15 @@
 			<dependency>
 				<groupId>org.arakhne.afc</groupId>
 				<artifactId>arakhneVmutils</artifactId>
-				<version>7.0-SNAPSHOT</version>
+				<version>7.0</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.arakhne.afc</groupId>
 				<artifactId>maventools</artifactId>
-				<version>3.3-SNAPSHOT</version>
+				<version>3.3</version>
 			</dependency>
 
-			<!-- ********** ** ARAKHNE.ORG ** ********** -->
 			<dependency>
 				<groupId>javax</groupId>
 				<artifactId>vecmath</artifactId>
@@ -529,7 +545,7 @@
 			<dependency>
 				<groupId>org.jruby</groupId>
 				<artifactId>jruby</artifactId>
-				<version>1.6.7.1</version>
+				<version>1.7.0.preview1</version>
 			</dependency>
 
 
@@ -537,7 +553,7 @@
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy</artifactId>
-				<version>2.0.0-beta-2</version>
+				<version>2.0.0-beta-3</version>
 			</dependency>
 
 			<!-- ********** ** JYTHON ** ********** -->
@@ -553,7 +569,7 @@
 				<artifactId>abcl</artifactId>
 				<version>0.27.0</version>
 			</dependency>
-			
+
 			<!-- ********** ** COMMON LISP ** ********** -->
 			<dependency>
 				<groupId>org.luaj</groupId>
@@ -637,7 +653,7 @@
 			<dependency>
 				<groupId>org.jboss.netty</groupId>
 				<artifactId>netty</artifactId>
-				<version>3.2.2.Final</version>
+				<version>3.2.7.Final</version>
 			</dependency>
 
 			<!-- ********** ** JUNIT ** ********** -->
@@ -673,17 +689,6 @@
 			<name>Arakhnê.org Snapshots</name>
 			<url>http://download.tuxfamily.org/arakhne/maven/</url>
 		</repository>
-
-		<!-- <repository>
-			<id>org.codehaus-maven</id>
-			<name>Codehaus Snapshots</name>
-			<url>http://snapshots.repository.codehaus.org/</url>
-		</repository> -->
-
-		<!-- <repository>
-			<id>net.java</id>
-			<url>http://download.java.net/maven/2</url>
-		</repository> -->
 
 		<!-- Sonatype repository containing JXSE.jar for 2.7 -->
 
