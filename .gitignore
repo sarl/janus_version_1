@@ -1,0 +1,29 @@
+# Eclipse
+.classpath
+.metadata/
+.settings/
+.project
+
+# NetBean
+bin/
+
+# Subversion and CVS
+.svn/
+.cvs/
+.git/
+
+# Maven
+target/
+
+# Compiled files
+*.class
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.exe
+
+# Temp files
+*.bak
+*~
