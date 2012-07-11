@@ -32,6 +32,7 @@ import org.janusproject.kernel.status.StatusFactory;
 /** A provider in the market example.
  * 
  * @author $Author: ngaud$
+ * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
@@ -43,6 +44,8 @@ public class ProviderAgent extends Agent {
 	
 	private static final long serialVersionUID = -2745112903625676209L;
 
+	private State state = null;
+	
 	/**
 	 */
 	public ProviderAgent() {
@@ -52,11 +55,43 @@ public class ProviderAgent extends Agent {
 	@Override
 	public Status activate(Object... parameters) {
 		print(Locale.getString(ProviderAgent.class, "LAUNCHING")); //$NON-NLS-1$
-
-		GroupAddress providerGA = getOrCreateGroup(ProvidingOrganization.class);
-		if(requestRole(Provider.class,providerGA)==null){
-			return StatusFactory.cancel(this);
-		}
+		this.state = State.WAITING_FOR_GROUP;
 		return StatusFactory.ok(this);
 	}
+	
+	/** {@inheritDoc}
+	 */
+	@Override
+	public Status live() {
+		assert(this.state!=null);
+		switch(this.state) {
+		case WAITING_FOR_GROUP:
+			GroupAddress providerGA = getExistingGroup(ProvidingOrganization.class);
+			if (providerGA!=null) {
+				if(requestRole(Provider.class,providerGA)!=null){
+					this.state = State.RUNNING;
+				}
+			}
+			break;
+		case RUNNING:
+			return super.live();
+		default:
+		}
+		return null;
+	}
+	
+	/**
+	 * @author $Author: sgalland$
+	 * @version $FullVersion$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 */
+	private enum State {
+		
+		WAITING_FOR_GROUP,
+		
+		RUNNING;
+		
+	}
+	
 }

@@ -30,6 +30,7 @@ import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agentsignal.LastSignalAdapter;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.core.Role;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.role.RoleActivationPrototype;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.status.Status;
@@ -78,7 +79,7 @@ public class Provider extends Role {
 				for(Message msg : getMailbox()) {
 					if (msg instanceof ContractQueryMessage) {
 						ContractQueryMessage cqm = (ContractQueryMessage)msg;
-						this.broker = cqm.getContext().getSender();
+						this.broker = ((RoleAddress)cqm.getSender()).getPlayer();
 						this.contractDescription = cqm.getContent();
 						getLogger().info(Locale.getString(Provider.class, "RECEIVE_BROKER_REQUEST")); //$NON-NLS-1$
 						return State.CREATING_CONTRACT_GROUP;

@@ -63,11 +63,13 @@ public class Buyer extends Role {
 		switch (this.state) {
 		case WAIT_FOR_SELLER: {
 			print(Locale.getString(Buyer.class, "HELLO")); //$NON-NLS-1$
-			sendMessage(Seller.class, new ContractFinalizationMessage());
-			return State.WAIT_SELLER_ACK;
+			if (sendMessage(Seller.class, new ContractFinalizationMessage())!=null) {
+				print(Locale.getString(Buyer.class, "WAIT")); //$NON-NLS-1$
+				return State.WAIT_SELLER_ACK;
+			}
+			return State.WAIT_FOR_SELLER;
 		}
 		case WAIT_SELLER_ACK: {
-			print(Locale.getString(Buyer.class, "WAIT")); //$NON-NLS-1$
 			for (Message msg : getMailbox()) {
 				print(Locale.getString(Buyer.class, "RECEIVE")); //$NON-NLS-1$
 				if (msg instanceof ContractFinalizationMessage) {

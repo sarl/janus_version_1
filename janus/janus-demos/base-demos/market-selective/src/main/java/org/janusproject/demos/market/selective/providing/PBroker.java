@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.arakhne.vmutil.locale.Locale;
-import org.janusproject.demos.market.selective.agent.ProviderAgent;
 import org.janusproject.demos.market.selective.capacity.FindLowestCostProposalCapacity;
 import org.janusproject.demos.market.selective.capacity.FindShortestTimeProposalCapacity;
 import org.janusproject.demos.market.selective.capacity.Proposal;
@@ -46,6 +45,7 @@ import org.janusproject.kernel.crio.capacity.CapacityContext;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.core.HasAllRequiredCapacitiesCondition;
 import org.janusproject.kernel.crio.core.Role;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.role.RoleActivationPrototype;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.status.Status;
@@ -113,16 +113,16 @@ public class PBroker extends Role {
 		case WAITING_FOR_PROVIDER_READY: {
 			for (Message msg : getMailbox()) {
 				if (msg instanceof ReadyToStartMessage) {
-					this.providersReady.add(msg.getSender());
-					this.sendMessage(Provider.class, msg.getSender(), new ReadyToStartMessage());
+					this.providersReady.add(((RoleAddress)msg.getSender()).getPlayer());
+					this.sendMessage(Provider.class, ((RoleAddress)msg.getSender()).getPlayer(), new ReadyToStartMessage());
 				}
 			}
-			if (this.providersReady.size() == ProviderAgent.providerCount) {
+			if (this.providersReady.size() == this.expectedProviderCount) {
 				print(Locale.getString(PBroker.class, "ALL_PROVIDER_READY")); //$NON-NLS-1$
 				return State.CONTACT_PROVIDER;
 			}
 			print(Locale.getString(PBroker.class, "PROVIDER_PARTIALLY_READY", //$NON-NLS-1$
-						this.providersReady.size(),ProviderAgent.providerCount));					
+						this.providersReady.size(),this.expectedProviderCount));					
 			return State.WAITING_FOR_PROVIDER_READY;
 		}
 

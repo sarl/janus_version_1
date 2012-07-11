@@ -53,8 +53,8 @@ public class Launcher {
 		
 		//Launch these agents
 		//Since we wants to execute these agents using a dedicated thread for each agent the method launchHeavyAgent is used in place of launchLightAgent
-		k.launchHeavyAgent(b,Locale.getString(Launcher.class, "BROKER")); //$NON-NLS-1$
 		k.launchHeavyAgent(p,Locale.getString(Launcher.class, "PROVIDER")); //$NON-NLS-1$
 		k.launchHeavyAgent(c,Locale.getString(Launcher.class, "CLIENT")); //$NON-NLS-1$
+		k.launchHeavyAgent(b,Locale.getString(Launcher.class, "BROKER")); //$NON-NLS-1$
 	}
 }

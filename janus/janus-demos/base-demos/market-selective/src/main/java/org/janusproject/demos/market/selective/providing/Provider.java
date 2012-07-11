@@ -35,6 +35,7 @@ import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agentsignal.LastSignalAdapter;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.core.Role;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.role.RoleActivationPrototype;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.status.Status;
@@ -98,7 +99,7 @@ public class Provider extends Role {
 			for (Message msg : getMailbox()) {
 				if (msg instanceof TravelRequestMessage) {
 					TravelRequestMessage cqm = (TravelRequestMessage) msg;
-					this.broker = cqm.getContext().getSender();
+					this.broker = ((RoleAddress)cqm.getSender()).getPlayer();
 					this.destination = cqm.getDestination();
 					print(Locale.getString(Provider.class, "RECEIVE_PBROKER_REQUEST", this.destination.toString()));//$NON-NLS-1$
 					return State.BUILD_PROPOSAL;

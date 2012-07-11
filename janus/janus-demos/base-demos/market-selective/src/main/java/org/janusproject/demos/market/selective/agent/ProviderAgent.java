@@ -26,7 +26,6 @@ import org.janusproject.kernel.agent.Agent;
 import org.janusproject.kernel.agent.AgentActivationPrototype;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.status.Status;
-import org.janusproject.kernel.status.StatusFactory;
 
 /** A provider in the market example.
  * 
@@ -42,27 +41,53 @@ public class ProviderAgent extends Agent {
 	
 	private static final long serialVersionUID = 5039268838958785484L;
 	
-	/**
-	 * Is the number of launched providers.
-	 */
-	public static int providerCount;
-	
-	static {
-		providerCount = 0;
-	}
+	private State state = null;
 	
 	/**
 	 */
 	public ProviderAgent() {
-		providerCount++;
+		//
 	}
 
 	@Override
 	public Status activate(Object... parameters) {
-		GroupAddress providerGA = getOrCreateGroup(ProvidingOrganization.class);
-		if(requestRole(Provider.class,providerGA)==null){
-			return StatusFactory.cancel(this);
-		}
-		return StatusFactory.ok(this);
+		this.state = State.WAITING_FOR_GROUP;
+		return null;
 	}
+
+	/** {@inheritDoc}
+	 */
+	@Override
+	public Status live() {
+		assert(this.state!=null);
+		switch(this.state) {
+		case WAITING_FOR_GROUP:
+			GroupAddress providerGA = getExistingGroup(ProvidingOrganization.class);
+			if (providerGA!=null) {
+				if(requestRole(Provider.class,providerGA)!=null){
+					this.state = State.RUNNING;
+				}
+			}
+			break;
+		case RUNNING:
+			return super.live();
+		default:
+		}
+		return null;
+	}
+	
+	/**
+	 * @author $Author: sgalland$
+	 * @version $FullVersion$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 */
+	private enum State {
+		
+		WAITING_FOR_GROUP,
+		
+		RUNNING;
+		
+	}
+
 }

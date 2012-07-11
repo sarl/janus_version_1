@@ -32,6 +32,7 @@ import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agentsignal.LastSignalAdapter;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.core.Role;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.role.RoleActivationPrototype;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.status.Status;
@@ -75,12 +76,12 @@ public class CBroker extends Role {
 		case WAIT_CLIENT:
 			for (Message m : getMailbox()) {
 				if (m instanceof TravelRequestMessage) {
-					sendMessage(Client.class, m.getSender(), new ReadyToStartMessage());
+					sendMessage(Client.class, ((RoleAddress)m.getSender()).getPlayer(), new ReadyToStartMessage());
 					TravelRequestMessage cqm = (TravelRequestMessage) m;
 					this.travelDestination = cqm.getDestination();
 					if (this.travelDestination != null) {
 						this.critera = cqm.getCritera();
-						this.client = cqm.getContext().getSender();
+						this.client = ((RoleAddress)cqm.getSender()).getPlayer();
 						return State.FORWARD_CLIENT_REQUEST;
 					}
 				}

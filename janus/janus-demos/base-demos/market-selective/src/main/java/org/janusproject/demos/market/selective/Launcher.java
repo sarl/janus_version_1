@@ -56,13 +56,12 @@ public class Launcher {
 		ProviderAgent p4 = new ProviderAgent();
 		ClientAgent c = new ClientAgent();	
 		
-		k.submitHeavyAgent(b,Locale.getString(Launcher.class, "BROKER"),providerCount); //$NON-NLS-1$
-		k.submitHeavyAgent(p1,Locale.getString(Launcher.class, "PROVIDER", 1)); //$NON-NLS-1$
-		k.submitHeavyAgent(p2,Locale.getString(Launcher.class, "PROVIDER", 2)); //$NON-NLS-1$
-		k.submitHeavyAgent(p3,Locale.getString(Launcher.class, "PROVIDER", 3)); //$NON-NLS-1$
-		k.submitHeavyAgent(p4,Locale.getString(Launcher.class, "PROVIDER", 4)); //$NON-NLS-1$
-		k.submitHeavyAgent(c,Locale.getString(Launcher.class, "CLIENT")); //$NON-NLS-1$
-		k.launchDifferedExecutionAgents();
+		k.launchHeavyAgent(p1,Locale.getString(Launcher.class, "PROVIDER", 1)); //$NON-NLS-1$
+		k.launchHeavyAgent(p2,Locale.getString(Launcher.class, "PROVIDER", 2)); //$NON-NLS-1$
+		k.launchHeavyAgent(p3,Locale.getString(Launcher.class, "PROVIDER", 3)); //$NON-NLS-1$
+		k.launchHeavyAgent(p4,Locale.getString(Launcher.class, "PROVIDER", 4)); //$NON-NLS-1$
+		k.launchHeavyAgent(c,Locale.getString(Launcher.class, "CLIENT")); //$NON-NLS-1$
+		k.launchHeavyAgent(b,Locale.getString(Launcher.class, "BROKER"),providerCount); //$NON-NLS-1$
 	}
 	
 }

@@ -4,6 +4,7 @@
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
  * Copyright (C) 2004-2010 Janus Core Developers
+ * Copyright (C) 2012 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,8 +95,11 @@ public class PBroker extends Role {
 		{
 			RoleAddress adr = sendMessage(Provider.class,
 						new ContractQueryMessage(this.contractDescription));
-			this.provider = adr.getPlayer();
-			return State.WAIT_PROVIDER_PROPOSAL; 
+			if (adr!=null) {
+				this.provider = adr.getPlayer();
+				return State.WAIT_PROVIDER_PROPOSAL;
+			}
+			return State.CONTACT_PROVIDER;
 		}
 		
 		case WAIT_PROVIDER_PROPOSAL:

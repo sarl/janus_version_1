@@ -91,7 +91,7 @@ public class Client extends Role {
 					return State.WAITING_CONTRACT_GROUP;
 				}
 			}
-			return State.BROKER_CONTACT;
+			return State.WAITING_ACK_FROM_BROKER;
 		}
 		case WAITING_CONTRACT_GROUP:
 			for (Message msg : getMailbox()) {

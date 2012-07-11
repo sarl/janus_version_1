@@ -26,7 +26,6 @@ import org.janusproject.kernel.agent.Agent;
 import org.janusproject.kernel.agent.AgentActivationPrototype;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.status.Status;
-import org.janusproject.kernel.status.StatusFactory;
 
 /** Client agent.
  * 
@@ -43,6 +42,8 @@ public class ClientAgent extends Agent {
 	
 	private static final long serialVersionUID = 9188260193724834566L;
 
+	private State state = null;
+	
 	/**
 	 */
 	public ClientAgent() {
@@ -50,14 +51,44 @@ public class ClientAgent extends Agent {
 	}
 	
 	@Override
-	public Status activate(Object... parameters) {	
-		GroupAddress ga = getOrCreateGroup(PurchaseOrganization.class);		
-		
-		if (requestRole(Client.class,ga)==null) {
-			return StatusFactory.cancel(this);
-		}
+	public Status activate(Object... parameters) {
+		this.state = State.WAITING_FOR_GROUP;
+		return null;
+	}
 
-		return StatusFactory.ok(this);
+	/** {@inheritDoc}
+	 */
+	@Override
+	public Status live() {
+		assert(this.state!=null);
+		switch(this.state) {
+		case WAITING_FOR_GROUP:
+			GroupAddress ga = getExistingGroup(PurchaseOrganization.class);		
+			if (ga!=null) {
+				if (requestRole(Client.class,ga)!=null) {
+					this.state = State.RUNNING;
+				}
+			}
+			break;
+		case RUNNING:
+			return super.live();
+		default:
+		}
+		return null;
+	}
+
+	/**
+	 * @author $Author: sgalland$
+	 * @version $FullVersion$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 */
+	private enum State {
+		
+		WAITING_FOR_GROUP,
+		
+		RUNNING;
+		
 	}
 
 }

@@ -25,6 +25,7 @@ import org.janusproject.demos.market.simple.influence.ContractTerminationSignal;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.crio.core.Role;
 import org.janusproject.kernel.crio.role.RoleActivationPrototype;
+import org.janusproject.kernel.message.StringMessage;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
@@ -64,12 +65,18 @@ public class Seller extends Role {
 		switch(this.state) {
 		case WAIT_BUYER:
 			SizedIterator<AgentAddress> players = getPlayers(Buyer.class);
-			if (players.totalSize()>0)
+			if (players.totalSize()>0) {
+				print(Locale.getString(Seller.class,"HELLO")); //$NON-NLS-1$
 				return State.DO_SOMETHING;
+			}
 			return State.WAIT_BUYER;
 		case DO_SOMETHING:
-			print(Locale.getString(Seller.class,"HELLO")); //$NON-NLS-1$
-			return State.GOOD_BYE;
+			broadcastMessage(Buyer.class, new StringMessage("CONTRACT_PASSED")); //$NON-NLS-1$
+			if (hasMessage()) {
+				getMailbox().clear();
+				return State.GOOD_BYE;
+			}
+			return State.DO_SOMETHING;
 		case GOOD_BYE:
 			fireSignal(new ContractTerminationSignal(this, this.contractDescription));
 			leaveMe();
