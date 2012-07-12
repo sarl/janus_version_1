@@ -23,6 +23,7 @@ package org.janusproject.scriptedagent;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
@@ -392,23 +393,34 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 				Iterator<URL> iterator = this.repository.getDirectories();
 				URL bu, fu;
 				ScriptEngine engine = getScriptEngine();
+				InputStream is;
 				while (iterator.hasNext()) {
 					bu = iterator.next();
 					fu = FileSystem.join(bu, scriptBasename);
 					try {
-						return evaluate(engine, new InputStreamReader(fu.openStream()));
-					}
-					catch (ScriptException e) {
-						if (firstException==null) {
-							firstException = e;
+						is = fu.openStream();
+						try {
+							return evaluate(engine, new InputStreamReader(is));
+						}
+						catch (ScriptException e) {
+							if (firstException==null) {
+								firstException = e;
+							}
+						}
+						catch (Throwable e) {
+							if (firstThrowable==null) {
+								firstThrowable = e;
+							}
+						}
+						finally {
+							is.close();
 						}
 					}
-					catch (Throwable e) {
+					catch (IOException e) {
 						if (firstThrowable==null) {
 							firstThrowable = e;
 						}
 					}
-					
 				}
 			}
 			if (firstException!=null) {
@@ -436,19 +448,26 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	@Override
 	public final Object runScript(File scriptFilename) {
 		try {
-			return evaluate(getScriptEngine(), new FileReader(scriptFilename));
+			FileReader fr = new FileReader(scriptFilename);
+			try {
+				return evaluate(getScriptEngine(), fr);
+			}
+			catch (ScriptException e) {
+				log(e);
+			}
+			catch (Exception e) {
+				log(new ScriptException(e));
+			}
+			catch (Throwable e) {
+				log(new ScriptException(new Exception(e)));
+			}
+			finally {
+				fr.close();
+				this.tempVariableIndex = 0;
+			}
 		}
-		catch (ScriptException e) {
-			log(e);
-		}
-		catch (Exception e) {
+		catch(IOException e) {
 			log(new ScriptException(e));
-		}
-		catch (Throwable e) {
-			log(new ScriptException(new Exception(e)));
-		}
-		finally {
-			this.tempVariableIndex = 0;
 		}
 		return null;
 	}
@@ -459,19 +478,26 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	@Override
 	public final Object runScript(URL scriptFilename) {
 		try {
-			return evaluate(getScriptEngine(), new InputStreamReader(scriptFilename.openStream()));
+			InputStream is = scriptFilename.openStream();
+			try {
+				return evaluate(getScriptEngine(), new InputStreamReader(is));
+			}
+			catch (ScriptException e) {
+				log(e);
+			}
+			catch (Exception e) {
+				log(new ScriptException(e));
+			}
+			catch (Throwable e) {
+				log(new ScriptException(new Exception(e)));
+			}
+			finally {
+				is.close();
+				this.tempVariableIndex = 0;
+			}
 		}
-		catch (ScriptException e) {
-			log(e);
-		}
-		catch (Exception e) {
+		catch(IOException e) {
 			log(new ScriptException(e));
-		}
-		catch (Throwable e) {
-			log(new ScriptException(new Exception(e)));
-		}
-		finally {
-			this.tempVariableIndex = 0;
 		}
 		return null;
 	}
@@ -494,6 +520,12 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 			log(new ScriptException(new Exception(e)));
 		}
 		finally {
+			try {
+				stream.close();
+			}
+			catch (IOException e) {
+				log(new ScriptException(e));
+			}
 			this.tempVariableIndex = 0;
 		}
 		return null;

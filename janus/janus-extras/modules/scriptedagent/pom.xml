@@ -17,7 +17,6 @@
 	<modules>
 		<module>script</module>
 		<module>groovyengine</module>
-		<module>javascriptengine</module>
 		<module>jythonengine</module>
 		<module>jrubyengine</module>
 		<module>lispengine</module>

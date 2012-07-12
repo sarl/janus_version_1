@@ -169,7 +169,7 @@ public class ScriptedAgentTest extends TestCase {
 			live();
 			return buffer.toString();
 		}
-		
+				
 	}
 	
 }

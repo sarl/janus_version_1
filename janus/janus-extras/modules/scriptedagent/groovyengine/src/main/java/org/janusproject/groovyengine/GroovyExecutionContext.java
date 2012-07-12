@@ -20,16 +20,16 @@
  */
 package org.janusproject.groovyengine;
 
+import groovy.lang.GroovyClassLoader;
+
 import java.io.Reader;
 import java.lang.reflect.Method;
-
-import groovy.lang.GroovyClassLoader;
-import groovy.util.GroovyScriptEngine;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl;
 import org.janusproject.scriptedagent.AbstractScriptExecutionContext;
 import org.janusproject.scriptedagent.ScriptedAgent;
 
@@ -95,8 +95,8 @@ public class GroovyExecutionContext extends AbstractScriptExecutionContext {
 	 */
 	@Override
 	public boolean isFunction(String functionName) {
-		GroovyScriptEngine engine = (GroovyScriptEngine)getScriptEngine();
-		GroovyClassLoader classLoader = engine.getGroovyClassLoader();
+		GroovyScriptEngineImpl engine = (GroovyScriptEngineImpl)getScriptEngine();
+		GroovyClassLoader classLoader = engine.getClassLoader();
 		String name;
 		for(Class<?> type : classLoader.getLoadedClasses()) {
 			name = type.getName();
