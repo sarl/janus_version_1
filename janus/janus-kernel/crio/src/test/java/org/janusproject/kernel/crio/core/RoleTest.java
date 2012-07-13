@@ -66,7 +66,8 @@ public class RoleTest extends TestCase {
 	private boolean distributed, persistent;
 	private RolePlayer player1;
 	private RolePlayer player2;
-	private Role role;
+	private Role role1;
+	private Role role2;
 
 	/**
 	 * @throws Exception
@@ -96,9 +97,12 @@ public class RoleTest extends TestCase {
 		this.player2 = new RolePlayerStub(this.context);
 		assertNotNull(this.group.requestRole(this.player2, RoleStub.class, null,
 				null));
-		this.role = this.group.getPlayedRole(this.player1.getAddress(),
+		this.role1 = this.group.getPlayedRole(this.player1.getAddress(),
 				RoleStub.class);
-		assertNotNull(this.role);
+		assertNotNull(this.role1);
+		this.role2 = this.group.getPlayedRole(this.player2.getAddress(),
+				RoleStub.class);
+		assertNotNull(this.role2);
 	}
 
 	/**
@@ -107,7 +111,8 @@ public class RoleTest extends TestCase {
 	@Override
 	public void tearDown() throws Exception {
 		this.context.getOrganizationRepository().clear();
-		this.role = null;
+		this.role1 = null;
+		this.role2 = null;
 		this.player1 = null;
 		this.group = null;
 		this.organization = null;
@@ -149,7 +154,7 @@ public class RoleTest extends TestCase {
 	 * {@link org.janusproject.kernel.crio.core.Role#getPlayer()}.
 	 */
 	public void testGetPlayer() {
-		assertEquals(this.player1.getAddress(), this.role.getPlayer());
+		assertEquals(this.player1.getAddress(), this.role1.getPlayer());
 	}
 
 	/**
@@ -157,7 +162,7 @@ public class RoleTest extends TestCase {
 	public void testGetExistingRoles() {
 		Collection<Class<? extends Role>> roles;
 
-		roles = this.role.getExistingRoles();
+		roles = this.role1.getExistingRoles();
 		assertNotNull(roles);
 		assertEquals(1, roles.size());
 		assertTrue(roles.contains(RoleStub.class));
@@ -167,7 +172,7 @@ public class RoleTest extends TestCase {
 		assertNotNull(this.group.requestRole(this.player2, Role3Stub.class, null,
 				null));
 
-		roles = this.role.getExistingRoles();
+		roles = this.role1.getExistingRoles();
 		assertNotNull(roles);
 		assertEquals(2, roles.size());
 		assertTrue(roles.contains(RoleStub.class));
@@ -180,7 +185,7 @@ public class RoleTest extends TestCase {
 	public void testGetExistingRolesGroupAddress() {
 		SizedIterator<Class<? extends Role>> roles;
 
-		roles = this.role.getExistingRoles(this.address);
+		roles = this.role1.getExistingRoles(this.address);
 		assertNotNull(roles);
 		assertEquals(1, roles.totalSize());
 		assertContains(roles, RoleStub.class);
@@ -188,12 +193,12 @@ public class RoleTest extends TestCase {
 		assertNotNull(this.group.requestRole(this.player2, Role3Stub.class, null,
 				null));
 
-		roles = this.role.getExistingRoles(this.address);
+		roles = this.role1.getExistingRoles(this.address);
 		assertNotNull(roles);
 		assertEquals(2, roles.totalSize());
 		assertContains(roles, RoleStub.class, Role3Stub.class);
 
-		roles = this.role.getExistingRoles(new GroupAddress(UUID.randomUUID(), this.organization
+		roles = this.role1.getExistingRoles(new GroupAddress(UUID.randomUUID(), this.organization
 				.getClass()));
 		assertNotNull(roles);
 		assertEquals(0, roles.totalSize());
@@ -204,13 +209,13 @@ public class RoleTest extends TestCase {
 	public void testGetPlayerClass() {
 		AgentAddress adr;
 
-		adr = this.role.getPlayer(RoleStub.class);
+		adr = this.role1.getPlayer(RoleStub.class);
 		assertOneOf(adr, this.player1.getAddress(), this.player2.getAddress());
 
-		adr = this.role.getPlayer(Role2Stub.class);
+		adr = this.role1.getPlayer(Role2Stub.class);
 		assertNull(adr);
 
-		adr = this.role.getPlayer(Role3Stub.class);
+		adr = this.role1.getPlayer(Role3Stub.class);
 		assertNull(adr);
 	}
 
@@ -219,24 +224,24 @@ public class RoleTest extends TestCase {
 	public void testGetPlayerClassGroupAddress() {
 		AgentAddress adr;
 
-		adr = this.role.getPlayer(RoleStub.class, this.address);
+		adr = this.role1.getPlayer(RoleStub.class, this.address);
 		assertOneOf(adr, this.player1.getAddress(), this.player2.getAddress());
 
-		adr = this.role.getPlayer(Role2Stub.class, this.address);
+		adr = this.role1.getPlayer(Role2Stub.class, this.address);
 		assertNull(adr);
 
-		adr = this.role.getPlayer(Role3Stub.class, this.address);
+		adr = this.role1.getPlayer(Role3Stub.class, this.address);
 		assertNull(adr);
 
 		GroupAddress gadr = new GroupAddress(UUID.randomUUID(), this.organization.getClass());
 
-		adr = this.role.getPlayer(RoleStub.class, gadr);
+		adr = this.role1.getPlayer(RoleStub.class, gadr);
 		assertNull(adr);
 
-		adr = this.role.getPlayer(Role2Stub.class, gadr);
+		adr = this.role1.getPlayer(Role2Stub.class, gadr);
 		assertNull(adr);
 
-		adr = this.role.getPlayer(Role3Stub.class, gadr);
+		adr = this.role1.getPlayer(Role3Stub.class, gadr);
 		assertNull(adr);
 	}
 
@@ -245,16 +250,16 @@ public class RoleTest extends TestCase {
 	public void testGetRoleAddressClass() {
 		RoleAddress adr;
 
-		adr = this.role.getRoleAddress(RoleStub.class);
+		adr = this.role1.getRoleAddress(RoleStub.class);
 		assertNotNull(adr);
 		assertEquals(this.group.getAddress(), adr.getGroup());
 		assertEquals(RoleStub.class, adr.getRole());
 		assertEquals(this.player1.getAddress(), adr.getPlayer());
 
-		adr = this.role.getRoleAddress(Role2Stub.class);
+		adr = this.role1.getRoleAddress(Role2Stub.class);
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(Role3Stub.class);
+		adr = this.role1.getRoleAddress(Role3Stub.class);
 		assertNull(adr);
 	}
 
@@ -263,28 +268,28 @@ public class RoleTest extends TestCase {
 	public void testGetRoleAddressClassAgentAddress() {
 		RoleAddress adr;
 
-		adr = this.role.getRoleAddress(RoleStub.class, this.player1.getAddress());
+		adr = this.role1.getRoleAddress(RoleStub.class, this.player1.getAddress());
 		assertNotNull(adr);
 		assertEquals(this.group.getAddress(), adr.getGroup());
 		assertEquals(RoleStub.class, adr.getRole());
 		assertEquals(this.player1.getAddress(), adr.getPlayer());
 
-		adr = this.role.getRoleAddress(Role2Stub.class, this.player1.getAddress());
+		adr = this.role1.getRoleAddress(Role2Stub.class, this.player1.getAddress());
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(Role3Stub.class, this.player1.getAddress());
+		adr = this.role1.getRoleAddress(Role3Stub.class, this.player1.getAddress());
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(RoleStub.class, this.player2.getAddress());
+		adr = this.role1.getRoleAddress(RoleStub.class, this.player2.getAddress());
 		assertNotNull(adr);
 		assertEquals(this.group.getAddress(), adr.getGroup());
 		assertEquals(RoleStub.class, adr.getRole());
 		assertEquals(this.player2.getAddress(), adr.getPlayer());
 
-		adr = this.role.getRoleAddress(Role2Stub.class, this.player2.getAddress());
+		adr = this.role1.getRoleAddress(Role2Stub.class, this.player2.getAddress());
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(Role3Stub.class, this.player2.getAddress());
+		adr = this.role1.getRoleAddress(Role3Stub.class, this.player2.getAddress());
 		assertNull(adr);
 	}
 
@@ -293,48 +298,48 @@ public class RoleTest extends TestCase {
 	public void testGetRoleAddressGroupAddressClassAgentAddress() {
 		RoleAddress adr;
 
-		adr = this.role.getRoleAddress(this.address, RoleStub.class, this.player1.getAddress());
+		adr = this.role1.getRoleAddress(this.address, RoleStub.class, this.player1.getAddress());
 		assertNotNull(adr);
 		assertEquals(this.group.getAddress(), adr.getGroup());
 		assertEquals(RoleStub.class, adr.getRole());
 		assertEquals(this.player1.getAddress(), adr.getPlayer());
 
-		adr = this.role.getRoleAddress(this.address, Role2Stub.class, this.player1.getAddress());
+		adr = this.role1.getRoleAddress(this.address, Role2Stub.class, this.player1.getAddress());
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(this.address, Role3Stub.class, this.player1.getAddress());
+		adr = this.role1.getRoleAddress(this.address, Role3Stub.class, this.player1.getAddress());
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(this.address, RoleStub.class, this.player2.getAddress());
+		adr = this.role1.getRoleAddress(this.address, RoleStub.class, this.player2.getAddress());
 		assertNotNull(adr);
 		assertEquals(this.group.getAddress(), adr.getGroup());
 		assertEquals(RoleStub.class, adr.getRole());
 		assertEquals(this.player2.getAddress(), adr.getPlayer());
 
-		adr = this.role.getRoleAddress(this.address, Role2Stub.class, this.player2.getAddress());
+		adr = this.role1.getRoleAddress(this.address, Role2Stub.class, this.player2.getAddress());
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(this.address, Role3Stub.class, this.player2.getAddress());
+		adr = this.role1.getRoleAddress(this.address, Role3Stub.class, this.player2.getAddress());
 		assertNull(adr);
 
 		GroupAddress gAdr = new GroupAddress(UUID.randomUUID(), this.organization.getClass());
 
-		adr = this.role.getRoleAddress(gAdr, RoleStub.class, this.player1.getAddress());
+		adr = this.role1.getRoleAddress(gAdr, RoleStub.class, this.player1.getAddress());
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(gAdr, Role2Stub.class, this.player1.getAddress());
+		adr = this.role1.getRoleAddress(gAdr, Role2Stub.class, this.player1.getAddress());
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(gAdr, Role3Stub.class, this.player1.getAddress());
+		adr = this.role1.getRoleAddress(gAdr, Role3Stub.class, this.player1.getAddress());
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(gAdr, RoleStub.class, this.player2.getAddress());
+		adr = this.role1.getRoleAddress(gAdr, RoleStub.class, this.player2.getAddress());
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(gAdr, Role2Stub.class, this.player2.getAddress());
+		adr = this.role1.getRoleAddress(gAdr, Role2Stub.class, this.player2.getAddress());
 		assertNull(adr);
 
-		adr = this.role.getRoleAddress(gAdr, Role3Stub.class, this.player2.getAddress());
+		adr = this.role1.getRoleAddress(gAdr, Role3Stub.class, this.player2.getAddress());
 		assertNull(adr);
 	}
 
@@ -344,7 +349,7 @@ public class RoleTest extends TestCase {
 		SizedIterator<RoleAddress> iterator;
 		RoleAddress ra;
 		
-		iterator = this.role.getRoleAddresses();
+		iterator = this.role1.getRoleAddresses();
 		assertNotNull(iterator);
 		assertEquals(1, iterator.totalSize());
 		assertEquals(1, iterator.rest());
@@ -365,7 +370,101 @@ public class RoleTest extends TestCase {
 		SizedIterator<RoleAddress> iterator;
 		RoleAddress ra;
 		
-		iterator = this.role.getRoleAddressesIn(this.group.getAddress());
+		iterator = this.role1.getRoleAddressesIn(this.group.getAddress());
+		assertNotNull(iterator);
+		assertEquals(2, iterator.totalSize());
+		assertEquals(2, iterator.rest());
+		assertTrue(iterator.hasNext());
+		ra = iterator.next();
+		
+		boolean a = (ra.getPlayer().equals(this.player1.getAddress()));
+		
+		assertEquals(this.group.getAddress(), ra.getGroup());
+		
+		if (a) {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player1.getAddress(), ra.getPlayer());
+		}
+		else {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player2.getAddress(), ra.getPlayer());
+		}
+
+		assertEquals(2, iterator.totalSize());
+		assertEquals(1, iterator.rest());
+		assertTrue(iterator.hasNext());
+
+		ra = iterator.next();
+		assertEquals(this.group.getAddress(), ra.getGroup());
+		
+		if (a) {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player2.getAddress(), ra.getPlayer());
+		}
+		else {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player1.getAddress(), ra.getPlayer());
+		}
+
+		assertEquals(2, iterator.totalSize());
+		assertEquals(0, iterator.rest());
+		assertFalse(iterator.hasNext());
+	}
+
+	/**
+	 */
+	public void testGetRoleAddressesInGroupAddressClass() {
+		SizedIterator<RoleAddress> iterator;
+		RoleAddress ra;
+		
+		iterator = this.role1.getRoleAddressesIn(this.group.getAddress(), RoleStub.class);
+		assertNotNull(iterator);
+		assertEquals(2, iterator.totalSize());
+		assertEquals(2, iterator.rest());
+		assertTrue(iterator.hasNext());
+		ra = iterator.next();
+		
+		boolean a = (ra.getPlayer().equals(this.player1.getAddress()));
+		
+		assertEquals(this.group.getAddress(), ra.getGroup());
+		
+		if (a) {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player1.getAddress(), ra.getPlayer());
+		}
+		else {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player2.getAddress(), ra.getPlayer());
+		}
+
+		assertEquals(2, iterator.totalSize());
+		assertEquals(1, iterator.rest());
+		assertTrue(iterator.hasNext());
+
+		ra = iterator.next();
+		assertEquals(this.group.getAddress(), ra.getGroup());
+		
+		if (a) {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player2.getAddress(), ra.getPlayer());
+		}
+		else {
+			assertEquals(RoleStub.class, ra.getRole());
+			assertEquals(this.player1.getAddress(), ra.getPlayer());
+		}
+
+		assertEquals(2, iterator.totalSize());
+		assertEquals(0, iterator.rest());
+		assertFalse(iterator.hasNext());
+	}
+
+	/**
+	 */
+	public void testGetRoleAddressesInGroupClass() {
+		SizedIterator<RoleAddress> iterator;
+		RoleAddress ra;
+		
+		iterator = this.role1.getRoleAddressesInGroup(RoleStub.class);
 		assertNotNull(iterator);
 		assertEquals(2, iterator.totalSize());
 		assertEquals(2, iterator.rest());
@@ -412,7 +511,7 @@ public class RoleTest extends TestCase {
 		SizedIterator<RoleAddress> iterator;
 		RoleAddress ra;
 		
-		iterator = this.role.getRoleAddressesInGroup();
+		iterator = this.role1.getRoleAddressesInGroup();
 		assertNotNull(iterator);
 		assertEquals(2, iterator.totalSize());
 		assertEquals(2, iterator.rest());
@@ -458,7 +557,7 @@ public class RoleTest extends TestCase {
 	public void testGetPlayerGroups() {
 		Collection<GroupAddress> grps;
 
-		grps = this.role.getPlayerGroups();
+		grps = this.role1.getPlayerGroups();
 		assertNotNull(grps);
 		assertEquals(1, grps.size());
 		assertTrue(grps.contains(this.address));
@@ -471,12 +570,12 @@ public class RoleTest extends TestCase {
 
 		GroupAddress gadr = new GroupAddress(UUID.randomUUID(), this.organization.getClass());
 
-		roles = this.role.getPlayerRoles(this.address);
+		roles = this.role1.getPlayerRoles(this.address);
 		assertNotNull(roles);
 		assertEquals(1, roles.size());
 		assertTrue(roles.contains(RoleStub.class));
 
-		roles = this.role.getPlayerRoles(gadr);
+		roles = this.role1.getPlayerRoles(gadr);
 		assertNotNull(roles);
 		assertEquals(0, roles.size());
 
@@ -487,7 +586,7 @@ public class RoleTest extends TestCase {
 		assertNotNull(g);
 		assertNotNull(g.requestRole(this.player1, Role3Stub.class, null, null));
 
-		roles = this.role.getPlayerRoles(gadr);
+		roles = this.role1.getPlayerRoles(gadr);
 		assertNotNull(roles);
 		assertEquals(1, roles.size());
 		assertFalse(roles.contains(RoleStub.class));
@@ -496,7 +595,7 @@ public class RoleTest extends TestCase {
 		assertNotNull(this.group.requestRole(this.player1, Role3Stub.class, null,
 				null));
 
-		roles = this.role.getPlayerRoles(this.address);
+		roles = this.role1.getPlayerRoles(this.address);
 		assertNotNull(roles);
 		assertEquals(2, roles.size());
 		assertTrue(roles.contains(RoleStub.class));
@@ -506,119 +605,119 @@ public class RoleTest extends TestCase {
 	/**
 	 */
 	public void testIsPlayingRoleClass() {
-		assertTrue(this.role.isPlayingRole(RoleStub.class));
-		assertFalse(this.role.isPlayingRole(Role3Stub.class));
+		assertTrue(this.role1.isPlayingRole(RoleStub.class));
+		assertFalse(this.role1.isPlayingRole(Role3Stub.class));
 
 		GroupAddress gadr = this.organization.createGroup(null, null,
 				this.membership, this.distributed, this.persistent);
 		KernelScopeGroup grp = this.context.getGroupRepository().get(gadr);
 
-		assertTrue(this.role.isPlayingRole(RoleStub.class));
-		assertFalse(this.role.isPlayingRole(Role3Stub.class));
+		assertTrue(this.role1.isPlayingRole(RoleStub.class));
+		assertFalse(this.role1.isPlayingRole(Role3Stub.class));
 
 		assertNotNull(grp.requestRole(this.player2, Role3Stub.class, null, null));
 
-		assertTrue(this.role.isPlayingRole(RoleStub.class));
-		assertFalse(this.role.isPlayingRole(Role3Stub.class));
+		assertTrue(this.role1.isPlayingRole(RoleStub.class));
+		assertFalse(this.role1.isPlayingRole(Role3Stub.class));
 
 		assertNotNull(this.group.requestRole(this.player2, Role3Stub.class, null,
 				null));
 
-		assertTrue(this.role.isPlayingRole(RoleStub.class));
-		assertFalse(this.role.isPlayingRole(Role3Stub.class));
+		assertTrue(this.role1.isPlayingRole(RoleStub.class));
+		assertFalse(this.role1.isPlayingRole(Role3Stub.class));
 
 		assertNotNull(this.group.requestRole(this.player1, Role3Stub.class, null,
 				null));
 
-		assertTrue(this.role.isPlayingRole(RoleStub.class));
-		assertTrue(this.role.isPlayingRole(Role3Stub.class));
+		assertTrue(this.role1.isPlayingRole(RoleStub.class));
+		assertTrue(this.role1.isPlayingRole(Role3Stub.class));
 	}
 
 	/**
 	 */
 	public void testIsPlayingRoleClassGroupAddress() {
-		assertTrue(this.role.isPlayingRole(RoleStub.class, this.address));
-		assertFalse(this.role.isPlayingRole(Role3Stub.class, this.address));
+		assertTrue(this.role1.isPlayingRole(RoleStub.class, this.address));
+		assertFalse(this.role1.isPlayingRole(Role3Stub.class, this.address));
 
 		GroupAddress gadr = this.organization.createGroup(null, null,
 				this.membership, this.distributed, this.persistent);
 		KernelScopeGroup grp = this.context.getGroupRepository().get(gadr);
 
-		assertTrue(this.role.isPlayingRole(RoleStub.class, this.address));
-		assertFalse(this.role.isPlayingRole(Role3Stub.class, this.address));
+		assertTrue(this.role1.isPlayingRole(RoleStub.class, this.address));
+		assertFalse(this.role1.isPlayingRole(Role3Stub.class, this.address));
 
 		assertNotNull(grp.requestRole(this.player2, Role3Stub.class, null, null));
 
-		assertTrue(this.role.isPlayingRole(RoleStub.class, this.address));
-		assertFalse(this.role.isPlayingRole(Role3Stub.class, this.address));
+		assertTrue(this.role1.isPlayingRole(RoleStub.class, this.address));
+		assertFalse(this.role1.isPlayingRole(Role3Stub.class, this.address));
 
 		assertNotNull(this.group.requestRole(this.player2, Role3Stub.class, null,
 				null));
 
-		assertTrue(this.role.isPlayingRole(RoleStub.class, this.address));
-		assertFalse(this.role.isPlayingRole(Role3Stub.class, this.address));
+		assertTrue(this.role1.isPlayingRole(RoleStub.class, this.address));
+		assertFalse(this.role1.isPlayingRole(Role3Stub.class, this.address));
 
 		assertNotNull(this.group.requestRole(this.player1, Role3Stub.class, null,
 				null));
 
-		assertTrue(this.role.isPlayingRole(RoleStub.class, this.address));
-		assertTrue(this.role.isPlayingRole(Role3Stub.class, this.address));
+		assertTrue(this.role1.isPlayingRole(RoleStub.class, this.address));
+		assertTrue(this.role1.isPlayingRole(Role3Stub.class, this.address));
 
-		assertFalse(this.role.isPlayingRole(RoleStub.class, gadr));
-		assertFalse(this.role.isPlayingRole(Role3Stub.class, gadr));
+		assertFalse(this.role1.isPlayingRole(RoleStub.class, gadr));
+		assertFalse(this.role1.isPlayingRole(Role3Stub.class, gadr));
 	}
 
 	/**
 	 */
 	public void testIsPlayedRoleClass() {
-		assertTrue(this.role.isPlayedRole(RoleStub.class));
-		assertFalse(this.role.isPlayedRole(Role3Stub.class));
+		assertTrue(this.role1.isPlayedRole(RoleStub.class));
+		assertFalse(this.role1.isPlayedRole(Role3Stub.class));
 
 		GroupAddress gadr = this.organization.createGroup(null, null,
 				this.membership, this.distributed, this.persistent);
 		KernelScopeGroup grp = this.context.getGroupRepository().get(gadr);
 
-		assertTrue(this.role.isPlayedRole(RoleStub.class));
-		assertFalse(this.role.isPlayedRole(Role3Stub.class));
+		assertTrue(this.role1.isPlayedRole(RoleStub.class));
+		assertFalse(this.role1.isPlayedRole(Role3Stub.class));
 
 		assertNotNull(grp.requestRole(this.player2, Role3Stub.class, null, null));
 
-		assertTrue(this.role.isPlayedRole(RoleStub.class));
-		assertFalse(this.role.isPlayedRole(Role3Stub.class));
+		assertTrue(this.role1.isPlayedRole(RoleStub.class));
+		assertFalse(this.role1.isPlayedRole(Role3Stub.class));
 
 		assertNotNull(this.group.requestRole(this.player2, Role3Stub.class, null,
 				null));
 
-		assertTrue(this.role.isPlayedRole(RoleStub.class));
-		assertTrue(this.role.isPlayedRole(Role3Stub.class));
+		assertTrue(this.role1.isPlayedRole(RoleStub.class));
+		assertTrue(this.role1.isPlayedRole(Role3Stub.class));
 	}
 
 	/**
 	 */
 	public void testIsPlayedRoleClassGroupAddress() {
-		assertTrue(this.role.isPlayedRole(RoleStub.class));
-		assertFalse(this.role.isPlayedRole(Role3Stub.class));
+		assertTrue(this.role1.isPlayedRole(RoleStub.class));
+		assertFalse(this.role1.isPlayedRole(Role3Stub.class));
 
 		GroupAddress gadr = this.organization.createGroup(null, null,
 				this.membership, this.distributed, this.persistent);
 		KernelScopeGroup grp = this.context.getGroupRepository().get(gadr);
 
-		assertTrue(this.role.isPlayedRole(RoleStub.class, this.address));
-		assertFalse(this.role.isPlayedRole(Role3Stub.class, this.address));
+		assertTrue(this.role1.isPlayedRole(RoleStub.class, this.address));
+		assertFalse(this.role1.isPlayedRole(Role3Stub.class, this.address));
 
 		assertNotNull(grp.requestRole(this.player2, Role3Stub.class, null, null));
 
-		assertTrue(this.role.isPlayedRole(RoleStub.class, this.address));
-		assertFalse(this.role.isPlayedRole(Role3Stub.class, this.address));
+		assertTrue(this.role1.isPlayedRole(RoleStub.class, this.address));
+		assertFalse(this.role1.isPlayedRole(Role3Stub.class, this.address));
 
 		assertNotNull(this.group.requestRole(this.player2, Role3Stub.class, null,
 				null));
 
-		assertTrue(this.role.isPlayedRole(RoleStub.class, this.address));
-		assertTrue(this.role.isPlayedRole(Role3Stub.class, this.address));
+		assertTrue(this.role1.isPlayedRole(RoleStub.class, this.address));
+		assertTrue(this.role1.isPlayedRole(Role3Stub.class, this.address));
 
-		assertFalse(this.role.isPlayedRole(RoleStub.class, gadr));
-		assertTrue(this.role.isPlayedRole(Role3Stub.class, gadr));
+		assertFalse(this.role1.isPlayedRole(RoleStub.class, gadr));
+		assertTrue(this.role1.isPlayedRole(Role3Stub.class, gadr));
 	}
 
 	/**
@@ -628,25 +727,25 @@ public class RoleTest extends TestCase {
 				this.membership, this.distributed, this.persistent);
 		KernelScopeGroup grp = this.context.getGroupRepository().get(gadr);
 
-		assertTrue(this.role.isMemberOf(this.address));
-		assertFalse(this.role.isMemberOf(gadr));
+		assertTrue(this.role1.isMemberOf(this.address));
+		assertFalse(this.role1.isMemberOf(gadr));
 
 		assertNotNull(this.group.requestRole(this.player2, Role3Stub.class, null,
 				null));
 
-		assertTrue(this.role.isMemberOf(this.address));
-		assertFalse(this.role.isMemberOf(gadr));
+		assertTrue(this.role1.isMemberOf(this.address));
+		assertFalse(this.role1.isMemberOf(gadr));
 
 		assertNotNull(this.group.requestRole(this.player1, Role3Stub.class, null,
 				null));
 
-		assertTrue(this.role.isMemberOf(this.address));
-		assertFalse(this.role.isMemberOf(gadr));
+		assertTrue(this.role1.isMemberOf(this.address));
+		assertFalse(this.role1.isMemberOf(gadr));
 
 		assertNotNull(grp.requestRole(this.player1, Role3Stub.class, null, null));
 
-		assertTrue(this.role.isMemberOf(this.address));
-		assertTrue(this.role.isMemberOf(gadr));
+		assertTrue(this.role1.isMemberOf(this.address));
+		assertTrue(this.role1.isMemberOf(gadr));
 	}
 
 	/**
@@ -656,33 +755,33 @@ public class RoleTest extends TestCase {
 				this.membership, this.distributed, this.persistent);
 		KernelScopeGroup grp = this.context.getGroupRepository().get(gadr);
 
-		assertTrue(this.role
+		assertTrue(this.role1
 				.isMemberOf(this.player1.getAddress(), this.address));
-		assertFalse(this.role.isMemberOf(this.player1.getAddress(), gadr));
+		assertFalse(this.role1.isMemberOf(this.player1.getAddress(), gadr));
 
 		assertNotNull(this.group.requestRole(this.player2, Role3Stub.class, null,
 				null));
 
-		assertTrue(this.role
+		assertTrue(this.role1
 				.isMemberOf(this.player1.getAddress(), this.address));
-		assertFalse(this.role.isMemberOf(this.player1.getAddress(), gadr));
+		assertFalse(this.role1.isMemberOf(this.player1.getAddress(), gadr));
 
 		assertNotNull(this.group.requestRole(this.player1, Role3Stub.class, null,
 				null));
 
-		assertTrue(this.role
+		assertTrue(this.role1
 				.isMemberOf(this.player1.getAddress(), this.address));
-		assertFalse(this.role.isMemberOf(this.player1.getAddress(), gadr));
+		assertFalse(this.role1.isMemberOf(this.player1.getAddress(), gadr));
 
 		assertNotNull(grp.requestRole(this.player1, Role3Stub.class, null, null));
 
-		assertTrue(this.role
+		assertTrue(this.role1
 				.isMemberOf(this.player1.getAddress(), this.address));
-		assertTrue(this.role.isMemberOf(this.player1.getAddress(), gadr));
+		assertTrue(this.role1.isMemberOf(this.player1.getAddress(), gadr));
 
-		assertTrue(this.role
+		assertTrue(this.role1
 				.isMemberOf(this.player2.getAddress(), this.address));
-		assertFalse(this.role.isMemberOf(this.player2.getAddress(), gadr));
+		assertFalse(this.role1.isMemberOf(this.player2.getAddress(), gadr));
 	}
 
 	/**
@@ -690,14 +789,14 @@ public class RoleTest extends TestCase {
 	public void testIsGroup() {
 		GroupAddress gadr = new GroupAddress(UUID.randomUUID(), this.organization.getClass());
 
-		assertTrue(this.role.isGroup(this.address));
-		assertFalse(this.role.isGroup(gadr));
+		assertTrue(this.role1.isGroup(this.address));
+		assertFalse(this.role1.isGroup(gadr));
 
 		gadr = this.organization.createGroup(null, null, this.membership,
 				this.distributed, this.persistent);
 
-		assertTrue(this.role.isGroup(this.address));
-		assertTrue(this.role.isGroup(gadr));
+		assertTrue(this.role1.isGroup(this.address));
+		assertTrue(this.role1.isGroup(gadr));
 	}
 
 	/**
@@ -705,7 +804,7 @@ public class RoleTest extends TestCase {
 	public void testGetGroups() {
 		List<GroupAddress> grps;
 
-		grps = this.role.getExistingsGroupsOfSameOrganization();
+		grps = this.role1.getExistingsGroupsOfSameOrganization();
 		assertNotNull(grps);
 		assertEquals(1, grps.size());
 		assertTrue(grps.contains(this.address));
@@ -713,7 +812,7 @@ public class RoleTest extends TestCase {
 		GroupAddress gadr = this.organization.createGroup(null, null,
 				this.membership, this.distributed, this.persistent);
 
-		grps = this.role.getExistingsGroupsOfSameOrganization();
+		grps = this.role1.getExistingsGroupsOfSameOrganization();
 		assertNotNull(grps);
 		assertEquals(2, grps.size());
 		assertTrue(grps.contains(this.address));
@@ -725,7 +824,7 @@ public class RoleTest extends TestCase {
 	public void testGetGroupsClass() {
 		List<GroupAddress> grps;
 
-		grps = this.role.getExistingGroups(Organization1Stub.class);
+		grps = this.role1.getExistingGroups(Organization1Stub.class);
 		assertNotNull(grps);
 		assertEquals(1, grps.size());
 		assertTrue(grps.contains(this.address));
@@ -733,13 +832,13 @@ public class RoleTest extends TestCase {
 		GroupAddress gadr = this.organization.createGroup(null, null,
 				this.membership, this.distributed, this.persistent);
 
-		grps = this.role.getExistingGroups(Organization1Stub.class);
+		grps = this.role1.getExistingGroups(Organization1Stub.class);
 		assertNotNull(grps);
 		assertEquals(2, grps.size());
 		assertTrue(grps.contains(this.address));
 		assertTrue(grps.contains(gadr));
 
-		grps = this.role.getExistingGroups(Organization2Stub.class);
+		grps = this.role1.getExistingGroups(Organization2Stub.class);
 		assertNotNull(grps);
 		assertEquals(0, grps.size());
 	}
@@ -749,7 +848,7 @@ public class RoleTest extends TestCase {
 	 * .
 	 */
 	public void testGetGroupAddress() {
-		assertEquals(this.group.getAddress(), this.role.getGroupAddress());
+		assertEquals(this.group.getAddress(), this.role1.getGroupAddress());
 	}
 
 	/**
@@ -758,16 +857,16 @@ public class RoleTest extends TestCase {
 	 */
 	public void testGetMemory() {
 		Memory m;
-		assertNotNull(m = this.role.getMemory());
-		assertSame(m, this.role.getMemory());
+		assertNotNull(m = this.role1.getMemory());
+		assertSame(m, this.role1.getMemory());
 	}
 
 	/**
 	 */
 	public void testGetMailbox() {
 		Mailbox m;
-		assertNotNull(m = this.role.getMailbox());
-		assertSame(m, this.role.getMailbox());
+		assertNotNull(m = this.role1.getMailbox());
+		assertSame(m, this.role1.getMailbox());
 	}
 
 	/**
@@ -777,21 +876,21 @@ public class RoleTest extends TestCase {
 	 */
 	public void testSetMailbox() {
 		Mailbox m;
-		assertNotNull(m = this.role.getMailbox());
-		assertSame(m, this.role.getMailbox());
+		assertNotNull(m = this.role1.getMailbox());
+		assertSame(m, this.role1.getMailbox());
 
 		Mailbox m2 = new TreeSetMailbox();
-		this.role.setMailbox(m2);
+		this.role1.setMailbox(m2);
 
-		assertSame(m2, this.role.getMailbox());
+		assertSame(m2, this.role1.getMailbox());
 	}
 
 	/**
 	 */
 	public void testGetMessageTransportService() {
 		MessageTransportService mts;
-		assertNotNull(mts = this.role.getMessageTransportService());
-		assertSame(mts, this.role.getMessageTransportService());
+		assertNotNull(mts = this.role1.getMessageTransportService());
+		assertSame(mts, this.role1.getMessageTransportService());
 	}
 
 	/**
@@ -803,18 +902,18 @@ public class RoleTest extends TestCase {
 		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
 		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
-		assertNull(this.role.getMessage());
+		assertNull(this.role1.getMessage());
 
-		this.role.sendMessage(RoleStub.class, this.player1.getAddress(), m2);
-		this.role.sendMessage(RoleStub.class, this.player1.getAddress(), m1);
+		this.role1.sendMessage(RoleStub.class, this.player1.getAddress(), m2);
+		this.role1.sendMessage(RoleStub.class, this.player1.getAddress(), m1);
 
-		Mailbox mb = this.role.getMailbox();
+		Mailbox mb = this.role1.getMailbox();
 		if (mb instanceof BufferedMailbox) {
 			((BufferedMailbox) mb).synchronizeMessages();
 		}
 
-		assertSame(m1, this.role.getMessage());
-		assertSame(m2, this.role.getMessage());
+		assertSame(m1, this.role1.getMessage());
+		assertSame(m2, this.role1.getMessage());
 	}
 
 	/**
@@ -826,18 +925,18 @@ public class RoleTest extends TestCase {
 		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
 		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
-		assertNull(this.role.peekMessage());
+		assertNull(this.role1.peekMessage());
 
-		this.role.sendMessage(RoleStub.class, this.player1.getAddress(), m2);
-		this.role.sendMessage(RoleStub.class, this.player1.getAddress(), m1);
+		this.role1.sendMessage(RoleStub.class, this.player1.getAddress(), m2);
+		this.role1.sendMessage(RoleStub.class, this.player1.getAddress(), m1);
 
-		Mailbox mb = this.role.getMailbox();
+		Mailbox mb = this.role1.getMailbox();
 		if (mb instanceof BufferedMailbox) {
 			((BufferedMailbox) mb).synchronizeMessages();
 		}
 
-		assertSame(m1, this.role.peekMessage());
-		assertSame(m1, this.role.peekMessage());
+		assertSame(m1, this.role1.peekMessage());
+		assertSame(m1, this.role1.peekMessage());
 	}
 
 	/**
@@ -850,19 +949,19 @@ public class RoleTest extends TestCase {
 		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
 		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
-		iterator = this.role.getMessages().iterator();
+		iterator = this.role1.getMessages().iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 
-		this.role.sendMessage(RoleStub.class, this.player1.getAddress(), m2);
-		this.role.sendMessage(RoleStub.class, this.player1.getAddress(), m1);
+		this.role1.sendMessage(RoleStub.class, this.player1.getAddress(), m2);
+		this.role1.sendMessage(RoleStub.class, this.player1.getAddress(), m1);
 
-		Mailbox mb = this.role.getMailbox();
+		Mailbox mb = this.role1.getMailbox();
 		if (mb instanceof BufferedMailbox) {
 			((BufferedMailbox) mb).synchronizeMessages();
 		}
 
-		iterator = this.role.getMessages().iterator();
+		iterator = this.role1.getMessages().iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -870,7 +969,7 @@ public class RoleTest extends TestCase {
 		assertSame(m2, iterator.next());
 		assertFalse(iterator.hasNext());
 
-		iterator = this.role.getMessages().iterator();
+		iterator = this.role1.getMessages().iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 	}
@@ -885,19 +984,19 @@ public class RoleTest extends TestCase {
 		Message m2 = new StringMessage("m2"); //$NON-NLS-1$
 		InteractionUtilStub.updateContext(m2, null, null, 1026f);
 
-		iterator = this.role.peekMessages().iterator();
+		iterator = this.role1.peekMessages().iterator();
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 
-		this.role.sendMessage(RoleStub.class, this.player1.getAddress(), m2);
-		this.role.sendMessage(RoleStub.class, this.player1.getAddress(), m1);
+		this.role1.sendMessage(RoleStub.class, this.player1.getAddress(), m2);
+		this.role1.sendMessage(RoleStub.class, this.player1.getAddress(), m1);
 
-		Mailbox mb = this.role.getMailbox();
+		Mailbox mb = this.role1.getMailbox();
 		if (mb instanceof BufferedMailbox) {
 			((BufferedMailbox) mb).synchronizeMessages();
 		}
 
-		iterator = this.role.peekMessages().iterator();
+		iterator = this.role1.peekMessages().iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -905,7 +1004,7 @@ public class RoleTest extends TestCase {
 		assertSame(m2, iterator.next());
 		assertFalse(iterator.hasNext());
 
-		iterator = this.role.peekMessages().iterator();
+		iterator = this.role1.peekMessages().iterator();
 		assertNotNull(iterator);
 		assertTrue(iterator.hasNext());
 		assertSame(m1, iterator.next());
@@ -918,46 +1017,46 @@ public class RoleTest extends TestCase {
 	 * @throws Exception
 	 */
 	public void testHasMessage() throws Exception {
-		assertFalse(this.role.hasMessage());
+		assertFalse(this.role1.hasMessage());
 
-		this.role.sendMessage(RoleStub.class, this.player1.getAddress(),
+		this.role1.sendMessage(RoleStub.class, this.player1.getAddress(),
 				new Message());
 
-		Mailbox mb = this.role.getMailbox();
+		Mailbox mb = this.role1.getMailbox();
 		if (mb instanceof BufferedMailbox) {
 			((BufferedMailbox) mb).synchronizeMessages();
 		}
 
-		assertTrue(this.role.hasMessage());
+		assertTrue(this.role1.hasMessage());
 	}
 
 	/**
 	 * @throws Exception
 	 */
 	public void testGetMailboxSize() throws Exception {
-		assertEquals(0, this.role.getMailboxSize());
+		assertEquals(0, this.role1.getMailboxSize());
 
-		this.role.sendMessage(RoleStub.class, this.player1.getAddress(),
+		this.role1.sendMessage(RoleStub.class, this.player1.getAddress(),
 				new Message());
 
 		{
-			Mailbox mb = this.role.getMailbox();
+			Mailbox mb = this.role1.getMailbox();
 			if (mb instanceof BufferedMailbox) {
 				((BufferedMailbox) mb).synchronizeMessages();
 			}
 		}
-		assertEquals(1, this.role.getMailboxSize());
+		assertEquals(1, this.role1.getMailboxSize());
 
-		this.role.sendMessage(RoleStub.class, this.player1.getAddress(),
+		this.role1.sendMessage(RoleStub.class, this.player1.getAddress(),
 				new Message());
 		{
-			Mailbox mb = this.role.getMailbox();
+			Mailbox mb = this.role1.getMailbox();
 			if (mb instanceof BufferedMailbox) {
 				((BufferedMailbox) mb).synchronizeMessages();
 			}
 		}
 
-		assertEquals(2, this.role.getMailboxSize());
+		assertEquals(2, this.role1.getMailboxSize());
 	}
 
 	/**
@@ -972,7 +1071,7 @@ public class RoleTest extends TestCase {
 		this.group.requestRole(player3, RoleStub.class, null, null);
 		this.group.requestRole(player4, Role3Stub.class, null, null);
 
-		RoleAddress r = this.role.sendMessage(RoleStub.class, this.player2.getAddress(), msg);
+		RoleAddress r = this.role1.sendMessage(RoleStub.class, this.player2.getAddress(), msg);
 		assertNotNull(r);
 		assertEquals(this.group.getAddress(), this.group.getAddress());
 		assertEquals(RoleStub.class, r.getRole());
@@ -1028,7 +1127,7 @@ public class RoleTest extends TestCase {
 		this.group.requestRole(player3, RoleStub.class, null, null);
 		this.group.requestRole(player4, Role3Stub.class, null, null);
 
-		RoleAddress r = this.role.sendMessage(new RoleAddress(
+		RoleAddress r = this.role1.sendMessage(new RoleAddress(
 				this.group.getAddress(), RoleStub.class, this.player2.getAddress()), msg);
 		assertNotNull(r);
 		assertEquals(this.group.getAddress(), this.group.getAddress());
@@ -1092,7 +1191,7 @@ public class RoleTest extends TestCase {
 		this.group.requestRole(player3, RoleStub.class, null, null);
 		this.group.requestRole(player4, Role3Stub.class, null, null);
 
-		this.role.forwardMessage(RoleStub.class, this.player2.getAddress(), msg);
+		this.role1.forwardMessage(RoleStub.class, this.player2.getAddress(), msg);
 
 		Role role;
 		Mailbox mb;
@@ -1144,7 +1243,7 @@ public class RoleTest extends TestCase {
 		this.group.requestRole(player3, RoleStub.class, null, null);
 		this.group.requestRole(player4, Role3Stub.class, null, null);
 
-		this.role.forwardMessage(new RoleAddress(this.group.getAddress(), RoleStub.class, this.player2.getAddress()), msg);
+		this.role1.forwardMessage(new RoleAddress(this.group.getAddress(), RoleStub.class, this.player2.getAddress()), msg);
 
 		Role role;
 		Mailbox mb;
@@ -1203,7 +1302,7 @@ public class RoleTest extends TestCase {
 				receiver,
 				1024);
 
-		assertEquals(receiver, this.role.forwardMessage(msg));
+		assertEquals(receiver, this.role1.forwardMessage(msg));
 
 		Role role;
 		Mailbox mb;
@@ -1255,7 +1354,7 @@ public class RoleTest extends TestCase {
 		this.group.requestRole(player3, RoleStub.class, null, null);
 		this.group.requestRole(player4, Role3Stub.class, null, null);
 
-		RoleAddress adr = this.role.sendMessage(RoleStub.class, msg);
+		RoleAddress adr = this.role1.sendMessage(RoleStub.class, msg);
 		assertNotNull(adr);
 
 		Role role;
@@ -1311,7 +1410,7 @@ public class RoleTest extends TestCase {
 		this.group.requestRole(player3, RoleStub.class, null, null);
 		this.group.requestRole(player4, Role3Stub.class, null, null);
 
-		RoleAddress adr = this.role.forwardMessage(RoleStub.class, msg);
+		RoleAddress adr = this.role1.forwardMessage(RoleStub.class, msg);
 		assertNotNull(adr);
 
 		Role role;
@@ -1368,7 +1467,7 @@ public class RoleTest extends TestCase {
 		this.group.requestRole(player3, RoleStub.class, null, null);
 		this.group.requestRole(player4, Role3Stub.class, null, null);
 
-		RoleAddress adr = this.role.sendMessage(RoleStub.class,
+		RoleAddress adr = this.role1.sendMessage(RoleStub.class,
 				new PolicyStub(player3.getAddress()), msg);
 
 		assertNotNull(adr);
@@ -1424,7 +1523,7 @@ public class RoleTest extends TestCase {
 		this.group.requestRole(player3, RoleStub.class, null, null);
 		this.group.requestRole(player4, Role3Stub.class, null, null);
 
-		RoleAddress adr = this.role.forwardMessage(RoleStub.class,
+		RoleAddress adr = this.role1.forwardMessage(RoleStub.class,
 				new PolicyStub(player3.getAddress()), msg);
 
 		assertNotNull(adr);
@@ -1479,7 +1578,7 @@ public class RoleTest extends TestCase {
 		this.group.requestRole(player3, RoleStub.class, null, null);
 		this.group.requestRole(player4, Role3Stub.class, null, null);
 
-		this.role.broadcastMessage(RoleStub.class, msg);
+		this.role1.broadcastMessage(RoleStub.class, msg);
 
 		Role role;
 		Mailbox mb;
@@ -1535,7 +1634,7 @@ public class RoleTest extends TestCase {
 		this.group.requestRole(player3, RoleStub.class, null, null);
 		this.group.requestRole(player4, Role3Stub.class, null, null);
 
-		this.role.forwardBroadcastMessage(RoleStub.class, msg);
+		this.role1.forwardBroadcastMessage(RoleStub.class, msg);
 
 		Role role;
 		Mailbox mb;
@@ -1587,7 +1686,7 @@ public class RoleTest extends TestCase {
 	 * @throws Exception
 	 */
 	public void testExecuteCapacityCall() throws Exception {
-		CapacityContext context = this.role.executeCapacityCall(
+		CapacityContext context = this.role1.executeCapacityCall(
 				CapacityStub.class, 'a', 'b', 'c');
 		assertNotNull(context);
 		assertNotNull(context.getIdentifier());
@@ -1609,10 +1708,10 @@ public class RoleTest extends TestCase {
 	 * @throws Exception
 	 */
 	public void testSubmitCapacityCall() throws Exception {
-		UUID id = this.role.submitCapacityCall(CapacityStub.class, 'a', 'b',
+		UUID id = this.role1.submitCapacityCall(CapacityStub.class, 'a', 'b',
 				'c');
 		assertNotNull(id);
-		CapacityContext context = this.role.waitCapacityCallResult(id);
+		CapacityContext context = this.role1.waitCapacityCallResult(id);
 		assertNotNull(context);
 		assertNotNull(context.getIdentifier());
 		assertFalse(context.isFailed());
@@ -1632,13 +1731,13 @@ public class RoleTest extends TestCase {
 	 * @throws Exception
 	 */
 	public void testCancelCapacityCall() throws Exception {
-		UUID id = this.role.submitCapacityCall(Capacity2Stub.class, 'a', 'b',
+		UUID id = this.role1.submitCapacityCall(Capacity2Stub.class, 'a', 'b',
 				'c');
 		assertNotNull(id);
 
-		assertTrue(this.role.cancelCapacityCall(id));
+		assertTrue(this.role1.cancelCapacityCall(id));
 
-		CapacityContext context = this.role.getCapacityCallResult(id);
+		CapacityContext context = this.role1.getCapacityCallResult(id);
 		assertNotNull(context);
 		assertNotNull(context.getIdentifier());
 		assertTrue(context.isFailed());
@@ -1651,15 +1750,15 @@ public class RoleTest extends TestCase {
 	 * {@link org.janusproject.kernel.crio.core.Role#getOrganization(Class)}.
 	 */
 	public void testOrganizationClass() {
-		Organization o = this.role.getOrganization(Organization2Stub.class);
+		Organization o = this.role1.getOrganization(Organization2Stub.class);
 		assertNotNull(o);
-		assertSame(o, this.role.getOrganization(Organization2Stub.class));
+		assertSame(o, this.role1.getOrganization(Organization2Stub.class));
 	}
 
 	/**
 	 */
 	public void testCreateGroupOrganization() {
-		GroupAddress adr = this.role.createGroup(Organization1Stub.class);
+		GroupAddress adr = this.role1.createGroup(Organization1Stub.class);
 		assertNotNull(adr);
 		assertNotSame(this.group.getAddress(), adr);
 	}
@@ -1667,11 +1766,11 @@ public class RoleTest extends TestCase {
 	/**
 	 */
 	public void testGetGroupOrganization() {
-		assertEquals(this.address, this.role.getExistingGroup(Organization1Stub.class));
-		GroupAddress adr = this.role.createGroup(Organization1Stub.class);
+		assertEquals(this.address, this.role1.getExistingGroup(Organization1Stub.class));
+		GroupAddress adr = this.role1.createGroup(Organization1Stub.class);
 		assertNotNull(adr);
 		for (int i = 0; i < 50; ++i) {
-			GroupAddress a = this.role.getExistingGroup(Organization1Stub.class);
+			GroupAddress a = this.role1.getExistingGroup(Organization1Stub.class);
 			assertNotNull(a);
 			assertTrue(a.equals(this.address) || a.equals(adr));
 		}
@@ -1680,7 +1779,7 @@ public class RoleTest extends TestCase {
 	/**
 	 */
 	public void testGetGroupGroupAddress_userData_validAccess() {
-		Group grp = this.role.getGroupObject(this.address);
+		Group grp = this.role1.getGroupObject(this.address);
 		assertNotNull(grp);
 		
 		assertNull(grp.getPrivateUserData());
@@ -1704,7 +1803,7 @@ public class RoleTest extends TestCase {
 		KernelScopeGroup otherGroup = this.context.getGroupRepository().get(otherAddress);
 		assertNotNull(otherGroup);
 
-		Group grp = this.role.getGroupObject(otherAddress);
+		Group grp = this.role1.getGroupObject(otherAddress);
 		assertNotNull(grp);
 		
 		Object userData1 = new Object();
@@ -1722,9 +1821,9 @@ public class RoleTest extends TestCase {
 	/**
 	 */
 	public void testGetOrCreateGroup() {
-		assertEquals(this.address, this.role
+		assertEquals(this.address, this.role1
 				.getOrCreateGroup(Organization1Stub.class));
-		assertFalse(this.address.equals(this.role
+		assertFalse(this.address.equals(this.role1
 				.getOrCreateGroup(Organization2Stub.class)));
 	}
 
@@ -1734,8 +1833,8 @@ public class RoleTest extends TestCase {
 	 * .
 	 */
 	public void testRequestRole() {
-		assertNull(this.role.requestRole(Role2Stub.class, this.address));
-		assertNotNull(this.role.requestRole(Role3Stub.class, this.address));
+		assertNull(this.role1.requestRole(Role2Stub.class, this.address));
+		assertNotNull(this.role1.requestRole(Role3Stub.class, this.address));
 	}
 
 	/**
@@ -1743,8 +1842,8 @@ public class RoleTest extends TestCase {
 	 * {@link org.janusproject.kernel.crio.core.Role#leaveRole(Class)}.
 	 */
 	public void testLeaveRoleClass() {
-		assertFalse(this.role.leaveRole(Role2Stub.class));
-		assertTrue(this.role.leaveRole(RoleStub.class));
+		assertFalse(this.role1.leaveRole(Role2Stub.class));
+		assertTrue(this.role1.leaveRole(RoleStub.class));
 	}
 
 	/**
@@ -1753,8 +1852,8 @@ public class RoleTest extends TestCase {
 	 * .
 	 */
 	public void testLeaveRoleClassGroupAddress() {
-		assertFalse(this.role.leaveRole(Role2Stub.class, this.address));
-		assertTrue(this.role.leaveRole(RoleStub.class, this.address));
+		assertFalse(this.role1.leaveRole(Role2Stub.class, this.address));
+		assertTrue(this.role1.leaveRole(RoleStub.class, this.address));
 	}
 
 	/**
@@ -1762,7 +1861,7 @@ public class RoleTest extends TestCase {
 	 * {@link org.janusproject.kernel.crio.core.Role#getPlayers()}.
 	 */
 	public void testGetPlayers() {
-		Iterator<AgentAddress> iterator = this.role.getPlayers();
+		Iterator<AgentAddress> iterator = this.role1.getPlayers();
 		assertNotNull(iterator);
 		assertContains(iterator, this.player1.getAddress(), this.player2
 				.getAddress());
@@ -1774,12 +1873,12 @@ public class RoleTest extends TestCase {
 	 * .
 	 */
 	public void testGetPlayersClass() {
-		Iterator<AgentAddress> iterator = this.role.getPlayers(RoleStub.class);
+		Iterator<AgentAddress> iterator = this.role1.getPlayers(RoleStub.class);
 		assertNotNull(iterator);
 		assertContains(iterator, this.player1.getAddress(), this.player2
 				.getAddress());
 
-		iterator = this.role.getPlayers(Role2Stub.class);
+		iterator = this.role1.getPlayers(Role2Stub.class);
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
 	}
@@ -1790,13 +1889,13 @@ public class RoleTest extends TestCase {
 	 * .
 	 */
 	public void testGetPlayersClassGroupAddress() {
-		Iterator<AgentAddress> iterator = this.role.getPlayers(RoleStub.class,
+		Iterator<AgentAddress> iterator = this.role1.getPlayers(RoleStub.class,
 				this.group.getAddress());
 		assertNotNull(iterator);
 		assertContains(iterator, this.player1.getAddress(), this.player2
 				.getAddress());
 
-		iterator = this.role.getPlayers(Role2Stub.class, this.group
+		iterator = this.role1.getPlayers(Role2Stub.class, this.group
 				.getAddress());
 		assertNotNull(iterator);
 		assertFalse(iterator.hasNext());
@@ -1805,9 +1904,9 @@ public class RoleTest extends TestCase {
 	/**
 	 */
 	public void testGetTimeManager() {
-		KernelTimeManager tm = this.role.getTimeManager();
+		KernelTimeManager tm = this.role1.getTimeManager();
 		assertNotNull(tm);
-		assertSame(tm, this.role.getTimeManager());
+		assertSame(tm, this.role1.getTimeManager());
 	}
 
 	/**
@@ -1815,9 +1914,9 @@ public class RoleTest extends TestCase {
 	public void testGroupListener() {
 		GroupListenerStub listener = new GroupListenerStub();
 		
-		this.role.addGroupListener(listener);
+		this.role1.addGroupListener(listener);
 		
-		GroupAddress adr = this.role.createGroup(this.organization.getClass());
+		GroupAddress adr = this.role1.createGroup(this.organization.getClass());
 		assertNotNull(adr);
 		
 		listener.assertCreation(adr);
@@ -1829,21 +1928,21 @@ public class RoleTest extends TestCase {
 	public void testRolePlayingListener() {
 		RolePlayingListenerStub listener = new RolePlayingListenerStub();
 				
-		GroupAddress adr = this.role.createGroup(Organization1Stub.class);
+		GroupAddress adr = this.role1.createGroup(Organization1Stub.class);
 		assertNotNull(adr);
 		
-		this.role.getGroupObject(adr).addRolePlayingListener(listener);
+		this.role1.getGroupObject(adr).addRolePlayingListener(listener);
 
 		listener.assertNull();
 		
-		assertNotNull(this.role.requestRole(RoleStub.class, adr));
+		assertNotNull(this.role1.requestRole(RoleStub.class, adr));
 		
-		listener.assertTaken(RoleStub.class, adr, this.role.getPlayer());
+		listener.assertTaken(RoleStub.class, adr, this.role1.getPlayer());
 		listener.assertNull();
 		
-		assertTrue(this.role.leaveRole(RoleStub.class, adr));
+		assertTrue(this.role1.leaveRole(RoleStub.class, adr));
 
-		listener.assertReleased(RoleStub.class, adr, this.role.getPlayer());
+		listener.assertReleased(RoleStub.class, adr, this.role1.getPlayer());
 		listener.assertNull();
 	}
 

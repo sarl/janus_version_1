@@ -231,6 +231,36 @@ public abstract class Role extends
 	}
 
 	/**
+	 * Replies all the roles of the given type and played in the current group.
+	 * 
+	 * @param role is the type of the role for which the addresses may be retreived.
+	 * @return played roles.
+	 * @GROUPAPI
+	 * @since 0.5
+	 */
+	protected final SizedIterator<RoleAddress> getRoleAddressesInGroup(Class<? extends Role> role) {
+		KernelScopeGroup grp = this.group.get();
+		assert(grp!=null);
+		return grp.getRoleAddresses(role);
+	}
+
+	/**
+	 * Replies all the roles of the given type and played in the specified group.
+	 * 
+	 * @param group is the group to explore.
+	 * @param role is the type of the role for which the addresses may be retreived.
+	 * @return played roles.
+	 * @GROUPAPI
+	 * @since 0.5
+	 */
+	protected final SizedIterator<RoleAddress> getRoleAddressesIn(GroupAddress group, Class<? extends Role> role) {
+		KernelScopeGroup grp = this.crioContext.get().getGroupRepository().get(group);
+		assert(grp!=null);
+		assert(grp!=null);
+		return grp.getRoleAddresses(role);
+	}
+
+	/**
 	 * Replies all played roles in the given group.
 	 * 
 	 * @param group
