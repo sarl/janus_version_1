@@ -63,6 +63,7 @@ import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.mailbox.BufferedMailbox;
 import org.janusproject.kernel.mailbox.Mailbox;
 import org.janusproject.kernel.message.Message;
+import org.janusproject.kernel.message.MessageException;
 import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
 import org.janusproject.kernel.schedule.Activable;
 import org.janusproject.kernel.status.MultipleStatus;
@@ -1124,6 +1125,7 @@ public abstract class Role extends
 	 * @return the receiver address if the delivery was successful, specially
 	 *         useful if the message was sent to a distant kernel where the
 	 *         agent might have died.
+	 * @throws MessageException when something wrong appended and the assertions were enabled. 
 	 * @MESSAGEAPI
 	 */
 	protected final RoleAddress sendMessage(Class<? extends Role> role,
@@ -1162,6 +1164,7 @@ public abstract class Role extends
 	 * @param message
 	 *            is the message to send
 	 * @return the address of the receiver.
+	 * @throws MessageException when something wrong appended and the assertions were enabled. 
 	 * @MESSAGEAPI
 	 */
 	protected final RoleAddress forwardMessage(Message message) {
@@ -1180,6 +1183,7 @@ public abstract class Role extends
 	 * @param message
 	 *            is the message to send
 	 * @return the address of the receiver.
+	 * @throws MessageException when something wrong appended and the assertions were enabled. 
 	 * @MESSAGEAPI
 	 */
 	protected final RoleAddress forwardMessage(Class<? extends Role> role,
@@ -1197,6 +1201,7 @@ public abstract class Role extends
 	 * @param message
 	 *            is the message to send
 	 * @return the address of the receiver.
+	 * @throws MessageException when something wrong appended and the assertions were enabled. 
 	 * @MESSAGEAPI
 	 * @since 0.5
 	 */
@@ -1216,6 +1221,7 @@ public abstract class Role extends
 	 *            is the message to send
 	 * @return the address of the receiver of the freshly sended message if it
 	 *         was found, <code>null</code> else.
+	 * @throws MessageException when something wrong appended and the assertions were enabled. 
 	 * @MESSAGEAPI
 	 */
 	protected final RoleAddress sendMessage(Class<? extends Role> role,
@@ -1235,6 +1241,7 @@ public abstract class Role extends
 	 *            is the message to send
 	 * @return the address of the receiver of the freshly sended message if it
 	 *         was found, <code>null</code> else.
+	 * @throws MessageException when something wrong appended and the assertions were enabled. 
 	 * @MESSAGEAPI
 	 */
 	protected final RoleAddress forwardMessage(Class<? extends Role> role,
@@ -1256,6 +1263,7 @@ public abstract class Role extends
 	 *            is the message to send
 	 * @return the address of the receiver of the freshly sended message if it
 	 *         was found, <code>null</code> else.
+	 * @throws MessageException when something wrong appended and the assertions were enabled. 
 	 * @MESSAGEAPI
 	 */
 	protected final RoleAddress sendMessage(Class<? extends Role> role,
@@ -1274,6 +1282,7 @@ public abstract class Role extends
 	 *            is the message to send
 	 * @return the address of the receiver of the freshly sended message if
 	 *         it was found, <code>null</code> else.
+	 * @throws MessageException when something wrong appended and the assertions were enabled. 
 	 * @MESSAGEAPI
 	 * @since 0.5
 	 */
@@ -1295,6 +1304,7 @@ public abstract class Role extends
 	 *            is the message to send
 	 * @return the address of the receiver of the freshly sended message if it
 	 *         was found, <code>null</code> else.
+	 * @throws MessageException when something wrong appended and the assertions were enabled. 
 	 * @MESSAGEAPI
 	 */
 	protected final RoleAddress forwardMessage(Class<? extends Role> role,
@@ -1313,6 +1323,7 @@ public abstract class Role extends
 	 *            is the role which may receive the message.
 	 * @param message
 	 *            is the message to send
+	 * @throws MessageException when something wrong appended and the assertions were enabled. 
 	 * @MESSAGEAPI
 	 */
 	protected final void broadcastMessage(Class<? extends Role> role,
@@ -1330,6 +1341,7 @@ public abstract class Role extends
 	 *            is the role which may receive the message.
 	 * @param message
 	 *            is the message to send
+	 * @throws MessageException when something wrong appended and the assertions were enabled. 
 	 * @MESSAGEAPI
 	 */
 	protected final void forwardBroadcastMessage(Class<? extends Role> role,

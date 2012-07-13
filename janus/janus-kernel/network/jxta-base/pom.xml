@@ -9,7 +9,7 @@
 	
 	<groupId>org.janus-project.kernel.network</groupId>
 	<artifactId>jxta-base</artifactId>
-	<name>JXTA-JXSE Janus Kernel</name>
+	<name>JXTA Base API for Janus</name>
 	
 	<dependencies>
 		<dependency>

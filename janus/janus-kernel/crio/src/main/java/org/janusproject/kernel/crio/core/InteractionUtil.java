@@ -20,12 +20,15 @@
  */
 package org.janusproject.kernel.crio.core;
 
+import java.util.logging.Level;
+
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.crio.interaction.UnspecifiedGroupMessageException;
 import org.janusproject.kernel.crio.interaction.UnspecifiedReceiverRoleMessageException;
 import org.janusproject.kernel.crio.interaction.UnspecifiedSenderRoleMessageException;
 import org.janusproject.kernel.message.Message;
+import org.janusproject.kernel.message.MessageException;
 import org.janusproject.kernel.message.MessageFactory;
 import org.janusproject.kernel.message.MessageReceiverSelectionPolicy;
 
@@ -79,7 +82,16 @@ class InteractionUtil extends MessageFactory {
 		setSender(message, selectedSenderAddress);
 		setReceiver(message, new RoleAddress(groupInstance.getAddress(), receiverRole, null));
 
-		groupInstance.broadcastMessage(message, includeSender);
+		KernelScopeGroup groupObject = sender.getGroupObject();
+		try {
+			groupInstance.broadcastMessage(message, includeSender);
+		}
+		catch(MessageException e) {
+			/*if (InteractionUtil.class.desiredAssertionStatus()) {
+				throw e;
+			}*/
+			groupObject.getLogger().log(Level.WARNING, e.getLocalizedMessage(), e);
+		}
 	}
 
 	/**
@@ -127,7 +139,17 @@ class InteractionUtil extends MessageFactory {
 		setSender(message, selectedSenderAddress);
 		setReceiver(message, receiver);
 
-		return sender.getGroupObject().sendMessage(message, includeSender);
+		KernelScopeGroup groupObject = sender.getGroupObject();
+		try {
+			return groupObject.sendMessage(message, includeSender);
+		}
+		catch(MessageException e) {
+			/*if (InteractionUtil.class.desiredAssertionStatus()) {
+				throw e;
+			}*/
+			groupObject.getLogger().log(Level.WARNING, e.getLocalizedMessage(), e);
+			return null;
+		}
 	}
 
 	/**
@@ -183,7 +205,17 @@ class InteractionUtil extends MessageFactory {
 		setSender(message, selectedSenderAddress);
 		setReceiver(message, receiver);
 
-		return sender.getGroupObject().sendMessage(message, includeSender);
+		KernelScopeGroup groupObject = sender.getGroupObject();
+		try {
+			return groupObject.sendMessage(message, includeSender);
+		}
+		catch(MessageException e) {
+			/*if (InteractionUtil.class.desiredAssertionStatus()) {
+				throw e;
+			}*/
+			groupObject.getLogger().log(Level.WARNING, e.getLocalizedMessage(), e);
+			return null;
+		}
 	}
 	
 }

@@ -49,6 +49,8 @@ import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.channels.ChannelInteractable;
 import org.janusproject.kernel.condition.ConditionFailure;
 import org.janusproject.kernel.condition.ConditionnedObject;
+import org.janusproject.kernel.crio.interaction.MailboxNotFoundException;
+import org.janusproject.kernel.crio.interaction.ReceiverNotFoundException;
 import org.janusproject.kernel.crio.organization.Group;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
@@ -337,7 +339,9 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 						roles);
 				boolean released = false;
 				for (Class<? extends Role> role : copy) {
-					released = leaveRole(player, role) || released;
+					if (leaveRole(player, role)) {
+						released = true;
+					}
 				}
 				return released;
 			}
@@ -371,12 +375,13 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 				assert (adr != null);
 				Role roleToRemove = roleDescriptor.getLocalRole(adr);
 				if (roleToRemove != null) {
-					RoleAddress roleAddress = roleToRemove.getAddress();
-					roleAddress.unbind();
 					ConditionFailure failedCondition = verifiesLeaveConditions(
 							player, roleToRemove);
 					if (failedCondition == null) {
 	
+						RoleAddress roleAddress = roleToRemove.getAddress();
+						roleAddress.unbind();
+
 						if (!roleDescriptor.unregisterAddress(adr)) {
 							return false;
 						}
@@ -390,7 +395,7 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 
 						// Notify player about role releasing to avoid role
 						// scheduling
-						player.roleReleased(roleToRemove, event);
+						player.roleReleasing(roleToRemove);
 	
 						if (roleDescriptor.isEmpty()) {
 							this.playersPerRole.remove(role);
@@ -416,6 +421,9 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 									.removeGroup(myAdr);
 						}
 						
+						// Notify player about role releasing
+						player.fireLeaveRole(event);
+
 						// Notifies the other members of the group that a role was released
 						for(RoleDescriptor rDesc : this.playersPerRole.values()) {
 							for(Role playedRole : rDesc.getLocalRoles()) {
@@ -881,19 +889,8 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 								return sendMessageToRemoteKernel(message);
 							}
 							else {
-								getLogger().warning(
-										Locale.getString(KernelScopeGroup.class,
-												"MAILBOX_NOT_FOUND", //$NON-NLS-1$
-												senderAddress.toString(),
-												receiverAddress.toString()));
+								throw new MailboxNotFoundException(message);
 							}
-						}
-						else {
-							getLogger().warning(
-									Locale.getString(KernelScopeGroup.class,
-											"RECEIVER_NOT_FOUND", //$NON-NLS-1$
-											senderAddress.toString(),
-											receiverAddress.toString()));
 						}
 					}
 					
@@ -909,15 +906,8 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 				receivingRole.getMailbox().add(message);
 				return receivingRole.getAddress();
 			}
-			
-			getLogger().warning(
-					Locale.getString(KernelScopeGroup.class,
-							"NO_RECEIVER_FOUND", //$NON-NLS-1$
-							message,
-							senderAddress.toString()
-					));
-			
-			return null;
+
+			throw new ReceiverNotFoundException(message);
 		}
 		finally {
 			this.internalStructureLock.unlock();

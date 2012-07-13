@@ -18,7 +18,7 @@
 	<groupId>org.janus-project.kernel.network</groupId>
 	<artifactId>jxse</artifactId>
 	<packaging>jar</packaging>
-	<name>JXTA-JXSE Janus Kernel</name>
+	<name>JXTA-JXSE Extension for Janus</name>
 	<build>
 		<plugins>
 			<plugin>

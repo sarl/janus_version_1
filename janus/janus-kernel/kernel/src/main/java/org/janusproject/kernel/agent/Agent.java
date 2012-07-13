@@ -837,6 +837,7 @@ implements Activable, Holon, Serializable {
 	public Status live() {
 		Activator<? extends Role> activator = getRoleActivator();
 		assert(activator!=null);
+		activator.sync();
 		return activator.live();		
 	}
 
@@ -896,7 +897,7 @@ implements Activable, Holon, Serializable {
 			assert(s.getSeverity()==StatusSeverity.OK) : s.toString();
 			return s;
 		}		
-				
+		
 		Status s = live();
 		return s;
 	}

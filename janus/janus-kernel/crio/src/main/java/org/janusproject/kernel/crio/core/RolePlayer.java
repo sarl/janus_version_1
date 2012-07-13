@@ -173,14 +173,13 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	}
 
 	/**
-	 * Invoked when a role was leaved.
+	 * Invoked just before the specified role is leaved.
 	 * 
 	 * @param role
-	 * @param event
+	 * @since 0.5
 	 */
-	void roleReleased(Role role, RolePlayingEvent event) {
+	void roleReleasing(Role role) {
 		this.roleActivator.removeRole(role);
-		fireLeaveRole(event);
 	}
 
 	/**
@@ -1390,7 +1389,8 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 		assert (repos != null);
 		boolean released = false;
 		for (GroupAddress adr : repos) {
-			released = leaveAllRoles(adr) || released;
+			if (leaveAllRoles(adr))
+				released = true;
 		}
 		return released;
 	}
