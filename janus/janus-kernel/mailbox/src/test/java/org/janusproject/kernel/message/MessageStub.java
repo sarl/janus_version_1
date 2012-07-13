@@ -20,6 +20,8 @@
  */
 package org.janusproject.kernel.message;
 
+import org.janusproject.kernel.address.Address;
+
 /**
  * Stub for message interface.
  * 
@@ -43,6 +45,17 @@ public class MessageStub extends AbstractContentMessage<Object> {
 		this.name = name;
 	}
 	
+	/**
+	 * @param date
+	 * @param name
+	 * @param emitter
+	 */
+	public MessageStub(float date, String name, Address emitter) {
+		this.creationDate = date;
+		this.name = name;
+		this.sender = emitter;
+	}
+
 	@Override
 	public String toString() {
 		return this.name+":"+Long.toString(Float.valueOf(this.creationDate).longValue()); //$NON-NLS-1$
