@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.janus-project.demos.jaak</groupId>
     <artifactId>jaak-demos</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
   </parent>
   
   <artifactId>jaak-ants</artifactId>

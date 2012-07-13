@@ -5,13 +5,13 @@
 	<parent>
 		<artifactId>janus-extras</artifactId>
 		<groupId>org.janus-project.extras</groupId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.5</version>
 		<relativePath>..</relativePath>
 	</parent>
 
 	<artifactId>modules</artifactId>
 	<groupId>org.janus-project.extras.organizations</groupId>
-	<version>0.5-SNAPSHOT</version>
+	<version>0.5</version>
 	<packaging>pom</packaging>
 	<name>Organization Templates</name>
 </project>

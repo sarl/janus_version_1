@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.janus-project.demos.acl-demos</groupId>
 		<artifactId>acl-demos</artifactId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.5</version>
 	</parent>
 
 	<groupId>org.janus-project.demos</groupId>

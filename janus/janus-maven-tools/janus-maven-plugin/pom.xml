@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>janus-maven-tools</artifactId>
 		<groupId>org.janus-project.maven</groupId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.5</version>
 	</parent>
 
 	<artifactId>janus-maven-plugin</artifactId>

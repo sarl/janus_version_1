@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>org.janus-project.extras.modules</groupId>
 		<artifactId>modules</artifactId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.5</version>
 	</parent>
 	
 	<groupId>org.janus-project.extras.modules.jaak</groupId>
 	<artifactId>jaak</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<name>Jaak Simulation</name>
 	<packaging>pom</packaging>
 	

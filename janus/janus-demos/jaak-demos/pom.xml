@@ -3,13 +3,13 @@
   <parent>
     <groupId>org.janus-project.demos</groupId>
     <artifactId>janus-demos</artifactId>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.5</version>
   </parent>
   
   <groupId>org.janus-project.demos.jaak</groupId>
   <artifactId>jaak-demos</artifactId>
   <packaging>pom</packaging>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.1</version>
   
   <modules>
   <module>jaak-ants</module>

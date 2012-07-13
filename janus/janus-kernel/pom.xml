@@ -7,7 +7,7 @@
 	<parent>
 		<artifactId>janus</artifactId>
 		<groupId>org.janus-project</groupId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.5</version>
 	</parent>
 
 	<packaging>pom</packaging>

@@ -86,7 +86,7 @@
 	</dependencies>
 
 	<properties>
-		<janus.verion>0.3-SNAPSHOT</janus.verion>
+		<janus.verion>0.3</janus.verion>
 		<felix.main.version>3.0.0</felix.main.version>
 		<felix.gogo.version>0.6.0</felix.gogo.version>
 	</properties>

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.janus-project.demos.simulation</groupId>
 		<artifactId>simulation-demos</artifactId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.5</version>
 	</parent>
 
 	<groupId>org.janus-project.demos</groupId>

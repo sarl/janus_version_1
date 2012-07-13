@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.janus-project.kernel</groupId>
 		<artifactId>network</artifactId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.5</version>
 	</parent>
 	
 	<groupId>org.janus-project.kernel.network</groupId>

@@ -6,7 +6,7 @@
 	<groupId>org.janus-project</groupId>
 	<artifactId>janus</artifactId>
 	<packaging>pom</packaging>
-	<version>0.5-SNAPSHOT</version>
+	<version>0.5</version>
 	<name>Janus Project</name>
 	<inceptionYear>2004</inceptionYear>
 	<url>http://www.janus-project.org</url>
@@ -307,7 +307,7 @@
 				<plugin>
 					<groupId>org.janus-project.maven</groupId>
 					<artifactId>janus-maven-plugin</artifactId>
-					<version>0.5-SNAPSHOT</version>
+					<version>0.5</version>
 				</plugin>
 
 			</plugins>
@@ -325,201 +325,201 @@
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>address</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>channels</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>configuration</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>condition</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>util</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>logger</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>agentmemory</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>agentsignal</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>repository</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>probe</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>locale</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>schedule</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>status</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>timemanager</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>mailbox</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>message</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>credential</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>crio</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>kernel</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>network</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel.network</groupId>
 				<artifactId>jxta-base</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel.network</groupId>
 				<artifactId>jxse</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel.network</groupId>
 				<artifactId>jxme</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>osgi</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 
 			<!-- ********** ** JANUS EXTRAS ** ********** -->
 			<dependency>
 				<groupId>org.janus-project.extras.modules.ecoresolution</groupId>
 				<artifactId>ecoengine</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.ecoresolution</groupId>
 				<artifactId>ecoagent</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.bdiengine</groupId>
 				<artifactId>bdiengine</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
 				<artifactId>script</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
 				<artifactId>jrubyengine</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
 				<artifactId>groovyengine</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.aclengine</groupId>
 				<artifactId>aclengine</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.jaak</groupId>
 				<artifactId>jaak-util</artifactId>
-				<version>0.1-SNAPSHOT</version>
+				<version>0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.jaak</groupId>
 				<artifactId>jaak-environmentinterface</artifactId>
-				<version>0.1-SNAPSHOT</version>
+				<version>0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.jaak</groupId>
 				<artifactId>jaak-turtle</artifactId>
-				<version>0.1-SNAPSHOT</version>
+				<version>0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.jaak</groupId>
 				<artifactId>jaak-environment</artifactId>
-				<version>0.1-SNAPSHOT</version>
+				<version>0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.jaak</groupId>
 				<artifactId>jaak-spawner</artifactId>
-				<version>0.1-SNAPSHOT</version>
+				<version>0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.jaak</groupId>
 				<artifactId>jaak-kernel</artifactId>
-				<version>0.1-SNAPSHOT</version>
+				<version>0.1</version>
 			</dependency>
 
 			<!-- ********** ** JANUS DEMOS ** ********** -->
 			<dependency>
 				<groupId>org.janus-project.demos.network</groupId>
 				<artifactId>janus-chat-model</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.demos</groupId>
 				<artifactId>market-selective</artifactId>
-				<version>0.5-SNAPSHOT</version>
+				<version>0.5</version>
 			</dependency>
 
 			<!-- ********** ** ARAKHNE.ORG ** ********** -->
@@ -897,7 +897,6 @@
 						<link>http://www.arakhne.org/arakhneVmutils/apidocs/</link>
 						<link>http://www.arakhne.org/arakhneRefs/apidocs/</link>
 					</links>
-					<stylesheet>maven</stylesheet>
 					<docfilessubdirs>true</docfilessubdirs>
 					<excludePackageNames>org.janus_project*</excludePackageNames>
 					<breakiterator>true</breakiterator>

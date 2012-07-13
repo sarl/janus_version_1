@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>janus-chat</artifactId>
 		<groupId>org.janus-project.demos.network</groupId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.5</version>
 	</parent>
 
 	<artifactId>janus-chat-android</artifactId>

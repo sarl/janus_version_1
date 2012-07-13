@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.janus-project.demos.network</groupId>
 		<artifactId>janus-chat</artifactId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.5</version>
 	</parent>
 
 	<artifactId>janus-chat-swing</artifactId>
