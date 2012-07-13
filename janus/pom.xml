@@ -119,13 +119,13 @@
 							<goal>replaceresource</goal>
 						</goals>
 					</execution>
-					<!-- execution>
+					<execution>
 						<id>source_generation</id>
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>generatereplacesrc</goal>
 						</goals>
-					</execution -->
+					</execution>
 				</executions>
 			</plugin>
 
