@@ -1521,9 +1521,7 @@ extends ActivatorAgent<AgentActivator> {
 		 */
 		@Override
 		public synchronized void waitUntilTermination() throws InterruptedException {
-			if (!KernelAgent.this.getState().isMortuary()) {
-				wait();
-			}
+			KernelAgent.this.waitUntilTermination();
 		}
 
 		/**
@@ -1531,9 +1529,7 @@ extends ActivatorAgent<AgentActivator> {
 		 */
 		@Override
 		public synchronized void waitUntilTermination(long timeout) throws InterruptedException {
-			if (!KernelAgent.this.getState().isMortuary()) {
-				wait(timeout);
-			}
+			KernelAgent.this.waitUntilTermination(timeout);
 		}
 
 		/**

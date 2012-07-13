@@ -14,12 +14,6 @@
 	<description>A Maven plugin to handle Janus Applications</description>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-			</plugin>
-		</plugins>
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>

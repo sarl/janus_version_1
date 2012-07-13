@@ -137,7 +137,7 @@ public class ScriptedAgentTest extends TestCase {
 		
 		k.launchLightAgent(agent);
 		
-		k.waitUntilTermination();
+		agent.waitUntilTermination(10000);
 		
 		assertTrue(agent.scriptedActivateExecuted);
 		assertTrue(agent.scriptedLiveExecuted);

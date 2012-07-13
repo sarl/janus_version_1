@@ -62,7 +62,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 	 * The platform configuration file name. <br/>
 	 * If not defined the default name of the layout will be used.
 	 * 
-	 * @parameter expression="${preparedist.platformConfigFileName}"
+	 * @parameter property="preparedist.platformConfigFileName"
 	 */
 	protected String platformConfigFileName = null;
 
@@ -70,7 +70,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 	 * The layout configuration file name. <br/>
 	 * If not defined the default name of the layout will be used.
 	 * 
-	 * @parameter expression="${preparedist.layoutConfigFileName}"
+	 * @parameter property="preparedist.layoutConfigFileName"
 	 */
 	protected String layoutConfigFileName = null;
 

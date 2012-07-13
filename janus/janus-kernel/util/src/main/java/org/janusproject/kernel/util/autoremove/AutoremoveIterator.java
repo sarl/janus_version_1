@@ -38,6 +38,7 @@ implements Iterator<M> {
 
 	private final Iterator<M> original;
 	private M next;
+	private boolean searched = false;
 
 	/**
 	 * @param iterator an iterator which is implementing the <code>remove</code> function.
@@ -45,21 +46,13 @@ implements Iterator<M> {
 	public AutoremoveIterator(Iterator<M> iterator) {
 		assert(iterator!=null);
 		this.original = iterator;
-		searchNext();
 	}
 	
 	private void searchNext() {
 		this.next = null;
-		M m;
+		this.searched = true;
 		while (this.next==null && this.original.hasNext()) {
-			m = this.original.next();
-			if (m!=null) {
-				// Consume the message
-				// assuming that the internal iterator has stopped
-				// its iteration when found the next element
-				this.original.remove();
-				this.next = m;
-			}
+			this.next = this.original.next();
 		}
 	}
 	
@@ -68,6 +61,9 @@ implements Iterator<M> {
 	 */
 	@Override
 	public boolean hasNext() {
+		if (!this.searched) {
+			searchNext();
+		}
 		return this.next!=null;
 	}
 
@@ -76,9 +72,16 @@ implements Iterator<M> {
 	 */
 	@Override
 	public M next() {
+		if (!this.searched) {
+			searchNext();
+		}
 		M n = this.next;
 		if (n==null) throw new NoSuchElementException();
-		searchNext();
+		this.searched = false;
+		// Consume the message
+		// assuming that the internal iterator has stopped
+		// its iteration when found the next element
+		this.original.remove();
 		return n;
 	}
 

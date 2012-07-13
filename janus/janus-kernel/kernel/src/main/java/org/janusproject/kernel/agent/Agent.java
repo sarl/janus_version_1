@@ -275,7 +275,7 @@ implements Activable, Holon, Serializable {
      * its execution or a thread has invoked {@link Object#notify()}
      * or {@link Object#notifyAll()} on the instance of this object.
      * In other words, this function extends the behavior of 
-     * {@link Object#wait()} by adding the termination of the kernel
+     * {@link Object#wait()} by adding the termination of the agent
      * as a critera to wake up.
      * <p>
      * In opposite to {@link Object#wait()}, this function does not
@@ -287,6 +287,27 @@ implements Activable, Holon, Serializable {
 	public synchronized void waitUntilTermination() throws InterruptedException {
 		while (getState()!=AgentLifeState.DIED) {
 			wait(10000);
+		}
+	}
+
+	/**
+     * Causes the current thread to wait until the kernel has terminated
+     * its execution or a thread has invoked {@link Object#notify()}
+     * or {@link Object#notifyAll()} on the instance of this object.
+     * In other words, this function extends the behavior of 
+     * {@link Object#wait()} by adding the termination of the kernel
+     * as a critera to wake up.
+     * <p>
+     * In opposite to {@link Object#wait()}, this function does not
+     * requires to explicitly get ownership of this object's monitor. 
+	 * 
+	 * @param timeout is the maximal time to wait for the termination in milliseconds.
+	 * @throws InterruptedException
+	 * @since 0.5
+	 */
+	public synchronized void waitUntilTermination(long timeout) throws InterruptedException {
+		if (getState()!=AgentLifeState.DIED) {
+			wait(timeout);
 		}
 	}
 
@@ -892,14 +913,10 @@ implements Activable, Holon, Serializable {
 		}
 
 		if (isSelfKillableNow()) {
-			Status s = killMe();
-			assert(s!=null);
-			assert(s.getSeverity()==StatusSeverity.OK) : s.toString();
-			return s;
+			return killMe();
 		}		
 		
-		Status s = live();
-		return s;
+		return live();
 	}
 
 	/** Destroy this agent and invoke {@link #end()}

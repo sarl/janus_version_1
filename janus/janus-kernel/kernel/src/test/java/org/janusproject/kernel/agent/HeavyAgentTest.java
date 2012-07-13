@@ -96,6 +96,8 @@ public class HeavyAgentTest extends TestCase {
 		sAgent.stopTest();
 		rAgent.stopTest();
 		
+		sAgent.waitUntilTermination();
+		rAgent.waitUntilTermination();
 		k.waitUntilTermination();
 		
 		listener.throwsErrors();

@@ -104,6 +104,8 @@ public class QueuedSignalAdapterTest extends TestCase {
 		this.adapter.onSignal(s4);
 		this.adapter.onSignal(s5);
 		
+		assertEquals(6, this.adapter.getQueueSize());
+
 		Iterator<Signal> iterator = this.adapter.iterator();
 		
 		assertTrue(iterator.hasNext());

@@ -71,13 +71,13 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 	/**
 	 * Location of the file.
 	 * 
-	 * @parameter expression="${project.build.directory}"
+	 * @parameter property="project.build.directory"
 	 * @required
 	 */
 	protected File outputDirectory;
 
 	/**
-	 * @parameter expression="${project.basedir}"
+	 * @parameter property="project.basedir"
 	 */
 	private File baseDirectory;
 
@@ -114,23 +114,24 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 	 * 
 	 * All files with extension ".japp.properties" will be merged into a single file. The name of the final file is defined using the platformConfigFileName parameter
 	 * 
-	 * @parameter expression="${preparedist.configDir}" default-value="src/main/janus/application/conf"
+	 * @parameter property="preparedist.configDir" default-value="src/main/janus/application/conf"
 	 */
 	protected String configDir;
 
 	/**
 	 * The set of artifacts that the projects depends on.
 	 * 
-	 * @parameter expression="${project.artifacts}"
+	 * @parameter property="project.artifacts"
 	 * @readonly
 	 */
 	protected Set<Artifact> artifacts;
 
-	/** @parameter expression="${project}" */
+	/** @parameter property="project"
+	 */
 	protected MavenProject mavenProject;
 
 	/**
-	 * @parameter expression="${project.artifact}"
+	 * @parameter property="project.artifact"
 	 * @readonly
 	 */
 	protected Artifact projectArtifact;
@@ -138,7 +139,7 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 	/**
 	 * Reference to the current session.
 	 * 
-	 * @parameter expression="${session}"
+	 * @parameter property="session"
 	 * @required
 	 */
 	private MavenSession mavenSession;

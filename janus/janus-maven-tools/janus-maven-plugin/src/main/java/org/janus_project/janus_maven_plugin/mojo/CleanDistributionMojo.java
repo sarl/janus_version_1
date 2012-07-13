@@ -43,7 +43,7 @@ public class CleanDistributionMojo extends AbstractJanusModuleMojo {
 	/**
 	 * The name to use for the final file
 	 * 
-	 * @parameter expression="${project.groupId}-${project.artifactId}-${project.version}"
+	 * @parameter default-value="${project.groupId}-${project.artifactId}-${project.version}"
 	 */
 	private String finalFileName;
 
