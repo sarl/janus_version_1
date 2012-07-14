@@ -10,7 +10,6 @@
 		<version>0.5</version>
 	</parent>
 
-	<groupId>org.janus-project.demos</groupId>
 	<artifactId>market-simple</artifactId>
 	<packaging>jar</packaging>
 	<name>Market MAS demo</name>

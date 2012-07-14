@@ -10,7 +10,6 @@
 		<version>0.5</version>
 	</parent>
 
-	<groupId>org.janus-project.demos</groupId>
 	<artifactId>request-protocol</artifactId>
 	<packaging>jar</packaging>
 	<name>Request Protocol ACL Janus demo</name>

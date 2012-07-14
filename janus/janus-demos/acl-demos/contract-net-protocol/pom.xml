@@ -10,7 +10,6 @@
 		<version>0.5</version>
 	</parent>
 
-	<groupId>org.janus-project.demos</groupId>
 	<artifactId>contract-net-protocol</artifactId>
 	<packaging>jar</packaging>
 	<name>ContractNetProtocol ACL Janus demo</name>

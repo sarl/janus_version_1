@@ -9,7 +9,6 @@
 	</parent>
 
 
-	<groupId>org.janus-project.demos</groupId>
 	<artifactId>eco-cube</artifactId>
 	<packaging>jar</packaging>
 	<name>Eco-Resolution Cube Problem</name>

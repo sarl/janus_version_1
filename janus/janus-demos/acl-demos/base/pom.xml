@@ -10,8 +10,7 @@
 		<version>0.5</version>
 	</parent>
 
-	<groupId>org.janus-project.demos</groupId>
-	<artifactId>base</artifactId>
+	<artifactId>acl-base-demo</artifactId>
 	<packaging>jar</packaging>
 	<name>Basic ACL Janus demo</name>
 	<inceptionYear>2012</inceptionYear>

@@ -10,7 +10,6 @@
 		<version>0.5</version>
 	</parent>
 
-	<groupId>org.janus-project.demos</groupId>
 	<artifactId>boids</artifactId>
 	<packaging>jar</packaging>
 	<name>Boids Simulation demo</name>

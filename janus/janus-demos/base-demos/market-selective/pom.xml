@@ -10,7 +10,6 @@
 		<version>0.5</version>
 	</parent>
 
-	<groupId>org.janus-project.demos</groupId>
 	<artifactId>market-selective</artifactId>
 	<packaging>jar</packaging>
 	<name>Advanced Market MAS demo</name>
