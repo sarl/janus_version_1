@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.janus-project.demos.scriptedagent.groovy</groupId>
 		<artifactId>groovy-demos</artifactId>
-		<version>0.5</version>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>groovy-market-selective</artifactId>
@@ -104,7 +104,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.janus-project.demos</groupId>
+			<groupId>org.janus-project.demos.base</groupId>
 			<artifactId>market-selective</artifactId>
 		</dependency>
 

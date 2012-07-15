@@ -4,13 +4,12 @@
 	<parent>
 		<groupId>org.janus-project.extras.modules</groupId>
 		<artifactId>modules</artifactId>
-		<version>0.5</version>
+		<version>1.0-SNAPSHOT</version>
 		<relativePath>../..</relativePath>
 	</parent>
 
 	<groupId>org.janus-project.extras.modules.jaak</groupId>
 	<artifactId>jaak-environmentinterface</artifactId>
-	<version>0.1</version>
 	<name>Jaak Environment Interface Definition</name>
 
 	<dependencies>
