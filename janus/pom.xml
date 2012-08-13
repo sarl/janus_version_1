@@ -150,6 +150,172 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<docencoding>UTF-8</docencoding>
+					<encoding>UTF-8</encoding>
+					<charset>UTF-8</charset>
+					<show>protected</show>
+					<detectLinks>true</detectLinks>
+					<detectJavaApiLink>true</detectJavaApiLink>
+					<links>
+						<link>http://download.java.net/media/java3d/javadoc/1.5.2/</link>
+						<link>http://www.arakhne.org/arakhneLogger/apidocs/</link>
+						<link>http://www.arakhne.org/arakhneVmutils/apidocs/</link>
+						<link>http://www.arakhne.org/arakhneRefs/apidocs/</link>
+					</links>
+					<docfilessubdirs>true</docfilessubdirs>
+					<excludePackageNames>org.janus_project*</excludePackageNames>
+					<breakiterator>true</breakiterator>
+					<version>true</version>
+					<author>true</author>
+					<keywords>true</keywords>
+					<useStandardDocletOptions>true</useStandardDocletOptions>
+					<excludePackageNames>org.janus_project.*:org.janusproject.demo*:org.janusproject.kernel.bench*:org.jruby*:org.luaj*:org.python*</excludePackageNames>
+					<groups>
+						<group>
+							<title>CRIO Implementation</title>
+							<packages>org.janusproject.kernel.crio*</packages>
+						</group>
+						<group>
+							<title>Agent and Kernel Core Implementation</title>
+							<packages>
+org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject.kernel.mailbox*:org.janusproject.kernel.schedule*:org.janusproject.kernel.time*:org.janusproject.kernel.probe*:org.janusproject.kernel.channel*
+							</packages>
+						</group>
+						<group>
+							<title>Holonic Organization</title>
+							<packages>org.janusproject.kernel.organization*</packages>
+						</group>
+						<group>
+							<title>Kernel Utilities</title>
+							<packages>org.janusproject.kernel.condition*:org.janusproject.kernel.locale*:org.janusproject.kernel.repository*:org.janusproject.kernel.util*:org.janusproject.kernel.status*:org.janusproject.kernel.message*:org.janusproject.kernel.configuration*:org.janusproject.kernel.credential*:org.janusproject.kernel.logger*
+							</packages>
+						</group>
+						<group>
+							<title>Jaak</title>
+							<packages>org.janusproject.jaak*</packages>
+						</group>
+						<group>
+							<title>Script API</title>
+							<packages>org.janusproject.groovy*:org.janusproject.jruby*:org.janusproject.jython*:org.janusproject.lua*:org.janusproject.lisp*:org.janusproject.script*</packages>
+						</group>
+						<group>
+							<title>ACL Extension</title>
+							<packages>org.janusproject.acl*</packages>
+						</group>
+						<group>
+							<title>BDI Extension</title>
+							<packages>org.janusproject.kernel.agent.bdi*</packages>
+						</group>
+						<group>
+							<title>Eco-Resolution Engine</title>
+							<packages>org.janusproject.ecoresolution*</packages>
+						</group>
+						<group>
+							<title>Network Support</title>
+							<packages>org.janusproject.kernel.network*</packages>
+						</group>
+						<group>
+							<title>OSGi Support</title>
+							<packages>org.janusproject.kernel.mmf*</packages>
+						</group>
+					</groups>
+					<bottom>&lt;small&gt;Copyright &amp;copy;
+						${project.inceptionYear}-${year} ${copyrighters}.
+						&lt;a
+						rel="license"
+						href="http://creativecommons.org/licenses/by-nc-nd/3.0/"&gt;&lt;img
+						alt="Creative Commons License" style="border-width:0"
+						src="{@docRoot}/doc-files/cc_by_nc_nd.png" /&gt;&lt;/a&gt;&lt;br
+						/&gt;&lt;span xmlns:dct="http://purl.org/dc/terms/"
+						property="dct:title"&gt;Janus API Documentation&lt;/span&gt; by
+						&lt;a xmlns:cc="http://creativecommons.org/ns#"
+						href="http://www.janus-project.org/Developers#Core"
+						property="cc:attributionName" rel="cc:attributionURL"&gt;Janus
+						Core Developers&lt;/a&gt; is licensed under a &lt;a rel="license"
+						href="http://creativecommons.org/licenses/by-nc-nd/3.0/"&gt;Creative
+						Commons Attribution-NonCommercial-NoDerivs
+						3.0 Unported
+						License&lt;/a&gt;.&lt;br /&gt;Based on a work at &lt;a
+						xmlns:dct="http://purl.org/dc/terms/"
+						href="http://www.janus-project.org/API_Documentation"
+						rel="dct:source"&gt;www.janus-project.org&lt;/a&gt;
+						&lt;br&gt;&lt;img
+						src="{@docRoot}/doc-files/small-janus-logo.jpg"&gt;&lt;/small&gt; </bottom>
+					<tags>
+						<tag>
+							<name>mavengroupid</name>
+							<placement>pt</placement>
+							<head>Maven Group Id:</head>
+						</tag>
+						<tag>
+							<name>mavenartifactid</name>
+							<placement>pt</placement>
+							<head>Maven Artifact Id:</head>
+						</tag>
+						<tag>
+							<name>GROUPAPI</name>
+							<placement>om</placement>
+							<head>Category: Group API</head>
+						</tag>
+						<tag>
+							<name>LOGGINGAPI</name>
+							<placement>om</placement>
+							<head>Category: Logging API</head>
+						</tag>
+						<tag>
+							<name>MINDAPI</name>
+							<placement>om</placement>
+							<head>Category: Mind API</head>
+						</tag>
+						<tag>
+							<name>MESSAGEAPI</name>
+							<placement>om</placement>
+							<head>Category: Message API</head>
+						</tag>
+						<tag>
+							<name>CAPACITYAPI</name>
+							<placement>om</placement>
+							<head>Category: Capacity API</head>
+						</tag>
+						<tag>
+							<name>ROLEAPI</name>
+							<placement>om</placement>
+							<head>Category: Role API</head>
+						</tag>
+						<tag>
+							<name>EXECUTIONAPI</name>
+							<placement>om</placement>
+							<head>Category: Agent Execution API</head>
+						</tag>
+						<tag>
+							<name>LAUNCHINGAPI</name>
+							<placement>om</placement>
+							<head>Category: Agent Launching API</head>
+						</tag>
+						<tag>
+							<name>HOLARCHYAPI</name>
+							<placement>om</placement>
+							<head>Category: Holarchy support API</head>
+						</tag>
+						<tag>
+							<name>KILLAPI</name>
+							<placement>om</placement>
+							<head>Category: Agent Kill API</head>
+						</tag>
+						<tag>
+							<name>CONDITONNEDOBJECTAPI</name>
+							<placement>om</placement>
+							<head>Category: Conditionned Object API</head>
+						</tag>
+					</tags>
+				</configuration>
+			</plugin>
+
 		</plugins>
 
 		<!-- ======================================= -->
@@ -197,12 +363,12 @@
 				<plugin>
 					<groupId>org.arakhne.afc</groupId>
 					<artifactId>tag-replacer</artifactId>
-					<version>2.3</version>
+					<version>2.4-SNAPSHOT</version>
 				</plugin>
 				<plugin>
 					<groupId>org.arakhne.afc</groupId>
 					<artifactId>license-installer</artifactId>
-					<version>2.3</version>
+					<version>2.4-SNAPSHOT</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -519,13 +685,13 @@
 			<dependency>
 				<groupId>org.arakhne.afc</groupId>
 				<artifactId>arakhneVmutils</artifactId>
-				<version>7.0</version>
+				<version>7.1-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.arakhne.afc</groupId>
 				<artifactId>maventools</artifactId>
-				<version>3.3</version>
+				<version>3.4-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
@@ -867,163 +1033,5 @@
 			</roles>
 		</contributor>
 	</contributors>
-
-	<!-- ======================================= -->
-	<!-- ==== Reports === -->
-	<!-- ======================================= -->
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.8.1</version>
-				<configuration>
-					<docencoding>UTF-8</docencoding>
-					<encoding>UTF-8</encoding>
-					<charset>UTF-8</charset>
-					<show>protected</show>
-					<detectLinks>true</detectLinks>
-					<detectJavaApiLink>true</detectJavaApiLink>
-					<links>
-						<link>http://download.java.net/media/java3d/javadoc/1.5.2/</link>
-						<link>http://www.arakhne.org/arakhneLogger/apidocs/</link>
-						<link>http://www.arakhne.org/arakhneVmutils/apidocs/</link>
-						<link>http://www.arakhne.org/arakhneRefs/apidocs/</link>
-					</links>
-					<docfilessubdirs>true</docfilessubdirs>
-					<excludePackageNames>org.janus_project*</excludePackageNames>
-					<breakiterator>true</breakiterator>
-					<version>true</version>
-					<author>true</author>
-					<keywords>true</keywords>
-					<useStandardDocletOptions>true</useStandardDocletOptions>
-					<groups>
-						<group>
-							<title>CRIO Implementation</title>
-							<packages>org.janusproject.kernel.crio*</packages>
-						</group>
-						<group>
-							<title>Agent and Kernel Core Implementation</title>
-							<packages>org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject.kernel.mailbox*:org.janusproject.kernel.schedule*:org.janusproject.kernel.time*
-							</packages>
-						</group>
-						<group>
-							<title>Holonic Organization</title>
-							<packages>org.janusproject.kernel.organization*</packages>
-						</group>
-						<group>
-							<title>Kernel Utilities</title>
-							<packages>org.janusproject.kernel.condition*:org.janusproject.kernel.locale*:org.janusproject.kernel.repository*:org.janusproject.kernel.util*:org.janusproject.kernel.status*
-							</packages>
-						</group>
-						<group>
-							<title>Network Support</title>
-							<packages>org.janusproject.kernel.network*</packages>
-						</group>
-						<group>
-							<title>OSGi Support</title>
-							<packages>org.janusproject.kernel.mmf*</packages>
-						</group>
-					</groups>
-					<bottom>&lt;small&gt;Copyright &amp;copy;
-						${project.inceptionYear}-${year} ${copyrighters}.
-						&lt;a
-						rel="license"
-						href="http://creativecommons.org/licenses/by-nc-nd/3.0/"&gt;&lt;img
-						alt="Creative Commons License" style="border-width:0"
-						src="{@docRoot}/doc-files/cc_by_nc_nd.png" /&gt;&lt;/a&gt;&lt;br
-						/&gt;&lt;span xmlns:dct="http://purl.org/dc/terms/"
-						property="dct:title"&gt;Janus API Documentation&lt;/span&gt; by
-						&lt;a xmlns:cc="http://creativecommons.org/ns#"
-						href="http://www.janus-project.org/Developers#Core"
-						property="cc:attributionName" rel="cc:attributionURL"&gt;Janus
-						Core Developers&lt;/a&gt; is licensed under a &lt;a rel="license"
-						href="http://creativecommons.org/licenses/by-nc-nd/3.0/"&gt;Creative
-						Commons Attribution-NonCommercial-NoDerivs
-						3.0 Unported
-						License&lt;/a&gt;.&lt;br /&gt;Based on a work at &lt;a
-						xmlns:dct="http://purl.org/dc/terms/"
-						href="http://www.janus-project.org/API_Documentation"
-						rel="dct:source"&gt;www.janus-project.org&lt;/a&gt;
-						&lt;br&gt;&lt;img
-						src="{@docRoot}/doc-files/small-janus-logo.jpg"&gt;&lt;/small&gt; </bottom>
-					<tags>
-						<tag>
-							<name>mavengroupid</name>
-							<placement>pt</placement>
-							<head>Maven Group Id:</head>
-						</tag>
-						<tag>
-							<name>mavenartifactid</name>
-							<placement>pt</placement>
-							<head>Maven Artifact Id:</head>
-						</tag>
-						<tag>
-							<name>GROUPAPI</name>
-							<placement>om</placement>
-							<head>Category: Group API</head>
-						</tag>
-						<tag>
-							<name>LOGGINGAPI</name>
-							<placement>om</placement>
-							<head>Category: Logging API</head>
-						</tag>
-						<tag>
-							<name>MINDAPI</name>
-							<placement>om</placement>
-							<head>Category: Mind API</head>
-						</tag>
-						<tag>
-							<name>MESSAGEAPI</name>
-							<placement>om</placement>
-							<head>Category: Message API</head>
-						</tag>
-						<tag>
-							<name>CAPACITYAPI</name>
-							<placement>om</placement>
-							<head>Category: Capacity API</head>
-						</tag>
-						<tag>
-							<name>ROLEAPI</name>
-							<placement>om</placement>
-							<head>Category: Role API</head>
-						</tag>
-						<tag>
-							<name>EXECUTIONAPI</name>
-							<placement>om</placement>
-							<head>Category: Agent Execution API</head>
-						</tag>
-						<tag>
-							<name>LAUNCHINGAPI</name>
-							<placement>om</placement>
-							<head>Category: Agent Launching API</head>
-						</tag>
-						<tag>
-							<name>HOLARCHYAPI</name>
-							<placement>om</placement>
-							<head>Category: Holarchy support API</head>
-						</tag>
-						<tag>
-							<name>KILLAPI</name>
-							<placement>om</placement>
-							<head>Category: Agent Kill API</head>
-						</tag>
-						<tag>
-							<name>CONDITONNEDOBJECTAPI</name>
-							<placement>om</placement>
-							<head>Category: Conditionned Object API</head>
-						</tag>
-					</tags>
-				</configuration>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>aggregate</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-		</plugins>
-	</reporting>
 
 </project>
