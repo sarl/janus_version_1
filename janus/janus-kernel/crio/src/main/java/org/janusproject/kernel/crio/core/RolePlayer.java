@@ -1351,6 +1351,28 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 		}
 		return false;
 	}
+	
+	/**
+	 * Function allowing the request of the liberation of this role on the
+	 * corresponding group.
+	 * <p>
+	 * This function assumes that a role could be played only one time by a
+	 * entity inside a one group.
+	 * 
+	 * @param role is the address of the role to leave.
+	 * @return <code>true</code> if the request was accepted, <code>false</code>
+	 *         else
+	 * @GROUPAPI
+	 * @since 1.0
+	 */
+	protected final boolean leaveRole(RoleAddress role) {
+		KernelScopeGroup grp = getCRIOContext().getGroupRepository().get(
+				role.getGroup());
+		if (grp != null) {
+			return grp.leaveRole(this, role.getRole());
+		}
+		return false;
+	}
 
 	/**
 	 * Function allowing the request of the liberation of all the roles on the
