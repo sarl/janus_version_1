@@ -29,19 +29,22 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.arakhne.vmutil.ReflectionUtil;
+
 /**
  * Implementation of a scripted agent that is
  * providing the means to invoke its protected
  * functions from a script that is not able to
  * invoke the functions with a protected scope.
- * 
+ *
+ * @param <C> is the type of ScriptExecutionContext supported by this agent.
  * @author $Author: sgalland$
  * @version $Name$ $Revision$ $Date$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  * @since 0.5
  */
-public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
+public abstract class UnprotectedScriptedAgent<C extends ScriptExecutionContext> extends ScriptedAgent<C> {
 
 	private static final long serialVersionUID = -5142920607712732405L;
 
@@ -70,18 +73,6 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 		}
 	}
 	
-	private static boolean mathesParameters(Method method, Object... parameters) {
-		Class<?>[] types = method.getParameterTypes();
-		if (types.length==parameters.length) {
-			boolean success = true;
-			for(int i=0; success && i<types.length; ++i) {
-				success = types[i].isInstance(parameters[i]);
-			}
-			return success;
-		}
-		return false;
-	}
-	
 	private static Method findMethod(Class<?> type, String name, Object... parameters) {
 		synchronized(methodDeclarations) {
 			Class<?> t = type;
@@ -90,7 +81,7 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 					if (declaredMethod.getName().equals(name)
 						&&(Modifier.isProtected(declaredMethod.getModifiers())
 						   ||Modifier.isPublic(declaredMethod.getModifiers()))
-						&&mathesParameters(declaredMethod, parameters)) {
+						&&ReflectionUtil.matchesParameters(declaredMethod, parameters)) {
 						Collection<Method> methods = methodDeclarations.get(name);
 						if (methods==null) {
 							methods = new ArrayList<Method>();
@@ -111,7 +102,7 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 	 * 
 	 * @param interpreter is the script interpreter to use.
 	 */
-	public UnprotectedScriptedAgent(ScriptExecutionContext interpreter) {
+	public UnprotectedScriptedAgent(C interpreter) {
 		super(interpreter);
 	}
 
@@ -123,7 +114,7 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 	 * @param interpreter is the script interpreter to use.
 	 * @param scriptBasename is the basename of the script to load at startup.
 	 */
-	public UnprotectedScriptedAgent(ScriptExecutionContext interpreter, String scriptBasename) {
+	public UnprotectedScriptedAgent(C interpreter, String scriptBasename) {
 		super(interpreter, scriptBasename);
 	}
 
@@ -133,7 +124,7 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 	 * @param interpreter is the script interpreter to use.
 	 * @param script is the filename of the script to load at startup.
 	 */
-	public UnprotectedScriptedAgent(ScriptExecutionContext interpreter, File script) {
+	public UnprotectedScriptedAgent(C interpreter, File script) {
 		super(interpreter, script);
 	}
 
@@ -143,7 +134,7 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 	 * @param interpreter is the script interpreter to use.
 	 * @param script is the filename of the script to load at startup.
 	 */
-	public UnprotectedScriptedAgent(ScriptExecutionContext interpreter, URL script) {
+	public UnprotectedScriptedAgent(C interpreter, URL script) {
 		super(interpreter, script);
 	}
 	
@@ -162,7 +153,7 @@ public abstract class UnprotectedScriptedAgent extends ScriptedAgent {
 		assert(methods!=null);
 		
 		for(Method method : methods) {
-			if (mathesParameters(method, parameters)) {
+			if (ReflectionUtil.matchesParameters(method, parameters)) {
 				try {
 					return method.invoke(this, parameters);
 				}

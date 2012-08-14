@@ -67,6 +67,15 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 				|| (v instanceof Character);
 	}
 
+	/** Replies if the given value is a raw value, ie is a script construct.
+	 * 
+	 * @param v
+	 * @return <code>true</code> if the value is a script construct;
+	 * <code>false</code> otherwise.
+	 */
+	protected static boolean isRaw(Object v) {
+		return (v instanceof CharSequence) && (v.toString().startsWith("___JANUS_KERNEL_TEMP_")); //$NON-NLS-1$
+	}
 
 	private Logger logger = null;
 	
@@ -97,7 +106,7 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 	/** {@inheritDoc}
 	 */
 	@Override
-	public void bindTo(ScriptedAgent agent) {
+	public void bindTo(ScriptedAgent<?> agent) {
 		//
 	}
 	
@@ -636,7 +645,10 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 			String paramName;
 			for(int i=0; i<params.length; ++i) {
 				if (i>0) command.append(',');
-				if (isSerializable(params[i])) {
+				if (isRaw(params[i])) {
+					command.append(params[i]);
+				}
+				else if (isSerializable(params[i])) {
 					command.append(toScriptSyntax(params[i]));
 				}
 				else {
@@ -663,7 +675,10 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 		// Translate the object instance
 		String paramName;
 		String instanceName;
-		if (isSerializable(objectInstance)) {
+		if (isRaw(objectInstance)) {
+			instanceName = objectInstance.toString();
+		}
+		else if (isSerializable(objectInstance)) {
 			instanceName = toScriptSyntax(objectInstance);
 		}
 		else {
@@ -675,7 +690,10 @@ public abstract class AbstractScriptExecutionContext implements ScriptExecutionC
 		// Translate the parameters
 		String[] p = new String[params.length];
 		for(int i=0; i<p.length; ++i) {
-			if (isSerializable(params[i])) {
+			if (isRaw(params[i])) {
+				p[i] = params[i].toString();
+			}
+			else if (isSerializable(params[i])) {
 				p[i] = toScriptSyntax(params[i]);
 			}
 			else {

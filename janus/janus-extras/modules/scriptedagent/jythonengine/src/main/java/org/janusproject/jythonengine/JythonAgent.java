@@ -41,7 +41,7 @@ import org.python.core.PyType;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public class JythonAgent extends ScriptedAgent {
+public class JythonAgent extends ScriptedAgent<JythonExecutionContext> {
 
 	private static final long serialVersionUID = -1096878039754819565L;
 

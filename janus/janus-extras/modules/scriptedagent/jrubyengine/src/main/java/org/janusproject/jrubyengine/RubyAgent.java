@@ -38,7 +38,7 @@ import org.janusproject.scriptedagent.ScriptedAgent;
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
-public class RubyAgent extends ScriptedAgent {
+public class RubyAgent extends ScriptedAgent<RubyExecutionContext> {
 
 	private static final long serialVersionUID = -2048354743353866599L;
 

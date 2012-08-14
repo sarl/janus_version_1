@@ -46,7 +46,7 @@ public interface ScriptExecutionContext {
 	 * 
 	 * @param agent
 	 */
-	public void bindTo(ScriptedAgent agent);
+	public void bindTo(ScriptedAgent<?> agent);
 
 	/** Replies if the interpreter supported by this script execution context
 	 * is compliant with the agent-separation concern.

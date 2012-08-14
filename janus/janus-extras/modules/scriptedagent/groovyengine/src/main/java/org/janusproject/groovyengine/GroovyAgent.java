@@ -39,7 +39,7 @@ import org.janusproject.scriptedagent.ScriptedAgent;
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
-public class GroovyAgent extends ScriptedAgent {
+public class GroovyAgent extends ScriptedAgent<GroovyExecutionContext> {
 
 	private static final long serialVersionUID = -6195345519507255244L;
 

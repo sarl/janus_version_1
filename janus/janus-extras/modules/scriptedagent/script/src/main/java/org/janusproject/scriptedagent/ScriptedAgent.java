@@ -51,6 +51,7 @@ import org.janusproject.scriptedagent.exception.InvalidDirectoryException;
  * functions. The expected prototypes of these functions are
  * described in the documentation of their names.
  * 
+ * @param <C> is the type of ScriptExecutionContext supported by the agent.
  * @author $Author: sgalland$
  * @author $Author: cwintz$
  * @author $Author: ngaud$
@@ -59,7 +60,7 @@ import org.janusproject.scriptedagent.exception.InvalidDirectoryException;
  * @mavenartifactid $ArtifactId$
  * @since 0.5
  */
-public class ScriptedAgent extends Agent {
+public class ScriptedAgent<C extends ScriptExecutionContext> extends Agent {
 
 	private static final long serialVersionUID = -6624883872941692209L;
 
@@ -127,11 +128,11 @@ public class ScriptedAgent extends Agent {
 		}
 	}
 
-	private ScriptExecutionContext scriptExecutor;
+	private C scriptExecutor;
 
 	private TeeManager teeManager = null;
 	
-	private ScriptLoader scriptLoader = null;
+	private ScriptLoader<C> scriptLoader = null;
 	private boolean automaticScriptExecution;
 
 	/**
@@ -142,7 +143,7 @@ public class ScriptedAgent extends Agent {
 	 * @param interpreter is the script interpreter to use.
 	 * @param startupScriptLoader is the script loader to use to load the startup script.
 	 */
-	protected ScriptedAgent(ScriptExecutionContext interpreter, ScriptLoader startupScriptLoader) {
+	protected ScriptedAgent(C interpreter, ScriptLoader<C> startupScriptLoader) {
 		super();
 		this.scriptExecutor = interpreter;
 		initRepository();
@@ -156,8 +157,8 @@ public class ScriptedAgent extends Agent {
 	 * 
 	 * @param interpreter is the script interpreter to use.
 	 */
-	public ScriptedAgent(ScriptExecutionContext interpreter) {
-		this(interpreter, (ScriptLoader)null);
+	public ScriptedAgent(C interpreter) {
+		this(interpreter, (ScriptLoader<C>)null);
 	}
 
 	/**
@@ -168,8 +169,8 @@ public class ScriptedAgent extends Agent {
 	 * @param interpreter is the script interpreter to use.
 	 * @param scriptBasename is the basename of the script to load at startup.
 	 */
-	public ScriptedAgent(ScriptExecutionContext interpreter, String scriptBasename) {
-		this(interpreter, new RepositoryScriptLoader(scriptBasename));
+	public ScriptedAgent(C interpreter, String scriptBasename) {
+		this(interpreter, new RepositoryScriptLoader<C>(scriptBasename));
 	}
 
 	/**
@@ -178,8 +179,8 @@ public class ScriptedAgent extends Agent {
 	 * @param interpreter is the script interpreter to use.
 	 * @param script is the filename of the script to load at startup.
 	 */
-	public ScriptedAgent(ScriptExecutionContext interpreter, File script) {
-		this(interpreter, new FileScriptLoader(script));
+	public ScriptedAgent(C interpreter, File script) {
+		this(interpreter, new FileScriptLoader<C>(script));
 	}
 
 	/**
@@ -188,8 +189,8 @@ public class ScriptedAgent extends Agent {
 	 * @param interpreter is the script interpreter to use.
 	 * @param script is the filename of the script to load at startup.
 	 */
-	public ScriptedAgent(ScriptExecutionContext interpreter, final URL script) {
-		this(interpreter, new URLScriptLoader(script));
+	public ScriptedAgent(C interpreter, URL script) {
+		this(interpreter, new URLScriptLoader<C>(script));
 	}
 	
 	private void initRepository() {
@@ -302,7 +303,7 @@ public class ScriptedAgent extends Agent {
 	 * 
 	 * @param scriptExecutor is the scriptExecutor to set
 	 */
-	protected final void setScriptExecutor(ScriptExecutionContext scriptExecutor) {
+	protected final void setScriptExecutor(C scriptExecutor) {
 		assert(scriptExecutor!=null);
 		this.scriptExecutor = scriptExecutor;
 		try {
@@ -330,7 +331,7 @@ public class ScriptedAgent extends Agent {
 	 * 
 	 * @return the script context.
 	 */
-	protected final ScriptExecutionContext getScriptExecutionContext() {
+	protected final C getScriptExecutionContext() {
 		return this.scriptExecutor;
 	}
 
@@ -881,13 +882,14 @@ public class ScriptedAgent extends Agent {
 
 	/** This class help to load startup scripts.
 	 * 
+	 * @param <C> is the type ScriptExecutionContext supported by this loader.
 	 * @author $Author: sgalland$
 	 * @version $Name$ $Revision$ $Date$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 0.5
 	 */
-	protected static abstract class ScriptLoader {
+	protected static abstract class ScriptLoader<C extends ScriptExecutionContext> {
 
 		/**
 		 */
@@ -901,7 +903,7 @@ public class ScriptedAgent extends Agent {
 		 * @param agent
 		 * @throws IOException
 		 */
-		protected abstract void loadStartupScript(ScriptExecutionContext context, ScriptedAgent agent) throws IOException;
+		protected abstract void loadStartupScript(ScriptExecutionContext context, ScriptedAgent<C> agent) throws IOException;
 		
 		/** Load the startup script.
 		 * 
@@ -909,7 +911,7 @@ public class ScriptedAgent extends Agent {
 		 * @param agent is the agent associated to the script.
 		 * @return the execution status.
 		 */
-		Status load(ScriptExecutionContext context, ScriptedAgent agent) {
+		Status load(ScriptExecutionContext context, ScriptedAgent<C> agent) {
 			Status status = null;
 			boolean isCatched = context.isCatchAllExceptions();
 			context.setCatchAllExceptions(false);
@@ -933,13 +935,14 @@ public class ScriptedAgent extends Agent {
 	
 	/** This class help to load startup script from the repository
 	 * 
+	 * @param <C> is the type ScriptExecutionContext supported by this loader.
 	 * @author $Author: sgalland$
 	 * @version $Name$ $Revision$ $Date$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 0.5
 	 */
-	protected static class RepositoryScriptLoader extends ScriptLoader {
+	protected static class RepositoryScriptLoader<C extends ScriptExecutionContext> extends ScriptLoader<C> {
 
 		private final String basename;
 		
@@ -954,7 +957,7 @@ public class ScriptedAgent extends Agent {
 		 * {@inheritDoc}
 		 */
 		@Override
-		protected void loadStartupScript(ScriptExecutionContext context, ScriptedAgent agent) throws IOException {
+		protected void loadStartupScript(ScriptExecutionContext context, ScriptedAgent<C> agent) throws IOException {
 			context.runScript(this.basename);
 		}
 				
@@ -962,13 +965,14 @@ public class ScriptedAgent extends Agent {
 
 	/** This class help to load startup script from the repository
 	 * 
+	 * @param <C> is the type ScriptExecutionContext supported by this loader.
 	 * @author $Author: sgalland$
 	 * @version $Name$ $Revision$ $Date$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 0.5
 	 */
-	protected static class FileScriptLoader extends ScriptLoader {
+	protected static class FileScriptLoader<C extends ScriptExecutionContext> extends ScriptLoader<C> {
 
 		private final File filename;
 		
@@ -983,7 +987,7 @@ public class ScriptedAgent extends Agent {
 		 * {@inheritDoc}
 		 */
 		@Override
-		protected void loadStartupScript(ScriptExecutionContext context, ScriptedAgent agent) throws IOException {
+		protected void loadStartupScript(ScriptExecutionContext context, ScriptedAgent<C> agent) throws IOException {
 			context.runScript(this.filename);
 		}
 				
@@ -991,13 +995,14 @@ public class ScriptedAgent extends Agent {
 
 	/** This class help to load startup script from the repository
 	 * 
+	 * @param <C> is the type ScriptExecutionContext supported by this loader.
 	 * @author $Author: sgalland$
 	 * @version $Name$ $Revision$ $Date$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 0.5
 	 */
-	protected static class URLScriptLoader extends ScriptLoader {
+	protected static class URLScriptLoader<C extends ScriptExecutionContext> extends ScriptLoader<C> {
 
 		private final URL filename;
 		
@@ -1012,7 +1017,7 @@ public class ScriptedAgent extends Agent {
 		 * {@inheritDoc}
 		 */
 		@Override
-		protected void loadStartupScript(ScriptExecutionContext context, ScriptedAgent agent) throws IOException {
+		protected void loadStartupScript(ScriptExecutionContext context, ScriptedAgent<C> agent) throws IOException {
 			context.runScript(this.filename);
 		}
 				

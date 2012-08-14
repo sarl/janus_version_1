@@ -35,7 +35,7 @@ import org.janusproject.scriptedagent.UnprotectedScriptedAgent;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public class LispAgent extends UnprotectedScriptedAgent {
+public class LispAgent extends UnprotectedScriptedAgent<LispExecutionContext> {
 
 	private static final long serialVersionUID = 2223144942117074910L;
 

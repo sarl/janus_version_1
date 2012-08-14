@@ -39,7 +39,7 @@ import org.luaj.vm2.lib.jse.LuaJavaClassUtil;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public class LuaAgent extends ScriptedAgent {
+public class LuaAgent extends ScriptedAgent<LuaExecutionContext> {
 
 	private static final long serialVersionUID = -1096878039754819565L;
 
@@ -153,7 +153,7 @@ public class LuaAgent extends ScriptedAgent {
 	 */
 	@Override
 	protected void preScriptActivation() {
-		LuaExecutionContext luaContext = (LuaExecutionContext)getScriptExecutionContext();
+		LuaExecutionContext luaContext = getScriptExecutionContext();
 		LuaJavaClassUtil.addAgentFunction(
 				getClass(),
 				ACTIVATE_SCRIPT_FUNCTION,
