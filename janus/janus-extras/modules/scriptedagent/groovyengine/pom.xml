@@ -81,44 +81,4 @@
 
 	</dependencies>
 
-	<!-- ======================================= -->
-	<!-- ==== Developers === -->
-	<!-- ======================================= -->
-
-
-	<developers>
-		<developer>
-			<id>lcabasson</id>
-			<name>Lionel.Cabasson</name>
-			<email>marshall777@gmail.com</email>
-			<url></url>
-			<organization>
-				Laboratoire Syst&amp;egrave;mes
-				et Transports - Universit&amp;eacute;
-				de
-				Technologie de Belfort-Montb&amp;eacute;liard
-			</organization>
-			<organizationUrl>http://www.multiagent.fr</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>cwintz</id>
-			<name>Camille Wintz</name>
-			<email>camille.wintz@live.fr</email>
-			<url></url>
-			<organization>
-				Laboratoire Syst&amp;egrave;mes
-				et Transports - Universit&amp;eacute;
-				de
-				Technologie de Belfort-Montb&amp;eacute;liard
-			</organization>
-			<organizationUrl>http://www.multiagent.fr</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-	</developers>
-
 </project>

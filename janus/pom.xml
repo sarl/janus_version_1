@@ -954,6 +954,7 @@ org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject
 			<name>James Todd</name>
 			<email>gonzo@jxta.org</email>
 			<properties>
+				<id>jtodd</id>
 				<contributions>PipeUtil.java; PeerGroupUtil.java</contributions>
 			</properties>
 			<roles>
@@ -965,72 +966,164 @@ org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject
 			<email>gillan.basso@utbm.fr</email>
 			<url>http://www.multiagent.fr/People:Basso_gillian</url>
 			<properties>
+				<id>gbasso</id>
 				<contributions>API Documentation, Beta Tester</contributions>
 			</properties>
 			<roles>
 				<role>Contributor</role>
 			</roles>
+			<organization>
+				IRTES-SET -
+				Universit&amp;eacute; de
+				Technologie de
+				Belfort-Montba&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.multiagent.fr</organizationUrl>
 		</contributor>
 		<contributor>
 			<name>Robin Geffroy</name>
 			<email>robin.geffroy@gmail.com</email>
 			<properties>
+				<id>rgeffroy</id>
 				<contributions>Android Port of the Kernel for Janus 0.5</contributions>
 			</properties>
 			<roles>
 				<role>Contributor</role>
 			</roles>
+			<organization>
+				Computer Science Department,
+				Universit&amp;eacute; de
+				Technologie de
+				Belfort-Montba&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
 			<name>J&amp;eacute;r&amp;eacute;mie Laval</name>
 			<email>jeremie.laval@gmail.com</email>
 			<url>http://neteril.org/</url>
 			<properties>
+				<id>jlaval</id>
 				<contributions>Android Port of the Kernel for Janus 0.5</contributions>
 			</properties>
 			<roles>
 				<role>Contributor</role>
 			</roles>
+			<organization>
+				Computer Science Department,
+				Universit&amp;eacute; de
+				Technologie de
+				Belfort-Montba&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
 			<name>Beno&amp;icirc;t Mauduit</name>
 			<email>benoit.mauduit@gmail.com</email>
 			<properties>
+				<id>bmauduit</id>
 				<contributions>Android Port of the Kernel for Janus 0.4</contributions>
 			</properties>
 			<roles>
 				<role>Contributor</role>
 			</roles>
+			<organization>
+				Computer Science Department,
+				Universit&amp;eacute; de
+				Technologie de
+				Belfort-Montba&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
 			<name>Matthias Brigaud</name>
 			<email>matthias.brigaud@gmail.com</email>
 			<properties>
+				<id>mbrigaud</id>
 				<contributions>Implementation of BDI engine for Janus 0.5</contributions>
 			</properties>
 			<roles>
 				<role>Contributor</role>
 			</roles>
+			<organization>
+				Computer Science Department,
+				Universit&amp;eacute; de
+				Technologie de
+				Belfort-Montba&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
 			<name>Renaud Buecher</name>
 			<email>renaud.buecher@utbm.fr</email>
 			<properties>
+				<id>rbuecher</id>
 				<contributions>JRuby interpreter for Janus 0.5</contributions>
 			</properties>
 			<roles>
 				<role>Contributor</role>
 			</roles>
+			<organization>
+				Computer Science Department,
+				Universit&amp;eacute; de
+				Technologie de
+				Belfort-Montba&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
 			<name>Guillaume Vinson</name>
 			<email>gui.vinson@gmail.com</email>
 			<properties>
+				<id>gvinson</id>
 				<contributions>JRuby interpreter for Janus 0.5</contributions>
 			</properties>
 			<roles>
 				<role>Contributor</role>
 			</roles>
+			<organization>
+				Computer Science Department,
+				Universit&amp;eacute; de
+				Technologie de
+				Belfort-Montba&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.utbm.fr</organizationUrl>
+		</contributor>
+		<contributor>
+			<name>Lionel Cabasson</name>
+			<email>marshall777@gmail.com</email>
+			<properties>
+				<id>lcabasson</id>
+				<contributions>Groovy interpreter for Janus 0.5</contributions>
+			</properties>
+			<roles>
+				<role>Contributor</role>
+			</roles>
+			<organization>
+				Computer Science Department,
+				Universit&amp;eacute; de
+				Technologie de
+				Belfort-Montba&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.utbm.fr</organizationUrl>
+		</contributor>
+		<contributor>
+			<name>Camille Wintz</name>
+			<email>camille.wintz@live.fr</email>
+			<properties>
+				<id>cwintz</id>
+				<contributions>Groovy interpreter for Janus 0.5</contributions>
+			</properties>
+			<roles>
+				<role>Contributor</role>
+			</roles>
+			<organization>
+				Computer Science Department,
+				Universit&amp;eacute; de
+				Technologie de
+				Belfort-Montba&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 	</contributors>
 
