@@ -43,17 +43,6 @@ public class BigIntegerMessage extends AbstractContentMessage<BigInteger> {
 	}
 
 	/**
-	 * @param o the content of the message.
-	 * @param context is the context to put inside this message.
-	 * @deprecated no replacement
-	 */
-	@Deprecated
-	public BigIntegerMessage(BigInteger o, MessageContext context) {
-		super();
-		this.content = o;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

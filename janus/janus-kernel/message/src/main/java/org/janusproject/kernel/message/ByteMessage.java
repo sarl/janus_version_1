@@ -41,17 +41,6 @@ public class ByteMessage extends AbstractContentMessage<Byte> {
 	}
 
 	/**
-	 * @param o the content of the message.
-	 * @param context is the context to put inside this message.
-	 * @deprecated no replacement
-	 */
-	@Deprecated
-	public ByteMessage(byte o, MessageContext context) {
-		super();
-		this.content = o;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

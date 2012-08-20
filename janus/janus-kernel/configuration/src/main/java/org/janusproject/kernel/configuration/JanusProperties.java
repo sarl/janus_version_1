@@ -1782,29 +1782,6 @@ public class JanusProperties extends Properties {
 		setProperty(property.getPropertyName(), value==null ? null : fmt.format(value));
 	}
 
-	/** Replies the root directory of the current Janus applications.
-	 * <p>
-	 * The file returned by this function depends on your current
-	 * operating system.
-	 * On Unix operating systems, the directory is 
-	 * {@code $HOME/.config/janus/NAME}. On Windows&reg; operating systems, the
-	 * directory is
-	 * {@code C:<span>\</span>Documents and Settings<span>\</span>USERNAME<span>\</span>Local Settings<span>\</span>Application Data<span>\</span>janus<span>\</span>NAME}.
-	 * {@code USERNAME} is the login of the current user, and {@code NAME} is the name of the
-	 * application replied by {@link JanusProperty#JANUS_APPLICATION_NAME}.
-	 * <p>
-	 * If you want a configuration directory which depends on an application instance,
-	 * see {@link #getHomeDirectory()}. 
-	 * 
-	 * @return the root directory of janus, never <code>null</code>.
-	 * @see #getHomeDirectory()
-	 * @deprecated see {@link #getApplicationDirectory()}
-	 */
-	@Deprecated
-	public File getRootDirectory() {
-		return getApplicationDirectory();
-	}
-
 	/** Replies the directory where the configurations of all the Janus applications
 	 * could be found.
 	 * <p>
@@ -1847,30 +1824,6 @@ public class JanusProperties extends Properties {
 		return FileSystem.join(
 				getRootConfigurationDirectory(),
 				getProperty(JanusProperty.JANUS_APPLICATION_NAME));
-	}
-
-	/** Replies the home directory of the current Janus application instance.
-	 * <p>
-	 * The file returned by this function depends on your current
-	 * operating system.
-	 * On Unix operating systems, the directory is 
-	 * {@code $HOME/.config/janus/NAME/ID}. On Windows&reg; operating systems, the
-	 * directory is
-	 * {@code C:<span>\</span>Documents and Settings<span>\</span>USERNAME<span>\</span>Local Settings<span>\</span>Application Data<span>\</span>janus<span>\</span>NAME<span>\</span>ID}.
-	 * {@code USERNAME} is the login of the current user, {@code NAME} is the name of the
-	 * application replied by {@link JanusProperty#JANUS_APPLICATION_NAME}, and {@code ID} is the
-	 * identifier of the current execution context replied by {@link #getContextId()}. 
-	 * <p>
-	 * If you want a configuration directory which is independent on an application instance,
-	 * see {@link #getRootDirectory()}. 
-	 * 
-	 * @return the home directory of janus, never <code>null</code>.
-	 * @see #getRootDirectory() 
-	 * @deprecated see {@link #getKernelDirectory()}
-	 */
-	@Deprecated
-	public File getHomeDirectory() {
-		return getKernelDirectory();
 	}
 
 	/** Replies the home directory of the current Janus application instance.

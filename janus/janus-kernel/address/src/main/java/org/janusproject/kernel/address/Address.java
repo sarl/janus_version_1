@@ -33,14 +33,6 @@ import java.util.UUID;
  * @see AgentAddress
  */
 public interface Address extends Serializable, Comparable<Address> {
-
-	/** Replies the identifier associated to this address.
-	 * 
-	 * @return the identifier associated to this address
-	 * @deprecated see {@link #getUUID()} 
-	 */
-	@Deprecated
-	public UUID getID();
 	
 	/** Replies the identifier associated to this address.
 	 * 

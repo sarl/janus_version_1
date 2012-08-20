@@ -1125,22 +1125,6 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 *            - the organization that the group have to implement
 	 * @return the address of the group, or <code>null</code>
 	 * @GROUPAPI
-	 * @deprecated see {@link #getExistingGroup(Class)}.
-	 */
-	@Deprecated
-	public final GroupAddress getGroup(
-			Class<? extends Organization> organization) {
-		return getExistingGroup(organization);
-	}
-
-	/**
-	 * Get the address of an already existing group implementing the specified
-	 * organization if any, do not create a new one.
-	 * 
-	 * @param organization
-	 *            - the organization that the group have to implement
-	 * @return the address of the group, or <code>null</code>
-	 * @GROUPAPI
 	 * @since 0.5
 	 */
 	public final GroupAddress getExistingGroup(
@@ -1178,23 +1162,6 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 				myGroups.add(grp.getAddress());
 		}
 		return myGroups;
-	}
-
-	/**
-	 * Get the address of an already existing group implementing the specified
-	 * organization if any, do not create a new one.
-	 * 
-	 * @param factory
-	 *            is the organization factory which may be used to instance
-	 *            organization.
-	 * @return the address of the group, or <code>null</code>
-	 * @GROUPAPI
-	 * @deprecated see {@link #getExistingGroup(OrganizationFactory)}
-	 */
-	@Deprecated
-	public final GroupAddress getGroup(
-			OrganizationFactory<? extends Organization> factory) {
-		return getExistingGroup(factory);
 	}
 
 	/**
@@ -2390,32 +2357,6 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 					groupName);
 		}
 		return ga;
-	}
-	
-	/** Replies the public information of the given group.
-	 * 
-	 * @param groupId is the address of the group.
-	 * @return the public informations on a group, or <code>null</code>
-	 * if the given id is unknown.
-	 * @since 0.4
-	 * @deprecated see {@link #getGroup(GroupAddress)}
-	 */
-	@Deprecated
-	public final Group getGroupDescription(GroupAddress groupId) {
-		return getGroup(groupId);
-	}
-
-	/** Replies the public information of the given group.
-	 * 
-	 * @param groupId is the address of the group.
-	 * @return the public informations on a group, or <code>null</code>
-	 * if the given id is unknown.
-	 * @since 0.5
-	 * @deprecated see {@link #getGroupObject(GroupAddress)}
-	 */
-	@Deprecated
-	public final Group getGroup(GroupAddress groupId) {
-		return getGroupObject(groupId);
 	}
 
 	/** Replies the public information of the given group.

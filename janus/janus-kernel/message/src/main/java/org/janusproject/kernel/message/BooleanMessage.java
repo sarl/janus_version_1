@@ -41,17 +41,6 @@ public class BooleanMessage extends AbstractContentMessage<Boolean> {
 	}
 
 	/**
-	 * @param o the content of the message.
-	 * @param context is the context to put inside this message.
-	 * @deprecated no replacement
-	 */
-	@Deprecated
-	public BooleanMessage(boolean o, MessageContext context) {
-		super();
-		this.content = o;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

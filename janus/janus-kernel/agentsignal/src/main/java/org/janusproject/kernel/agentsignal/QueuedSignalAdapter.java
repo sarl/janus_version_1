@@ -56,16 +56,6 @@ implements SignalListener, Iterable<T> {
 		this.type = type;
 	}
 
-	/** Replies the last received signal.
-	 * 
-	 * @return the last received signal, or <code>null</code> if none.
-	 * @deprecated see {@link #getFirstAvailableSignal()}
-	 */
-	@Deprecated
-	public T getLastReceivedSignal() {
-		return getFirstAvailableSignal();
-	}
-
 	/** Replies the first available received signal in the queue.
 	 * The replied message is removed from the queue of signals.
 	 * It means that a second call to <code>getFirstAvailableSignal</code>

@@ -158,7 +158,7 @@ public class NPuzzlePanel extends JPanel implements ChannelInteractableListener,
 
 		updateUIComponents();
 
-		k.getChannelManager().addChannelIteractableListener(this);
+		k.getChannelManager().addChannelInteractableListener(this);
 	}
 
 	private void updateUIComponents() {

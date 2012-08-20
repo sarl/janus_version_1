@@ -40,13 +40,4 @@ public abstract class AbstractCondition<O> implements Condition<O> {
 		//
 	}
 
-	/** {@inheritDoc}
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	public final int getConditionParameterCount() {
-		return 0;
-	}
-
 }

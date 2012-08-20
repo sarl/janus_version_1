@@ -87,7 +87,7 @@ public class ChannelManager {
 	 * Adds a {@link ChannelInteractableListener}
 	 * @param listener
 	 */
-	public void addChannelIteractableListener(ChannelInteractableListener listener) {
+	public void addChannelInteractableListener(ChannelInteractableListener listener) {
 		if (listener!=null) {
 			this.listeners.add(ChannelInteractableListener.class, listener);
 		}
@@ -97,7 +97,7 @@ public class ChannelManager {
 	 * Removes a {@link ChannelInteractableListener}
 	 * @param listener
 	 */
-	public void removeChannelIteractableListener(ChannelInteractableListener listener) {
+	public void removeChannelInteractableListener(ChannelInteractableListener listener) {
 		if (listener!=null) {
 			this.listeners.remove(ChannelInteractableListener.class, listener);
 		}

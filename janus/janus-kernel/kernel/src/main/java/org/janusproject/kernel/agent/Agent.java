@@ -964,42 +964,6 @@ implements Activable, Holon, Serializable {
 	
 	/** Stop the agent execution until the given timout is reached.
 	 * <p>
-	 * <strong>CAUTION:</strong> this function never pauses the
-	 * agent when the execution of the agent's life-cycle functions
-	 * ({@link #activate(Object...)}, {@link #live()}, and
-	 * {@link #end()}) are under progression.
-	 * Pause request is taken into account
-	 * just after {@link #live()} has exited. Pause function
-	 * may be invoked from {@link #activate(Object...)} and
-	 * {@link #end()} but these functions are outside the
-	 * scope of the pause feature, ie. pause as no effect on
-	 * the invocation of these functions.
-	 * <p>
-	 * This function is available for both heavy and light agents.
-	 * <p>
-	 * In the underground implementation, if the agent is threaded,
-	 * ie. it is an heavy agent, the {@link Thread#sleep(long)} 
-	 * is invoked.
-	 * If the agent is not threaded, ie. it is a 
-	 * light agent, the agent's activator ignore it until the
-	 * timeout is reached.
-	 * <p>
-	 * The timout unit depends on the current time manager.
-	 * 
-	 * @param timeout is the delay during which the agent must sleep
-	 * (in default time manager's unit).
-	 * @return <code>true</code> if the agent will be paused,
-	 * otherwise <code>false</code>
-	 * @see KernelTimeManager
-	 * @deprecated see {@link #sleep(float)}
-	 */
-	@Deprecated
-	protected final boolean pause(float timeout) {
-		return sleep(timeout);
-	}
-	
-	/** Stop the agent execution until the given timout is reached.
-	 * <p>
 	 * <strong>CAUTION:</strong> this function does never sleep the
 	 * agent when the execution of the agent's life-cycle functions
 	 * ({@link #activate(Object...)}, {@link #live()}, and
@@ -1117,26 +1081,6 @@ implements Activable, Holon, Serializable {
 			buf.append("-SLEEPING"); //$NON-NLS-1$
 		}
 		return buf.toString();
-	}
-	
-	/** Add listener on life state changes.
-	 * 
-	 * @param listener
-	 * @deprecated see {@link #addAgentLifeStateListener(AgentLifeStateListener)}
-	 */
-	@Deprecated
-	public final void addAgentLifeStageListener(AgentLifeStateListener listener) {
-		addAgentLifeStateListener(listener);
-	}
-
-	/** Remove listener on life state changes.
-	 * 
-	 * @param listener
-	 * @deprecated see {@link #removeAgentLifeStateListener(AgentLifeStateListener)}
-	 */
-	@Deprecated
-	public final void removeAgentLifeStageListener(AgentLifeStateListener listener) {
-		removeAgentLifeStateListener(listener);
 	}
 	
 	/**

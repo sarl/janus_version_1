@@ -271,7 +271,7 @@ class JaakGrid implements GridModel, ActionApplier {
 	/** Move a turtle body from a cell to an other cell.
 	 * <p>
 	 * The move of the body may be discarted if
-	 * {@link #removeCell(GridCell, int, int)} on the
+	 * {@link #removeTurtle(int,int,TurtleBody)} on the
 	 * starting cell is replying <code>false</code>, or
 	 * if {@link #putTurtle(int, int, TurtleBody)} on
 	 * the targeting cell is replying <code>false</code>. 

@@ -158,7 +158,7 @@ public class CubeWorldPanel extends JPanel implements ChannelInteractableListene
 		
 		updateUIComponents();
 		
-		k.getChannelManager().addChannelIteractableListener(this);
+		k.getChannelManager().addChannelInteractableListener(this);
 	}
 	
 	private void updateUIComponents() {

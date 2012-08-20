@@ -20,7 +20,6 @@
 		Indeed if the child modules has org.janus-project.kernel:janus-kernel as 
 		parent, assembly is impossible due to the Maven dependency specifications. -->
 	<modules>
-		<module>locale</module>
 		<module>util</module>
 		<module>logger</module>
 		<module>address</module>

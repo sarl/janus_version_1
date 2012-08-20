@@ -20,8 +20,6 @@
  */
 package org.janusproject.kernel.address;
 
-import java.net.UnknownHostException;
-import java.util.StringTokenizer;
 import java.util.UUID;
 
 /**
@@ -48,39 +46,6 @@ public abstract class AgentAddress extends AbstractAddress {
 	 * agents are addressed.
 	 */
 	private String name;
-
-	/** Replies a AgentAddress which corresponds to the specified string.
-	 * <p>
-	 * The parameter must be result of the {@link #toString()} function.
-	 * 
-	 * @param address is the name of the address 
-	 * @return the address or <code>null</code> if it could be created.
-	 * @throws UnknownHostException if the host name in the given address is unknown (from DNS point of view).
-	 * @throws IllegalArgumentException if the given address has invalid format or value.
-	 * @deprecated See <code>AddressUtil.createAgentAddress(String)</code>
-	 * @see "{@code AddressUtil.createAgentAddress(String)}"
-	 */
-	@Deprecated
-	public static AgentAddress valueOf(String address)
-	throws UnknownHostException, IllegalArgumentException {
-		if (address==null)
-			throw new IllegalArgumentException();
-		StringTokenizer tok = new StringTokenizer(address, "::"); //$NON-NLS-1$
-		if (tok.countTokens() != 2)
-			throw new IllegalArgumentException();
-
-		String name = tok.nextToken();
-		String ids = tok.nextToken();
-
-		tok = new StringTokenizer(ids, "@"); //$NON-NLS-1$
-
-		UUID id = UUID.fromString(tok.nextToken());
-		assert(id!=null);
-
-		return new AgentAddress(id,name) {
-			private static final long serialVersionUID = 2052897212713875693L;
-		};
-	}
 
 	/** Create a agent address.
 	 * 

@@ -287,17 +287,6 @@ public class ProbeManager {
 		this.collectiveProbes.remove(probe);
 		onCollectiveProbeReleased(probe);
 	}
-
-	/** Return the names of supported probes.
-	 * 
-	 * @param probedObjectType is the type of the objects for which all names of probed attributes mustbe replied.
-	 * @return the list of the probed attributes.
-	 * @deprecated see {@link #getWatchableNames(Class)} 
-	 */
-	@Deprecated
-	public Set<String> getProbeNames(Class<?> probedObjectType) {
-		return getWatchableNames(probedObjectType);
-	}
 	
 	/** Return the names of supported probes.
 	 * 
@@ -556,17 +545,6 @@ public class ProbeManager {
 		catch (Throwable e) {
 			throw new ProbeCreationException(AgentProbe.class, e);
 		}
-	}
-
-	/** Replies all the probes on the given entity.
-	 * 
-	 * @param entity is the address of the entity.
-	 * @return probes.
-	 * @deprecated see {@link #getProbes(AgentAddress)}
-	 */
-	@Deprecated
-	public final Iterator<IndividualProbe> getAgentProbes(AgentAddress entity) {
-		return getProbes(entity);
 	}
 
 	/** Replies all the probes on the given entity.
