@@ -47,32 +47,32 @@ import java.lang.annotation.Target;
  * <p>
  * <strong>Example 2: three parameters of type Integer, String, Boolean resp.</strong><br>
  * <pre><code><span>@</span>CapacityPrototype(
- *   input={Integer.class,String.class,Boolean.class}
+ *   fixedParameters={Integer.class,String.class,Boolean.class}
  *)</pre></code>
  * <p>
  * <strong>Example 3: two mandatory parameters of type Integer, String resp. and one optional Boolean</strong><br>
  * <pre><code><span>@</span>CapacityPrototype(
- *   input={Integer.class,String.class,Boolean.class},
- *   optionalInputAt=2
+ *   fixedParameters={Integer.class,String.class,Boolean.class},
+ *   optionalParameterAt=2
  *)</code></pre>
  * <p>
  * <strong>Example 3: two mandatory parameters of type Integer, String resp., followed by any parameters of type Boolean</strong><br>
  * <pre><code><span>@</span>CapacityPrototype(
- *   input={Integer.class,String.class},
- *   allInput=Boolean.class
+ *   fixedParameters={Integer.class,String.class},
+ *   variableParameters=Boolean.class
  *)</code></pre>
  * <p>
  * <strong>Example 4: two mandatory parameters of type Integer, String resp., followed one optional Boolean, followed by any parameters of type Float</strong><br>
  * <pre><code><span>@</span>CapacityPrototype(
- *   input={Integer.class,String.class,Boolean.class},
- *   optionalInputAt=2,
- *   allInput=Float.class
+ *   fixedParameters={Integer.class,String.class,Boolean.class},
+ *   optionalParameterAt=2,
+ *   variableParameters=Float.class
  *)</code></pre>
  * <p>
  * <strong>Example 5: no parameter</strong><br>
  * <pre><code><span>@</span>CapacityPrototype
  *<span>@</span>CapacityPrototype(
- *   input={}
+ *   fixedParameters={}
  *)</code></pre>
  * 
  * @author $Author: sgalland$
