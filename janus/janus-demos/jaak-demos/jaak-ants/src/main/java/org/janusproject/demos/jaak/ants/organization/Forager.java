@@ -39,7 +39,7 @@ import org.janusproject.kernel.status.StatusFactory;
 /** This class defines a forager role.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -192,7 +192,7 @@ public class Forager extends AntRole {
 	/** State of the forager role.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

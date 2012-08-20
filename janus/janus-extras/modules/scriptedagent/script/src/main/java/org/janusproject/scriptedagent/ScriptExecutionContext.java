@@ -33,7 +33,7 @@ import javax.script.ScriptEngineFactory;
  * Execution context for a script language.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  * @since 0.5

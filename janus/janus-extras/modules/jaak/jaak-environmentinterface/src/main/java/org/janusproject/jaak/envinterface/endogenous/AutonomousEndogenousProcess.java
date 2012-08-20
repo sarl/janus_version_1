@@ -30,7 +30,7 @@ import org.janusproject.jaak.envinterface.influence.Influence;
  * does not output any influence.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

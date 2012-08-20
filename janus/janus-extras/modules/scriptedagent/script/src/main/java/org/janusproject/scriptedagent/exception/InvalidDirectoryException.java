@@ -28,7 +28,7 @@ import org.arakhne.vmutil.locale.Locale;
  * Invalid directory for Jython scripts.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

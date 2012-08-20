@@ -24,7 +24,7 @@ package org.janusproject.demos.ecoresolution.ecocube.agent;
  * List of types of agents in the eco-resolution cube problem.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

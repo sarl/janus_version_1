@@ -25,7 +25,7 @@ package org.janusproject.demos.ecoresolution.econpuzzle.exception;
  * have master and slave that do not corresponds
  * 
  * @author Nicolas GAUD &lt;nicolas.gaud@utbm.fr&gt;
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

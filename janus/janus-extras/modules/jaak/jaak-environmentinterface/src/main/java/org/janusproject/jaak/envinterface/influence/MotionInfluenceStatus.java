@@ -23,7 +23,7 @@ package org.janusproject.jaak.envinterface.influence;
 /** Status of the last emitted motion influence.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

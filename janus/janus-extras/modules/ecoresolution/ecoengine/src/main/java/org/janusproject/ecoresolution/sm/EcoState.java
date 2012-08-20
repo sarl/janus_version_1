@@ -30,7 +30,7 @@ package org.janusproject.ecoresolution.sm;
  * 
  * @author $Author: sgalland$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

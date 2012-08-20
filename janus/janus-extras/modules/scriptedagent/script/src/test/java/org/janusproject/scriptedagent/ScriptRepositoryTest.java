@@ -35,7 +35,7 @@ import org.arakhne.vmutil.Resources;
 
 /**
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  * @since 0.5

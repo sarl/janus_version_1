@@ -28,7 +28,7 @@ import org.janusproject.jaak.math.Point2i;
 /** Provide implementation for a turtle spawner on a point.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

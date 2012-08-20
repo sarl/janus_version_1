@@ -38,7 +38,7 @@ import org.janusproject.kernel.agent.Kernels;
  * Graphic User Interface for the ant demo.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -80,7 +80,7 @@ public class AntFrame extends JFrame implements GridStateChannelListener {
 
 	/**
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

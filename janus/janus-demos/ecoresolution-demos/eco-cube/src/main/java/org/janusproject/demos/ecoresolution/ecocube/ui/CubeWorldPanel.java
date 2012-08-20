@@ -63,7 +63,7 @@ import org.janusproject.kernel.channels.ChannelInteractableListener;
 /** Panel to display the cube world.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
@@ -352,7 +352,7 @@ public class CubeWorldPanel extends JPanel implements ChannelInteractableListene
 	/** Displayer of the cube world.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */
@@ -468,7 +468,7 @@ public class CubeWorldPanel extends JPanel implements ChannelInteractableListene
 	/** State of the world.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */

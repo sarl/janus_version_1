@@ -28,7 +28,7 @@ import org.janusproject.jaak.math.Vector2f;
  * in {@link TurtleBodyCapacityMethodName}.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

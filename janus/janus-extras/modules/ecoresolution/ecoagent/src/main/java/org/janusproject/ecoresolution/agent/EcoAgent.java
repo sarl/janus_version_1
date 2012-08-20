@@ -51,7 +51,7 @@ import org.janusproject.kernel.status.Status;
  * 
  * @author $Author: sgalland$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
@@ -324,7 +324,7 @@ public abstract class EcoAgent extends Agent implements ChannelInteractable {
 	 * 
 	 * @author $Author: sgalland$
 	 * @author $Author: ngaud$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */
@@ -401,7 +401,7 @@ public abstract class EcoAgent extends Agent implements ChannelInteractable {
 	 * 
 	 * @author $Author: sgalland$
 	 * @author $Author: ngaud$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */

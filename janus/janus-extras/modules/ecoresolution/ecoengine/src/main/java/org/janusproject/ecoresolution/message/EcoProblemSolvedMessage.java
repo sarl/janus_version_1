@@ -25,7 +25,7 @@ import org.janusproject.kernel.message.Message;
 /** A message which is indicating that the eco problem was solved.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

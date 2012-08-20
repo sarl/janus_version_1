@@ -380,6 +380,7 @@ public class KernelEventTest extends TestCase {
 		 * {@inheritDoc}
 		 */
 		@Override
+		@Deprecated
 		public void addChannelIteractableListener(
 				ChannelInteractableListener listener) {
 			//
@@ -389,6 +390,7 @@ public class KernelEventTest extends TestCase {
 		 * {@inheritDoc}
 		 */
 		@Override
+		@Deprecated
 		public void removeChannelIteractableListener(
 				ChannelInteractableListener listener) {
 			//
@@ -398,6 +400,7 @@ public class KernelEventTest extends TestCase {
 		 * {@inheritDoc}
 		 */
 		@Override
+		@Deprecated
 		public ChannelInteractable getChannelInteractable(AgentAddress address) {
 			return null;
 		}

@@ -27,7 +27,7 @@ import org.janusproject.ecoresolution.relation.EcoRelationUtil;
 /** Utilities for relations.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

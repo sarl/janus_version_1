@@ -34,7 +34,7 @@ import org.janusproject.kernel.logger.LoggerUtil;
 /** Launcher for the pacman Demo.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

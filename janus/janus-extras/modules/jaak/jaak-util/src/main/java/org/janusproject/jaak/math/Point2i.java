@@ -23,7 +23,7 @@ package org.janusproject.jaak.math;
 /** 2D Point with 2 integers.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

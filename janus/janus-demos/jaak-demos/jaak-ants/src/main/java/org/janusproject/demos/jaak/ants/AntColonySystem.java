@@ -41,7 +41,7 @@ import org.janusproject.kernel.agent.Kernels;
 /** Launcher for the Ant Colony Demo.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

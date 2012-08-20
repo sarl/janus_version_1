@@ -24,7 +24,7 @@ package org.janusproject.jaak.envinterface.perception;
  * environment object stay.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

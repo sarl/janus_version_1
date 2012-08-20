@@ -53,7 +53,7 @@ import org.janusproject.jaak.math.Point2i;
  * UI for the pacman game.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -265,7 +265,7 @@ public class PacManPanel extends JPanel implements MouseListener, KeyListener, G
 
 	/**
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

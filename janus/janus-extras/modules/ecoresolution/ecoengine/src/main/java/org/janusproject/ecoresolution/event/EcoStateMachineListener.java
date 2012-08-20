@@ -28,7 +28,7 @@ import org.janusproject.ecoresolution.sm.EcoState;
  * 
  * @author $Author: sgalland$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  * @see EcoState

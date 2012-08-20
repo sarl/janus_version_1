@@ -58,7 +58,7 @@ import org.janusproject.kernel.agent.Kernels;
  * @author $Author: gui.vinson@gmail.com$
  * @author $Author: renaud.buecher@utbm.fr$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

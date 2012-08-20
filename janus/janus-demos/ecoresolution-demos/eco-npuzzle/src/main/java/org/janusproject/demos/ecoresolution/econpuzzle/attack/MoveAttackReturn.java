@@ -30,7 +30,7 @@ import org.janusproject.ecoresolution.relation.EcoRelation;
 /**
  * Represents the answer  to a MoveAttack specifying the new acquaintances of the Tile that has moved.
  * @author Nicolas GAUD &lt;nicolas.gaud@utbm.fr&gt;
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

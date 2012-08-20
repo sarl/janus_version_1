@@ -48,7 +48,7 @@ import org.janusproject.kernel.util.multicollection.MultiCollection;
 /** This class defines an implementation of turtle body.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

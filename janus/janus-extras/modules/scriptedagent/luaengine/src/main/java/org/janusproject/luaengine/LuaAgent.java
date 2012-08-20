@@ -35,7 +35,7 @@ import org.luaj.vm2.lib.jse.LuaJavaClassUtil;
  * Agent created to run LUA commands and scripts.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

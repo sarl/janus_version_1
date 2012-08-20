@@ -23,7 +23,7 @@ package org.janusproject.jaak.envinterface.perception;
 /** This interface permits to manipulate the environmental objects.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

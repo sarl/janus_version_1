@@ -39,7 +39,7 @@ import org.janusproject.jaak.envinterface.perception.Substance;
  * decide to follow the trail.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

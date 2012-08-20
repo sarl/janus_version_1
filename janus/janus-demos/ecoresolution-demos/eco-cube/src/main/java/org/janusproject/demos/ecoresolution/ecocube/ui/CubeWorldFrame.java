@@ -32,7 +32,7 @@ import org.janusproject.kernel.Kernel;
 /** Frame to display the cube world.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

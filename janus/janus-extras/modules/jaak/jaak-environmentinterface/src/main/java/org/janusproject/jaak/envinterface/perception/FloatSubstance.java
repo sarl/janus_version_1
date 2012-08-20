@@ -27,7 +27,7 @@ import java.math.BigInteger;
  * floating point value as the internal substance value.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

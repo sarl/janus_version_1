@@ -26,7 +26,7 @@ import java.util.EventListener;
  * Listener on the channel able to obtain information from the grid state in a Jaak environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

@@ -35,7 +35,7 @@ import org.janusproject.kernel.logger.LoggerUtil;
 /** Applet for the Ant Colony Demo.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

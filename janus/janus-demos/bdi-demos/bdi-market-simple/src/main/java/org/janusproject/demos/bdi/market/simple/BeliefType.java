@@ -25,7 +25,7 @@ package org.janusproject.demos.bdi.market.simple;
  * 
  * @author $Author: mbrigaud$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

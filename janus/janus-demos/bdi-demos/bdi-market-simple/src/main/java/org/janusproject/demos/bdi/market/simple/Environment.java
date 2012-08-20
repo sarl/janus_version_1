@@ -37,7 +37,7 @@ import org.janusproject.kernel.agent.bdi.BDIAgent;
  * 
  * @author $Author: mbrigaud$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

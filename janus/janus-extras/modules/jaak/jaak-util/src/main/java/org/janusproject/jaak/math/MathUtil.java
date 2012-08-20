@@ -24,7 +24,7 @@ package org.janusproject.jaak.math;
 /** Mathematic utilities for Jaak.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

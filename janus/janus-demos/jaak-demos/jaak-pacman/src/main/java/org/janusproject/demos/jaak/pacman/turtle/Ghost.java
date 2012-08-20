@@ -48,7 +48,7 @@ import org.janusproject.kernel.util.random.RandomNumber;
  * When it is perceiving the pacman, it pursue it.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

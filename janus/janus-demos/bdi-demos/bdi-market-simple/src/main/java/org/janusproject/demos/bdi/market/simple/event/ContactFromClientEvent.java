@@ -28,7 +28,7 @@ import org.janusproject.kernel.agent.bdi.event.BDIEvent;
  * 
  * @author $Author: mbrigaud$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

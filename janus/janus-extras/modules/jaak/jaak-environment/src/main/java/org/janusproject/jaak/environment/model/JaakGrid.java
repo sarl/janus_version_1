@@ -43,7 +43,7 @@ import org.janusproject.jaak.math.Point2i;
 /** This class defines grid for the Jaak environment model.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -533,7 +533,7 @@ class JaakGrid implements GridModel, ActionApplier {
 	/** This class defines cell of the grid for the Jaak environment model.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

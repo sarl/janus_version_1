@@ -37,7 +37,7 @@ import org.python.core.PyType;
  * Agent created to run Jython commands and scripts.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

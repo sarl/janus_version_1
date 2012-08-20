@@ -27,7 +27,7 @@ import org.janusproject.jaak.envinterface.influence.Influence;
  * which is not an agent.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -128,7 +128,7 @@ public class EnvironmentalObject extends AbstractPerceivable implements JaakObje
 	
 	/**
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

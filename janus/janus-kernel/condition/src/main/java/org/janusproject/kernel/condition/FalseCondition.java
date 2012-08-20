@@ -55,6 +55,7 @@ implements Condition<Object>, ConditionFailure {
 	 * @return {@code 0}
 	 */
 	@Override
+	@Deprecated
 	public int getConditionParameterCount() {
 		return 0;
 	}

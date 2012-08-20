@@ -29,7 +29,7 @@ import org.arakhne.vmutil.locale.Locale;
  * 
  * @author $Author: sgalland$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

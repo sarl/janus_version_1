@@ -39,7 +39,7 @@ import org.arakhne.vmutil.ReflectionUtil;
  *
  * @param <C> is the type of ScriptExecutionContext supported by this agent.
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  * @since 0.5

@@ -24,7 +24,7 @@ package org.janusproject.jaak.math;
  * 
  * @param <T> is the implementation type of the tuple.
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

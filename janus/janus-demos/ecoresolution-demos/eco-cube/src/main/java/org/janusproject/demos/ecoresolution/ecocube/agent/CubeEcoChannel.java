@@ -26,7 +26,7 @@ import org.janusproject.ecoresolution.agent.EcoChannel;
 /** Channel dedicated to eco-agents.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

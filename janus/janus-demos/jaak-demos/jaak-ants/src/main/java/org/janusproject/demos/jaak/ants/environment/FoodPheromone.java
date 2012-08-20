@@ -25,7 +25,7 @@ import java.awt.Color;
 /** This class defines a pheromon which is permitting to return to a food source.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

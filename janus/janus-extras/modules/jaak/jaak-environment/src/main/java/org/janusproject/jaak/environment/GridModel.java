@@ -27,7 +27,7 @@ import org.janusproject.jaak.math.Point2i;
 /** This interface defines a grid for the Jaak environment model.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

@@ -25,7 +25,7 @@ import org.janusproject.jaak.envinterface.body.TurtleBody;
 /** This class defines an influence from turtle to environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

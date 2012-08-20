@@ -29,7 +29,7 @@ import org.janusproject.jaak.envinterface.influence.Influence;
  * other turtles.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

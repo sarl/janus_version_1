@@ -151,7 +151,7 @@ public class OrganizationRepositoryTest extends TestCase {
 		
 		/**
 		 * @author St&eacute;phane GALLAND &lt;stephane.galland@utbm.fr&gt;
-		 * @version $Name$ $Revision$ $Date$
+		 * @version $FullVersion$
 		 * @mavengroupid org.janus-project.kernel
 		 * @mavenartifactid crio
 		 */
@@ -201,7 +201,7 @@ public class OrganizationRepositoryTest extends TestCase {
 		
 		/**
 		 * @author St&eacute;phane GALLAND &lt;stephane.galland@utbm.fr&gt;
-		 * @version $Name$ $Revision$ $Date$
+		 * @version $FullVersion$
 		 * @mavengroupid org.janus-project.kernel
 		 * @mavenartifactid crio
 		 */
@@ -250,7 +250,7 @@ public class OrganizationRepositoryTest extends TestCase {
 		
 		/**
 		 * @author St&eacute;phane GALLAND &lt;stephane.galland@utbm.fr&gt;
-		 * @version $Name$ $Revision$ $Date$
+		 * @version $FullVersion$
 		 * @mavengroupid org.janus-project.kernel
 		 * @mavenartifactid crio
 		 */

@@ -27,7 +27,7 @@ import org.janusproject.kernel.channels.Channel;
 /** This class permits to define a Turtle in Jaak.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

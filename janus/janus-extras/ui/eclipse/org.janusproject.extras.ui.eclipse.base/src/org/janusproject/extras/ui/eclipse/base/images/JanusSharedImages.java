@@ -19,7 +19,7 @@ import org.janusproject.extras.ui.eclipse.base.Activator;
 
 /**
  * @author Sebastian RODRIGUEZ &lt;sebastian@sebastianrodriguez.com.ar&gt;
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid org.janus-project.kernel
  * @mavenartifactid org.janusproject.extras.ui.eclipse.base
  * 

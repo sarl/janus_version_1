@@ -19,7 +19,7 @@ import org.eclipse.ui.console.MessageConsoleStream;
  * A Simple Console that redirects System.err and System.out to this console.
  * 
  * @author Sebastian RODRIGUEZ &lt;sebastian@sebastianrodriguez.com.ar&gt;
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid org.janus-project.kernel
  * @mavenartifactid xxxx
  * 

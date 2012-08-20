@@ -40,7 +40,7 @@ import org.janusproject.kernel.channels.Channel;
  * @author $Author: gui.vinson@gmail.com$
  * @author $Author: renaud.buecher@utbm.fr$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -92,7 +92,7 @@ public interface AgentShellChannel extends Channel {
 	/** Listener on the results of a run.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */
@@ -109,7 +109,7 @@ public interface AgentShellChannel extends Channel {
 	/** Listener on logs.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */

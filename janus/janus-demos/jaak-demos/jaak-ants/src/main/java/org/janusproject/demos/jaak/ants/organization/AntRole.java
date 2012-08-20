@@ -35,7 +35,7 @@ import org.janusproject.kernel.util.random.RandomNumber;
 /** This class defines a role for all ants.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

@@ -54,6 +54,7 @@ public final class TrueCondition implements Condition<Object> {
 	 * @return {@code 0}
 	 */
 	@Override
+	@Deprecated
 	public int getConditionParameterCount() {
 		return 0;
 	}

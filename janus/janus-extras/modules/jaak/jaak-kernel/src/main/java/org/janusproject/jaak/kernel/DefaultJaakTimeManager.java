@@ -28,7 +28,7 @@ import org.janusproject.kernel.time.ConstantKernelTimeManager;
 /** Time manager for Jaak environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

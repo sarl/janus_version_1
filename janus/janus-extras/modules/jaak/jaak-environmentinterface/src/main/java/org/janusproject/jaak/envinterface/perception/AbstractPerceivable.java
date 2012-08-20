@@ -28,7 +28,7 @@ import org.janusproject.jaak.math.Point2i;
 /** This class defines a perceived turtle.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

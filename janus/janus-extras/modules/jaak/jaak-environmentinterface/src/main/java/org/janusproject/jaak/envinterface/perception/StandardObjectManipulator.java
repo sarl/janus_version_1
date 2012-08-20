@@ -27,7 +27,7 @@ import org.janusproject.jaak.envinterface.perception.Substance;
 /** This class permits to manipulate the environmental objects.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

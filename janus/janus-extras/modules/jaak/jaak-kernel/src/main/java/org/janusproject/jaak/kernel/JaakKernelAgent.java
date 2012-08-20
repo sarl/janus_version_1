@@ -59,7 +59,7 @@ import org.janusproject.kernel.util.multicollection.MultiCollection;
 /** Provide the core agent which is responsible of the Jaak environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -356,7 +356,7 @@ class JaakKernelAgent extends Agent implements KernelListener, ChannelInteractab
 	/** Defines the channel to retreive the grid information.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */
@@ -390,7 +390,7 @@ class JaakKernelAgent extends Agent implements KernelListener, ChannelInteractab
 	/** Defines the channel to retreive the grid information.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

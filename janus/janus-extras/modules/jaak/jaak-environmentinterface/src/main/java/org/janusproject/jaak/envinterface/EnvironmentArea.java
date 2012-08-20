@@ -25,7 +25,7 @@ import org.janusproject.jaak.math.Point2i;
 /** This interface is for the area covered by the environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

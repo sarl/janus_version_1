@@ -69,7 +69,7 @@ import org.janusproject.kernel.status.StatusFactory;
  * </ol>
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -670,7 +670,7 @@ public abstract class Turtle extends Agent implements ChannelInteractable {
 	/** Channel to allow binding 
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */
@@ -712,7 +712,7 @@ public abstract class Turtle extends Agent implements ChannelInteractable {
 	/** This class permits to define a Turtle in Jaak.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

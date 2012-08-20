@@ -40,7 +40,7 @@ import org.luaj.vm2.script.LuaScriptEngineFactory;
  * It allows to run several scripts under several forms (path, commands, ...).
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

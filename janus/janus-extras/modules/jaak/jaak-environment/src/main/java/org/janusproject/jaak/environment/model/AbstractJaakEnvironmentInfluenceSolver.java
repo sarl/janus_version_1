@@ -29,7 +29,7 @@ import org.janusproject.jaak.environment.solver.InfluenceSolver;
  * to the internal data structures of the Jaak environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

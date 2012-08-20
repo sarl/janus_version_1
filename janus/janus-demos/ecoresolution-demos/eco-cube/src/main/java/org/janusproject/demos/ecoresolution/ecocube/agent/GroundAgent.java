@@ -30,7 +30,7 @@ import org.janusproject.ecoresolution.relation.EcoAttack;
  * A plane eco-agent.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
@@ -94,7 +94,7 @@ public class GroundAgent extends EcoAgent {
 	/** Implementation of an eco-channel.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */

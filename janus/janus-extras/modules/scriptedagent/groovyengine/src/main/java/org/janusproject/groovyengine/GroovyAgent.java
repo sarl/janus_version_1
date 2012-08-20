@@ -35,7 +35,7 @@ import org.janusproject.scriptedagent.ScriptedAgent;
  * @author $Author: cwintz$
  * @author $Author: ngaud$
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

@@ -31,7 +31,7 @@ import org.janusproject.jaak.math.Point2i;
  * or modifying Bresenham's original algorithm. See further functions below.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -97,7 +97,7 @@ public class Bresenham {
 	 * implemented in either the firmware or the hardware of modern graphics cards.
 	 * 
 	 * @author St&eacute;phane GALLAND &lt;stephane.galland@utbm.fr&gt;
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid org.janus-project.jaak
 	 * @mavenartifactid util
 	 */
@@ -211,7 +211,7 @@ public class Bresenham {
 	/** Iterates on points on a rectangle.
 	 * 
 	 * @author St&eacute;phane GALLAND &lt;stephane.galland@utbm.fr&gt;
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid org.janus-project.jaak
 	 * @mavenartifactid util
 	 */

@@ -27,7 +27,7 @@ import org.janusproject.kernel.address.AgentAddress;
  * 
  * @author $Author: mbrigaud$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

@@ -42,7 +42,7 @@ import org.osgi.framework.BundleContext;
  * OSGI Activator
  * 
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

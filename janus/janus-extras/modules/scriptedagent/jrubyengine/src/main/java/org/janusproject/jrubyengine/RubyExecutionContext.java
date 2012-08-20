@@ -46,7 +46,7 @@ import org.jruby.runtime.builtin.IRubyObject;
  * @author $Author: ngaud$
  * @author $Author: gvinson$
  * @author $Author: rbuecher$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

@@ -27,7 +27,7 @@ import org.janusproject.demos.jaak.ants.AntColonySystem;
 /** This class defines a pheromon which is permitting to return to a colony.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
