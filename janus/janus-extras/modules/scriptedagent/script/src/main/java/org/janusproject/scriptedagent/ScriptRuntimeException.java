@@ -26,7 +26,7 @@ import javax.script.ScriptException;
  * The RuntimeException version of {@link ScriptException}.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  * @since 0.5

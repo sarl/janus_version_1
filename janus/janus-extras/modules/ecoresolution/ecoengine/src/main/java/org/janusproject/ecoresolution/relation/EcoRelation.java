@@ -31,7 +31,7 @@ import org.janusproject.ecoresolution.identity.EcoIdentity;
  * 
  * @author $Author: sgalland$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

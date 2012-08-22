@@ -158,7 +158,7 @@ public class NPuzzlePanel extends JPanel implements ChannelInteractableListener,
 
 		updateUIComponents();
 
-		k.getChannelManager().addChannelIteractableListener(this);
+		k.getChannelManager().addChannelInteractableListener(this);
 	}
 
 	private void updateUIComponents() {
@@ -345,7 +345,7 @@ public class NPuzzlePanel extends JPanel implements ChannelInteractableListener,
 	 * Displayer of the NPuzzle Game
 	 * 
 	 * @author Nicolas GAUD &lt;nicolas.gaud@utbm.fr&gt;
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */
@@ -478,7 +478,7 @@ public class NPuzzlePanel extends JPanel implements ChannelInteractableListener,
 	 * A state of the NPuzzle Game
 	 * 
 	 * @author Nicolas GAUD &lt;nicolas.gaud@utbm.fr&gt;
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */
@@ -555,7 +555,7 @@ public class NPuzzlePanel extends JPanel implements ChannelInteractableListener,
 	/**
 	 * A couple of integers identifying a place within the NPuzzle Grid
 	 * @author Nicolas GAUD &lt;nicolas.gaud@utbm.fr&gt;
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */

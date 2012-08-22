@@ -41,7 +41,7 @@ import org.janusproject.kernel.status.StatusFactory;
  * @author $Author: kleroy$
  * @author $Author: ptalagrand$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

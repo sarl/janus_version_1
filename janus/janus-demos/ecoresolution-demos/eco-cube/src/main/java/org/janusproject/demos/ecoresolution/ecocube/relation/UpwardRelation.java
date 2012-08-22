@@ -29,7 +29,7 @@ import org.janusproject.ecoresolution.relation.EcoRelation;
 /** Relationship "Master is below Slave"
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

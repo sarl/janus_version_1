@@ -30,7 +30,7 @@ import org.janusproject.jaak.math.Point2i;
  * This frustum is not orientable.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -65,7 +65,7 @@ public class SquareTurtleFrustum implements TurtleFrustum {
 	 * restricted to a square.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

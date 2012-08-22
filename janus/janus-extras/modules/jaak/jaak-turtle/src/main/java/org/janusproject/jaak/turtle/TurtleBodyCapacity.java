@@ -34,7 +34,7 @@ import org.janusproject.kernel.crio.capacity.CapacityPrototype;
 /** This class defines a capacity to access to turtle body.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

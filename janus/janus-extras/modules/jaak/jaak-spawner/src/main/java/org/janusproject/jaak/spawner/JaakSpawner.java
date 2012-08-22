@@ -36,7 +36,7 @@ import org.janusproject.kernel.time.KernelTimeManager;
 /** Provide implementation for a turtle spawner in Jaak environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -196,7 +196,7 @@ public abstract class JaakSpawner {
 	/** Provide implementation for a body factory dedicated to spawners.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

@@ -26,7 +26,7 @@ import org.janusproject.jaak.math.Vector2f;
 /** This class defines a motion influence.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

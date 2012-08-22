@@ -26,7 +26,7 @@ import org.janusproject.kernel.channels.Channel;
 /** Channel to communicate with the pacman.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

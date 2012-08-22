@@ -57,7 +57,7 @@ import org.janusproject.kernel.util.random.RandomNumber;
  * make possible to have different individuals in the population.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -118,7 +118,7 @@ public class Ant extends Turtle {
 	/** This class defines the implementation of a PheromoneTendencyCapacity.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */
@@ -176,7 +176,7 @@ public class Ant extends Turtle {
 	/** This class defines the implementation of a PheromoneTendencyCapacity.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

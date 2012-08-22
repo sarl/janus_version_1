@@ -28,7 +28,7 @@ import org.janusproject.jaak.math.Point2i;
 /** This interface defines a frustum for for a turtle.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

@@ -624,19 +624,6 @@ extends CapacityImplementation {
 	 * @param callContext is the context of invocation of this capacity.
 	 * @return the address of the group where this role is defined.
 	 * @GROUPAPI
-	 * @deprecated see {@link #getGroupAddress(CapacityContext)}
-	 */
-	@Deprecated
-	protected static final GroupAddress getGroup(CapacityContext callContext) {
-		return getGroupAddress(callContext);
-	}
-
-	/**
-	 * Replies the address of the group where this role is defined.
-	 * 
-	 * @param callContext is the context of invocation of this capacity.
-	 * @return the address of the group where this role is defined.
-	 * @GROUPAPI
 	 * @since 0.5
 	 */
 	protected static final GroupAddress getGroupAddress(CapacityContext callContext) {
@@ -669,24 +656,6 @@ extends CapacityImplementation {
 	 *            the organization that the group have to implement
 	 * @return the address of the group, or <code>null</code>
 	 * @GROUPAPI
-	 * @deprecated see {@link #getExistingGroup(CapacityContext, Class)}
-	 */
-	@Deprecated
-	protected static final GroupAddress getGroup(
-			CapacityContext callContext,
-			Class<? extends Organization> organization) {
-		return getExistingGroup(callContext, organization);
-	}
-
-	/**
-	 * Get the address of an already existing group implementing the specified
-	 * organization if any, do not create a new one.
-	 * 
-	 * @param callContext is the context of invocation of this capacity.
-	 * @param organization -
-	 *            the organization that the group have to implement
-	 * @return the address of the group, or <code>null</code>
-	 * @GROUPAPI
 	 * @since 0.5
 	 */
 	protected static final GroupAddress getExistingGroup(
@@ -696,24 +665,6 @@ extends CapacityImplementation {
 		Role role = context.getRole();
 		assert(role!=null);
 		return role.getExistingGroup(organization);
-	}
-
-	/**
-	 * Get the address of an already existing group implementing the specified
-	 * organization if any, do not create a new one.
-	 * 
-	 * @param callContext is the context of invocation of this capacity.
-	 * @param factory is the organization factory to use to create an organization instance
-	 * when required by the CRIO context.
-	 * @return the address of the group, or <code>null</code>
-	 * @GROUPAPI
-	 * @deprecated see {@link #getExistingGroup(CapacityContext, OrganizationFactory)}
-	 */
-	@Deprecated
-	protected static final GroupAddress getGroup(
-			CapacityContext callContext,
-			OrganizationFactory<? extends Organization> factory) {
-		return getExistingGroup(callContext, factory);
 	}
 
 	/**
@@ -1174,23 +1125,6 @@ extends CapacityImplementation {
 	 * 			the organization that the group have to implement
 	 * @return all known groups
 	 * @GROUPAPI
-	 * @deprecated see {@link #getExistingGroups(CapacityContext, Class)}
-	 */
-	@Deprecated
-	protected static final List<GroupAddress> getGroups(
-			CapacityContext callContext,
-			Class<? extends Organization> organization) {
-		return getExistingGroups(callContext, organization);
-	}
-
-	/**
-	 * Return all known groups of an organization.
-	 * 
-	 * @param callContext is the context of invocation of this capacity.
-	 * @param organization
-	 * 			the organization that the group have to implement
-	 * @return all known groups
-	 * @GROUPAPI
 	 * @since 0.5
 	 */
 	protected static final List<GroupAddress> getExistingGroups(
@@ -1229,19 +1163,6 @@ extends CapacityImplementation {
 		Role r = context.getRole();
 		assert(r!=null);
 		return r.getExistingRoles(group);
-	}
-
-	/**
-	 * Return all the groups in which this calling-role's player is playing a role.
-	 * 
-	 * @param callContext is the context of invocation of this capacity.
-	 * @return all the groups in which this role player is playing a role.
-	 * @GROUPAPI
-	 * @deprecated see {@link #getPlayerGroups(CapacityContext)}
-	 */
-	@Deprecated
-	protected static final Collection<GroupAddress> getGroups(CapacityContext callContext) {
-		return getPlayerGroups(callContext);
 	}
 
 	/**

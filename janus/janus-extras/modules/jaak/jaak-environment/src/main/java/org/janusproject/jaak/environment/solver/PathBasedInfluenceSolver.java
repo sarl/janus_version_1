@@ -48,7 +48,7 @@ import org.janusproject.jaak.math.Vector2f;
  * </ul>
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -219,7 +219,7 @@ public class PathBasedInfluenceSolver extends AbstractJaakEnvironmentInfluenceSo
 	
 	/** 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */
@@ -293,7 +293,7 @@ public class PathBasedInfluenceSolver extends AbstractJaakEnvironmentInfluenceSo
 	
 	/** 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

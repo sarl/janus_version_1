@@ -27,7 +27,7 @@ import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
  * inside the environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

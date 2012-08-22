@@ -52,7 +52,7 @@ import org.janusproject.kernel.util.event.ListenerCollection;
  * @author $Author: lcabasson$
  * @author $Author: cwintz$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

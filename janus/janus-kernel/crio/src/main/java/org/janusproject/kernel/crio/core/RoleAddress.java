@@ -184,17 +184,6 @@ public class RoleAddress implements Address {
 		h = h * 31 + ((this.player==null) ? 0 : this.player.hashCode());
 		return h;
 	}
-
-	/** Replies the identifier associated to this address.
-	 * 
-	 * @return the identifier associated to this address.
-	 * @deprecated see {@link #getUUID()}
-	 */
-	@Override
-	@Deprecated
-	public UUID getID() {
-		return getUUID();
-	}
 	
 	/** Replies the identifier associated to this address.
 	 * 

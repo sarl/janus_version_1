@@ -30,7 +30,7 @@ import java.lang.annotation.RetentionPolicy;
  * are containing scripts.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  * @since 0.5

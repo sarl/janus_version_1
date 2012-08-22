@@ -35,7 +35,7 @@ import org.janusproject.kernel.status.StatusFactory;
 /** This class defines a patroller role.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -131,7 +131,7 @@ public class Patroller extends AntRole {
 	/** State of the patroller
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

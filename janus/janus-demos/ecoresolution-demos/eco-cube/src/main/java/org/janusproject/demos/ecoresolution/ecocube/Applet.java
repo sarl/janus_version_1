@@ -36,7 +36,7 @@ import org.janusproject.kernel.logger.LoggerUtil;
 
 /**
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

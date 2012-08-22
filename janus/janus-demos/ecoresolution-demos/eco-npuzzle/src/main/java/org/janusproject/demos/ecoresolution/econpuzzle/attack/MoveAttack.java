@@ -32,7 +32,7 @@ import org.janusproject.ecoresolution.relation.EcoRelation;
  * Each time an EcoAgent receives a MoveAttack, it answers with a MoveAttackReturn
  * This attack constains as constraint the set of the new acquaintances for the Tile that receives it
  * @author Nicolas GAUD &lt;nicolas.gaud@utbm.fr&gt;
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

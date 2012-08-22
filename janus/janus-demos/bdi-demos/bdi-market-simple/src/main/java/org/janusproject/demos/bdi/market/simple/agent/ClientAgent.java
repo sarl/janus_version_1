@@ -53,7 +53,7 @@ import org.janusproject.kernel.util.random.RandomNumber;
  * 
  * @author $Author: mbrigaud$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

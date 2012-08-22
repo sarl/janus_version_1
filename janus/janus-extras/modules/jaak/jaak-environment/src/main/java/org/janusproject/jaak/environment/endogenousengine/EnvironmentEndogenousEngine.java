@@ -29,7 +29,7 @@ import org.janusproject.kernel.time.KernelTimeManager;
 /** This interface defines the endogenous rules of the environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

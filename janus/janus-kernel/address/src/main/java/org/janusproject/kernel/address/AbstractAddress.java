@@ -65,17 +65,6 @@ public abstract class AbstractAddress implements Address {
 	public int hashCode() {
 		return this.id.hashCode();
 	}
-
-	/** Replies the identifier associated to this address.
-	 * 
-	 * @return the identifier associated to this address.
-	 * @deprecated see {@link #getUUID()}
-	 */
-	@Override
-	@Deprecated
-	public UUID getID() {
-		return this.id;
-	}
 	
 	/** Replies the identifier associated to this address.
 	 * 

@@ -43,17 +43,6 @@ public class BigDecimalMessage extends AbstractContentMessage<BigDecimal> {
 	}
 
 	/**
-	 * @param o the content of the message.
-	 * @param context is the context to put inside this message.
-	 * @deprecated no replacement
-	 */
-	@Deprecated
-	public BigDecimalMessage(BigDecimal o, MessageContext context) {
-		super();
-		this.content = o;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

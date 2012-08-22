@@ -29,7 +29,7 @@ import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
  * to apply actions in a Jaak environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

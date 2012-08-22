@@ -34,7 +34,7 @@ import org.jruby.embed.util.SystemPropertyCatcher;
  * @author $Author: ngaud$
  * @author $Author: gvinson$
  * @author $Author: rbuecher$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

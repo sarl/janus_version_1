@@ -24,7 +24,7 @@ package org.janusproject.jaak.environment.model;
  * space on a grid.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

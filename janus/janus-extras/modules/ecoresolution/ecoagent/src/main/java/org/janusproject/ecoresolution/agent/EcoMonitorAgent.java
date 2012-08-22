@@ -47,7 +47,7 @@ import org.janusproject.kernel.status.StatusFactory;
  * 
  * @author $Author: sgalland$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
@@ -181,7 +181,7 @@ class EcoMonitorAgent extends Agent implements KernelListener {
 	 * 
 	 * @author $Author: sgalland$
 	 * @author $Author: ngaud$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */

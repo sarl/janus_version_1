@@ -42,7 +42,7 @@ import org.janusproject.kernel.channels.Channel;
 /** This class defines an interactive pacman.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -127,7 +127,7 @@ public class PacMan extends Turtle {
 	
 	/**
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

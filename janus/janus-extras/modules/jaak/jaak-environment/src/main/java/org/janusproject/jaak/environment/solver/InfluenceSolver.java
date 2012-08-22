@@ -44,7 +44,7 @@ import org.janusproject.jaak.math.Point2i;
  * 
  * @param <T> is the type of the turtle bodies supported by this solver.
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

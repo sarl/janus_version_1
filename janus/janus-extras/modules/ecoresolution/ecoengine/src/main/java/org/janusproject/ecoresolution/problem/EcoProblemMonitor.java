@@ -24,7 +24,7 @@ package org.janusproject.ecoresolution.problem;
  * if the problem is solved or not solved.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

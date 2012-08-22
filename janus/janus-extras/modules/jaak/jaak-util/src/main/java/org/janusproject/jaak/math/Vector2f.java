@@ -24,7 +24,7 @@ package org.janusproject.jaak.math;
 /** 2D Vector with 2 floating-point values.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

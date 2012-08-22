@@ -34,7 +34,7 @@ import org.janusproject.kernel.address.AgentAddress;
 /** This interface defines a body for a turtle.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

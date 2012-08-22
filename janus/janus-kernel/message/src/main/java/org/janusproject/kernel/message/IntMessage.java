@@ -39,18 +39,7 @@ public class IntMessage extends AbstractContentMessage<Integer> {
 	public IntMessage(int o) {
 		this.content = o;
 	}
-
-	/**
-	 * @param o the content of the message.
-	 * @param context is the context to put inside this message.
-	 * @deprecated no replacement
-	 */
-	@Deprecated
-	public IntMessage(int o, MessageContext context) {
-		super();
-		this.content = o;
-	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */

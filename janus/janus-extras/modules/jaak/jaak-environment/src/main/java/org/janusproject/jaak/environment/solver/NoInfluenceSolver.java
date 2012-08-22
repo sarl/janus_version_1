@@ -38,7 +38,7 @@ import org.janusproject.jaak.environment.model.RealTurtleBody;
  * </ul>
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

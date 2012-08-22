@@ -51,15 +51,6 @@ public final class TrueCondition implements Condition<Object> {
 
 	/**
 	 * {@inheritDoc}
-	 * @return {@code 0}
-	 */
-	@Override
-	public int getConditionParameterCount() {
-		return 0;
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * @return {@code "true"}
 	 */
 	@Override

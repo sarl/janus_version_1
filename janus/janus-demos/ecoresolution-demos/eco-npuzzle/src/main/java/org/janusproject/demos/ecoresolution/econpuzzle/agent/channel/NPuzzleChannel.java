@@ -28,7 +28,7 @@ import org.janusproject.ecoresolution.agent.EcoChannel;
  * Channel dedicated to NPuzzle EcoAgent
  * 
  * @author Nicolas GAUD &lt;nicolas.gaud@utbm.fr&gt;
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

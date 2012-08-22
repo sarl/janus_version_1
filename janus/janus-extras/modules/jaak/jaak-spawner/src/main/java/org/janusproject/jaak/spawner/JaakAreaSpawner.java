@@ -29,7 +29,7 @@ import org.janusproject.kernel.util.random.RandomNumber;
 /** Provide implementation for a turtle spawner on a rectangle.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

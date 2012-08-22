@@ -40,7 +40,7 @@ import sun.org.mozilla.javascript.Scriptable;
  * Agent created to run Javascript commands and scripts
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  * @since 1.0
@@ -161,7 +161,7 @@ public class JavascriptAgent extends ScriptedAgent<JavascriptExecutionContext> {
 	
 	/**
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 1.0
@@ -308,7 +308,7 @@ public class JavascriptAgent extends ScriptedAgent<JavascriptExecutionContext> {
 		
 	/**
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 1.0

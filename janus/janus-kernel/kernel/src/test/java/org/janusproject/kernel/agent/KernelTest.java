@@ -212,7 +212,7 @@ public class KernelTest extends TestCase {
 		KernelListenerStub kListener = new KernelListenerStub();
 		ChannelListenerStub listener = new ChannelListenerStub();
 		Kernel k = Kernels.create();
-		k.getChannelManager().addChannelIteractableListener(listener);
+		k.getChannelManager().addChannelInteractableListener(listener);
 		k.addKernelListener(kListener);
 		listener.reset();
 		

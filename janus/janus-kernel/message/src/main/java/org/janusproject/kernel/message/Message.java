@@ -78,17 +78,6 @@ implements Serializable, Cloneable {
 	public Message() {
 		//
 	}
-	
-	/**
-	 * Create a message with the given context.
-	 * 
-	 * @param context is the context to put inside this message.
-	 * @deprecated no replacement
-	 */
-	@Deprecated
-	public Message(MessageContext context) {
-		throw new UnsupportedOperationException();
-	}
 
 	/**
 	 * Replies the unique identifier of this message.
@@ -97,18 +86,6 @@ implements Serializable, Cloneable {
 	 */
 	public final UUID getIdentifier() {
 		return this.id;
-	}
-
-	/**
-	 * Replies the context of the message.
-	 * 
-	 * @return the context of the message.
-	 * @deprecated no replacement
-	 */
-	@SuppressWarnings("static-method")
-	@Deprecated
-	public final MessageContext getContext() {
-		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -156,24 +133,6 @@ implements Serializable, Cloneable {
 	 */
 	public final float getCreationDate() {
 		return this.creationDate;
-	}
-
-	/**
-	 * Replies the context of the message.
-	 * <p>
-	 * If the current message context is not of the given
-	 * type, an exception is thrown.
-	 * 
-	 * @param <LC> is the type of the replied context.
-	 * @param type is the type of the replied context.
-	 * @return the context of the message, never <code>null</code>.
-	 * @throws UnspecifiedMessageContextException when the message does not containing a valid context.
-	 * @deprecated no replacement
-	 */
-	@SuppressWarnings("static-method")
-	@Deprecated
-	public final <LC extends MessageContext> LC getContext(Class<LC> type) throws UnspecifiedMessageContextException {
-		throw new UnsupportedOperationException();
 	}
 
 	/**

@@ -182,17 +182,6 @@ implements Activator<A> {
 	protected abstract Iterator<? extends A> getExecutionPolicy(
 			ActivationStage stage,
 			Collection<? extends A> candidates);
-	
-	/** Synchronize the internal data structures.
-	 * All pending activable objects are put back
-	 * into the main collection of activated objects.
-	 * 
-	 * @deprecated see {@link #sync()}
-	 */
-	@Deprecated
-	public void synchronizeActivator() {
-		sync();
-	}
 
 	/**
 	 * {@inheritDoc}

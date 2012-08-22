@@ -41,17 +41,6 @@ extends Message {
 	protected AbstractContentMessage() {
 		super();
 	}
-	
-	/**
-	 * Create a message with the given context.
-	 * 
-	 * @param context is the context to put inside this message.
-	 * @deprecated no replacement
-	 */
-	@Deprecated
-	protected AbstractContentMessage(MessageContext context) {
-		super();
-	}
 
 	/** Replies the content of this message.
 	 * 

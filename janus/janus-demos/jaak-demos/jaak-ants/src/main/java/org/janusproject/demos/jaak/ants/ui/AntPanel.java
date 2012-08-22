@@ -41,7 +41,7 @@ import org.janusproject.jaak.math.Point2i;
  * Graphic User Interface for the ant demo.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

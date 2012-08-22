@@ -38,7 +38,7 @@ import org.janusproject.kernel.agent.Kernels;
  * Graphic User Interface for the pacman demo.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -82,7 +82,7 @@ public class PacManFrame extends JFrame implements GridStateChannelListener {
 
 	/**
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

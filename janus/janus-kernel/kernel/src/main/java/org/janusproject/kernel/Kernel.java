@@ -32,8 +32,6 @@ import org.janusproject.kernel.agent.AgentLifeStateListener;
 import org.janusproject.kernel.agent.ChannelManager;
 import org.janusproject.kernel.agent.KernelContext;
 import org.janusproject.kernel.agent.ProbeManager;
-import org.janusproject.kernel.channels.ChannelInteractable;
-import org.janusproject.kernel.channels.ChannelInteractableListener;
 import org.janusproject.kernel.configuration.JanusProperty;
 import org.janusproject.kernel.crio.core.CRIOContext;
 import org.janusproject.kernel.crio.core.GroupAddress;
@@ -377,22 +375,6 @@ public interface Kernel extends LoggerProvider {
 	 * @param listener
 	 */
 	public void removeKernelListener(KernelListener listener);
-
-	/** Add listener on life state changes.
-	 * 
-	 * @param listener
-	 * @deprecated see {@link #addAgentLifeStateListener(AgentLifeStateListener)}
-	 */
-	@Deprecated
-	public void addAgentLifeStageListener(AgentLifeStateListener listener);
-
-	/** Remove listener on life state changes.
-	 * 
-	 * @param listener
-	 * @deprecated see {@link #removeAgentLifeStateListener(AgentLifeStateListener)}
-	 */
-	@Deprecated
-	public void removeAgentLifeStageListener(AgentLifeStateListener listener);
 	
 	/** Add listener on life state changes.
 	 * 
@@ -419,34 +401,6 @@ public interface Kernel extends LoggerProvider {
 	 * @since 0.5
 	 */
 	public void removeGroupListener(GroupListener listener);
-
-	/**
-	 * Adds a {@link ChannelInteractableListener}
-	 * @param listener
-	 * @deprecated see {@link #getChannelManager()} and {@link ChannelManager#addChannelIteractableListener(ChannelInteractableListener)}.
-	 */
-	@Deprecated
-	public void addChannelIteractableListener(ChannelInteractableListener listener);
-	
-	/**
-	 * Removes a {@link ChannelInteractableListener}
-	 * @param listener
-	 * @deprecated see {@link #getChannelManager()} and {@link ChannelManager#removeChannelIteractableListener(ChannelInteractableListener)}.
-	 */
-	@Deprecated
-	public void removeChannelIteractableListener(ChannelInteractableListener listener);
-	
-	/**
-	 * Return the {@link ChannelInteractable} Interface for the agent.
-	 * Only local agents can be reached this way.
-	 * 
-	 * @param address
-	 * @return the {@link ChannelInteractable} interface for the agent if the
-	 *         agent is local and if it implements the interface, <code>null</code> otherwise.
-	 * @deprecated see {@link #getChannelManager()} and {@link ChannelManager#getChannelInteractable(AgentAddress)}.
-	 */
-	@Deprecated
-	public ChannelInteractable getChannelInteractable(AgentAddress address);
 
 	/**
 	 * Return the manager of channels for this kernel.

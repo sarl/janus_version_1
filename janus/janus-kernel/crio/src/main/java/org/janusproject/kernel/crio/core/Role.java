@@ -314,62 +314,12 @@ public abstract class Role extends
 	 * @param groupId is the address of the group.
 	 * @return the public informations on a group, or <code>null</code>
 	 * if the given id is unknown.
-	 * @since 0.4
-	 * @deprecated see {@link #getGroup(GroupAddress)}
-	 */
-	@Deprecated
-	public final Group getGroupDescription(GroupAddress groupId) {
-		return getGroup();
-	}
-
-	/** Replies the public information of the given group.
-	 * 
-	 * @param groupId is the address of the group.
-	 * @return the public informations on a group, or <code>null</code>
-	 * if the given id is unknown.
 	 * @since 0.5
 	 */
 	public final Group getGroupObject(GroupAddress groupId) {
 		if (getGroupAddress().equals(groupId))
 			return getCurrentGroup();
 		return getPlayerInstance().getGroupObject(groupId);
-	}
-
-	/** Replies the public information of the given group.
-	 * 
-	 * @param groupId is the address of the group.
-	 * @return the public informations on a group, or <code>null</code>
-	 * if the given id is unknown.
-	 * @since 0.5
-	 * @deprecated see {@link #getGroupObject(GroupAddress)}
-	 */
-	@Deprecated
-	public final Group getGroup(GroupAddress groupId) {
-		return getGroupObject(groupId);
-	}
-
-	/** Replies the public information of the current group where the role is playing.
-	 * 
-	 * @return the public informations on a group, or <code>null</code>
-	 * if the given id is unknown.
-	 * @since 0.4
-	 * @deprecated see {@link #getGroup()}
-	 */
-	@Deprecated
-	public final Group getGroupDescription() {
-		return getGroup();
-	}
-
-	/** Replies the public information of the current group where the role is playing.
-	 * 
-	 * @return the public informations on a group, or <code>null</code>
-	 * if the given id is unknown.
-	 * @since 0.5
-	 * @deprecated see {@link #getCurrentGroup()}
-	 */
-	@Deprecated
-	public final Group getGroup() {
-		return getCurrentGroup();
 	}
 
 	/** Replies the public information of the current group where the role is playing.
@@ -475,38 +425,10 @@ public abstract class Role extends
 	 *            the organization that the group have to implement
 	 * @return all known groups
 	 * @GROUPAPI
-	 * @deprecated see {@link #getExistingGroups(Class)}
-	 */
-	@Deprecated
-	protected final List<GroupAddress> getGroups(
-			Class<? extends Organization> organization) {
-		return getExistingGroups(organization);
-	}
-
-	/**
-	 * Return all known groups of the given organization.
-	 * 
-	 * @param organization
-	 *            the organization that the group have to implement
-	 * @return all known groups
-	 * @GROUPAPI
 	 */
 	protected final List<GroupAddress> getExistingGroups(
 			Class<? extends Organization> organization) {
 		return getOrganization(organization).getGroups();
-	}
-
-	/**
-	 * Return all known groups in the same organization as the current group.
-	 * The current group is also replied.
-	 * 
-	 * @return all known groups in current organization
-	 * @GROUPAPI
-	 * @deprecated see {@link #getExistingsGroupsOfSameOrganization()}
-	 */
-	@Deprecated
-	protected final List<GroupAddress> getGroups() {
-		return getExistingsGroupsOfSameOrganization();
 	}
 
 	/**
@@ -1967,39 +1889,6 @@ public abstract class Role extends
 			Class<? extends Organization> organization) {
 		// Do not pass by the role player to preserve computation time
 		return getOrganization(organization).getGroup();
-	}
-
-	/**
-	 * Get the address of an already existing group implementing the specified
-	 * organization if any, do not create a new one.
-	 * 
-	 * @param organization
-	 *            - the organization that the group have to implement
-	 * @return the address of the group, or <code>null</code>
-	 * @GROUPAPI
-	 * @deprecated see {@link #getExistingGroup(Class)}
-	 */
-	@Deprecated
-	protected final GroupAddress getGroup(
-			Class<? extends Organization> organization) {
-		return getExistingGroup(organization);
-	}
-
-	/**
-	 * Get the address of an already existing group implementing the specified
-	 * organization if any, do not create a new one.
-	 * 
-	 * @param factory
-	 *            is the organization factory to use to create an organization
-	 *            instance when required by the CRIO context.
-	 * @return the address of the group, or <code>null</code>
-	 * @GROUPAPI
-	 * @deprecated see {@link #getExistingGroup(OrganizationFactory)}
-	 */
-	@Deprecated
-	protected final GroupAddress getGroup(
-			OrganizationFactory<? extends Organization> factory) {
-		return getExistingGroup(factory);
 	}
 
 	/**

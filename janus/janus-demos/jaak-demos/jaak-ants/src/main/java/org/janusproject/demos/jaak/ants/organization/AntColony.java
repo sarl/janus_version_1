@@ -26,7 +26,7 @@ import org.janusproject.kernel.crio.core.Organization;
 /** This class defines the organization of an ant colony.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

@@ -31,7 +31,7 @@ import org.janusproject.scriptedagent.UnprotectedScriptedAgent;
  * Agent created to run Common Lisp commands and scripts.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

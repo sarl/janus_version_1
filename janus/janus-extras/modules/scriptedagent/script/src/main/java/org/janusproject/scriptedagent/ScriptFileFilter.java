@@ -34,7 +34,7 @@ import org.arakhne.vmutil.FileSystem;
  * File filter that is matching script files.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  * @since 0.5

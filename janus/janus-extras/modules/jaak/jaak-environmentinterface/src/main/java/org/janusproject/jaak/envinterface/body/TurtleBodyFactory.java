@@ -27,7 +27,7 @@ import org.janusproject.kernel.address.AgentAddress;
 /** Factory of bodies for turtles.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

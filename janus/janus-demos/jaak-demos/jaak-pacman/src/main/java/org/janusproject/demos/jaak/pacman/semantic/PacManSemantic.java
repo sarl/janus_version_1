@@ -23,7 +23,7 @@ package org.janusproject.demos.jaak.pacman.semantic;
 /** This class defines a pacman.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

@@ -33,7 +33,7 @@ import org.janusproject.kernel.channels.Channel;
  * Channel to obtain information from the grid state in a Jaak environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

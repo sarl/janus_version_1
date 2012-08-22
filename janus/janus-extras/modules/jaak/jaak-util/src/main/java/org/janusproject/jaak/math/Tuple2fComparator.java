@@ -26,7 +26,7 @@ import java.util.Comparator;
  * Comparator of Tuple2f.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

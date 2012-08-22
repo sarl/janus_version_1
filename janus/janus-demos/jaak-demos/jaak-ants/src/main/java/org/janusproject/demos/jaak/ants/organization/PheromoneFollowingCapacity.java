@@ -30,7 +30,7 @@ import org.janusproject.kernel.crio.capacity.CapacityPrototype;
 /** This interface defines the capacity to select a route of pheromone.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

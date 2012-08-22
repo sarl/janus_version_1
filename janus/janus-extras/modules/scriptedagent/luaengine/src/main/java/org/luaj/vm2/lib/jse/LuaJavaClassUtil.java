@@ -39,7 +39,7 @@ import org.luaj.vm2.LuaValue;
  * Utility to use the Lua value for Java classes.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

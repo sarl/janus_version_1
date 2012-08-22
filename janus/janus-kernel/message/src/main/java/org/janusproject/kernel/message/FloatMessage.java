@@ -41,17 +41,6 @@ public class FloatMessage extends AbstractContentMessage<Float> {
 	}
 
 	/**
-	 * @param o the content of the message.
-	 * @param context is the context to put inside this message.
-	 * @deprecated no replacement
-	 */
-	@Deprecated
-	public FloatMessage(float o, MessageContext context) {
-		super();
-		this.content = o;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override

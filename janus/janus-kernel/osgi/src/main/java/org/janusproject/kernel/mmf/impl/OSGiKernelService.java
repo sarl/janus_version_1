@@ -38,7 +38,6 @@ import org.janusproject.kernel.agent.ChannelManager;
 import org.janusproject.kernel.agent.KernelContext;
 import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.agent.ProbeManager;
-import org.janusproject.kernel.channels.ChannelInteractable;
 import org.janusproject.kernel.channels.ChannelInteractableListener;
 import org.janusproject.kernel.credential.Credentials;
 import org.janusproject.kernel.crio.core.CRIOContext;
@@ -48,14 +47,14 @@ import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.GroupListener;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.crio.organization.OrganizationFactory;
-import org.janusproject.kernel.mmf.KernelAuthority;
-import org.janusproject.kernel.mmf.KernelService;
-import org.janusproject.kernel.mmf.KernelServiceListener;
 import org.janusproject.kernel.mmf.JanusApplication;
 import org.janusproject.kernel.mmf.JanusModule;
+import org.janusproject.kernel.mmf.KernelAuthority;
 import org.janusproject.kernel.mmf.KernelOperation;
+import org.janusproject.kernel.mmf.KernelService;
 import org.janusproject.kernel.mmf.KernelServiceEvent;
 import org.janusproject.kernel.mmf.KernelServiceEvent.KernelServiceEventType;
+import org.janusproject.kernel.mmf.KernelServiceListener;
 import org.janusproject.kernel.status.MultipleStatus;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
@@ -369,16 +368,6 @@ public class OSGiKernelService implements KernelService, KernelListener,
 
 	/**
 	 * {@inheritDoc}
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	public void addAgentLifeStageListener(AgentLifeStateListener listener) {
-		this.kernel.addAgentLifeStateListener(listener);
-	}
-
-	/**
-	 * {@inheritDoc}
 	 */
 	@Override
 	public void addAgentLifeStateListener(AgentLifeStateListener listener) {
@@ -392,17 +381,7 @@ public class OSGiKernelService implements KernelService, KernelListener,
 	public void addKernelListener(KernelListener listener) {
 		this.kernel.addKernelListener(listener);
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	public void removeAgentLifeStageListener(AgentLifeStateListener listener) {
-		this.kernel.removeAgentLifeStateListener(listener);
-	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -458,30 +437,6 @@ public class OSGiKernelService implements KernelService, KernelListener,
 	@Override
 	public void kernelAgentLaunched(KernelEvent event) {
 		// Do nothing
-	}
-
-	/** {@inheritDoc}
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	public void addChannelIteractableListener(
-			ChannelInteractableListener listener) {
-		if (this.kernel != null)
-			this.kernel.addChannelIteractableListener(listener);
-
-	}
-
-	/** {@inheritDoc}
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	public void removeChannelIteractableListener(
-			ChannelInteractableListener listener) {
-		if (this.kernel != null)
-			this.kernel.removeChannelIteractableListener(listener);
-
 	}
 
 	private Status authorizeKernelOperation(KernelOperation op,
@@ -634,7 +589,7 @@ public class OSGiKernelService implements KernelService, KernelListener,
 				for (int i = 0; i < ref.length; ++i) {
 					ChannelInteractableListener cl = (ChannelInteractableListener) this.context
 							.getService(ref[i]);
-					this.kernel.getChannelManager().addChannelIteractableListener(cl);
+					this.kernel.getChannelManager().addChannelInteractableListener(cl);
 				}
 			}
 			ref = this.context.getServiceReferences(KernelListener.class.getName(),
@@ -699,7 +654,7 @@ public class OSGiKernelService implements KernelService, KernelListener,
 			// Others the service can play as well
 
 			if (serv instanceof ChannelInteractableListener) {
-				addChannelIteractableListener((ChannelInteractableListener) serv);
+				this.getChannelManager().addChannelInteractableListener((ChannelInteractableListener) serv);
 			}
 			if (serv instanceof KernelListener) {
 				addKernelListener((KernelListener) serv);
@@ -709,7 +664,7 @@ public class OSGiKernelService implements KernelService, KernelListener,
 			}
 
 			if (serv instanceof AgentLifeStateListener) {
-				addAgentLifeStageListener((AgentLifeStateListener) serv);
+				addAgentLifeStateListener((AgentLifeStateListener) serv);
 			}
 
 		}
@@ -719,7 +674,7 @@ public class OSGiKernelService implements KernelService, KernelListener,
 			m_ref = event.getServiceReference();
 			Object serv = this.context.getService(m_ref);
 			if (serv instanceof ChannelInteractableListener) {
-				removeChannelIteractableListener((ChannelInteractableListener) serv);
+				this.getChannelManager().removeChannelInteractableListener((ChannelInteractableListener) serv);
 			}
 			if (serv instanceof KernelListener) {
 				removeKernelListener((KernelListener) serv);
@@ -729,18 +684,9 @@ public class OSGiKernelService implements KernelService, KernelListener,
 			}
 
 			if (serv instanceof AgentLifeStateListener) {
-				removeAgentLifeStageListener((AgentLifeStateListener) serv);
+				removeAgentLifeStateListener((AgentLifeStateListener) serv);
 			}
 		}
-	}
-
-	/** {@inheritDoc}
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	public ChannelInteractable getChannelInteractable(AgentAddress address) {
-		return this.kernel.getChannelInteractable(address);
 	}
 
 	/**

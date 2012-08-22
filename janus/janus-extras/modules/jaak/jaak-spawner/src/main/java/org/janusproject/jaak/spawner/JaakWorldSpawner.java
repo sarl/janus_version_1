@@ -36,7 +36,7 @@ import org.janusproject.kernel.util.random.RandomNumber;
 /** A spawner which is spawning on the overall world surface.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

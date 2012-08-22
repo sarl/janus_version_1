@@ -43,7 +43,7 @@ import org.osgi.framework.BundleContext;
  * OSGi activator for the EcoCube demo.
  * 
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

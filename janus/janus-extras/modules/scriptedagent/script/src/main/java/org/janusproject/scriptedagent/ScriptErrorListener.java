@@ -28,7 +28,7 @@ import javax.script.ScriptException;
  * Listener on error in a script.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  * @since 0.5

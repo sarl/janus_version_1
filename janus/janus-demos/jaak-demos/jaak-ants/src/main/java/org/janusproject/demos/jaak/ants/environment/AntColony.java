@@ -25,7 +25,7 @@ import org.janusproject.jaak.envinterface.perception.Burrow;
 /** Defines an ant colony.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

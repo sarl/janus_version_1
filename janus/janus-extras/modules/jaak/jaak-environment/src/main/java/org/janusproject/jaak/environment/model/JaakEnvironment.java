@@ -67,7 +67,7 @@ import org.janusproject.kernel.util.random.RandomNumber;
  * until it reach the border of the grid. 
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -567,7 +567,7 @@ public class JaakEnvironment implements EnvironmentArea {
 	 * its content.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */
@@ -599,7 +599,7 @@ public class JaakEnvironment implements EnvironmentArea {
 	 * its content.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */
@@ -662,7 +662,7 @@ public class JaakEnvironment implements EnvironmentArea {
 	/** This class defines an implementation of turtle body factory.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

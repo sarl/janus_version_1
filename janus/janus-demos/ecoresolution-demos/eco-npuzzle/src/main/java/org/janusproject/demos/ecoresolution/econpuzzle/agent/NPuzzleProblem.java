@@ -36,7 +36,7 @@ import org.janusproject.ecoresolution.identity.NoIdentity;
 /**
  * General utilities to control N-Puzzle problem eco-solving.
  * @author Nicolas GAUD &lt;nicolas.gaud@utbm.fr&gt;
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

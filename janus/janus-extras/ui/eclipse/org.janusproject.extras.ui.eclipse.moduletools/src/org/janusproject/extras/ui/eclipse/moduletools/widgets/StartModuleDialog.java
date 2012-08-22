@@ -58,7 +58,7 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * @author Sebastian RODRIGUEZ &lt;sebastian@sebastianrodriguez.com.ar&gt;
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid org.janus-project.kernel
  * @mavenartifactid org.janusproject.extras.ui.eclipse.moduletools
  * 

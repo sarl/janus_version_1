@@ -31,11 +31,9 @@ import junit.framework.TestCase;
 
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.KernelEvent;
-import org.janusproject.kernel.KernelListener;
 import org.janusproject.kernel.KernelEvent.KernelEventType;
+import org.janusproject.kernel.KernelListener;
 import org.janusproject.kernel.address.AgentAddress;
-import org.janusproject.kernel.channels.ChannelInteractable;
-import org.janusproject.kernel.channels.ChannelInteractableListener;
 import org.janusproject.kernel.crio.core.CRIOContext;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.core.Organization;
@@ -43,10 +41,10 @@ import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.GroupListener;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.crio.organization.OrganizationFactory;
+import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.util.sizediterator.EmptyIterator;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
-import org.janusproject.kernel.logger.LoggerUtil;
 
 /**
  * @author $Author: sgalland$
@@ -282,24 +280,6 @@ public class KernelEventTest extends TestCase {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Deprecated
-		@Override
-		public void addAgentLifeStageListener(AgentLifeStateListener listener) {
-			//
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Deprecated
-		@Override
-		public void removeAgentLifeStageListener(AgentLifeStateListener listener) {
-			//
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
 		@Override
 		public void addAgentLifeStateListener(AgentLifeStateListener listener) {
 			//
@@ -373,32 +353,6 @@ public class KernelEventTest extends TestCase {
 		public AgentAddress submitLightAgent(Agent agent,
 				String name, AgentActivator activator,
 				Object... initParameters) {
-			return null;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void addChannelIteractableListener(
-				ChannelInteractableListener listener) {
-			//
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void removeChannelIteractableListener(
-				ChannelInteractableListener listener) {
-			//
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public ChannelInteractable getChannelInteractable(AgentAddress address) {
 			return null;
 		}
 

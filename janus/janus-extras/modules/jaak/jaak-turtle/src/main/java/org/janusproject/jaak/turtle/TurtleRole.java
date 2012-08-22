@@ -37,7 +37,7 @@ import org.janusproject.kernel.crio.core.Role;
 /** This class permits to define a Turtle in Jaak.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

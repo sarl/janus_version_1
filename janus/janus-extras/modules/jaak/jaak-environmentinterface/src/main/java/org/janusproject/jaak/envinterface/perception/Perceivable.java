@@ -27,7 +27,7 @@ import org.janusproject.jaak.math.Point2i;
  * inside the Jaak environment.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

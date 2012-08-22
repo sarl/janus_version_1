@@ -28,7 +28,7 @@ import org.janusproject.kernel.util.random.RandomNumber;
  * Direction for the player.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

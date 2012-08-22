@@ -32,7 +32,7 @@ import org.janusproject.ecoresolution.relation.EcoRelation;
  * A cube eco-agent.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
@@ -136,7 +136,7 @@ public class CubeAgent extends AbstractCubeProblemAgent {
 	/** Implementation of an eco-channel.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */

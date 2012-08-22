@@ -38,7 +38,7 @@ import org.janusproject.jaak.math.Point2i;
  * A substance is a non-atomic object.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

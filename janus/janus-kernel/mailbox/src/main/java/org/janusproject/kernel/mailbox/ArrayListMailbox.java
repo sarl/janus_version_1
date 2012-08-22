@@ -88,19 +88,6 @@ public class ArrayListMailbox extends AbstractMailbox {
 	public final Comparator<? super Message> comparator() {
 		return this.messageComparator;
 	}
-
-	/** Add the given mail in the mail box using a dichotomic algorithm.
-	 * 
-	 * @param msg is the message to insert.
-	 * @return <code>true</code> if the message was added, otherwise <code>false</code>
-	 * @deprecated {@link ListUtil#dichotomicAdd(List, Comparator, Object, boolean)}
-	 */
-	@Deprecated
-	protected boolean dichotomicAddition(Message msg) {
-		return ListUtil.dichotomicAdd(
-				this.inbox, this.messageComparator, msg,
-				true);
-	}
 	
 	/**
 	 * {@inheritDoc}

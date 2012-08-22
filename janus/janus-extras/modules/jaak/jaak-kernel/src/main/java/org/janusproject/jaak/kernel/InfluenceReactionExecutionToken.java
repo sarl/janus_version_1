@@ -24,7 +24,7 @@ package org.janusproject.jaak.kernel;
  * Influence-Reaction process.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */

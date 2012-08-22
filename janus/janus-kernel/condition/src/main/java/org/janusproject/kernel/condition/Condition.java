@@ -51,13 +51,4 @@ public interface Condition<O> extends Serializable {
 	 */
 	public ConditionFailure evaluateFailure(O object);	
 
-	/**
-	 * Returns the number of parameters required to evaluated this condition.
-	 * 
-	 * @return the number of parameters required to evaluated this condition.
-	 * @deprecated
-	 */
-	@Deprecated
-	public int getConditionParameterCount();
-
 }

@@ -43,12 +43,11 @@ import java.util.logging.Logger;
 import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.KernelEvent;
-import org.janusproject.kernel.KernelListener;
 import org.janusproject.kernel.KernelEvent.KernelEventType;
+import org.janusproject.kernel.KernelListener;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.channels.ChannelInteractable;
-import org.janusproject.kernel.channels.ChannelInteractableListener;
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
 import org.janusproject.kernel.crio.core.CRIOContext;
@@ -1142,26 +1141,6 @@ extends ActivatorAgent<AgentActivator> {
 		removeEventListener(KernelListener.class, listener);
 	}
 	
-	/**
-	 * Adds a {@link ChannelInteractableListener}
-	 * @param listener
-	 * @deprecated see {@link Kernel#getChannelManager()}
-	 */
-	@Deprecated
-	public void addChannelIteractableListener(ChannelInteractableListener listener){
-		getKernelContext().getChannelManager().addChannelIteractableListener(listener);
-	}
-	
-	/**
-	 * Removes a {@link ChannelInteractableListener}
-	 * @param listener
-	 * @deprecated see {@link Kernel#getChannelManager()}
-	 */
-	@Deprecated
-	public void removeChannelIteractableListener(ChannelInteractableListener listener){
-		getKernelContext().getChannelManager().removeChannelIteractableListener(listener);
-	}
-	
 	/** Fire agent arrival.
 	 * 
 	 * @param agent is the launched agent.
@@ -1234,20 +1213,6 @@ extends ActivatorAgent<AgentActivator> {
 				sentToLogger = false;
 		}
 		return sentToLogger;
-	}
-	
-	/** Replies the object which is able to interact with a channel
-	 * for the given agent address.
-	 * 
-	 * @param address is the address of the agent for which an channel-support
-	 * may be replied.
-	 * @return the object which is able to interact with a channel for the agent,
-	 * otherwise <code>null</code>
-	 * @deprecated see {@link Kernel#getProbeManager()} and {@link ChannelManager#getChannelInteractable(AgentAddress)}
-	 */
-	@Deprecated
-	public ChannelInteractable getChannelInteractable(AgentAddress address) {
-		return getKernelContext().getChannelManager().getChannelInteractable(address);
 	}
 	
 	/**
@@ -1789,16 +1754,6 @@ extends ActivatorAgent<AgentActivator> {
 
 		/**
 		 * {@inheritDoc}
-		 * @deprecated
-		 */
-		@Deprecated
-		@Override
-		public void addAgentLifeStageListener(AgentLifeStateListener listener) {
-			KernelAgent.this.addAgentLifeStateListener(listener);
-		}
-
-		/**
-		 * {@inheritDoc}
 		 */
 		@Override
 		public void addAgentLifeStateListener(AgentLifeStateListener listener) {
@@ -1807,52 +1762,10 @@ extends ActivatorAgent<AgentActivator> {
 
 		/**
 		 * {@inheritDoc}
-		 * @deprecated
-		 */
-		@Deprecated
-		@Override
-		public void removeAgentLifeStageListener(AgentLifeStateListener listener) {
-			KernelAgent.this.removeAgentLifeStateListener(listener);
-		}
-
-		/**
-		 * {@inheritDoc}
 		 */
 		@Override
 		public void removeAgentLifeStateListener(AgentLifeStateListener listener) {
 			KernelAgent.this.removeAgentLifeStateListener(listener);
-		}
-
-		/** {@inheritDoc}
-		 * @deprecated
-		 */
-		@Deprecated
-		@Override
-		public void addChannelIteractableListener(
-				ChannelInteractableListener listener) {
-			KernelAgent.this.addChannelIteractableListener(listener);
-			
-		}
-
-		/** {@inheritDoc}
-		 * @deprecated
-		 */
-		@Deprecated
-		@Override
-		public void removeChannelIteractableListener(
-				ChannelInteractableListener listener) {
-			KernelAgent.this.removeChannelIteractableListener(listener);
-			
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * @deprecated
-		 */
-		@Deprecated
-		@Override
-		public ChannelInteractable getChannelInteractable(AgentAddress address) {
-			return KernelAgent.this.getChannelInteractable(address);
 		}
 
 		/**

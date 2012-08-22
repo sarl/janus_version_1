@@ -28,7 +28,7 @@ import org.janusproject.ecoresolution.agent.EcoAgent;
 /** General utilities to control eco-resolution problem solving.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

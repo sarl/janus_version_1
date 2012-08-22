@@ -67,59 +67,6 @@ extends ConcurrentHashRepository<GroupAddress, KernelScopeGroup> {
 	}
 
 	/**
-	 * Create a new <b>Group</b> that implements this organization with the
-	 * specified set of conditions to access and leave this group.
-	 * 
-	 * @param organization is the implemented organization.
-	 * @param obtainConditions is the set of conditions to access to this group
-	 * @param leaveConditions is the set of conditions to leave this group
-	 * @param membership is the membership service to use in this group. Use null to
-	 *   obtain an open group.
-	 * @param distributed whether the group is distributed over the network or not
-	 * @param persistent whether the group is persistent when no more role is playing inside
-	 * @return the address of the new group freshly created
-	 * @deprecated see {@link #newGroup(UUID, Organization, Collection, Collection, MembershipService, boolean, boolean, String)}
-	 */
-	@Deprecated
-	public GroupAddress newGroup(
-			Organization organization,
-			Collection<? extends GroupCondition> obtainConditions,
-			Collection<? extends GroupCondition> leaveConditions,
-			MembershipService membership,
-			boolean distributed,
-			boolean persistent) {
-		
-		return newGroup(null, organization, obtainConditions, leaveConditions, membership, distributed, persistent, null);
-	}
-
-	/**
-	 * Create a new <b>Group</b> with a specific that implements this organization with the
-	 * specified set of conditions to access and leave this group.
-	 * 
-	 * @param id the desired group id
-	 * @param organization is the implemented organization.
-	 * @param obtainConditions is the set of conditions to access to this group
-	 * @param leaveConditions is the set of conditions to leave this group
-	 * @param membership is the membership service to use in this group. Use null to
-	 *   obtain an open group.
-	 * @param distributed whether the group is distributed over the network or not
-	 * @param persistent whether the group is persistent when no more role is playing inside
-	 * @return the address of the new group freshly created
-	 * @deprecated see {@link #newGroup(UUID, Organization, Collection, Collection, MembershipService, boolean, boolean, String)}
-	 */
-	@Deprecated
-	public GroupAddress newGroup(
-			UUID id,
-			Organization organization,
-			Collection<? extends GroupCondition> obtainConditions,
-			Collection<? extends GroupCondition> leaveConditions,
-			MembershipService membership,
-			boolean distributed,
-			boolean persistent) {
-		return newGroup(id, organization, obtainConditions, leaveConditions, membership, distributed, persistent);
-	}
-
-	/**
 	 * Create a new <b>Group</b> with a specific that implements this organization with the
 	 * specified set of conditions to access and leave this group.
 	 * 

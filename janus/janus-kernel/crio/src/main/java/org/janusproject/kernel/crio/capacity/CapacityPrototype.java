@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * <p>
  * Optional parameters could be defined.
  * The index of the first optional
- * input parameter may be set with {@link #optionalInputAt()}.
+ * input parameter may be set with {@link #optionalParameterAt()}.
  * It is assumed that all subsequent input parameters are
  * also optional; and all parameters with at lower index
  * are mandatory.
@@ -47,32 +47,32 @@ import java.lang.annotation.Target;
  * <p>
  * <strong>Example 2: three parameters of type Integer, String, Boolean resp.</strong><br>
  * <pre><code><span>@</span>CapacityPrototype(
- *   input={Integer.class,String.class,Boolean.class}
+ *   fixedParameters={Integer.class,String.class,Boolean.class}
  *)</pre></code>
  * <p>
  * <strong>Example 3: two mandatory parameters of type Integer, String resp. and one optional Boolean</strong><br>
  * <pre><code><span>@</span>CapacityPrototype(
- *   input={Integer.class,String.class,Boolean.class},
- *   optionalInputAt=2
+ *   fixedParameters={Integer.class,String.class,Boolean.class},
+ *   optionalParameterAt=2
  *)</code></pre>
  * <p>
  * <strong>Example 3: two mandatory parameters of type Integer, String resp., followed by any parameters of type Boolean</strong><br>
  * <pre><code><span>@</span>CapacityPrototype(
- *   input={Integer.class,String.class},
- *   allInput=Boolean.class
+ *   fixedParameters={Integer.class,String.class},
+ *   variableParameters=Boolean.class
  *)</code></pre>
  * <p>
  * <strong>Example 4: two mandatory parameters of type Integer, String resp., followed one optional Boolean, followed by any parameters of type Float</strong><br>
  * <pre><code><span>@</span>CapacityPrototype(
- *   input={Integer.class,String.class,Boolean.class},
- *   optionalInputAt=2,
- *   allInput=Float.class
+ *   fixedParameters={Integer.class,String.class,Boolean.class},
+ *   optionalParameterAt=2,
+ *   variableParameters=Float.class
  *)</code></pre>
  * <p>
  * <strong>Example 5: no parameter</strong><br>
  * <pre><code><span>@</span>CapacityPrototype
  *<span>@</span>CapacityPrototype(
- *   input={}
+ *   fixedParameters={}
  *)</code></pre>
  * 
  * @author $Author: sgalland$
@@ -85,32 +85,11 @@ import java.lang.annotation.Target;
 public @interface CapacityPrototype {
 
 	/** 
-	 * Get the type of all the input values without exception.
-	 * @deprecated see {@link #variableParameters()}
-	 */
-	@Deprecated
-	Class<?> allInput() default CapacityPrototype.class;
-
-	/** 
 	 * Get the type of all the parameters in the dynamic-length list of parameters.
 	 * 
 	 * @since 0.5
 	 */
 	Class<?> variableParameters() default CapacityPrototype.class;
-
-	/** 
-	 * List of types of the input values.
-	 * <p>
-	 * An input value may be optional
-	 * according to its position in
-	 * the value's list. See
-	 * {@link #optionalInputAt()}
-	 * for more details.
-	 * 
-	 * @deprecated see {@link #fixedParameters()}
-	 */
-	@Deprecated
-	Class<?>[] input() default {CapacityPrototype.class};
 	
 	/** 
 	 * List of types of the parameters.
@@ -131,31 +110,11 @@ public @interface CapacityPrototype {
 	 * <p>
 	 * All input values with an index greater or
 	 * equal to the given index are assumed to
-	 * be optional.
-	 * 
-	 * @deprecated see {@link #optionalParameterAt()}
-	 */
-	@Deprecated
-	int optionalInputAt() default -1;
-
-	/** 
-	 * Index of the first optional value in
-	 * input parameters.
-	 * <p>
-	 * All input values with an index greater or
-	 * equal to the given index are assumed to
 	 * be optional.  
 	 * 
 	 * @since 0.5
 	 */
 	int optionalParameterAt() default -1;
-
-	/** 
-	 * List of types of the individual output values.
-	 * @deprecated see {@link #fixedOutput()}
-	 */
-	@Deprecated
-	Class<?>[] output() default {CapacityPrototype.class};
 	
 	/** 
 	 * List of types of the individual output values.
@@ -163,14 +122,6 @@ public @interface CapacityPrototype {
 	 * @since 0.5
 	 */
 	Class<?>[] fixedOutput() default {CapacityPrototype.class};
-
-	/** 
-	 * Get the type of all the output values in the dynamic-length list of outputs.
-	 * 
-	 * @deprecated see {@link #variableOutput()}
-	 */
-	@Deprecated
-	Class<?> allOutput() default CapacityPrototype.class;
 	
 	/** 
 	 * Get the type of all the output values in the dynamic-length list of outputs.

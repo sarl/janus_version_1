@@ -48,7 +48,7 @@ import org.janusproject.ecoresolution.relation.EcoRelation;
 /**
  * 
  * @author Nicolas GAUD &lt;nicolas.gaud@utbm.fr&gt;
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */

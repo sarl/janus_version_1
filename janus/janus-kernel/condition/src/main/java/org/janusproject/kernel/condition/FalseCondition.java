@@ -49,15 +49,6 @@ implements Condition<Object>, ConditionFailure {
 	public ConditionFailure evaluateFailure(Object object) {
 		return this;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * @return {@code 0}
-	 */
-	@Override
-	public int getConditionParameterCount() {
-		return 0;
-	}
 	
 	/**
 	 * {@inheritDoc}

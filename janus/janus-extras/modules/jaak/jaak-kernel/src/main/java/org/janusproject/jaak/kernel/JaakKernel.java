@@ -31,7 +31,7 @@ import org.janusproject.kernel.agent.Kernels;
 /** Utility methods to initialize and manage a Jaak kernel.
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
@@ -87,7 +87,7 @@ public class JaakKernel {
 	/** Utility methods to initialize and manage a Jaak kernel.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */

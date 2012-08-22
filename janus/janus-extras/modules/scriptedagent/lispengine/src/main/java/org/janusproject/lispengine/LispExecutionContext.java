@@ -43,7 +43,7 @@ import org.janusproject.scriptedagent.ScriptedAgent;
  * It allows to run several scripts under several forms (path, commands, ...).
  * 
  * @author $Author: sgalland$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
@@ -259,7 +259,7 @@ public class LispExecutionContext extends AbstractScriptExecutionContext {
 	 * Reader that read the package prefix of the LispExecutionContext.
 	 * 
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $Groupid$
 	 * @mavenartifactid $ArtifactId$
 	 */

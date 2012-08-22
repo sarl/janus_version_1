@@ -55,7 +55,7 @@ import org.janusproject.scriptedagent.exception.InvalidDirectoryException;
  * @author $Author: sgalland$
  * @author $Author: cwintz$
  * @author $Author: ngaud$
- * @version $Name$ $Revision$ $Date$
+ * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  * @since 0.5
@@ -730,7 +730,7 @@ public class ScriptedAgent<C extends ScriptExecutionContext> extends Agent {
 
 	/**
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 0.5
@@ -790,7 +790,7 @@ public class ScriptedAgent<C extends ScriptExecutionContext> extends Agent {
 
 	/**
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 0.5
@@ -884,7 +884,7 @@ public class ScriptedAgent<C extends ScriptExecutionContext> extends Agent {
 	 * 
 	 * @param <C> is the type ScriptExecutionContext supported by this loader.
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 0.5
@@ -937,7 +937,7 @@ public class ScriptedAgent<C extends ScriptExecutionContext> extends Agent {
 	 * 
 	 * @param <C> is the type ScriptExecutionContext supported by this loader.
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 0.5
@@ -967,7 +967,7 @@ public class ScriptedAgent<C extends ScriptExecutionContext> extends Agent {
 	 * 
 	 * @param <C> is the type ScriptExecutionContext supported by this loader.
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 0.5
@@ -997,7 +997,7 @@ public class ScriptedAgent<C extends ScriptExecutionContext> extends Agent {
 	 * 
 	 * @param <C> is the type ScriptExecutionContext supported by this loader.
 	 * @author $Author: sgalland$
-	 * @version $Name$ $Revision$ $Date$
+	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 * @since 0.5
