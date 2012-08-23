@@ -570,7 +570,6 @@ final class KernelScopeGroup extends ConditionnedObject<RolePlayer, GroupConditi
 	 *            role.
 	 * @return the address of the receiver.
 	 */
-	@SuppressWarnings("null")
 	public RoleAddress requestRole(RolePlayer player, Class<? extends Role> role,
 			RoleFactory factory, AccessControlContext accessContext,
 			Object... initObjects) {
