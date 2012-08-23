@@ -69,23 +69,37 @@ public class RoleAddress implements Address {
 	 * @param player is the player of the role.
 	 */
 	RoleAddress(GroupAddress group, Class<? extends Role> role, AgentAddress player) {
+		this(group, role, player, null);
+	}
+
+	/**
+	 * @param group is the address of the group of the role.
+	 * @param role is the role.
+	 * @param player is the player of the role.
+	 * @param name is the name associated to the address.
+	 * @since 1.0
+	 */
+	RoleAddress(GroupAddress group, Class<? extends Role> role, AgentAddress player, String name) {
 		assert(group!=null);
 		assert(role!=null);
 		this.group = group;
 		this.roleType = role;
 		this.player = player;
 		this.role = null;
+		this.name = name;
 	}
 
 	/** {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public final String toString() {
 		StringBuilder b = new StringBuilder();
+		b.append(this.name);
+		b.append("||"); //$NON-NLS-1$
 		b.append(this.group.toString());
-		b.append("|"); //$NON-NLS-1$
+		b.append("||"); //$NON-NLS-1$
 		b.append(this.roleType.getSimpleName());
-		b.append("|"); //$NON-NLS-1$
+		b.append("||"); //$NON-NLS-1$
 		if (this.player!=null) {
 			b.append(this.player.toString());
 		}

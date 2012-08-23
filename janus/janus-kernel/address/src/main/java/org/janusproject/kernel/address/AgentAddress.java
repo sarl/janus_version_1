@@ -77,7 +77,7 @@ public abstract class AgentAddress extends AbstractAddress {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public final String toString() {
 		return getName() + "::" + getUUID(); //$NON-NLS-1$
 	}
 

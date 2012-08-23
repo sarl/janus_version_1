@@ -101,8 +101,9 @@ public class GroupAddress extends AbstractAddress {
 	/** {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
-		return getUUID().toString();
+	public final String toString() {
+		return getName() + "::" + getUUID() //$NON-NLS-1$
+				+ "::" + getOrganization().toString(); //$NON-NLS-1$
 	}
 
 	/** Replies the organization instancied by this group.
