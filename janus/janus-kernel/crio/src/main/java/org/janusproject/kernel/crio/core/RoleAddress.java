@@ -94,7 +94,9 @@ public class RoleAddress implements Address {
 	@Override
 	public final String toString() {
 		StringBuilder b = new StringBuilder();
-		b.append(this.name);
+		if (this.name!=null && !this.name.isEmpty()) {
+			b.append(this.name);
+		}
 		b.append("||"); //$NON-NLS-1$
 		b.append(this.group.toString());
 		b.append("||"); //$NON-NLS-1$

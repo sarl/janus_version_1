@@ -102,8 +102,16 @@ public class GroupAddress extends AbstractAddress {
 	 */
 	@Override
 	public final String toString() {
-		return getName() + "::" + getUUID() //$NON-NLS-1$
-				+ "::" + getOrganization().toString(); //$NON-NLS-1$
+		StringBuilder b = new StringBuilder();
+		String n = getName();
+		if (n!=null && !n.isEmpty()) {
+			b.append(n);
+		}
+		b.append("::"); //$NON-NLS-1$
+		b.append(getUUID());
+		b.append("::"); //$NON-NLS-1$
+		b.append(getOrganization().toString());
+		return b.toString();
 	}
 
 	/** Replies the organization instancied by this group.
