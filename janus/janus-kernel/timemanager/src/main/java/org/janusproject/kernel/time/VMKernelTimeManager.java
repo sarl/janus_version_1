@@ -42,7 +42,7 @@ public class VMKernelTimeManager implements KernelTimeManager {
 	/**
 	 */
 	public VMKernelTimeManager() {
-		this.initialTime = System.currentTimeMillis();
+		this.initialTime = System.nanoTime();
 	}
 	
 	/** {@inheritDoc}
@@ -52,16 +52,15 @@ public class VMKernelTimeManager implements KernelTimeManager {
 		return new Date(System.currentTimeMillis());
 	}
 
-	private long getCurrentTimeAsLong() {
-		return System.currentTimeMillis() - this.initialTime;
+	private double getCurrentTimeAsMillis() {
+		return (System.nanoTime() - this.initialTime) * 1e-6;
 	}
 	
 	/** {@inheritDoc}
 	 */
 	@Override
 	public float getCurrentTime() {
-		Long currentTime = getCurrentTimeAsLong();
-		return currentTime.floatValue();
+		return (float) getCurrentTimeAsMillis();
 	}
 
 	/** {@inheritDoc}
@@ -69,7 +68,7 @@ public class VMKernelTimeManager implements KernelTimeManager {
 	@Override
 	public float getCurrentTime(TimeUnit unit) {
 		assert(unit!=null);
-		return unit.convert(getCurrentTimeAsLong(), TimeUnit.MILLISECONDS);
+		return unit.convert((long)getCurrentTimeAsMillis(), TimeUnit.MILLISECONDS);
 	}
 
 }
