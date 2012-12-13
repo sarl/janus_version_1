@@ -24,7 +24,11 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
- * This class retreives time from the virtual machine.
+ * This class retreives time according to how the time
+ * on the virtual machine evolves.
+ * The time in the time manager is initialized with {@code 0}.
+ * And the time evolves at the same rate as the current
+ * operating system clock. 
  * 
  * @author $Author: sgalland$
  * @version $FullVersion$
@@ -33,6 +37,14 @@ import java.util.concurrent.TimeUnit;
  */
 public class VMKernelTimeManager implements KernelTimeManager {
 
+	private final long initialTime;
+	
+	/**
+	 */
+	public VMKernelTimeManager() {
+		this.initialTime = System.nanoTime();
+	}
+	
 	/** {@inheritDoc}
 	 */
 	@Override
@@ -40,11 +52,15 @@ public class VMKernelTimeManager implements KernelTimeManager {
 		return new Date(System.currentTimeMillis());
 	}
 
+	private double getCurrentTimeAsMillis() {
+		return (System.nanoTime() - this.initialTime) * 1e-6;
+	}
+	
 	/** {@inheritDoc}
 	 */
 	@Override
 	public float getCurrentTime() {
-		return System.currentTimeMillis();
+		return (float) getCurrentTimeAsMillis();
 	}
 
 	/** {@inheritDoc}
@@ -52,7 +68,7 @@ public class VMKernelTimeManager implements KernelTimeManager {
 	@Override
 	public float getCurrentTime(TimeUnit unit) {
 		assert(unit!=null);
-		return unit.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+		return unit.convert((long)getCurrentTimeAsMillis(), TimeUnit.MILLISECONDS);
 	}
 
 }

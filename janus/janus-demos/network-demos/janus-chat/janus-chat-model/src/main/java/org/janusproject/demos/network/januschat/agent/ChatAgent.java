@@ -44,6 +44,7 @@ import org.janusproject.kernel.channels.ChannelInteractable;
 import org.janusproject.kernel.crio.capacity.CapacityContext;
 import org.janusproject.kernel.crio.capacity.CapacityImplementation;
 import org.janusproject.kernel.crio.core.GroupAddress;
+import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.role.RolePlayingEvent;
 import org.janusproject.kernel.crio.role.RolePlayingListener;
 import org.janusproject.kernel.message.Message;
@@ -230,7 +231,7 @@ public class ChatAgent extends Agent implements ChannelInteractable, RolePlaying
 		@Override
 		public void call(CapacityContext call) throws Exception {
 			GroupAddress chatroom = call.getInputValueAt(0, GroupAddress.class);
-			AgentAddress emitter = call.getInputValueAt(1, AgentAddress.class);
+			RoleAddress emitter = call.getInputValueAt(1, RoleAddress.class);
 			String message = call.getInputValueAt(2, String.class);
 			onChatRoomMessageReceived(chatroom, emitter, message);
 		}
@@ -240,11 +241,11 @@ public class ChatAgent extends Agent implements ChannelInteractable, RolePlaying
 		 */
 		@SuppressWarnings("synthetic-access")
 		@Override
-		public void onChatRoomMessageReceived(GroupAddress chatroom, AgentAddress emitter, String message) {
+		public void onChatRoomMessageReceived(GroupAddress chatroom, RoleAddress emitter, String message) {
 			// Notify listeners about the join
 			IncomingChatListener[] list = ChatAgent.this.getEventListeners(IncomingChatListener.class);
 			for (IncomingChatListener listener : list) {
-				listener.incomingMessage(chatroom, emitter, message);
+				listener.incomingMessage(chatroom, emitter.getPlayer(), message);
 			}
 		}
 

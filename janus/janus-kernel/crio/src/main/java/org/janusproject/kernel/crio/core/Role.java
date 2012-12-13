@@ -2170,6 +2170,30 @@ public abstract class Role extends
 	 * 
 	 * @param role
 	 *            is the role to leave.
+	 * @return <code>true</code> if the request was accepted, <code>false</code>
+	 *         else
+	 * @GROUPAPI
+	 * @since 1.0
+	 */
+	protected final boolean leaveRole(RoleAddress role) {
+		// Do not leave this role instance immediately to
+		// prevent exception during the rest of the live function.
+		// See proceedPrivateBehaviour() for the role release.
+		if (role!=null && getPlayer().equals(role.getPlayer())) {
+			return releaseRole(role.getRole(), role.getGroup());
+		}
+		return false;
+	}
+
+	/**
+	 * Function allowing the request of the liberation of a role on the given
+	 * group.
+	 * <p>
+	 * This function assumes that a role could be played only one time by a
+	 * entity inside a one group.
+	 * 
+	 * @param role
+	 *            is the role to leave.
 	 * @param group
 	 *            is the address of the group of the role to leave.
 	 * @return <code>true</code> if the request was accepted, <code>false</code>

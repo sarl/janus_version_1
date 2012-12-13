@@ -32,6 +32,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
+import org.janusproject.kernel.agentsignal.BufferedSignalManager;
+import org.janusproject.kernel.agentsignal.SignalManager;
 import org.janusproject.kernel.condition.AfterTimeCondition;
 import org.janusproject.kernel.condition.TimeCondition;
 import org.janusproject.kernel.configuration.JanusProperty;
@@ -910,6 +912,11 @@ implements Activable, Holon, Serializable {
 
 		if(this.mailbox instanceof BufferedMailbox) {
 			((BufferedMailbox)this.mailbox).synchronizeMessages();
+		}
+		
+		SignalManager sm = getSignalManager();
+		if (sm instanceof BufferedSignalManager) {
+			((BufferedSignalManager)sm).sync();
 		}
 
 		if (isSelfKillableNow()) {

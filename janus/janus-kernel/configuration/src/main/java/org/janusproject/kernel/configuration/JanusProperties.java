@@ -118,7 +118,7 @@ public class JanusProperties extends Properties {
 
 	/** This constant is the default application name for Janus kernels.
 	 * <p>
-	 * Value: <code>janus</code>.
+	 * Value: <code>DefaultJanusApplication</code>.
 	 * 
 	 * @see JanusProperty#JANUS_APPLICATION_NAME
 	 */

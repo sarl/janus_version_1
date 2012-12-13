@@ -20,10 +20,10 @@
  */
 package org.janusproject.demos.network.januschat.organization;
 
-import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.crio.capacity.Capacity;
 import org.janusproject.kernel.crio.capacity.CapacityPrototype;
 import org.janusproject.kernel.crio.core.GroupAddress;
+import org.janusproject.kernel.crio.core.RoleAddress;
 
 /**
  * This capacity permits to notifies the user about the
@@ -36,7 +36,7 @@ import org.janusproject.kernel.crio.core.GroupAddress;
  * @mavenartifactid $ArtifactId$
  */
 @CapacityPrototype(
-		fixedParameters={GroupAddress.class, AgentAddress.class, String.class}
+		fixedParameters={GroupAddress.class, RoleAddress.class, String.class}
 )
 public interface SendToUserCapacity extends Capacity {
 	
@@ -46,6 +46,6 @@ public interface SendToUserCapacity extends Capacity {
 	 * @param emitter is the emitter of the message.
 	 * @param message is the text of the message.
 	 */
-	public void onChatRoomMessageReceived(GroupAddress chatroom, AgentAddress emitter, String message);
+	public void onChatRoomMessageReceived(GroupAddress chatroom, RoleAddress emitter, String message);
 	
 }

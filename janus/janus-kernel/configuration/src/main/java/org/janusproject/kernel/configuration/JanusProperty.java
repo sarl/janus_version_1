@@ -36,7 +36,7 @@ package org.janusproject.kernel.configuration;
  * </ol>
  * 
  * @author $Author: sgalland$
- * $@author $Author: ngaud$
+ * @author $Author: ngaud$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
@@ -46,7 +46,9 @@ public enum JanusProperty {
 	/**
 	 * Property to find the home folder for an instance of Janus kernel.
 	 * The instance of janus kernel depends on the application.
-	 * 
+         * <p>
+	 * Read-only: yes.
+         * 
 	 * @see JanusProperties#getKernelDirectory()
 	 */
 	JANUS_KERNEL_HOME("janus.kernel.home", true), //$NON-NLS-1$
@@ -55,6 +57,8 @@ public enum JanusProperty {
 	 * Property to find the home folder for a Janus application.
 	 * The folder contains the subfolder dedicated to all
 	 * the instances of the kernel running the application.
+         * <p>
+	 * Read-only: yes.
 	 * 
 	 * @see JanusProperties#getApplicationDirectory()
 	 */
@@ -65,6 +69,8 @@ public enum JanusProperty {
 	 * The folder is the top-most folder dedicated to the Janus
 	 * platform, including all the applications and the instanced
 	 * kernels.
+         * <p>
+	 * Read-only: yes.
 	 * 
 	 * @see JanusProperties#getRootConfigurationDirectory()
 	 */
@@ -72,25 +78,35 @@ public enum JanusProperty {
 
 	/**
 	 * Property to find Janus Application Name.
+         * <p>
+	 * Read-only: yes.
 	 */
 	JANUS_APPLICATION_NAME("janus.app.name", true), //$NON-NLS-1$
 
 	/** Indicates if the groups are persistent.
+         * <p>
+	 * Read-only: no.
 	 */
 	GROUP_PERSISTENCE("janus.groups.persistence", false),  //$NON-NLS-1$
 
 	/** Indicates if the groups are distributed.
+         * <p>
+	 * Read-only: no.
 	 */
 	GROUP_DISTRIBUTION("janus.groups.distribution", false),  //$NON-NLS-1$
 
 	/** Indicates the timeout delay (in milliseconds) to await
 	 * before an iddle kernel agent to be killed.
+         * <p>
+	 * Read-only: yes.
 	 */
 	JANUS_KERNEL_KILL_TIMEOUT("janus.kernel.killTimeout", true),  //$NON-NLS-1$
 	
 	/** Indicates if new kernels are keeping alive
 	 * when they are no more agents to schedule.
 	 * Keeping alive is the negation of beeing suicidal.
+         * <p>
+	 * Read-only: no.
 	 */
 	JANUS_KERNEL_KEEP_ALIVE("janus.kernel.keepAlive", false),  //$NON-NLS-1$
 	
@@ -98,57 +114,82 @@ public enum JanusProperty {
 	 * are keeping alive
 	 * when they are no more role to play.
 	 * Keeping alive is the negation of beeing suicidal.
+         * <p>
+	 * Read-only: no.
 	 */
 	JANUS_AGENT_KEEP_ALIVE("janus.agent.keepAlive", false),  //$NON-NLS-1$
 
 	/** Indicates the default signal management policy 
 	 * for role players and roles.
+         * <p>
+	 * Read-only: no.
 	 */
 	JANUS_AGENT_SIGNAL_POLICY("janus.agent.signalPolicy", false), //$NON-NLS-1$
 
 	/** Indicates the default type of mailbox for the agents.
+         * <p>
+	 * Read-only: no.
 	 */
 	JANUS_AGENT_MAILBOX_TYPE("janus.agent.mailbox.type", false), //$NON-NLS-1$
 
 	/** Indicates the default type of mailbox for the roles.
+         * <p>
+	 * Read-only: no.
 	 */
 	JANUS_ROLE_MAILBOX_TYPE("janus.agent.role.mailbox.type", false), //$NON-NLS-1$
 
 	/**
 	 * If janus should clean the jxta home, it deletes
 	 * all directories.
+         * <p>
+	 * Read-only: no.
 	 */
 	JXTA_CLEAN("net.jxta.clean", false), //$NON-NLS-1$
 
-	/**
+	/** The identifier of the World-Of-Janus that may be used
+         * to be connectedd to the Janus community thourhg JXTA.
+         * <p>
+	 * Read-only: no.
 	 */
 	JXTA_WOJ_ID("net.jxta.wojId", false), //$NON-NLS-1$
 
 	/**
 	 * The Main Applications group PeerGroupID. 
 	 * In this JXTA Peer Group is where newly created janus groups are broadcasted to distant kernels.
+         * <p>
+	 * Read-only: yes.
 	 */
 	JXTA_APPLICATION_ID("net.jxta.applicationId", true), //$NON-NLS-1$
 
-	/**
+	/** Indicates if the JXTA library can log or not.
+         * <p>
+	 * Read-only: no.
 	 */
 	JXTA_LOGGING("net.jxta.logging.Logging", false), //$NON-NLS-1$
 
-	/**
+	/** The logging level of the JXTA library.
+         * <p>
+	 * Read-only: no.
 	 */
 	JXTA_LEVEL("net.jxta.level", false), //$NON-NLS-1$
 
-	/**
+	/** The URI that permits to create make a rendez-vous with JXTA.
+         * <p>
+	 * Read-only: true.
 	 */
 	JXTA_SEEDING_URI("net.jxta.seedingUri", true), //$NON-NLS-1$
 
 	/**
-	 * JXTA mode.
+	 * The JXTA mode, usually "Edge".
+         * <p>
+	 * Read-only: no.
 	 */
 	JXTA_MODE("net.jxta.mode", false), //$NON-NLS-1$
 
 	/**
 	 * JXTA home folder. This folder dependents on an application instance.
+         * <p>
+	 * Read-only: true.
 	 */
 	JXTA_HOME("JXTA_HOME", true); //$NON-NLS-1$
 	

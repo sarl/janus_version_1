@@ -143,8 +143,9 @@ public class ProbeManager {
 				// If marked as watchable, save this field  
 				Watchable annotation = field.getAnnotation(Watchable.class);
 				if (annotation!=null) {
-					if (finalLevel || !annotation.isFinal())
+					if (finalLevel || !annotation.isFinal()) {
 						attributes.put(attrName, field);
+					}
 				}
 			}
 			
@@ -185,6 +186,13 @@ public class ProbeManager {
 			while (iterator.hasNext()) {
 				field = iterator.next();
 				if (field.getName().equals(probeName)) {
+					// JANUS-156: Enable the probe manager to access to
+					// the fields that are not public.
+					// Change the accessibility during the reading of
+					// the value to limit the time during which
+					// the field accessibility is overridden.
+					boolean isAccessible = field.isAccessible();
+					field.setAccessible(true);
 					try {
 						return field.get(probedObject);
 					}
@@ -196,6 +204,9 @@ public class ProbeManager {
 					}
 					catch (IllegalAccessException e) {
 						iterator.remove();
+					}
+					finally {
+						field.setAccessible(isAccessible);
 					}
 					
 					// Remove the cache entry when it is no more required
