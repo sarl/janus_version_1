@@ -40,22 +40,6 @@
 						<supportedProjectType>war</supportedProjectType>
 					</supportedProjectTypes>
 				</configuration>
-				<executions>
-					<execution>
-						<id>executionGenerateManifest</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>manifest</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>executionGenerateBundle</id>
-						<phase>package</phase>
-						<goals>
-							<goal>bundle</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
