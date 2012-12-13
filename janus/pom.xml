@@ -183,7 +183,7 @@
 						<group>
 							<title>Agent and Kernel Core Implementation</title>
 							<packages>
-org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject.kernel.mailbox*:org.janusproject.kernel.schedule*:org.janusproject.kernel.time*:org.janusproject.kernel.probe*:org.janusproject.kernel.channel*
+								org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject.kernel.mailbox*:org.janusproject.kernel.schedule*:org.janusproject.kernel.time*:org.janusproject.kernel.probe*:org.janusproject.kernel.channel*
 							</packages>
 						</group>
 						<group>
@@ -417,6 +417,7 @@ org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject
 					<configuration>
 						<lifecycleMappingMetadata>
 							<pluginExecutions>
+
 								<pluginExecution>
 									<pluginExecutionFilter>
 										<groupId>org.arakhne.afc</groupId>
@@ -431,6 +432,7 @@ org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject
 										<execute />
 									</action>
 								</pluginExecution>
+
 								<pluginExecution>
 									<pluginExecutionFilter>
 										<groupId>org.arakhne.afc</groupId>
@@ -444,20 +446,7 @@ org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject
 										<execute />
 									</action>
 								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.felix</groupId>
-										<artifactId>maven-bundle-plugin</artifactId>
-										<versionRange>[0.1-SNAPSHOT,)</versionRange>
-										<goals>
-											<goal>manifest</goal>
-											<goal>bundle</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<execute />
-									</action>
-								</pluginExecution>
+
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
@@ -870,6 +859,18 @@ org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject
 			</snapshots>
 		</repository>
 
+		<!-- Repositories for eclipse related plugins and other RCP stuff -->
+		<repository>
+			<id>juno</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/releases/juno</url>
+		</repository>
+
+		<repository>
+			<id>helios</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/releases/helios</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>

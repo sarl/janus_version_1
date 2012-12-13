@@ -8,19 +8,10 @@
  */
 package org.janusproject.extras.ui.eclipse.moduletools.widgets;
 
-import java.net.URL;
-
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.ImageRegistry;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -30,26 +21,17 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 import org.janusproject.extras.ui.eclipse.base.images.JanusSharedImages;
 import org.janusproject.extras.ui.eclipse.moduletools.Activator;
-import org.janusproject.kernel.mmf.IKernelService;
 import org.janusproject.kernel.mmf.JanusModule;
+import org.janusproject.kernel.mmf.KernelService;
 import org.janusproject.kernel.status.Status;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -82,16 +64,13 @@ public class StartModuleDialog extends TitleAreaDialog {
 
 		// Set the message
 		if (getKernelService() == null) {
-			setMessage("The KernelService is not available.",
-					IMessageProvider.ERROR);
+			setMessage("The KernelService is not available.", IMessageProvider.ERROR);
 		} else {
-			setMessage("Select the Module to start.",
-					IMessageProvider.INFORMATION);
+			setMessage("Select the Module to start.", IMessageProvider.INFORMATION);
 		}
 		Bundle bundle = Platform.getBundle(Activator.PLUGIN_ID);
 
-		setTitleImage(JanusSharedImages
-				.getImage(JanusSharedImages.LOGO_JANUS_BANNER));
+		setTitleImage(JanusSharedImages.getImage(JanusSharedImages.LOGO_JANUS_BANNER));
 
 		return contents;
 	}
@@ -99,9 +78,7 @@ public class StartModuleDialog extends TitleAreaDialog {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.jface.dialogs.TitleAreaDialog#createDialogArea(org.eclipse
-	 * .swt.widgets.Composite)
+	 * @see org.eclipse.jface.dialogs.TitleAreaDialog#createDialogArea(org.eclipse .swt.widgets.Composite)
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
@@ -114,31 +91,27 @@ public class StartModuleDialog extends TitleAreaDialog {
 	 * @param parent
 	 */
 	private void createModuleViewer(Composite parent) {
-		viewer = new TableViewer(parent, SWT.FULL_SELECTION | SWT.BORDER
-				| SWT.SINGLE);
-		createColumns(viewer);
-		viewer.setContentProvider(new ModulesContentProvider());
-		viewer.setLabelProvider(new ModulesLabelProvider());
-		viewer.getTable().setLayoutData(new GridData(GridData.FILL_BOTH));
-		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		this.viewer = new TableViewer(parent, SWT.FULL_SELECTION | SWT.BORDER | SWT.SINGLE);
+		createColumns(this.viewer);
+		this.viewer.setContentProvider(new ModulesContentProvider());
+		this.viewer.setLabelProvider(new ModulesLabelProvider());
+		this.viewer.getTable().setLayoutData(new GridData(GridData.FILL_BOTH));
+		this.viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				IStructuredSelection selection = (IStructuredSelection) event
-						.getSelection();
-				selectedReference = (ServiceReference) selection
-						.getFirstElement();
-				selectedReference.getClass();
+				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				StartModuleDialog.this.selectedReference = (ServiceReference) selection.getFirstElement();
+				StartModuleDialog.this.selectedReference.getClass();
 			}
 		});
-		viewer.setInput("Start");
+this.viewer.setInput("Start");
 	}
 
 	private void createColumns(TableViewer viewer) {
 
-		String[] titles = { "Name", "Description", "ModuleClass", "Bundle", "Bundle Version",
-				"ServiceID" };
-		int[] bounds = { 200, 200, 200, 200, 50,20 };
+		String[] titles = { "Name", "Description", "ModuleClass", "Bundle", "Bundle Version", "ServiceID" };
+		int[] bounds = { 200, 200, 200, 200, 50, 20 };
 
 		for (int i = 0; i < titles.length; i++) {
 			TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
@@ -152,22 +125,19 @@ public class StartModuleDialog extends TitleAreaDialog {
 		table.setLinesVisible(true);
 	}
 
-	class ModulesLabelProvider extends LabelProvider implements
-			ITableLabelProvider {
+	class ModulesLabelProvider extends LabelProvider implements ITableLabelProvider {
 
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java
-		 * .lang.Object, int)
+		 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java .lang.Object, int)
 		 */
 		@Override
 		public Image getColumnImage(Object obj, int idx) {
 			if (idx == 0) {
 				ServiceReference ref = (ServiceReference) obj;
 				JanusModule m = (JanusModule) getBundleContext().getService(ref);
-				if(m.isRunning()){
+				if (m.isRunning()) {
 					return JanusSharedImages.getImage(JanusSharedImages.MODULE_RUNNING);
 				}
 				return JanusSharedImages.getImage(JanusSharedImages.MODULE);
@@ -178,9 +148,7 @@ public class StartModuleDialog extends TitleAreaDialog {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.
-		 * lang.Object, int)
+		 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java. lang.Object, int)
 		 */
 		@Override
 		public String getColumnText(Object obj, int column) {
@@ -222,9 +190,7 @@ public class StartModuleDialog extends TitleAreaDialog {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse
-		 * .jface.viewers.Viewer, java.lang.Object, java.lang.Object)
+		 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse .jface.viewers.Viewer, java.lang.Object, java.lang.Object)
 		 */
 		@Override
 		public void inputChanged(Viewer arg0, Object arg1, Object arg2) {
@@ -235,21 +201,18 @@ public class StartModuleDialog extends TitleAreaDialog {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(
-		 * java.lang.Object)
+		 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements( java.lang.Object)
 		 */
 		@Override
 		public Object[] getElements(Object parent) {
 			try {
-				ServiceReference[] refs = getBundleContext()
-						.getServiceReferences(JanusModule.class.getName(), null);
+				ServiceReference[] refs = getBundleContext().getServiceReferences(JanusModule.class.getName(), null);
 				if (refs == null) {
 					return new Object[0];
 				}
 				return refs;
 			} catch (InvalidSyntaxException e) {
-				
+
 			}
 			return new Object[0];
 		}
@@ -258,31 +221,27 @@ public class StartModuleDialog extends TitleAreaDialog {
 
 	public void run() {
 		if (getKernelService() == null) {
-			MessageDialog
-					.openError(getShell(), "Unavailable Kernel",
-							"The KernelService is not available. Please ensure Janus is running.");
+			MessageDialog.openError(getShell(), "Unavailable Kernel", "The KernelService is not available. Please ensure Janus is running.");
 			return;
 		}
 
 		int res = open();
 		if (res == OK) {
 			JanusModule m = getSelectedModule();
-			if(m.isRunning()){
+			if (m.isRunning()) {
 				MessageDialog.openError(getShell(), "Module Running", "The selected Module is already running.");
 				return;
 			}
 			Status status = getKernelService().startJanusModule(m, null);
 			if (status.isFailure()) {
-				MessageDialog.openError(getShell(),
-						"Error while starting module", status.getMessage());
+				MessageDialog.openError(getShell(), "Error while starting module", status.getMessage());
 			}
 		}
 	}
 
 	public JanusModule getSelectedModule() {
 		if (selectedReference != null) {
-			return (JanusModule) getBundleContext().getService(
-					selectedReference);
+			return (JanusModule) getBundleContext().getService(selectedReference);
 		}
 		return null;
 
@@ -292,15 +251,14 @@ public class StartModuleDialog extends TitleAreaDialog {
 		return Platform.getBundle(Activator.PLUGIN_ID).getBundleContext();
 	}
 
-	private IKernelService getKernelService() {
+	private KernelService getKernelService() {
 		BundleContext context = getBundleContext();
-		ServiceReference r = context.getServiceReference(IKernelService.class
-				.getName());
+		ServiceReference r = context.getServiceReference(KernelService.class.getName());
 		if (r == null) {
 			return null;
 		}
 
-		return (IKernelService) context.getService(r);
+		return (KernelService) context.getService(r);
 	}
 
 }

@@ -9,12 +9,12 @@
 		<relativePath>..</relativePath>
 	</parent>
 
-	<artifactId>ui</artifactId>
-	<groupId>org.janus-project.extras.organizations</groupId>
+	<groupId>org.janus-project.extras</groupId>
+	<artifactId>ui</artifactId>	
 	<packaging>pom</packaging>
 	<name>UI Extensions</name>
 	
 	<modules>
-		<!-- <module>eclipse</module> -->
+		<module>eclipse</module>
 	</modules>
 </project>

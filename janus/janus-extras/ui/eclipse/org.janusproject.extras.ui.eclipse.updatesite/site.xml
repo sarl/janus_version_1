@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <description name="Janus Eclipse Update Site" url="http://www.janus-project.org/eclipse">
-      Janus Eclipse Support Update Site
-   </description>
-   <feature url="features/org.janusproject.extras.ui.eclipse.feature.core_0.3.0.qualifier.jar" id="org.janusproject.extras.ui.eclipse.feature.core" version="0.3.0.qualifier"/>
-</site>

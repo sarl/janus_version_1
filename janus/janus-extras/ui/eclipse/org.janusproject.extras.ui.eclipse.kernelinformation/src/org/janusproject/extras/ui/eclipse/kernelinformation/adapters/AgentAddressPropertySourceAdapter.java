@@ -21,7 +21,7 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 import org.janusproject.extras.ui.eclipse.kernelinformation.Activator;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.channels.ChannelInteractable;
-import org.janusproject.kernel.mmf.IKernelService;
+import org.janusproject.kernel.mmf.KernelService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -41,16 +41,16 @@ public class AgentAddressPropertySourceAdapter implements IPropertySource {
 
 	private static final String CAT_ADDR = "Address";
 	private static final String CAT_CHANNELS = "Channels";
-	
+
 	private AgentAddress address = null;
-	private ChannelInteractable channelInteractable = null;
+	//private ChannelInteractable channelInteractable = null;
 
 	private IPropertyDescriptor[] propertyDescriptors;
 
 	public AgentAddressPropertySourceAdapter(AgentAddress address) {
 		this.address = address;
-		IKernelService s = getKernelService();
-		channelInteractable = s.getChannelInteractable(address);
+		//KernelService s = getKernelService();
+		//channelInteractable = s.getChannelInteractable(address);
 	}
 
 	/*
@@ -67,35 +67,29 @@ public class AgentAddressPropertySourceAdapter implements IPropertySource {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
+	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyDescriptors()
 	 */
 	@Override
 	public IPropertyDescriptor[] getPropertyDescriptors() {
 		if (propertyDescriptors == null) {
 			// Create a descriptor and set a category
-			PropertyDescriptor uuidDescriptor = new PropertyDescriptor(
-					PROPERTY_UUID, "Address");
+			PropertyDescriptor uuidDescriptor = new PropertyDescriptor(PROPERTY_UUID, "Address");
 
 			uuidDescriptor.setCategory(CAT_ADDR);
 
-			PropertyDescriptor nameDescriptor = new PropertyDescriptor(
-					PROPERTY_NAME, "Name");
+			PropertyDescriptor nameDescriptor = new PropertyDescriptor(PROPERTY_NAME, "Name");
 
 			nameDescriptor.setCategory(CAT_ADDR);
 
-			PropertyDescriptor isIntDescriptor = new PropertyDescriptor(
-					PROPERTY_CHANNELINTERACTABLE, "Supports Channels");
+			PropertyDescriptor isIntDescriptor = new PropertyDescriptor(PROPERTY_CHANNELINTERACTABLE, "Supports Channels");
 
 			isIntDescriptor.setCategory(CAT_CHANNELS);
 
-			PropertyDescriptor chDescriptor = new PropertyDescriptor(
-					PROPERTY_CHANNELS, "Supported Channels");
+			PropertyDescriptor chDescriptor = new PropertyDescriptor(PROPERTY_CHANNELS, "Supported Channels");
 
 			chDescriptor.setCategory(CAT_CHANNELS);
 
-			propertyDescriptors = new IPropertyDescriptor[] { nameDescriptor,
-					uuidDescriptor, isIntDescriptor, chDescriptor };
+			propertyDescriptors = new IPropertyDescriptor[] { nameDescriptor, uuidDescriptor, isIntDescriptor, chDescriptor };
 		}
 		return propertyDescriptors;
 
@@ -104,22 +98,21 @@ public class AgentAddressPropertySourceAdapter implements IPropertySource {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(java
-	 * .lang.Object)
+	 * @see org.eclipse.ui.views.properties.IPropertySource#getPropertyValue(java .lang.Object)
 	 */
 	@Override
 	public Object getPropertyValue(Object id) {
+	//FIXME update this methods to remove all ref to channel
 		if (PROPERTY_UUID.equals(id)) {
-			return address.getID();
+			return this.address.getUUID();
 		} else if (PROPERTY_NAME.equals(id)) {
-			return address.getName();
-		} else if (PROPERTY_CHANNELINTERACTABLE.equals(id)) {
-			return channelInteractable != null;
+			return this.address.getName();
+		 /*else if (PROPERTY_CHANNELINTERACTABLE.equals(id)) {
+			return this.channelInteractable != null;*/
 		} else if (PROPERTY_CHANNELS.equals(id)) {
-			if (channelInteractable != null) {
-				return channelInteractable.getSupportedChannels().toString();
-			}
+			/*if (this.channelInteractable != null) {
+				return this.channelInteractable.getSupportedChannels().toString();
+			}*/
 			return "None";
 		}
 		return "Retorno para " + id;
@@ -128,9 +121,7 @@ public class AgentAddressPropertySourceAdapter implements IPropertySource {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.ui.views.properties.IPropertySource#isPropertySet(java.lang
-	 * .Object)
+	 * @see org.eclipse.ui.views.properties.IPropertySource#isPropertySet(java.lang .Object)
 	 */
 	@Override
 	public boolean isPropertySet(Object id) {
@@ -141,9 +132,7 @@ public class AgentAddressPropertySourceAdapter implements IPropertySource {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.ui.views.properties.IPropertySource#resetPropertyValue(java
-	 * .lang.Object)
+	 * @see org.eclipse.ui.views.properties.IPropertySource#resetPropertyValue(java .lang.Object)
 	 */
 	@Override
 	public void resetPropertyValue(Object id) {
@@ -154,22 +143,18 @@ public class AgentAddressPropertySourceAdapter implements IPropertySource {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(java
-	 * .lang.Object, java.lang.Object)
+	 * @see org.eclipse.ui.views.properties.IPropertySource#setPropertyValue(java .lang.Object, java.lang.Object)
 	 */
 	@Override
 	public void setPropertyValue(Object id, Object value) {
 
 	}
 
-	private IKernelService getKernelService() {
-		BundleContext context = Platform.getBundle(Activator.PLUGIN_ID)
-				.getBundleContext();
-		ServiceReference r = context.getServiceReference(IKernelService.class
-				.getName());
+	private KernelService getKernelService() {
+		BundleContext context = Platform.getBundle(Activator.PLUGIN_ID).getBundleContext();
+		ServiceReference r = context.getServiceReference(KernelService.class.getName());
 		if (r != null) {
-			return (IKernelService) context.getService(r);
+			return (KernelService) context.getService(r);
 		}
 		return null;
 	}
