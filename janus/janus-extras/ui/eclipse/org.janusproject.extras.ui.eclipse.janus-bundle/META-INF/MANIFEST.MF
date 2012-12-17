@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Bundle
-Bundle-SymbolicName: org.janus-project.extras.ui.eclipse.janus-bundle;singleton:=true
+Bundle-SymbolicName: org.janusproject.extras.ui.eclipse.janus-bundle;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.janusproject.extras.ui.eclipse.bundle.Activator
 Require-Bundle: org.eclipse.core.runtime,
