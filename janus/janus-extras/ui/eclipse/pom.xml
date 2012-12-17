@@ -85,7 +85,7 @@
 					<target>
 						<artifact>
 							<groupId>org.janus-project.extras.ui.eclipse</groupId>
-							<artifactId>target-definition</artifactId>
+							<artifactId>org.janusproject.extras.ui.eclipse.target-definition</artifactId>
 							<version>1.0.0-SNAPSHOT</version>
 							<classifier>juno</classifier>
 						</artifact>
