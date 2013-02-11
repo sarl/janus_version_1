@@ -1144,6 +1144,43 @@ org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject
 			</organization>
 			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
+        <contributor>
+            <name>Boris Feld</name>
+            <email>lothiraldan@gmail.com</email>
+            <properties>
+                <id>bfeld</id>
+                <contributions>ZeroMQ network layer, json and bson acl encoder
+                    and FIPA propose protocol</contributions>
+            </properties>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+            <organization>
+                Computer Science Department,
+                Universit&amp;eacute; de
+                Technologie de
+                Belfort-Montba&amp;eacute;liard
+            </organization>
+            <organizationUrl>http://www.utbm.fr</organizationUrl>
+        </contributor>
+        <contributor>
+            <name>Nicolas Grenie</name>
+            <email>nicolas.grenie@utbm.fr</email>
+            <properties>
+                <id>ngrenie</id>
+                <contributions>Json and bson acl encoder and FIPA propose protocol.</contributions>
+            </properties>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+            <organization>
+                Computer Science Department,
+                Universit&amp;eacute; de
+                Technologie de
+                Belfort-Montba&amp;eacute;liard
+            </organization>
+            <organizationUrl>http://www.utbm.fr</organizationUrl>
+        </contributor>
 	</contributors>
 
 </project>
