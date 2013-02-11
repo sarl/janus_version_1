@@ -76,12 +76,22 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+		</dependency>
+
+		<dependency>
+		  <groupId>de.undercouch</groupId>
+		  <artifactId>bson4jackson</artifactId>
+		</dependency>
 	</dependencies>
 
 	<!-- ======================================= -->
 	<!-- ==== Developers === -->
 	<!-- ======================================= -->
-	
+
 	<developers>
 		<developer>
 			<id>madeline</id>
