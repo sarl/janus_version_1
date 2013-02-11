@@ -828,6 +828,19 @@ org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject
 				<artifactId>easymock</artifactId>
 				<version>3.1</version>
 			</dependency>
+			
+			<!-- *****************JACKSON************ -->
+			  <dependency>
+				   <groupId>org.codehaus.jackson</groupId>
+				   <artifactId>jackson-mapper-asl</artifactId>
+				   <version>1.9.11</version>
+			  </dependency>
+		   
+			<dependency>
+			  <groupId>de.undercouch</groupId>
+			  <artifactId>bson4jackson</artifactId>
+			  <version>1.3.0</version>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -869,6 +882,12 @@ org.janusproject.kernel.agent*:org.janusproject.kernel.address*:org.janusproject
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		
+		<!-- Jackson repository -->
+	  <repository>
+	   <id>codehaus-snapshots</id>
+	   <url>http://snapshots.repository.codehaus.org</url>
+	  </repository>
 
 	</repositories>
 
