@@ -57,7 +57,7 @@ public class ACLAgent extends Agent {
 	private PayloadEncoding payloadEncoding;
 
 	/**
-	 * The ACL representation of the ACLTransportMessage (Bit-efficient, String or XML)
+	 * The ACL representation of the ACLTransportMessage (Bit-efficient, String, JSON or XML)
 	 * Default Bit-efficient
 	 */
 	private ACLRepresentation aclRepresentation;

@@ -48,7 +48,15 @@ public enum ACLRepresentation {
 	 */
 	STRING("fipa.acl.rep.string.std"), //$NON-NLS-1$
 	/**
-	 * 
+	 *
+	 */
+	JSON("set.acl.rep.json.std"),
+	/*
+	 *
+	 */
+	BSON("set.acl.rep.bson.std"),
+	/**
+	 *
 	 */
 	XML("fipa.acl.rep.xml.std"); //$NON-NLS-1$
 	  
