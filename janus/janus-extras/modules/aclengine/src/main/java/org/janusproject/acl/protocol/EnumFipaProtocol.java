@@ -50,6 +50,9 @@ public enum EnumFipaProtocol {
 	FIPA_REQUEST("fipa-request"), //$NON-NLS-1$
 	/**
 	 */
+	FIPA_PROPOSE("fipa-propose"), //$NON-NLS-1$
+	/**
+	 */
 	FIPA_CONTRACT_NET("fipa-contract-net"); //$NON-NLS-1$
 	
 	private final String name;

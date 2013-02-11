@@ -30,6 +30,8 @@ import org.janusproject.acl.ACLMessage;
 import org.janusproject.acl.Performative;
 import org.janusproject.acl.protocol.cnp.ContractNetProtocolState;
 import org.janusproject.acl.protocol.cnp.FipaContractNetProtocol;
+import org.janusproject.acl.protocol.propose.FipaProposeProtocol;
+import org.janusproject.acl.protocol.propose.ProposeProtocolState;
 import org.janusproject.acl.protocol.request.FipaRequestProtocol;
 import org.janusproject.acl.protocol.request.RequestProtocolState;
 
@@ -76,6 +78,7 @@ public class FipaConversationManager {
 	public FipaConversationManager(final ACLAgent agent) {
 		this.agent = agent;
 		this.conversations = new ArrayList<AbstractFipaProtocol>();
+		this.logger = Logger.getLogger(this.getClass().getName());
 	}
 	
 	/**
@@ -99,6 +102,12 @@ public class FipaConversationManager {
 			protocol.setRefAclAgent(this.agent);
 			this.conversations.add(protocol);
 			return protocol;
+		} else if (EnumFipaProtocol.FIPA_PROPOSE == protocolType) {
+			protocol = new FipaProposeProtocol(this.agent);
+			protocol.setState(ProposeProtocolState.NOT_STARTED);
+			protocol.setRefAclAgent(this.agent);
+			this.conversations.add(protocol);
+			return protocol;
 		}
 		else {
 			this.logger.log(Level.SEVERE, "Protocol not supported"); //$NON-NLS-1$
@@ -115,7 +124,9 @@ public class FipaConversationManager {
 	 */
 	public AbstractFipaProtocol createConversation(EnumFipaProtocol protocolType, String name) {	
 		AbstractFipaProtocol protocol = createProtocol(protocolType);
-		protocol.setName(name);
+		if(protocol != null) {
+			protocol.setName(name);
+		}
 		return protocol;
 	}
 	
