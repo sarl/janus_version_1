@@ -20,6 +20,9 @@
  */
 package org.janusproject.kernel.agent;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.ref.WeakReference;
@@ -120,13 +123,15 @@ extends ActivatorAgent<AgentActivator> {
 	 * @param commitSuicide indicates if this agent is able to commit suicide or not
 	 * @param timeManager is the time manager to use, or <code>null</code> to use the default one.
 	 * @param startUpListener is a listener on kernel events which may be added at startup.
+	 * @param initParameters are the parameters to pass to the activate function.
 	 */
 	protected KernelAgent(
 			AgentActivator activator,
 			Boolean commitSuicide,
 			KernelTimeManager timeManager,
-			EventListener startUpListener) {
-		this(activator,commitSuicide,timeManager,startUpListener,null, null);
+			EventListener startUpListener,
+			Object... initParameters) {
+		this(activator,commitSuicide,timeManager,startUpListener,null, null, initParameters);
 	}
 
 	/**
@@ -137,6 +142,7 @@ extends ActivatorAgent<AgentActivator> {
 	 * @param timeManager is the time manager to use, or <code>null</code> to use the default one.
 	 * @param startUpListener is a listener on kernel events which may be added at startup.
 	 * @param applicationName is the name of the application supported by this kernel.
+	 * @param initParameters are the parameters to pass to the activate function.
 	 * @since 0.4
 	 */
 	protected KernelAgent(
@@ -144,8 +150,9 @@ extends ActivatorAgent<AgentActivator> {
 			Boolean commitSuicide,
 			KernelTimeManager timeManager,
 			EventListener startUpListener,
-			String applicationName) {
-		this(activator,commitSuicide,timeManager,startUpListener,null,applicationName);
+			String applicationName,
+			Object... initParameters) {
+		this(activator,commitSuicide,timeManager,startUpListener,null,applicationName,initParameters);
 	}
 
 	/**
@@ -157,14 +164,16 @@ extends ActivatorAgent<AgentActivator> {
 	 * @param startUpListener is a listener on kernel events which may be added at startup.
 	 * @param distantKernelHandler is the handler which will be notified each time a message should
 	 * be sent to a distant kernel.
+	 * @param initParameters are the parameters to pass to the activate function.
 	 */
 	protected KernelAgent(
 			AgentActivator activator,
 			Boolean commitSuicide,
 			KernelTimeManager timeManager,
 			EventListener startUpListener,
-			DistantKernelHandler distantKernelHandler) {
-		this(activator,commitSuicide,timeManager,startUpListener,distantKernelHandler,null);
+			DistantKernelHandler distantKernelHandler,
+			Object... initParameters) {
+		this(activator,commitSuicide,timeManager,startUpListener,distantKernelHandler,null, initParameters);
 	}
 
 	/**
@@ -177,6 +186,7 @@ extends ActivatorAgent<AgentActivator> {
 	 * @param distantKernelHandler is the handler which will be notified each time a message should
 	 * be sent to a distant kernel.
 	 * @param applicationName is the name of the application supported by this kernel.
+	 * @param initParameters are the parameters to pass to the activate function.
 	 * @since 0.4
 	 */
 	protected KernelAgent(
@@ -185,7 +195,8 @@ extends ActivatorAgent<AgentActivator> {
 			KernelTimeManager timeManager,
 			EventListener startUpListener,
 			DistantKernelHandler distantKernelHandler,
-			String applicationName) {
+			String applicationName,
+			Object... initParameters) {
 		super(activator, commitSuicide);
 		
 		if (startUpListener instanceof KernelListener)
@@ -209,7 +220,7 @@ extends ActivatorAgent<AgentActivator> {
 		Kernels.add(this);
 		
 		// Launching kernel agent
-		this.context.getExecutorService().execute(new AgentThread(this, null));
+		this.context.getExecutorService().execute(new AgentThread(this, initParameters));
 		while (!this.isLaunch.get()) {
 			Thread.yield();
 		}
@@ -2006,6 +2017,22 @@ extends ActivatorAgent<AgentActivator> {
 		public GroupAddress getOrCreateGroup(UUID id,
 				Class<? extends Organization> organization, String groupName) {
 			return KernelAgent.this.getOrCreateGroup(id, organization, groupName);
+		}
+		
+		/** {@inheritDoc}
+		 */
+		@Override
+		public void createCheckPoint(OutputStream stream) throws IOException {
+			// Force the platform to be paused
+			if (!isPaused()) {
+				pause();
+				while(!isPaused()) {
+					Thread.yield();
+				}
+			}
+			// Output the state of the platform
+			ObjectOutputStream oos = new ObjectOutputStream(stream);
+			oos.writeObject(KernelAgent.this);
 		}
 
 	}

@@ -20,6 +20,8 @@
  */
 package org.janusproject.kernel.agent;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -600,6 +602,13 @@ public class KernelEventTest extends TestCase {
 		@Override
 		public synchronized void waitUntilTermination(long timeout) throws InterruptedException {
 			wait(timeout);
+		}
+
+		/** {@inheritDoc}
+		 */
+		@Override
+		public void createCheckPoint(OutputStream stream) throws IOException {
+			throw new UnsupportedOperationException();
 		}
 
 	}

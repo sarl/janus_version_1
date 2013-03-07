@@ -20,6 +20,8 @@
  */
 package org.janusproject.kernel.mmf.impl;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -927,6 +929,13 @@ public class OSGiKernelService implements KernelService, KernelListener,
 	public synchronized void waitUntilTermination(long timeout) throws InterruptedException {
 		this.kernel.waitUntilTermination(timeout);
 		notifyAll(); // Force the waiter on this object to wake up.
+	}
+
+	/** {@inheritDoc}
+	 */
+	@Override
+	public void createCheckPoint(OutputStream stream) throws IOException {
+		throw new UnsupportedOperationException();
 	}
 
 }

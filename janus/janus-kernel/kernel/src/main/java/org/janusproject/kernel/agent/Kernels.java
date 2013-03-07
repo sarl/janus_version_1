@@ -20,6 +20,8 @@
  */
 package org.janusproject.kernel.agent;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.EventListener;
 import java.util.Iterator;
@@ -1065,6 +1067,22 @@ public final class Kernels {
 	public static void setPreferredKernelFactory(KernelAgentFactory factory) {
 		defaultKernelFactory = factory;
 	}
+	
+	/** Restore the kernel state from a saved check-point and start a kernel
+	 * according to the check-point content.
+	 * <p>
+	 * A check-point must be created by a call to {@link Kernel#createCheckPoint(java.io.OutputStream)}.
+	 * 
+	 * @param stream is the stream from which the check-point should be retreived.
+	 * @return the restored kernel.
+	 * @throws IOException
+	 * @since 1.0
+	 * @see Kernel#createCheckPoint(java.io.OutputStream)
+	 */
+	public static Kernel restoreCheckPoint(InputStream stream) throws IOException {
+		throw new UnsupportedOperationException();
+	}
+	
 
 	/**
 	 * @author $Author: sgalland$
