@@ -1,36 +1,57 @@
 package org.janusproject.extras.ui.eclipse.kernelinformation.views;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.part.*;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.DrillDownAdapter;
+import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributor;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.*;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.SWT;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.Platform;
 import org.janusproject.extras.ui.eclipse.base.images.JanusSharedImages;
 import org.janusproject.extras.ui.eclipse.kernelinformation.Activator;
+import org.janusproject.kernel.Kernel;
+import org.janusproject.kernel.KernelEvent;
+import org.janusproject.kernel.KernelListener;
 import org.janusproject.kernel.address.AgentAddress;
-import org.janusproject.kernel.agent.KernelEvent;
-import org.janusproject.kernel.agent.KernelListener;
-import org.janusproject.kernel.agent.channels.KernelInformationChannel;
+import org.janusproject.kernel.agent.KernelAgent;
 import org.janusproject.kernel.channels.ChannelInteractable;
 import org.janusproject.kernel.channels.ChannelInteractableListener;
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
-import org.janusproject.kernel.mmf.IKernelService;
 import org.janusproject.kernel.mmf.JanusModule;
-import org.janusproject.kernel.util.thread.ThreadUtil;
+import org.janusproject.kernel.mmf.KernelService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
@@ -57,7 +78,7 @@ public class KernelInformationView extends ViewPart implements
 	private Action action2;
 	private Action doubleClickAction;
 
-	private KernelInformationChannel channel = null;
+	private Kernel janusKernel = null;
 
 	/*
 	 * The content provider class is responsible for providing objects to the
@@ -162,10 +183,17 @@ public class KernelInformationView extends ViewPart implements
 
 		@Override
 		public Object[] getChildren() {
-			if (channel == null) {
+			if (janusKernel == null) {
 				return new Object[0];
 			}
-			return channel.getAgents().toArray();
+			//TODO change it by introducing a new attribute containing the collection update with a kernellistener
+			Iterator<AgentAddress> agentIter = janusKernel.getAgents();
+			Collection<AgentAddress> agents = new HashSet<AgentAddress>();
+			while(agentIter.hasNext()) {
+				agents.add(agentIter.next());
+			}
+			
+			return agents.toArray();
 		}
 
 	}
@@ -206,18 +234,18 @@ public class KernelInformationView extends ViewPart implements
 
 		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 			if (newInput != null
-					&& newInput instanceof KernelInformationChannel) {
-				channel = (KernelInformationChannel) newInput;
+					&& newInput instanceof Kernel) {
+				janusKernel = (Kernel) newInput;
 			}
 			v.refresh();
 		}
 
 		public void dispose() {
-			channel = null;
+			janusKernel = null;
 		}
 
 		public Object[] getElements(Object parent) {
-			if (parent instanceof KernelInformationChannel) {
+			if (parent instanceof Kernel) {
 				if (invisibleRoot == null)
 					initialize();
 				return getChildren(invisibleRoot);
@@ -436,15 +464,15 @@ public class KernelInformationView extends ViewPart implements
 		return Platform.getBundle(Activator.PLUGIN_ID).getBundleContext();
 	}
 
-	private IKernelService getKernelService() {
+	private KernelService getKernelService() {
 		BundleContext context = getBundleContext();
-		ServiceReference r = context.getServiceReference(IKernelService.class
+		ServiceReference r = context.getServiceReference(KernelService.class
 				.getName());
 		if (r == null) {
 			return null;
 		}
 
-		return (IKernelService) context.getService(r);
+		return (KernelService) context.getService(r);
 	}
 
 	/*
@@ -468,12 +496,18 @@ public class KernelInformationView extends ViewPart implements
 	 */
 	@Override
 	public void channelIteractableLaunched(ChannelInteractable agent) {
-		if (agent.getSupportedChannels().contains(
-				KernelInformationChannel.class)
-				&& channel == null) {
-			channel = agent.getChannel(KernelInformationChannel.class);
-			viewer.setInput(channel);
+		
+		if (agent instanceof KernelAgent && janusKernel == null) {			
+			janusKernel = ((KernelAgent)agent).toKernel();
+			viewer.setInput(janusKernel);
 		}
+		
+		/*if (agent.getSupportedChannels().contains(
+				KernelInformationChannel.class)
+				&& janusKernel == null) {
+			janusKernel = agent.getChannel(KernelInformationChannel.class);
+			viewer.setInput(janusKernel);
+		}*/
 
 	}
 

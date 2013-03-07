@@ -2,13 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!--
-		CAUTION: this module has not the org.janus-project.kernel:janus-kernel
-		maven module as parent to avoid dependency on it. Indeed if this
-		modules has org.janus-project.kernel:janus-kernel as parent, assembly
-		in org.janus-project.kernel:janus-kernel is impossible due to the
-		Maven dependency specifications.
-	-->
+	<!-- CAUTION: this module has not the org.janus-project.kernel:janus-kernel 
+		maven module as parent to avoid dependency on it. Indeed if this modules 
+		has org.janus-project.kernel:janus-kernel as parent, assembly in org.janus-project.kernel:janus-kernel 
+		is impossible due to the Maven dependency specifications. -->
 	<parent>
 		<artifactId>janus</artifactId>
 		<groupId>org.janus-project</groupId>
@@ -16,11 +13,14 @@
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
-
+	<properties>
+		<manifest-location>META-INF</manifest-location>
+	</properties>
 
 	<groupId>org.janus-project.kernel</groupId>
 	<artifactId>osgi</artifactId>
-	<packaging>jar</packaging>
+	<version>1.0.0</version>
+	<packaging>bundle</packaging>
 	<name>OSGified Janus Kernel</name>
 
 	<build>
@@ -50,22 +50,6 @@
 						<supportedProjectType>war</supportedProjectType>
 					</supportedProjectTypes>
 				</configuration>
-				<executions>
-					<execution>
-						<id>executionGenerateManifest</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>manifest</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>executionGenerateBundle</id>
-						<phase>package</phase>
-						<goals>
-							<goal>bundle</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

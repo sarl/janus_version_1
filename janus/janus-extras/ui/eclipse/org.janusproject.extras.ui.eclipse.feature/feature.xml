@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.janusproject.extras.ui.eclipse.feature.core"
+      id="org.janusproject.extras.ui.eclipse.feature"
       label="Janus Eclipse Core Feature"
-      version="0.5.qualifier"
+      version="1.0.0.qualifier"
       provider-name="org.janus-project">
 
    <description url="http://www.janus-project.org">
@@ -30,13 +30,13 @@ de Tucumán.
    </description>
 
    <copyright>
-      Copyright (c) 2004-10, Janus Core Developers &lt;Sebastian RODRIGUEZ, Nicolas GAUD, Stephane GALLAND&gt;
+      Copyright (c) 2004-12, Janus Core Developers &lt;Sebastian RODRIGUEZ, Nicolas GAUD, Stephane GALLAND&gt;
 All rights reserved.
 
 http://www.janus-project.org
    </copyright>
 
-   <license url="http://www.janus-project.org/index.php/Licensing:Janus">
+   <license url="http://www.janus-project.org/Licensing:Janus">
       Janus is released and distributed with two agreements depending on the type of its usage: academic use, or commercial/industrial use.
 Free for Academic and Non-Commercial Use.
 
@@ -47,21 +47,21 @@ Please contact Janus Core Team for other uses.
          id="org.janusproject.extras.ui.eclipse.base"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.janusproject.extras.ui.eclipse.kernelinformation"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
    <plugin
          id="org.janusproject.extras.ui.eclipse.moduletools"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.0.0"
          unpack="false"/>
 
 </feature>
