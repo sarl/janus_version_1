@@ -78,6 +78,19 @@ implements Serializable, Cloneable {
 	public Message() {
 		//
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Message clone() {
+		try {
+			return (Message)super.clone();
+		}
+		catch (CloneNotSupportedException e) {
+			throw new Error(e);
+		}
+	}
 
 	/**
 	 * Replies the unique identifier of this message.
