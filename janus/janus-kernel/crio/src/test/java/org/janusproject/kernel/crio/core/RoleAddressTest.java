@@ -59,11 +59,9 @@ public class RoleAddressTest extends TestCase {
 		this.organization = new Organization1Stub(this.context);
 		this.description = UUID.randomUUID().toString();
 		this.name = UUID.randomUUID().toString();
-		this.agentAddress = new AgentAddress(
+		this.agentAddress = AddressUtil.createAgentAddress(
 				UUID.randomUUID(),
-				this.name) {
-			private static final long serialVersionUID = -2998653127689848721L;
-		};
+				this.name);
 		this.groupAddress = new GroupAddress(
 				UUID.randomUUID(),
 				this.organization.getClass(),
