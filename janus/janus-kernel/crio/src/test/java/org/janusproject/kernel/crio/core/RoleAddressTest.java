@@ -29,6 +29,7 @@ import java.util.logging.Level;
 
 import junit.framework.TestCase;
 
+import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.logger.LoggerUtil;
 
 /**
@@ -37,11 +38,13 @@ import org.janusproject.kernel.logger.LoggerUtil;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public class GroupAddressTest extends TestCase {
+public class RoleAddressTest extends TestCase {
 
 	private CRIOContext context;
 	private Organization organization;
-	private GroupAddress address;
+	private GroupAddress groupAddress;
+	private AgentAddress agentAddress;
+	private RoleAddress address;
 	private String description;
 	private String name;
 	
@@ -56,12 +59,20 @@ public class GroupAddressTest extends TestCase {
 		this.organization = new Organization1Stub(this.context);
 		this.description = UUID.randomUUID().toString();
 		this.name = UUID.randomUUID().toString();
-		this.address = new GroupAddress(
+		this.agentAddress = AddressUtil.createAgentAddress(
+				UUID.randomUUID(),
+				this.name);
+		this.groupAddress = new GroupAddress(
 				UUID.randomUUID(),
 				this.organization.getClass(),
 				null,
 				this.name,
 				this.description);
+		this.address = new RoleAddress(
+				this.groupAddress,
+				Role3Stub.class,
+				this.agentAddress,
+				this.name);
 	}
 	
 	/**
@@ -70,6 +81,8 @@ public class GroupAddressTest extends TestCase {
 	@Override
 	public void tearDown() throws Exception {
 		this.address = null;
+		this.groupAddress = null;
+		this.agentAddress = null;
 		this.organization = null;
 		this.name = null;
 		this.description = null;
@@ -79,14 +92,8 @@ public class GroupAddressTest extends TestCase {
 
 	/**
 	 */
-	public void testGetOrganization() {
-		assertSame(this.organization.getClass(), this.address.getOrganization());
-	}
-
-	/**
-	 */
 	public void testGetDescription() {
-		assertEquals(this.description, this.address.getDescription());
+		assertNull(this.address.getDescription());
 	}
 
 	/**
@@ -94,7 +101,43 @@ public class GroupAddressTest extends TestCase {
 	public void testGetName() {
 		assertEquals(this.name, this.address.getName());
 	}
-	
+
+	/**
+	 */
+	public void testGetGroup() {
+		assertEquals(this.groupAddress, this.address.getGroup());
+	}
+
+	/**
+	 */
+	public void testGetGroupObject() {
+		assertNull(this.address.getGroupObject());
+	}
+
+	/**
+	 */
+	public void testGetPlayer() {
+		assertEquals(this.agentAddress, this.address.getPlayer());
+	}
+
+	/**
+	 */
+	public void testGetRole() {
+		assertEquals(Role3Stub.class, this.address.getRole());
+	}
+
+	/**
+	 */
+	public void testGetRoleObject() {
+		assertNull(this.address.getRoleObject());
+	}
+
+	/**
+	 */
+	public void testGetUUID() {
+		assertNotNull(this.address.getUUID());
+	}
+
 	/**
 	 * @throws Exception
 	 */
@@ -121,16 +164,19 @@ public class GroupAddressTest extends TestCase {
 			bais.close();
 		}
 		
-		assertTrue(unserializedObject instanceof GroupAddress);
+		assertTrue(unserializedObject instanceof RoleAddress);
 		assertNotSame(this.address, unserializedObject);
 		
-		GroupAddress gAdr = (GroupAddress)unserializedObject;
-		assertEquals(this.address.getUUID(), gAdr.getUUID());
-		assertEquals(this.address.getName(), gAdr.getName());
-		assertEquals(this.address.getOrganization(), gAdr.getOrganization());
-		assertNull(this.address.getGroup());
-		assertEquals(this.address.getDescription(), gAdr.getDescription());
-		assertEquals(this.address, gAdr);
+		RoleAddress rAdr = (RoleAddress)unserializedObject;
+		assertEquals(this.address.getUUID(), rAdr.getUUID());
+		assertEquals(this.address.getName(), rAdr.getName());
+		assertEquals(this.address.getDescription(), rAdr.getDescription());
+		assertEquals(this.address.getGroup(), rAdr.getGroup());
+		assertNull(rAdr.getGroupObject());
+		assertEquals(this.address.getPlayer(), rAdr.getPlayer());
+		assertEquals(this.address.getRole(), rAdr.getRole());
+		assertNull(rAdr.getRoleObject());
+		assertEquals(this.address, rAdr);
 	}
 
 }

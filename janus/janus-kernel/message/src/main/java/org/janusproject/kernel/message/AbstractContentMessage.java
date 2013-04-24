@@ -41,7 +41,7 @@ extends Message {
 	protected AbstractContentMessage() {
 		super();
 	}
-
+	
 	/** Replies the content of this message.
 	 * 
 	 * @return the content of this message.

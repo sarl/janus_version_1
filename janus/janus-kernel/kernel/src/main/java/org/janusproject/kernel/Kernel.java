@@ -20,6 +20,8 @@
  */
 package org.janusproject.kernel;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +33,7 @@ import org.janusproject.kernel.agent.AgentLifeState;
 import org.janusproject.kernel.agent.AgentLifeStateListener;
 import org.janusproject.kernel.agent.ChannelManager;
 import org.janusproject.kernel.agent.KernelContext;
+import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.agent.ProbeManager;
 import org.janusproject.kernel.configuration.JanusProperty;
 import org.janusproject.kernel.crio.core.CRIOContext;
@@ -459,6 +462,27 @@ public interface Kernel extends LoggerProvider {
 	 * @since 0.5
 	 */
 	public void resume();
+
+	/**
+	 * Save the state of the kernel into the specified stream.
+	 * If the kernel is not paused, this function force
+	 * the kernel to be paused.
+	 * <p>
+	 * The saving of the states of the distant kernels depends on
+	 * the implementation of the networking kernel agent. Please
+	 * see the documentation of your networking kernel agent for
+	 * details. 
+	 * <p>
+	 * Any saved check-point may be used to restore the kernel state,
+	 * with a call to {@link Kernels#restoreCheckPoint(java.io.InputStream)}.
+	 * 
+	 * @param stream is the stream in which the state of the kernel.
+	 * @see #pause()
+	 * @see #isPaused()
+	 * @throws IOException
+	 * @since 1.0
+	 */
+	public void createCheckPoint(OutputStream stream) throws IOException;
 
 	/**
 	 * Creates a new group implementing the specified organization with its

@@ -20,6 +20,10 @@
  */
 package org.janusproject.kernel.address;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.UUID;
 
 import junit.framework.TestCase;
@@ -97,6 +101,42 @@ public class AgentAddressTest extends TestCase {
 		AgentAddress hAdr3 = new AgentAddressStub(this.uid, this.name);
 		assertEquals(this.name+"::"+this.uid.toString(), //$NON-NLS-1$
 				hAdr3.toString());
+	}
+
+	/**
+	 * @throws Exception
+	 */
+	public void testSerialization() throws Exception {
+		AgentAddress address = new AgentAddressStub(this.uid, this.name);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(address);
+		}
+		finally {
+			baos.close();
+		}
+		
+		byte[] data = baos.toByteArray();
+		
+		Object unserializedObject = null;
+		
+		ByteArrayInputStream bais = new ByteArrayInputStream(data);
+		try {
+			ObjectInputStream ois = new ObjectInputStream(bais);
+			unserializedObject = ois.readObject();
+		}
+		finally {
+			bais.close();
+		}
+		
+		assertTrue(unserializedObject instanceof AgentAddress);
+		assertNotSame(address, unserializedObject);
+		
+		AgentAddress uAdr = (AgentAddress)unserializedObject;
+		assertEquals(this.uid, uAdr.getUUID());
+		assertEquals(this.name, uAdr.getName());
+		assertEquals(address, uAdr);
 	}
 
 }

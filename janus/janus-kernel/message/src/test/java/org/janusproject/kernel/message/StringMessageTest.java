@@ -20,10 +20,15 @@
  */
 package org.janusproject.kernel.message;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 
-import org.janusproject.kernel.logger.LoggerUtil;
 import junit.framework.TestCase;
+
+import org.janusproject.kernel.logger.LoggerUtil;
 
 /**
  * @author $Author: sgalland$
@@ -61,6 +66,43 @@ public class StringMessageTest extends TestCase {
 	 */
 	public void testGetContent() {
 		assertEquals(this.expected, this.message.getContent());
+	}
+	
+	/**
+	 * @throws Exception
+	 */
+	public void testSerialization() throws Exception {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(this.message);
+		}
+		finally {
+			baos.close();
+		}
+		
+		byte[] data = baos.toByteArray();
+		
+		Object unserializedObject = null;
+		
+		ByteArrayInputStream bais = new ByteArrayInputStream(data);
+		try {
+			ObjectInputStream ois = new ObjectInputStream(bais);
+			unserializedObject = ois.readObject();
+		}
+		finally {
+			bais.close();
+		}
+		
+		assertTrue(unserializedObject instanceof StringMessage);
+		assertNotSame(this.message, unserializedObject);
+		
+		StringMessage msg = (StringMessage)unserializedObject;
+		assertEquals(this.message.getCreationDate(), msg.getCreationDate());
+		assertEquals(this.message.getIdentifier(), msg.getIdentifier());
+		assertEquals(this.message.getReceiver(), msg.getReceiver());
+		assertEquals(this.message.getSender(), msg.getSender());
+		assertEquals(this.expected, msg.getContent());
 	}
 	
 }
