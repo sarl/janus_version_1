@@ -18,6 +18,7 @@
 	<modules>
 		<module>market-simple</module>
 		<module>market-selective</module>
+		<module>helloagents</module>
 	</modules>
 
 </project>
