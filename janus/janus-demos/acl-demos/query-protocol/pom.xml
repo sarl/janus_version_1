@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.janus-project.demos.acl-demos</groupId>
+		<artifactId>acl-demos</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>query-protocol</artifactId>
+	<packaging>jar</packaging>
+	<name>Query Protocol ACL Janus demo</name>
+	<inceptionYear>2012</inceptionYear>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-Activator>org.janusproject.demos.acl.query.osgi.QueryProtocolACLDemoActivator</Bundle-Activator>
+						<Include-Resource>
+							{maven-resources}, {maven-dependencies},
+							META-INF/license=target/classes/META-INF/license,
+							META-INF/AUTHORS.${project.artifactId}.txt=target/classes/META-INF/AUTHORS.janus.txt,
+							META-INF/NOTICE.${project.artifactId}.txt=target/classes/META-INF/NOTICE.janus.txt,
+						</Include-Resource>
+						<Import-Package>
+							org.janusproject.kernel*;version="${project.version}",*
+						</Import-Package>
+					</instructions>
+					<supportedProjectTypes>
+						<supportedProjectType>jar</supportedProjectType>
+						<supportedProjectType>bundle</supportedProjectType>
+						<supportedProjectType>war</supportedProjectType>
+					</supportedProjectTypes>
+					<archive>
+						<manifestFile>${manifest.file}</manifestFile>
+						<manifest>
+							<mainClass>org.janusproject.demos.acl.query.Launcher</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>executionGenerateManifest</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>executionGenerateBundle</id>
+						<phase>package</phase>
+						<goals>
+							<goal>bundle</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.janus-project.maven</groupId>
+				<artifactId>janus-maven-plugin</artifactId>
+				<configuration>
+					<layout>felix</layout>
+					<!-- The launcher will instantiate a OSGi Platform -->
+					<launcher>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>org.apache.felix.main</artifactId>
+						<version>${felix.main.version}</version>
+					</launcher>
+				</configuration>
+				<executions>
+					<execution>
+						<id>executionCreateBundleDist</id>
+						<phase>package</phase>
+						<goals>
+							<goal>zip</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.janus-project.extras.modules.aclengine</groupId>
+			<artifactId>aclengine</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>osgi</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.main</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-arq</artifactId>
+		</dependency>
+	</dependencies>
+
+	<developers>
+		<developer>
+			<id>flacreus</id>
+			<name>Florian Lacreuse</name>
+			<email>florian.lacreuse@utbm.fr</email>
+			<url></url>
+			<organization>
+				Laboratoire Syst&amp;egrave;mes
+				et Transports - Universit&amp;eacute;
+				de
+				Technologie de Belfort-Montb&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.multiagent.fr</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>sroth-01</id>
+			<name>Sebastien Roth</name>
+			<email>sebastien.roth-01@utbm.fr</email>
+			<url></url>
+			<organization>
+				Laboratoire Syst&amp;egrave;mes
+				et Transports - Universit&amp;eacute;
+				de
+				Technologie de Belfort-Montb&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.multiagent.fr</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>cstentz</id>
+			<name>Claire-Helene Stentz</name>
+			<email>claire-helene.stentz@utbm.fr</email>
+			<url></url>
+			<organization>
+				Laboratoire Syst&amp;egrave;mes
+				et Transports - Universit&amp;eacute;
+				de
+				Technologie de Belfort-Montb&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.multiagent.fr</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+</project>

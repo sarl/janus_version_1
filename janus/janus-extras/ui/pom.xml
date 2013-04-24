@@ -9,7 +9,6 @@
 		<relativePath>..</relativePath>
 	</parent>
 
-	<groupId>org.janus-project.extras</groupId>
 	<artifactId>ui</artifactId>	
 	<packaging>pom</packaging>
 	<name>UI Extensions</name>

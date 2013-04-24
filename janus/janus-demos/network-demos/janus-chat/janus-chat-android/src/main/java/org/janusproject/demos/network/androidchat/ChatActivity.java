@@ -58,7 +58,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 
-/** Activity for the simple chat on Android.
+/**
+ * Activity for the simple chat on Android.
  * 
  * @author $Author: sgalland$
  * @version $FullVersion$
@@ -86,10 +87,11 @@ public class ChatActivity extends Activity {
 	/**
 	 * Called when the activity is first created.
 	 * 
-	 * @param savedInstanceState If the activity is being re-initialized after 
-	 * previously being shut down then this Bundle contains the data it most 
-	 * recently supplied in onSaveInstanceState(Bundle).
-	 * <b>Note: Otherwise it is null.</b>
+	 * @param savedInstanceState
+	 *            If the activity is being re-initialized after previously being
+	 *            shut down then this Bundle contains the data it most recently
+	 *            supplied in onSaveInstanceState(Bundle). <b>Note: Otherwise it
+	 *            is null.</b>
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -103,8 +105,7 @@ public class ChatActivity extends Activity {
 		// support this Android activity
 		try {
 			Android.initialize(this);
-		}
-		catch (AndroidException e) {
+		} catch (AndroidException e) {
 			Log.e(TAG, e.getLocalizedMessage(), e);
 		}
 
@@ -114,8 +115,8 @@ public class ChatActivity extends Activity {
 
 		Tab tab = actionBar.newTab();
 		tab.setText(Locale.getString("IDDLE")); //$NON-NLS-1$
-		tab.setTabListener(new TabListener<IddleFragment>(
-				ChatActivity.this, "iddle", IddleFragment.class, null)); //$NON-NLS-1$
+		tab.setTabListener(new TabListener<IddleFragment>(ChatActivity.this,
+				"iddle", IddleFragment.class, null)); //$NON-NLS-1$
 		actionBar.addTab(tab);
 
 		if (isOnline()) {
@@ -154,8 +155,9 @@ public class ChatActivity extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		ActionBar actionBar = getActionBar();
-		int roomCount = (actionBar==null) ? 0 : actionBar.getTabCount();
-		boolean hasSelectedTab = (actionBar==null) ? false : actionBar.getSelectedTab()!=null;
+		int roomCount = (actionBar == null) ? 0 : actionBar.getTabCount();
+		boolean hasSelectedTab = (actionBar == null) ? false : actionBar
+				.getSelectedTab() != null;
 
 		MenuItem item;
 
@@ -163,10 +165,11 @@ public class ChatActivity extends Activity {
 		item.setEnabled(!this.isWaiting.get());
 
 		item = menu.findItem(R.id.exitRoomMenuItem);
-		item.setEnabled(!this.isWaiting.get() && roomCount>0 && hasSelectedTab);
+		item.setEnabled(!this.isWaiting.get() && roomCount > 0
+				&& hasSelectedTab);
 
 		item = menu.findItem(R.id.exitApplicationMenuItem);
-		item.setEnabled(!this.isWaiting.get() && roomCount>0);
+		item.setEnabled(!this.isWaiting.get() && roomCount > 0);
 
 		return true;
 	}
@@ -196,18 +199,19 @@ public class ChatActivity extends Activity {
 		super.onDestroy();
 	}
 
-	/** Replies the preferred name for the user.
+	/**
+	 * Replies the preferred name for the user.
 	 * 
 	 * @return the preferred name for the user.
 	 */
 	public String getUsername() {
-		AccountManager manager = AccountManager.get(this); 
-		Account[] accounts = manager.getAccountsByType("com.google");  //$NON-NLS-1$
+		AccountManager manager = AccountManager.get(this);
+		Account[] accounts = manager.getAccountsByType("com.google"); //$NON-NLS-1$
 
 		for (Account account : accounts) {
-			if (account.name!=null && !account.name.isEmpty()) {
+			if (account.name != null && !account.name.isEmpty()) {
 				String[] parts = account.name.split("@"); //$NON-NLS-1$
-				if(parts.length>0 && parts[0]!=null)
+				if (parts.length > 0 && parts[0] != null)
 					return parts[0];
 				return account.name;
 			}
@@ -216,7 +220,8 @@ public class ChatActivity extends Activity {
 		return Locale.getString(ChatActivity.class, "USERNAME"); //$NON-NLS-1$
 	}
 
-	/** Replies the address of the chatter supported by this activity.
+	/**
+	 * Replies the address of the chatter supported by this activity.
 	 * 
 	 * @return the address of the chatter supported by this activity.
 	 */
@@ -224,27 +229,30 @@ public class ChatActivity extends Activity {
 		return this.myself;
 	}
 
-	/** Set the address of the chatter supported by this activity.
+	/**
+	 * Set the address of the chatter supported by this activity.
 	 * 
-	 * @param adr is the address of the chatter supported by this activity.
+	 * @param adr
+	 *            is the address of the chatter supported by this activity.
 	 */
 	protected void myself(AgentAddress adr) {
 		this.myself = adr;
 	}
 
-	/** Exit from the current room.
+	/**
+	 * Exit from the current room.
 	 * 
-	 * @return the name of the room from which the chatter has exited;
-	 * or <code>null</code> if no room was found.
+	 * @return the name of the room from which the chatter has exited; or
+	 *         <code>null</code> if no room was found.
 	 */
 	public GroupAddress exitCurrentRoom() {
 		ActionBar actionBar = getActionBar();
-		if (actionBar!=null) {
+		if (actionBar != null) {
 			Tab tab = actionBar.getSelectedTab();
-			if (tab!=null) {
+			if (tab != null) {
 				Object tag = tab.getTag();
 				if (tag instanceof GroupAddress) {
-					GroupAddress room = (GroupAddress)tag;
+					GroupAddress room = (GroupAddress) tag;
 					ChatChannel channel = ChatUtil.getChannelFor(myself());
 					channel.exitChatroom(room);
 					return room;
@@ -254,19 +262,19 @@ public class ChatActivity extends Activity {
 		return null;
 	}
 
-	/** Exit from the application.
+	/**
+	 * Exit from the application.
 	 */
 	public void exitActivity() {
 		ActionBar actionBar = getActionBar();
-		if (actionBar!=null) {
+		if (actionBar != null) {
 			ChatChannel channel = ChatUtil.getChannelFor(myself());
-			while (actionBar.getTabCount()>0) {
+			while (actionBar.getTabCount() > 0) {
 				Tab tab = actionBar.getTabAt(0);
 				Object tag = tab.getTag();
 				if (tag instanceof GroupAddress) {
-					channel.exitChatroom((GroupAddress)tag);
-				}
-				else {
+					channel.exitChatroom((GroupAddress) tag);
+				} else {
 					actionBar.removeTabAt(0);
 				}
 			}
@@ -274,46 +282,52 @@ public class ChatActivity extends Activity {
 		finish();
 	}
 
-	/** Select and join a room.
+	/**
+	 * Select and join a room.
 	 */
 	public void joinRoom() {
 		showDialog(JOIN_ROOM_DIALOG_ID);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		Dialog dialog = null;
-		switch(id) {
-		case JOIN_ROOM_DIALOG_ID:
-			dialog = new JoinRoomDialog(this);
-			break;
+		switch (id) {
+			case JOIN_ROOM_DIALOG_ID:
+				dialog = new JoinRoomDialog(this);
+				break;
+			default:
+				break;
 		}
 		return dialog;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
-		switch(id) {
+		switch (id) {
 		case JOIN_ROOM_DIALOG_ID:
-			JoinRoomDialog roomDialog = (JoinRoomDialog)dialog;
+			JoinRoomDialog roomDialog = (JoinRoomDialog) dialog;
 			roomDialog.refresh();
+			break;
+		default:
 			break;
 		}
 	}
-	
-	/** 
+
+	/**
 	 * @author $Author: sgalland$
 	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */
-	private class Listener implements KernelListener, ChatterListener, IncomingChatListener, OnMenuItemClickListener {
+	private class Listener implements KernelListener, ChatterListener,
+			IncomingChatListener, OnMenuItemClickListener {
 
 		/**
 		 */
@@ -321,8 +335,9 @@ public class ChatActivity extends Activity {
 			//
 		}
 
-		/** {@inheritDoc}
-		 */	
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void onChatterCreated(AgentAddress chatter) {
 			// The chatter was created, then
@@ -336,7 +351,8 @@ public class ChatActivity extends Activity {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void incomingMessage(GroupAddress chatroom, AgentAddress sender, String message) {
+		public void incomingMessage(GroupAddress chatroom, AgentAddress sender,
+				String message) {
 			// Ignore this event because this activity is not focussing on the
 			// messages but on the creation and destruction of chat rooms.
 		}
@@ -382,7 +398,7 @@ public class ChatActivity extends Activity {
 		 */
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
-			switch(item.getItemId()) {
+			switch (item.getItemId()) {
 			case R.id.joinRoomMenuItem:
 				joinRoom();
 				return true;
@@ -392,8 +408,9 @@ public class ChatActivity extends Activity {
 			case R.id.exitApplicationMenuItem:
 				exitActivity();
 				return true;
+			default:
+				return false;				
 			}
-			return false;
 		}
 
 		/**
@@ -449,7 +466,7 @@ public class ChatActivity extends Activity {
 
 	} // class Listener
 
-	/** 
+	/**
 	 * @author $Author: sgalland$
 	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
@@ -480,15 +497,14 @@ public class ChatActivity extends Activity {
 			Bundle args = new Bundle();
 			args.putSerializable("room", this.chatroom); //$NON-NLS-1$
 			args.putSerializable("chatter", myself()); //$NON-NLS-1$
-			tab.setTabListener(new TabListener<RoomFragment>(
-					ChatActivity.this, roomName, RoomFragment.class,
-					args));
+			tab.setTabListener(new TabListener<RoomFragment>(ChatActivity.this,
+					roomName, RoomFragment.class, args));
 			actionBar.addTab(tab);
 		}
 
 	} // class TabCreator
 
-	/** 
+	/**
 	 * @author $Author: sgalland$
 	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
@@ -517,18 +533,17 @@ public class ChatActivity extends Activity {
 		@Override
 		public void run() {
 			ActionBar actionBar = getActionBar();
-			if (this.chatroom==null) {
-				for(int i=0; i<actionBar.getTabCount(); ++i) {
+			if (this.chatroom == null) {
+				for (int i = 0; i < actionBar.getTabCount(); ++i) {
 					Tab tab = actionBar.getTabAt(i);
 					Object tag = tab.getTag();
-					if (tag==null || !(tag instanceof GroupAddress)) {
+					if (tag == null || !(tag instanceof GroupAddress)) {
 						actionBar.removeTabAt(i);
 						--i;
 					}
 				}
-			}
-			else {
-				for(int i=0; i<actionBar.getTabCount(); ++i) {
+			} else {
+				for (int i = 0; i < actionBar.getTabCount(); ++i) {
 					Tab tab = actionBar.getTabAt(i);
 					Object tag = tab.getTag();
 					if (this.chatroom.equals(tag)) {
@@ -541,53 +556,65 @@ public class ChatActivity extends Activity {
 
 	} // class TabRemover
 
-	/** 
+	/**
 	 * @author $Author: sgalland$
 	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */
-	private static class TabListener<T extends Fragment>
-	implements ActionBar.TabListener {
+	private static class TabListener<T extends Fragment> implements
+			ActionBar.TabListener {
 
-		/** Fragmented activity.
+		/**
+		 * Fragmented activity.
 		 */
 		private final Activity activity;
 
-		/** Tag for the activity fragment.
+		/**
+		 * Tag for the activity fragment.
 		 */
 		private final String fragmentTag;
 
-		/** Type of the fragment to create.
+		/**
+		 * Type of the fragment to create.
 		 */
 		private final Class<T> fragmentType;
 
-		/** Arguments to pass to the fragment creator.
+		/**
+		 * Arguments to pass to the fragment creator.
 		 */
 		private final Bundle fragmentInstanciationArguments;
 
-		/** Portion of the UI that is supporting a Tab.
+		/**
+		 * Portion of the UI that is supporting a Tab.
 		 */
 		private Fragment fragment;
 
 		/**
-		 * @param activity is the activity that is fragmented.
-		 * @param tag is the tag of the activity fragment.
-		 * @param type is the type of the fragment to create.
-		 * @param args are the arguments to pass to the fragment creator.
+		 * @param activity
+		 *            is the activity that is fragmented.
+		 * @param tag
+		 *            is the tag of the activity fragment.
+		 * @param type
+		 *            is the type of the fragment to create.
+		 * @param args
+		 *            are the arguments to pass to the fragment creator.
 		 */
-		public TabListener(Activity activity, String tag, Class<T> type, Bundle args) {
+		public TabListener(Activity activity, String tag, Class<T> type,
+				Bundle args) {
 			this.activity = activity;
 			this.fragmentTag = tag;
 			this.fragmentType = type;
 			this.fragmentInstanciationArguments = args;
 
 			// Check to see if we already have a fragment for this tab, probably
-			// from a previously saved state.  If so, deactivate it, because our
+			// from a previously saved state. If so, deactivate it, because our
 			// initial state is that a tab isn't shown.
-			this.fragment = this.activity.getFragmentManager().findFragmentByTag(this.fragmentTag);
-			if (this.fragment!=null && !this.fragment.isDetached()) {
-				FragmentTransaction ft = this.activity.getFragmentManager().beginTransaction();
+			this.fragment = this.activity.getFragmentManager()
+					.findFragmentByTag(this.fragmentTag);
+			if (this.fragment != null && !this.fragment.isDetached()) {
+				FragmentTransaction ft = this.activity.getFragmentManager()
+						.beginTransaction();
 				ft.detach(this.fragment);
 				ft.commit();
 			}
@@ -598,15 +625,13 @@ public class ChatActivity extends Activity {
 		 */
 		@Override
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
-			if (this.fragment==null) {
+			if (this.fragment == null) {
 				// Create a fragment if never instancied.
-				this.fragment = Fragment.instantiate(
-						this.activity,
+				this.fragment = Fragment.instantiate(this.activity,
 						this.fragmentType.getName(),
 						this.fragmentInstanciationArguments);
 				ft.add(android.R.id.content, this.fragment, this.fragmentTag);
-			}
-			else {
+			} else {
 				// Attach an already created fragment
 				ft.attach(this.fragment);
 			}
@@ -617,7 +642,7 @@ public class ChatActivity extends Activity {
 		 */
 		@Override
 		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-			if (this.fragment!=null) {
+			if (this.fragment != null) {
 				ft.detach(this.fragment);
 			}
 		}
@@ -632,7 +657,7 @@ public class ChatActivity extends Activity {
 
 	} // class TabListener
 
-	/** 
+	/**
 	 * @author $Author: sgalland$
 	 * @version $FullVersion$
 	 * @mavengroupid $GroupId$
@@ -655,7 +680,7 @@ public class ChatActivity extends Activity {
 		public void run() {
 			ChatActivity a = this.activity.get();
 			Listener l = this.listener.get();
-			if (a!=null && l!=null) {
+			if (a != null && l != null) {
 				JxtaJxmeKernelAgentFactory factory = new JxtaJxmeKernelAgentFactory();
 				Kernels.create(factory, l);
 			}
@@ -664,4 +689,3 @@ public class ChatActivity extends Activity {
 	} // class Initializer
 
 }
-

@@ -21,6 +21,7 @@
 package org.janusproject.acl.protocol;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +31,8 @@ import org.janusproject.acl.ACLMessage;
 import org.janusproject.acl.Performative;
 import org.janusproject.acl.protocol.cnp.ContractNetProtocolState;
 import org.janusproject.acl.protocol.cnp.FipaContractNetProtocol;
+import org.janusproject.acl.protocol.query.FipaQueryProtocol;
+import org.janusproject.acl.protocol.query.QueryProtocolState;
 import org.janusproject.acl.protocol.request.FipaRequestProtocol;
 import org.janusproject.acl.protocol.request.RequestProtocolState;
 
@@ -100,6 +103,13 @@ public class FipaConversationManager {
 			this.conversations.add(protocol);
 			return protocol;
 		}
+		else if (EnumFipaProtocol.FIPA_QUERY == protocolType) {
+			protocol = new FipaQueryProtocol(this.agent);
+			protocol.setState(QueryProtocolState.NOT_STARTED);
+			protocol.setRefAclAgent(this.agent);
+			this.conversations.add(protocol);
+			return protocol;
+		}
 		else {
 			this.logger.log(Level.SEVERE, "Protocol not supported"); //$NON-NLS-1$
 			return null;
@@ -144,6 +154,35 @@ public class FipaConversationManager {
 				return protocol;
 		}
 		return null;		
+	}
+	
+	/** 
+	 * Indicates if the agent mailbox contains at least one ACL Message for the given protocol and performatives or not.
+	 * 
+	 * @param protocol 
+	 * @param performative 
+	 * 
+	 * @return <code>true</code> if the mailbox contains at least one ACL Message 
+	 * for the given protocol and performatives, otherwise <code>false</code>
+	 */
+	public boolean hasACLMessages(EnumFipaProtocol protocol, Performative... performative) {
+		return this.agent.hasACLMessages(protocol, performative);
+	}
+	
+	/**
+	 * Delete current protocols in the given state
+	 * 
+	 * @param state
+	 */
+	public void removeConversations(ProtocolState state) {
+		Iterator<AbstractFipaProtocol> i = this.conversations.iterator();
+		
+		while (i.hasNext()) {
+			AbstractFipaProtocol conv = i.next();
+			if (conv.getState() == state) {
+				i.remove();
+			}
+		}
 	}
 	
 	/**

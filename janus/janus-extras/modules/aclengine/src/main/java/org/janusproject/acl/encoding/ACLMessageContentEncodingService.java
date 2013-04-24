@@ -35,7 +35,7 @@ import org.janusproject.acl.ACLMessageContent;
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
-interface ACLMessageContentEncodingService
+public interface ACLMessageContentEncodingService
 {
     /**
      * This method encodes the ACLMessageContent of an ACLMessage in the matching type

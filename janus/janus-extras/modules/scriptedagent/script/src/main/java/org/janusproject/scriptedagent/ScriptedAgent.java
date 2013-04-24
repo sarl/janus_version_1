@@ -834,7 +834,6 @@ public class ScriptedAgent<C extends ScriptExecutionContext> extends Agent {
 		 * 
 		 * @param context is the context to associate to this manager.
 		 */
-		@SuppressWarnings("resource")
 		public void preExecution(ScriptExecutionContext context) {
 			Writer w;
 			this.lastActivity = System.currentTimeMillis();
@@ -843,10 +842,25 @@ public class ScriptedAgent<C extends ScriptExecutionContext> extends Agent {
 			if (w!=this.stdout.getWrappedWriter()) {
 				this.stdout = new TeeWriter(this.buffer, w);
 			}
+
+            try {
+				w.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
 			w = context.getStandardError();
 			if (w!=this.stderr.getWrappedWriter()) {
 				this.stderr = new TeeWriter(this.buffer, w);
 			}
+
+            try {
+				w.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		}
 
 		/** Replies the buffered text.

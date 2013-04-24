@@ -405,4 +405,9 @@ public class FipaRequestProtocol extends AbstractFipaProtocol {
 		
 		//System.out.println("\n=> MESSAGE envoyé via REQUEST PROTOCOL : \n" + message.toString());
 	}
+	
+	@Override
+	protected void setFinalStep() {
+		this.setState(RequestProtocolState.DONE);
+	}
 }

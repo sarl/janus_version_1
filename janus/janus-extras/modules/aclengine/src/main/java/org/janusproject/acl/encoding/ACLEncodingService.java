@@ -30,6 +30,9 @@ import org.janusproject.acl.ACLMessageContent;
 import org.janusproject.acl.ACLMessageEnvelope;
 import org.janusproject.acl.ACLRepresentation;
 import org.janusproject.acl.ACLTransportMessage;
+import org.janusproject.acl.encoding.bitefficient.BitEfficientACLCodec;
+import org.janusproject.acl.encoding.bitefficient.BitEfficientEnvelopeCodec;
+import org.janusproject.acl.encoding.xml.XMLACLCodec;
 import org.janusproject.acl.exception.UnspecifiedACLMessageRepresentationException;
 
 /**
@@ -276,7 +279,7 @@ public class ACLEncodingService
 		} 
     	else if (aclRepresentation.equalsIgnoreCase(ACLRepresentation.XML.getValue())) {
     		this.contentEncodingService = new XMLACLCodec();
-    		this.envelopeEncodingService = new XMLEnvelopeCodec();
+    		this.envelopeEncodingService = new BitEfficientEnvelopeCodec();
 		} else {
 			throw new UnspecifiedACLMessageRepresentationException();
 		}

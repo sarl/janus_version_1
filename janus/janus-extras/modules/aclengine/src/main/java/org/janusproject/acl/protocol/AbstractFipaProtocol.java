@@ -29,7 +29,6 @@ import java.util.logging.Logger;
 import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.acl.ACLAgent;
 import org.janusproject.acl.Performative;
-import org.janusproject.acl.protocol.request.RequestProtocolState;
 import org.janusproject.kernel.address.AgentAddress;
 
 /**
@@ -211,11 +210,9 @@ public abstract class AbstractFipaProtocol {
 	/**
 	 * Ends the protocol execution by setting the {@link #getState} to DONE.
 	 * 
-	 * @see RequestProtocolState
+	 * @see ProtocolState
 	 */
-	protected final void setFinalStep(){
-		this.state = RequestProtocolState.DONE;
-	}
+	protected abstract void setFinalStep();
 	
 	/**
 	 * Gets the current conversation id.
@@ -253,7 +250,7 @@ public abstract class AbstractFipaProtocol {
 	 * 
 	 * @return <code>true</code> if the referenced agent is the initiator or <code>false</code> otherwise.
 	 */
-	protected final Boolean isInitiator(){
+	public final Boolean isInitiator(){
 		return ( getRefAclAgent().getAddress() == this.initiator );
 	}
 	
@@ -262,7 +259,7 @@ public abstract class AbstractFipaProtocol {
 	 * 
 	 * @return <code>true</code> if the referenced agent is a participant or <code>false</code> otherwise.
 	 */
-	protected final Boolean isParticipant() {
+	public final Boolean isParticipant() {
 		for (AgentAddress participant : this.participants) {
 			if (participant.compareTo(this.refAclAgent.getAddress()) == 0) 
 				return true;
@@ -354,6 +351,10 @@ public abstract class AbstractFipaProtocol {
 		str.append(msg);
 		
 		this.logger.log(Level.SEVERE, str.toString());
+	}
+	
+	public void print(String msg) {
+		this.logger.log(Level.SEVERE, msg);
 	}
 	
 	/**

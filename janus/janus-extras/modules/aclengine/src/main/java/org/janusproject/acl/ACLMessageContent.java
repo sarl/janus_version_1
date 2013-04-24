@@ -21,6 +21,7 @@
 package org.janusproject.acl;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 import org.janusproject.kernel.address.AgentAddress;
@@ -290,7 +291,7 @@ public interface ACLMessageContent
 	 * the latest time by which the sending agent would like to receive a reply.
 	 * @return the reply-by parameter of the ACL Message.
 	 */
-	public String getReplyBy();
+	public Date getReplyBy();
 	
 	/**
 	 * Sets the reply-by parameter of the ACL Message.
@@ -299,6 +300,6 @@ public interface ACLMessageContent
 	 * the latest time by which the sending agent would like to receive a reply.
 	 * @param replyBy - the reply-by parameter of the ACL Message.
 	 */
-	public void setReplyBy(String replyBy);    
+	public void setReplyBy(Date replyBy);    
     
 }

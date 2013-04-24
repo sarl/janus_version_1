@@ -35,7 +35,7 @@ import org.janusproject.acl.ACLMessageEnvelope;
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
  */
-interface ACLMessageEnvelopeEncodingService
+public interface ACLMessageEnvelopeEncodingService
 {
     /**
      * This method encodes the ACLMessageContent of an ACLMessage

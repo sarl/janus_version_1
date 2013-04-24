@@ -20,6 +20,7 @@
  */
 package org.janusproject.jrubyengine;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.lang.ref.SoftReference;
@@ -169,7 +170,6 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("resource")
 	@Override
 	public boolean isFunction(String functionName) {
 		Writer old = getStandardError();
@@ -184,6 +184,13 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 		}
 		finally {
 			setStandardError(old);
+
+            try {
+				old.close();
+				w.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}

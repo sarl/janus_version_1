@@ -20,8 +20,10 @@
  */
 package org.janusproject.acl;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import org.janusproject.acl.encoding.PayloadEncoding;
@@ -44,7 +46,7 @@ import org.janusproject.kernel.agent.Agent;
 public class ACLAgent extends Agent {
 
 	private static final long serialVersionUID = -8831445952166271312L;
-
+	
 	/**
 	 * The ACL Message Handler of this agent
 	 */
@@ -126,10 +128,40 @@ public class ACLAgent extends Agent {
 		return null;
 	}
 
+//	/**
+//	 * Replies the first available ACL Message
+//	 * in the agent mail box  
+//	 * with the given performative 
+//	 * and the given protocol type 
+//	 * and, then, removes it from the mailbox.
+//	 * @param protocolType 
+//	 * @param performative 
+//	 * 
+//	 * @return the first available ACL Message, or <code>null</code> if the mailbox is empty.
+//	 * @see #peekACLMessage()
+//	 * @see #getACLMessages()
+//	 * @see #peekACLMessages()
+//	 * @see #hasACLMessage()
+//	 */
+//	public final ACLMessage getACLMessage(EnumFipaProtocol protocolType, Performative performative) {
+//		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
+//			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
+//			if(aMsg != null 
+//					&& ( aMsg.getPerformative() == performative )
+//					&& ( aMsg.getProtocol() == protocolType)
+//					)
+//			{
+//				getMailbox().remove( msg );
+//				return aMsg;
+//			}
+//		}
+//		return null;
+//	}
+	
 	/**
 	 * Replies the first available ACL Message
 	 * in the agent mail box  
-	 * with the given performative 
+	 * with one of the given performative 
 	 * and the given protocol type 
 	 * and, then, removes it from the mailbox.
 	 * @param protocolType 
@@ -141,11 +173,13 @@ public class ACLAgent extends Agent {
 	 * @see #peekACLMessages()
 	 * @see #hasACLMessage()
 	 */
-	public final ACLMessage getACLMessage(EnumFipaProtocol protocolType, Performative performative) {
+	public final ACLMessage getACLMessage(EnumFipaProtocol protocolType, Performative... performative) {
+		List<Performative> performatives = Arrays.asList(performative);
+		
 		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
 			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
 			if(aMsg != null 
-					&& ( aMsg.getPerformative() == performative )
+					&& ( performatives.contains(aMsg.getPerformative()) )
 					&& ( aMsg.getProtocol() == protocolType)
 					)
 			{
@@ -171,6 +205,31 @@ public class ACLAgent extends Agent {
 		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
 			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
 			if( ( aMsg != null ) && ( aMsg.getConversationId().compareTo(conversationId) == 0 ) ){
+				getMailbox().remove( msg );
+				return aMsg;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Replies the first available ACL Message 
+	 * for a specific conversation and performative(s)
+	 * and, then, removes it from the mailbox.
+	 * This method is essentially used in protocols.
+	 * 
+	 * @param conversationId
+	 * @param performative
+	 * 
+	 * @return the first available ACL Message, or <code>null</code>
+	 */
+	public final ACLMessage getACLMessageFromProtocol(UUID conversationId, Performative... performative) {
+		List<Performative> performatives = Arrays.asList(performative);
+		
+		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
+			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
+			if( ( aMsg != null ) && ( aMsg.getConversationId().compareTo(conversationId) == 0 ) 
+					&& performatives.contains(aMsg.getPerformative())) {
 				getMailbox().remove( msg );
 				return aMsg;
 			}
@@ -292,6 +351,31 @@ public class ACLAgent extends Agent {
 	protected final boolean hasACLMessage(){
 		Iterator<?> iterator = peekMessages(ACLTransportMessage.class).iterator();
 		return iterator.hasNext();
+	}
+	
+	/** 
+	 * Indicates if the agent mailbox contains at least one ACL Message for the given protocol and performatives or not.
+	 * @param protocol 
+	 * @param performative 
+	 * 
+	 * @return <code>true</code> if the mailbox contains at least one ACL Message 
+	 * for the given protocol and performatives, otherwise <code>false</code>
+	 */
+	public final boolean hasACLMessages(EnumFipaProtocol protocol, Performative... performative) {
+		List<Performative> performatives = Arrays.asList(performative);
+		
+		for(ACLTransportMessage msg : peekMessages(ACLTransportMessage.class)) {
+			ACLMessage aMsg = getAclMessageFromTransportMessage( msg ) ;
+			if(aMsg != null 
+					&& ( performatives.contains(aMsg.getPerformative()) )
+					&& ( aMsg.getProtocol() == protocol)
+					)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

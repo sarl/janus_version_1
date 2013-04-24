@@ -47,6 +47,7 @@ import org.janusproject.kernel.address.AgentAddress;
  * @mavenartifactid $ArtifactId$
  */
 public class FipaContractNetProtocol extends AbstractFipaProtocol {
+	private boolean checkTimeOut;
 	
 	/**
 	 * Creates a new Contract Net Protocol for a given agent.
@@ -56,6 +57,13 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 	public FipaContractNetProtocol(ACLAgent agent){
 		super(agent);
 		setMaximumParticipants(Short.MAX_VALUE);
+		this.checkTimeOut = true;
+	}
+	
+	public FipaContractNetProtocol(ACLAgent agent, boolean checkTimeOut){
+		super(agent);
+		setMaximumParticipants(Short.MAX_VALUE);
+		this.checkTimeOut = checkTimeOut;
 	}
 	
 	/**
@@ -112,7 +120,7 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 	 */
 	public ProtocolResult getCallForProposal() {
 		
-		if( hasReachedTimeout() ){
+		if( this.checkTimeOut && hasReachedTimeout() ){
 			addError(Locale.getString("FipaContractNetProtocol.2")); //$NON-NLS-1$
 		}
 		else{
@@ -121,6 +129,7 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 				ACLMessage message = getRefAclAgent().getACLMessage(EnumFipaProtocol.FIPA_CONTRACT_NET, Performative.CFP);
 				
 				if (message != null) {
+					this.getParticipants().clear();
 					initiate( message.getSender(), getRefAclAgent().getAddress() );
 					
 					setConversationId( message.getConversationId() );
@@ -199,7 +208,7 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 	 */
 	public List<ProtocolResult> getAllProposals(){
 		
-		if( hasReachedTimeout() ){
+		if( this.checkTimeOut && hasReachedTimeout() ){
 			addError(Locale.getString("FipaContractNetProtocol.9")); //$NON-NLS-1$
 		}
 		else{
@@ -344,7 +353,7 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 	 */
 	public ProtocolResult getAnswerToCallForProposal() {
 		
-		if( hasReachedTimeout() ){
+		if( this.checkTimeOut && hasReachedTimeout() ){
 			addError(Locale.getString("FipaContractNetProtocol.21")); //$NON-NLS-1$
 		}
 		else{
@@ -458,7 +467,7 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 	 */
 	public List<ProtocolResult> getResults() {
 
-		if( hasReachedTimeout() ){
+		if( this.checkTimeOut && hasReachedTimeout() ){
 			addError(Locale.getString("FipaContractNetProtocol.32")); //$NON-NLS-1$
 		}
 		else {
@@ -579,4 +588,18 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 		
 		//System.out.println("\n=> MESSAGE envoyé via CNP PROTOCOL par " + getRefAclAgent().getName() + ": \n" + message.toString() );
 	}
+
+	@Override
+	protected void setFinalStep() {
+		this.setState(ContractNetProtocolState.DONE);
+	}
+
+	public boolean isCheckTimeOut() {
+		return this.checkTimeOut;
+	}
+
+	public void setCheckTimeOut(boolean checkTimeOut) {
+		this.checkTimeOut = checkTimeOut;
+	}
 }
+

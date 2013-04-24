@@ -40,6 +40,22 @@
 						<supportedProjectType>war</supportedProjectType>
 					</supportedProjectTypes>
 				</configuration>
+				<executions>
+					<execution>
+						<id>executionGenerateManifest</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>executionGenerateBundle</id>
+						<phase>package</phase>
+						<goals>
+							<goal>bundle</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -60,6 +76,30 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Used for XML decoder. Better than basic SAX or DOM (imho). -->
+		<dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+		</dependency>
+            
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		
+		<!-- Used for BSON encoder -->
+		
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+		</dependency>
+		
+		<dependency>
+		  <groupId>de.undercouch</groupId>
+		  <artifactId>bson4jackson</artifactId>
+		</dependency>
+            
 	</dependencies>
 
 	<!-- ======================================= -->
@@ -103,6 +143,54 @@
 			<id>ptalagrand</id>
 			<name>Paul Talagrand</name>
 			<email>paul.talagrand@utbm.fr</email>
+			<url></url>
+			<organization>
+				Laboratoire Syst&amp;egrave;mes
+				et Transports - Universit&amp;eacute;
+				de
+				Technologie de Belfort-Montb&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.multiagent.fr</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>flacreus</id>
+			<name>Florian Lacreuse</name>
+			<email>florian.lacreuse@utbm.fr</email>
+			<url></url>
+			<organization>
+				Laboratoire Syst&amp;egrave;mes
+				et Transports - Universit&amp;eacute;
+				de
+				Technologie de Belfort-Montb&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.multiagent.fr</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>sroth-01</id>
+			<name>Sebastien Roth</name>
+			<email>sebastien.roth-01@utbm.fr</email>
+			<url></url>
+			<organization>
+				Laboratoire Syst&amp;egrave;mes
+				et Transports - Universit&amp;eacute;
+				de
+				Technologie de Belfort-Montb&amp;eacute;liard
+			</organization>
+			<organizationUrl>http://www.multiagent.fr</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>cstentz</id>
+			<name>Claire-Helene Stentz</name>
+			<email>claire-helene.stentz@utbm.fr</email>
 			<url></url>
 			<organization>
 				Laboratoire Syst&amp;egrave;mes

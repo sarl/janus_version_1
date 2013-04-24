@@ -23,12 +23,16 @@ package org.janusproject.acl;
 /**
  * This enumeration describes all available performatives as defined by FIPA
  * 
- * @see <a href="http://www.fipa.org/specs/fipa00037/SC00037J.html">FIPA Communicative Act Library Specification</a>
+ * @see <a href="http://www.fipa.org/specs/fipa00037/SC00037J.html">FIPA
+ *      Communicative Act Library Specification</a>
  * 
  * @author $Author: madeline$
  * @author $Author: kleroy$
  * @author $Author: ptalagrand$
  * @author $Author: ngaud$
+ * @author $Author: flacreus$
+ * @author $Author: sroth-01$
+ * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
  * @mavenartifactid $ArtifactId$
@@ -36,71 +40,100 @@ package org.janusproject.acl;
 public enum Performative {
 	/**
 	 */
-	NONE, 
+	NONE("none"), //$NON-NLS-1$
 	/**
 	 */
-	ACCEPT_PROPOSAL,  
+	ACCEPT_PROPOSAL("accept-proposal"), //$NON-NLS-1$
 	/**
 	 */
-	AGREE,  
+	AGREE("agree"), //$NON-NLS-1$
 	/**
 	 */
-	CANCEL,  
+	CANCEL("cancel"), //$NON-NLS-1$
 	/**
 	 */
-	CFP,  
+	CFP("cfp"), //$NON-NLS-1$
 	/**
 	 */
-	CONFIRM,  
+	CONFIRM("confirm"), //$NON-NLS-1$
 	/**
 	 */
-	DISCONFIRM,  
+	DISCONFIRM("disconfirm"), //$NON-NLS-1$
 	/**
 	 */
-	FAILURE,  
+	FAILURE("failure"), //$NON-NLS-1$
 	/**
 	 */
-	INFORM,  
+	INFORM("inform"), //$NON-NLS-1$
 	/**
 	 */
-	INFORM_IF,  
+	INFORM_IF("inform-if"), //$NON-NLS-1$
 	/**
 	 */
-	INFORM_REF,  
+	INFORM_REF("inform-ref"), //$NON-NLS-1$
 	/**
 	 */
-	NOT_UNDERSTOOD,  
+	NOT_UNDERSTOOD("not-understood"), //$NON-NLS-1$
 	/**
 	 */
-	PROPOSE,  
+	PROPOSE("propose"), //$NON-NLS-1$  
 	/**
 	 */
-	QUERY_IF,  
+	QUERY_IF("query-if"), //$NON-NLS-1$
 	/**
 	 */
-	QUERY_REF,  
+	QUERY_REF("query-ref"), //$NON-NLS-1$ 
 	/**
 	 */
-	REFUSE,  
+	REFUSE("refuse"), //$NON-NLS-1$
 	/**
 	 */
-	REJECT_PROPOSAL,  
+	REJECT_PROPOSAL("reject-proposal"), //$NON-NLS-1$
 	/**
 	 */
-	REQUEST,  
+	REQUEST("request"), //$NON-NLS-1$ 
 	/**
 	 */
-	REQUEST_WHEN,  
+	REQUEST_WHEN("request-when"), //$NON-NLS-1$
 	/**
 	 */
-	REQUEST_WHENEVER,  
+	REQUEST_WHENEVER("request-whenever"), //$NON-NLS-1$
 	/**
 	 */
-	SUBSCRIBE,  
+	SUBSCRIBE("subscribe"), //$NON-NLS-1$
 	/**
 	 */
-	PROXY,  
+	PROXY("proxy"), //$NON-NLS-1$ 
 	/**
 	 */
-	PROPAGATE
+	PROPAGATE("propagate"); //$NON-NLS-1$
+
+	private final String name;
+
+	Performative(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the string name of the performative
+	 */
+	public String getName() {
+		return this.name;
+	}
+
+	/**
+	 * @param name
+	 * @return the field of the performative enum corresponding to the specified
+	 *         string
+	 * @throws IllegalArgumentException
+	 */
+	public static Performative valueOfByName(String name)
+			throws IllegalArgumentException {
+		for (Performative value : values()) {
+			if (value.getName().equalsIgnoreCase(name)) {
+				return value;
+			}
+		}
+		return Performative.NONE;
+	}
 }

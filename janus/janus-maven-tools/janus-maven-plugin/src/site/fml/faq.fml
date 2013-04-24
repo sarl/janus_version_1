@@ -33,7 +33,7 @@
 org.osgi.framework.system.packages=sun.net.www,sun.misc,sun.reflect
 
 #Equinox
-osgi.bundles=yourapp.jar,org.apache.felix.bundlerepository-1.4.0.jar@start,janus-kernel-0.2-SNAPSHOT.jar@start
+osgi.bundles=yourapp.jar,org.apache.felix.bundlerepository-1.6.6.jar@start,janus-kernel-0.2-SNAPSHOT.jar@start
 
 eclipse.ignoreApp=true
 

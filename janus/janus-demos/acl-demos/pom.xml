@@ -19,6 +19,8 @@
 		<module>base</module>
 		<module>contract-net-protocol</module>
 		<module>request-protocol</module>
+    	<module>query-protocol</module>
+    	<module>propose-protocol</module>
 	</modules>
 
 </project>

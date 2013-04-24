@@ -21,13 +21,15 @@
 package org.janusproject.acl;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
 import java.util.UUID;
 
 import org.janusproject.acl.encoding.StringACLCodec;
+import org.janusproject.acl.encoding.xml.XMLACLCodec;
+import org.janusproject.acl.encoding.xml.XMLACLCodecHelper;
 import org.janusproject.acl.protocol.EnumFipaProtocol;
 import org.janusproject.kernel.address.AgentAddress;
 
@@ -86,6 +88,14 @@ public class ACLMessage
 	@Override
 	public String toString() {
 		return StringACLCodec.toString(this);
+	}
+	
+	/**
+	 * Returns a string representation of the ACL Message.
+	 * @return a string representing this ACL Message.
+	 */
+	public String toXML() {
+		return XMLACLCodecHelper.format(XMLACLCodec.toXML(this));
 	}
 	
 	/**
@@ -459,7 +469,7 @@ public class ACLMessage
     	private UUID conversationId = null; 
     	private String replyWith = null; 
     	private String inReplyTo = null; 
-    	private String replyBy = null; 
+    	private Date replyBy = null; 
     	
     	/**
     	 * {@inheritDoc}
@@ -657,7 +667,7 @@ public class ACLMessage
     	 * {@inheritDoc}
     	 */
 		@Override
-		public String getReplyBy() {
+		public Date getReplyBy() {
 			return this.replyBy;
 		}
 		
@@ -665,9 +675,9 @@ public class ACLMessage
     	 * {@inheritDoc}
     	 */
 		@Override
-		public void setReplyBy(String replyBy) {
+		public void setReplyBy(Date replyBy) {
 			this.replyBy = replyBy;
 		}
-		
     }
+
 }

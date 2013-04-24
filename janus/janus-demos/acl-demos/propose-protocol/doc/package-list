@@ -1,0 +1,5 @@
+org.janusproject.demos.acl.propose
+org.janusproject.demos.acl.propose.agent
+org.janusproject.demos.acl.propose.organization
+org.janusproject.demos.acl.propose.osgi
+org.janusproject.demos.acl.propose.role
