@@ -75,7 +75,7 @@ public class RequestProtocolACLDemoActivator  implements BundleActivator, JanusA
 	 */
 	@Override
 	public Status start(KernelService kernel) {
-		this.logger.log(Level.INFO, Locale.getString(RequestProtocolACLDemoActivator.class, "ACLCNP_START")); //$NON-NLS-1$		
+		this.logger.log(Level.INFO, Locale.getString(RequestProtocolACLDemoActivator.class, "ACLREQUEST_START")); //$NON-NLS-1$		
 		
 		LoggerUtil.setGlobalLevel(Level.ALL);
 		LoggerUtil.setShortLogMessageEnable(true);

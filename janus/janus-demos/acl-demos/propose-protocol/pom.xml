@@ -24,7 +24,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-Activator>org.janusproject.demos.acl.request.osgi.RequestProtocolACLDemoActivator</Bundle-Activator>
+						<Bundle-Activator>org.janusproject.demos.acl.propose.osgi.ProposeProtocolACLDemoActivator</Bundle-Activator>
 						<Include-Resource>
 							{maven-resources}, {maven-dependencies},
 							META-INF/license=target/classes/META-INF/license,
@@ -43,7 +43,7 @@
 					<archive>
 						<manifestFile>${manifest.file}</manifestFile>
 						<manifest>
-							<mainClass>org.janusproject.demos.acl.request.Launcher</mainClass>
+							<mainClass>org.janusproject.demos.acl.propose.Launcher</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
