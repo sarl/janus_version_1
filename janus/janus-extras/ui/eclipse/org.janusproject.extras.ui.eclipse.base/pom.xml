@@ -10,6 +10,7 @@
         <groupId>org.janus-project.extras.ui.eclipse</groupId>
         <artifactId>org.janusproject.extras.ui.eclipse.base</artifactId>
         <version>1.0.0-SNAPSHOT</version>
+	<name>Base Eclipse UI for Janus</name>
         <packaging>eclipse-plugin</packaging>
 
 

@@ -11,6 +11,6 @@
 	<artifactId>org.janusproject.extras.ui.eclipse.feature</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>eclipse-feature</packaging>
-	<name>Janus Eclipse Feature</name>
+	<name>Eclipse Features for Janus</name>
 
 </project>
