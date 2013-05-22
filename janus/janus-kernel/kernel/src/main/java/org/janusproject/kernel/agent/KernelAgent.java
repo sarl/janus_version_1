@@ -1344,7 +1344,10 @@ extends ActivatorAgent<AgentActivator> {
 
 				this.agent.isMigrating.set(false);
 
-				if (s!=null && s.isLoggable()) {
+				if (s!=null && s.isFailure()) {
+					if (s.isLoggable()) {
+						s.logOn(logger);
+					}
 					KernelAgent.this.removeAgentFromKernel(this.agent);
 				}
 				else {
@@ -1364,7 +1367,7 @@ extends ActivatorAgent<AgentActivator> {
 							if (!getKernelContext().isKernelPaused() && !this.agent.wakeUpIfSleeping()) {
 								s = this.agent.proceedPrivateBehaviour();
 								if (s!=null && s.isLoggable()) {
-									s.logOn(this.agent.getLogger());
+									s.logOn(logger);
 								}
 								if (s!=null && s.isFailure() && s.getSeverity()!=StatusSeverity.CANCEL) {
 									this.kill = true; // Force to kill the agent because is has failed
