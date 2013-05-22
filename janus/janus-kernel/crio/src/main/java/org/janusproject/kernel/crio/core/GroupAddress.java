@@ -137,6 +137,20 @@ public class GroupAddress extends AbstractAddress {
 		return this.name;
 	}
 	
+	/** {@inheritDoc}
+	 */
+	@Override
+	public void setName(String name) {
+		String n = getName();
+		if ((n==null && name!=null) || (n!=null && !n.equals(name))) {
+			this.name = name;
+			KernelScopeGroup group = getGroup();
+			if (group!=null) {
+				group.setPublicUserData("name", name); //$NON-NLS-1$
+			}
+		}
+	}
+	
 	/** Remove the link between this address and its group.
 	 */
 	synchronized void unbind() {

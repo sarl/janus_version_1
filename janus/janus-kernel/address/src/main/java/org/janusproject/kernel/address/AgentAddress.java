@@ -65,10 +65,9 @@ public abstract class AgentAddress extends AbstractAddress {
 		return this.name;
 	}
 
-	/** Set the name of this address.
-	 * 
-	 * @param iname
+	/** {@inheritDoc}
 	 */
+	@Override
 	public void setName(String iname) {
 		this.name = iname;
 	}

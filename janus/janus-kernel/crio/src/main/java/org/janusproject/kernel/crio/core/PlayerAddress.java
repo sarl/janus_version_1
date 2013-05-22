@@ -66,6 +66,20 @@ class PlayerAddress extends AgentAddress {
 		bind(player);
 	}
 	
+	/** {@inheritDoc}
+	 */
+	@Override
+	public void setName(String iname) {
+		String n = getName();
+		if ((n==null && iname!=null) || (n!=null && !n.equals(iname))) {
+			super.setName(iname);
+			RolePlayer player = getRolePlayer();
+			if (player!=null) {
+				player.setName(iname);
+			}
+		}
+	}
+	
 	/** Remove the link between this address and its player.
 	 */
 	synchronized void unbind() {

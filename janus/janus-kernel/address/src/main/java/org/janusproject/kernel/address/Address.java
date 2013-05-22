@@ -46,6 +46,13 @@ public interface Address extends Serializable, Comparable<Address> {
 	 */
 	public String getName();
 
+	/** Set the name of this address.
+	 * 
+	 * @param name is the name of this object.
+	 * @since 0.6
+	 */
+	public void setName(String name);
+
 	/** Test if this address and the given one are equal.
 	 * 
 	 * @param address is the address to be compared.

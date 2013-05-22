@@ -125,7 +125,7 @@ public class AbstractAddressTest extends TestCase {
 		 */
 		private static final long serialVersionUID = -2690537490629450518L;
 		
-		private final String name;
+		private String name;
 		
 		/**
 		 * @param uid
@@ -139,6 +139,13 @@ public class AbstractAddressTest extends TestCase {
 		@Override
 		public String getName() {
 			return this.name;
+		}
+
+		/** {@inheritDoc}
+		 */
+		@Override
+		public void setName(String name) {
+			this.name = name;
 		}
 		
 	}

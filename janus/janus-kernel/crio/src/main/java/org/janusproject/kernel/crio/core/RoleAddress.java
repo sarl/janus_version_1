@@ -155,6 +155,13 @@ public class RoleAddress implements Address {
 		return this.name;
 	}
 	
+	/** {@inheritDoc}
+	 */
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	/** Remove the link between this address and its role.
 	 */
 	synchronized void unbind() {
