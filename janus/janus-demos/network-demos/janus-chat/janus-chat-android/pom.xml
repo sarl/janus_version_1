@@ -54,7 +54,7 @@
 					<nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory>
 					<sdk>
 						<path>${android.sdk.path}</path>
-						<platform>13</platform>
+						<platform>15</platform>
 					</sdk>
 					<emulator>
 						<avd>acer500</avd>
