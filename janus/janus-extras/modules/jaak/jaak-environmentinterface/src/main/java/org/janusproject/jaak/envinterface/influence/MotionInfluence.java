@@ -21,6 +21,8 @@
 package org.janusproject.jaak.envinterface.influence;
 
 import org.janusproject.jaak.envinterface.body.TurtleBody;
+import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
+import org.janusproject.jaak.envinterface.perception.JaakObject;
 import org.janusproject.jaak.math.Vector2f;
 
 /** This class defines a motion influence.
@@ -34,6 +36,7 @@ public class MotionInfluence extends Influence {
 
 	private final Vector2f linearMotion;
 	private float angularMotion;
+	private final JaakObject moveObject;
 
 	/**
 	 * @param emitter is the identifier of the influence emitter.
@@ -45,6 +48,8 @@ public class MotionInfluence extends Influence {
 	public MotionInfluence(TurtleBody emitter, Vector2f linearMotion, float angularMotion) {
 		super(emitter);
 		assert(linearMotion!=null);
+		assert(emitter!=null);
+		this.moveObject = emitter;
 		this.linearMotion = linearMotion;
 		this.angularMotion = angularMotion;
 	}
@@ -55,6 +60,8 @@ public class MotionInfluence extends Influence {
 	 */
 	public MotionInfluence(TurtleBody emitter, float angularMotion) {
 		super(emitter);
+		assert(emitter!=null);
+		this.moveObject = emitter;
 		this.linearMotion = new Vector2f();
 		this.angularMotion = angularMotion;
 	}
@@ -68,6 +75,8 @@ public class MotionInfluence extends Influence {
 	public MotionInfluence(TurtleBody emitter, Vector2f linearMotion) {
 		super(emitter);
 		assert(linearMotion!=null);
+		assert(emitter!=null);
+		this.moveObject = emitter;
 		this.linearMotion = linearMotion;
 		this.angularMotion = 0f;
 	}
@@ -77,6 +86,66 @@ public class MotionInfluence extends Influence {
 	 */
 	public MotionInfluence(TurtleBody emitter) {
 		super(emitter);
+		assert(emitter!=null);
+		this.moveObject = emitter;
+		this.linearMotion = new Vector2f();
+		this.angularMotion = 0f;
+	}
+
+	/**
+	 * @param emitter is the identifier of the influence emitter.
+	 * @param object is the object to move.
+	 * @param linearMotion is the linear motion to apply. The vector
+	 * describes the motion direction and the length of the vector
+	 * is the number of cells to traverse.
+	 * @param angularMotion is the rotational motion to apply.
+	 */
+	public MotionInfluence(TurtleBody emitter, EnvironmentalObject object, Vector2f linearMotion, float angularMotion) {
+		super(emitter);
+		assert(linearMotion!=null);
+		assert(object!=null);
+		this.moveObject = object;
+		this.linearMotion = linearMotion;
+		this.angularMotion = angularMotion;
+	}
+	
+	/**
+	 * @param emitter is the identifier of the influence emitter.
+	 * @param object is the object to move.
+	 * @param angularMotion is the rotational motion to apply.
+	 */
+	public MotionInfluence(TurtleBody emitter, EnvironmentalObject object, float angularMotion) {
+		super(emitter);
+		assert(object!=null);
+		this.moveObject = object;
+		this.linearMotion = new Vector2f();
+		this.angularMotion = angularMotion;
+	}
+
+	/**
+	 * @param emitter is the identifier of the influence emitter.
+	 * @param object is the object to move.
+	 * @param linearMotion is the linear motion to apply. The vector
+	 * describes the motion direction and the length of the vector
+	 * is the number of cells to traverse.
+	 */
+	public MotionInfluence(TurtleBody emitter, EnvironmentalObject object, Vector2f linearMotion) {
+		super(emitter);
+		assert(linearMotion!=null);
+		assert(object!=null);
+		this.moveObject = object;
+		this.linearMotion = linearMotion;
+		this.angularMotion = 0f;
+	}
+
+	/**
+	 * @param emitter is the identifier of the influence emitter.
+	 * @param object is the object to move.
+	 */
+	public MotionInfluence(TurtleBody emitter, EnvironmentalObject object) {
+		super(emitter);
+		assert(object!=null);
+		this.moveObject = object;
 		this.linearMotion = new Vector2f();
 		this.angularMotion = 0f;
 	}
@@ -145,6 +214,14 @@ public class MotionInfluence extends Influence {
 	 */
 	public float getAngularMotion() {
 		return this.angularMotion;
+	}
+	
+	/** Replies the moved object.
+	 * 
+	 * @return the moved object.
+	 */
+	public JaakObject getMovedObject() {
+		return this.moveObject;
 	}
 
 	/**

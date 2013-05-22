@@ -33,6 +33,7 @@ import org.janusproject.jaak.envinterface.body.TurtleBody;
 import org.janusproject.jaak.envinterface.influence.Influence;
 import org.janusproject.jaak.envinterface.influence.MotionInfluence;
 import org.janusproject.jaak.envinterface.influence.MotionInfluenceStatus;
+import org.janusproject.jaak.envinterface.perception.JaakObject;
 import org.janusproject.jaak.environment.GridModel;
 import org.janusproject.jaak.environment.ValidationResult;
 import org.janusproject.jaak.environment.model.AbstractJaakEnvironmentInfluenceSolver;
@@ -68,15 +69,15 @@ public class PathBasedInfluenceSolver extends AbstractJaakEnvironmentInfluenceSo
 			Map<Point2i, List<PathElement>> conflictingCells,
 			Influence influence,
 			ActionApplier actionApplier) {
-		TurtleBody body;
 		Point2i position;
 
 		if (influence instanceof MotionInfluence) {
 			MotionInfluence mi = (MotionInfluence)influence;
 			
-			body = influence.getEmitter();
-			assert(body!=null);
-			position = body.getPosition();
+			JaakObject movedObject = mi.getMovedObject();
+			assert(movedObject!=null);
+
+			position = movedObject.getPosition();
 			assert(position!=null);
 	
 			// Compute target position
