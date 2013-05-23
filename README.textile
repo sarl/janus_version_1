@@ -6,11 +6,11 @@ Janus is free for non-commercial use and distributed under the terms of the "GPL
 
 Janus is jointly developed by the multiagent teams of the "Laboratoire Systèmes et Transports":http://www.multiagent.fr and the "Centro de Investigación de Tecnologías Avanzadas de Tucumán.":http://citat.org.ar
 
-h1. Building the Janus Platform from CLI
+h1. Building the Janus Platform from CLI with Maven
 
 h2. Requirements
 
-* Java Development Toolkit (JDK) 1.6, but not the version 1.7.
+* Java Development Toolkit (JDK) 1.6, but not the version 1.7 if you want to create an Android application.
 * Maven 3.0 or higher.
 
 h2. Compilation on Windows
@@ -38,4 +38,44 @@ h2. Cleaning on Unix
 # Open a Shell terminal
 # Go into the directory where the source code is located (inside which this README file is, also).
 # Type the following command line: @sh ./clean.sh@
+
+h1. Using Janus in a Maven project
+
+To use the Janus platform inside your Maven project, you must:
+
+Add a dependency to the Janus platform (replace @X.X@ by the correct version number):
+
+<dependency>
+    <groupId>org.janus-project.kernel</groupId>
+    <artifactId>kernel</artifactId>
+    <version>X.X</version>
+</dependency>
+
+
+Add the Maven repositories of Janus:
+
+<repositories>
+    <repository>
+        <id>org.janus-project.maven</id>
+        <name>Janus Project Snapshots</name>
+        <url>http://www.janus-project.org/maven/</url>
+    </repository>
+</repositories>
+<pluginRepositories>
+    <pluginRepository>
+        <id>org.janus-project.maven</id>
+        <name>Janus Project Snapshots</name>
+        <url>http://www.janus-project.org/maven/</url>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </pluginRepository>
+</pluginRepositories>
+
+
+h1. Using Janus outside the Maven tools
+
+To use the Janus platform outside the Maven tools, you must download the Jar file that is containing the Janus platform and its dependencies (@janus-kernel-X.X-with-dependencies.jar@) from the "download page of Janus":http://www.janus-project.org/Download
+
+Then, you may add the downloaded Jar file into the dependencies of your Java project.
 
