@@ -6,19 +6,18 @@
 	<parent>
 		<groupId>org.janus-project.extras</groupId>
 		<artifactId>ui</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>0.6</version>
 	</parent>
 
 
 	<groupId>org.janus-project.extras.ui</groupId>
 	<artifactId>eclipse</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.6.0</version>
 	<name>Eclipse UI for Janus</name>
 	<packaging>pom</packaging>
 
 	<properties>
 		<tycho.version>0.15.0</tycho.version>
-		<janus.version>${project.version}</janus.version>
 	</properties>
 
 	<modules>
@@ -87,7 +86,7 @@
 						<artifact>
 							<groupId>org.janus-project.extras.ui.eclipse</groupId>
 							<artifactId>org.janusproject.extras.ui.eclipse.target-definition</artifactId>
-							<version>1.0.0-SNAPSHOT</version>
+							<version>${janus.version.osgi}</version>
 							<classifier>juno</classifier>
 						</artifact>
 					</target>
@@ -127,7 +126,6 @@
 		<dependency>
 			<groupId>org.janus-project.kernel</groupId>
 			<artifactId>osgi</artifactId>
-			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

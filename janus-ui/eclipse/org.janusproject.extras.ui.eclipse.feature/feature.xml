@@ -2,7 +2,7 @@
 <feature
       id="org.janusproject.extras.ui.eclipse.feature"
       label="Janus Eclipse Core Feature"
-      version="1.0.0.qualifier"
+      version="0.6.0"
       provider-name="org.janus-project">
 
    <description url="http://www.janus-project.org">
@@ -30,7 +30,7 @@ de Tucumán.
    </description>
 
    <copyright>
-      Copyright (c) 2004-12, Janus Core Developers &lt;Sebastian RODRIGUEZ, Nicolas GAUD, Stephane GALLAND&gt;
+      Copyright (c) 2004-13, Janus Core Developers &lt;Sebastian RODRIGUEZ, Nicolas GAUD, Stephane GALLAND&gt;
 All rights reserved.
 
 http://www.janus-project.org
@@ -47,21 +47,21 @@ Please contact Janus Core Team for other uses.
          id="org.janusproject.extras.ui.eclipse.base"
          download-size="0"
          install-size="0"
-         version="1.0.0"
+         version="0.6.0"
          unpack="false"/>
 
    <plugin
          id="org.janusproject.extras.ui.eclipse.kernelinformation"
          download-size="0"
          install-size="0"
-         version="1.0.0"
+         version="0.6.0"
          unpack="false"/>
 
    <plugin
          id="org.janusproject.extras.ui.eclipse.moduletools"
          download-size="0"
          install-size="0"
-         version="1.0.0"
+         version="0.6.0"
          unpack="false"/>
 
 </feature>

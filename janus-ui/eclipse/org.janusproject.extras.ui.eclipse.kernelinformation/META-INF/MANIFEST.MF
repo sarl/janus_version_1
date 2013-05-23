@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Kernelinformation
 Bundle-SymbolicName: org.janusproject.extras.ui.eclipse.kernelinformation;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.6.0
 Bundle-Activator: org.janusproject.extras.ui.eclipse.kernelinformation.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.janusproject.extras.ui.eclipse.base;bundle-version="1.0.0",
- org.janus-project.kernel.osgi;bundle-version="1.0.0",
+ org.janusproject.extras.ui.eclipse.base;bundle-version="0.6.0",
+ org.janus-project.kernel.osgi;bundle-version="0.6.0",
  org.eclipse.ui.views.properties.tabbed;bundle-version="3.5.100"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
