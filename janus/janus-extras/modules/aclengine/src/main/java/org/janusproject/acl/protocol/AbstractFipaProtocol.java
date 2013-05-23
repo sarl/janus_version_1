@@ -353,7 +353,11 @@ public abstract class AbstractFipaProtocol {
 		this.logger.log(Level.SEVERE, str.toString());
 	}
 	
-	public void print(String msg) {
+	/** Print the specified message on the logging output.
+	 * 
+	 * @param msg is the message to output.
+	 */
+	protected void print(String msg) {
 		this.logger.log(Level.SEVERE, msg);
 	}
 	

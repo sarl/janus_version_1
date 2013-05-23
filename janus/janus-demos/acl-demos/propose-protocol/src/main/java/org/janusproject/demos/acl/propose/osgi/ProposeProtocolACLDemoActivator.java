@@ -41,6 +41,7 @@ import org.osgi.framework.BundleContext;
 
 
 /**
+ * OSGi activator for the Propose protocol demo.
  * 
  * @author $Author: bfeld$
  * @author $Author: ngrenie$

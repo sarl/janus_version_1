@@ -25,7 +25,7 @@ import org.janusproject.demos.acl.propose.role.Requester;
 import org.janusproject.kernel.crio.core.CRIOContext;
 import org.janusproject.kernel.crio.core.Organization;
 
-/**
+/** Organization that is supporting the propose protocol.
  * 
  * @author $Author: bfeld$
  * @author $Author: ngrenie$

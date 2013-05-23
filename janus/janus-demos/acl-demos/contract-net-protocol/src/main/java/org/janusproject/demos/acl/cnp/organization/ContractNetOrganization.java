@@ -26,7 +26,7 @@ import org.janusproject.kernel.crio.core.CRIOContext;
 import org.janusproject.kernel.crio.core.Organization;
 
 
-/**
+/** Defines the organization that is supporting the Contract-Net-Protocol.
 *
 * 
 * @author $Author: madeline$

@@ -34,21 +34,21 @@ import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 
-/**
-*
-* 
-* @author $Author: madeline$
-* @author $Author: kleroy$
-* @author $Author: ptalagrand$
-* @author $Author: ngaud$
-* @version $FullVersion$
-* @mavengroupid $Groupid$
-* @mavenartifactid $ArtifactId$
-*/
+/** Agent that is receiving the call-for-proposal.
+ *
+ * 
+ * @author $Author: madeline$
+ * @author $Author: kleroy$
+ * @author $Author: ptalagrand$
+ * @author $Author: ngaud$
+ * @version $FullVersion$
+ * @mavengroupid $Groupid$
+ * @mavenartifactid $ArtifactId$
+ */
 public class ACLCallForProposalReceiver extends ACLAgent {
 
 	private static final long serialVersionUID = -7078376398776599011L;
-	
+
 	/**
 	 * The protocol's manager
 	 */
@@ -59,15 +59,15 @@ public class ACLCallForProposalReceiver extends ACLAgent {
 		this.protocolManager = new FipaConversationManager(this);
 		AbstractFipaProtocol protocol = this.protocolManager.createConversation(EnumFipaProtocol.FIPA_CONTRACT_NET,Locale.getString("INITIALIZATION")); //$NON-NLS-1$
 		protocol.initiateAsParticipant();
-		
+
 		Logger.getAnonymousLogger().log(Level.INFO, Locale.getString("CREATION")); //$NON-NLS-1$
-		
+
 		GroupAddress groupAddress = getOrCreateGroup(ContractNetOrganization.class);	
-		
+
 		if (requestRole( ContractNetBroker.class, groupAddress, protocol)==null) {
 			return StatusFactory.cancel(this);
 		}
-		
+
 		return StatusFactory.ok(this);
 	}	
 }

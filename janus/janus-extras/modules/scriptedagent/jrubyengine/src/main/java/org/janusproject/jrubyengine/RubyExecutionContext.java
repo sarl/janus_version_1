@@ -170,6 +170,7 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("resource")
 	@Override
 	public boolean isFunction(String functionName) {
 		Writer old = getStandardError();
@@ -177,7 +178,7 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 		setStandardError(w);
 		try {
 			Object m = evaluate(getScriptEngine(), ":self.method( :"+functionName+" )");  //$NON-NLS-1$//$NON-NLS-2$
-			return m instanceof RubyMethod;
+			return (m instanceof RubyMethod);
 		}
 		catch (Throwable _) {
 			//

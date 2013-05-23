@@ -40,7 +40,7 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 
-/**
+/** OSGi activator for the Contract-Net-Protocol.
  * 
  * @author $Author: ngaud$
  * @version $FullVersion$

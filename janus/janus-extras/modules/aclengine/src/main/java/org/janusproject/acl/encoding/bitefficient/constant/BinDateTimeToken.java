@@ -28,7 +28,7 @@ package org.janusproject.acl.encoding.bitefficient.constant;
  * @see <a href="http://www.fipa.org/specs/fipa00069/SC00069G.html">FIPA ACL Message Representation in Bit-Efficient Specification</a> 
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -36,21 +36,48 @@ package org.janusproject.acl.encoding.bitefficient.constant;
  */
 
 public enum BinDateTimeToken {
-	ABS_TIME((byte) 0x20),//Absolute time
-	REL_TIME_POS((byte) 0x21),//Relative time positive
-	REL_TIME_NEG((byte) 0x22),//Relative time negative
-	ABS_TIME_TYPE_DESIGNATOR((byte) 0x24),//Absolute time with type designator
-	REL_TIME_POS_TYPE_DESIGNATOR((byte) 0x25),//Relative time positive with type designator
-	REL_TIME_NEG_TYPE_DESIGNATOR((byte) 0x26),//Relative time negative with type designator
-	;
+	/** Absolute time.
+	 * <p>
+	 * Code: {@code 0x20}.
+	 */
+	ABS_TIME((byte) 0x20),
+	/** Relative positive time.
+	 * <p>
+	 * Code: {@code 0x21}.
+	 */
+	REL_TIME_POS((byte) 0x21),
+	/** Relative negative time.
+	 * <p>
+	 * Code: {@code 0x22}.
+	 */
+	REL_TIME_NEG((byte) 0x22),
+	/** Absolute time with type designator.
+	 * <p>
+	 * Code: {@code 0x24}.
+	 */
+	ABS_TIME_TYPE_DESIGNATOR((byte) 0x24),
+	/** Relative time positive with type designator.
+	 * <p>
+	 * Code: {@code 0x25}.
+	 */
+	REL_TIME_POS_TYPE_DESIGNATOR((byte) 0x25),
+	/** Relative time negative with type designator.
+	 * <p>
+	 * Code: {@code 0x26}.
+	 */
+	REL_TIME_NEG_TYPE_DESIGNATOR((byte) 0x26);
 	
 	private final byte code;
 	
-	BinDateTimeToken(byte code){
+	private BinDateTimeToken(byte code){
 		this.code = code;
 	}
 	
-	public byte getCode(){
+	/** Replies the code from the FIPA specification.
+	 * 
+	 * @return the code.
+	 */
+	public byte getCode() {
 		return this.code;
 	}
 	

@@ -30,11 +30,8 @@ import org.janusproject.kernel.crio.core.Role;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 
-/**
- * 
- * 
-
- * 
+/** Role that is answerer.
+ *  
  * @author $Author: madeline$
  * @author $Author: kleroy$
  * @author $Author: ptalagrand$

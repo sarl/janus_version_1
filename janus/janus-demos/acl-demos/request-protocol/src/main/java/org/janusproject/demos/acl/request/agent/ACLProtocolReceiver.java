@@ -35,8 +35,7 @@ import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 
 
-/**
- * 
+/** Agent that is receiving.
  * 
  * @author $Author: madeline$
  * @author $Author: kleroy$

@@ -38,7 +38,7 @@ import org.janusproject.kernel.logger.LoggerUtil;
  * DEMO : Query Protocol
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$

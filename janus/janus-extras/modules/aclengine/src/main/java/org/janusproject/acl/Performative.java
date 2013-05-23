@@ -31,7 +31,7 @@ package org.janusproject.acl;
  * @author $Author: ptalagrand$
  * @author $Author: ngaud$
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$

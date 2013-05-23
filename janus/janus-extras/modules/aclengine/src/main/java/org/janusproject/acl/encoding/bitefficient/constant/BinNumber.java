@@ -22,13 +22,14 @@
 package org.janusproject.acl.encoding.bitefficient.constant;
 
 /**
- * This enumeration describes all available constant for BinNumber as defined by FIPA for Bit-Efficient encoding, 
+ * This enumeration describes all available constant for
+ * BinNumber as defined by FIPA for Bit-Efficient encoding, 
  * and their setter (used for decoding process - java reflection tips)
  * 
  * @see <a href="http://www.fipa.org/specs/fipa00069/SC00069G.html">FIPA ACL Message Representation in Bit-Efficient Specification</a> 
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -37,16 +38,28 @@ package org.janusproject.acl.encoding.bitefficient.constant;
 
 public enum BinNumber {
 
+	/** Begin a decimal number.
+	 * <p>
+	 * Code: {@code 0x12}.
+	 */
 	DECIMAL_NUMBER_BEGIN((byte) 0x12),
+	/** Begin an hexadecimal number.
+	 * <p>
+	 * Code: {@code 0x13}.
+	 */
 	HEXA_NUMBER_BEGIN((byte) 0x13);
 	
 	private final byte code;
 	
-	BinNumber(byte code){
+	private BinNumber(byte code){
 		this.code = code;
 	}
 	
-	public byte getCode(){
+	/** Replies the code from the FIPA specification.
+	 * 
+	 * @return the code.
+	 */
+	public byte getCode() {
 		return this.code;
 	}
 	

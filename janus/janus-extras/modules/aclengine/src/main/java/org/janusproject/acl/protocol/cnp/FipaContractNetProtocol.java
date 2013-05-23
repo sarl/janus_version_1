@@ -51,15 +51,21 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 	
 	/**
 	 * Creates a new Contract Net Protocol for a given agent.
+	 * The timeouts are testing during the protocol execution. 
 	 * 
 	 * @param agent
 	 */
 	public FipaContractNetProtocol(ACLAgent agent){
-		super(agent);
-		setMaximumParticipants(Short.MAX_VALUE);
-		this.checkTimeOut = true;
+		this(agent, true);
 	}
 	
+	/**
+	 * Creates a new Contract Net Protocol for a given agent.
+	 * 
+	 * @param agent
+	 * @param checkTimeOut indicates if the timeouts are tested during the
+	 * protocol execution. 
+	 */
 	public FipaContractNetProtocol(ACLAgent agent, boolean checkTimeOut){
 		super(agent);
 		setMaximumParticipants(Short.MAX_VALUE);
@@ -594,10 +600,21 @@ public class FipaContractNetProtocol extends AbstractFipaProtocol {
 		this.setState(ContractNetProtocolState.DONE);
 	}
 
+	/** Replies if the timeouts are testing during the procotol execution.
+	 * 
+	 * @return <code>true</code> if the timeouts are checked;
+	 * <code>false</code> otherwise.
+	 */
 	public boolean isCheckTimeOut() {
 		return this.checkTimeOut;
 	}
 
+	/** Enable or disable the checking of the timeouts during
+	 * the protocol execution.
+	 * 
+	 * @param checkTimeOut is <code>true</code> for enabling;
+	 * <code>false</code> for disabling.
+	 */
 	public void setCheckTimeOut(boolean checkTimeOut) {
 		this.checkTimeOut = checkTimeOut;
 	}

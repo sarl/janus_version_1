@@ -31,9 +31,10 @@ import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 
-/**
+/** Agent that is answering.
+ * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -48,6 +49,10 @@ public class ACLAgentAnswerer extends ACLAgent {
 	 */
 	protected FipaConversationManager protocolManager;
 
+	/**
+	 * @param aclRepresentation
+	 * @param payloadEncoding
+	 */
 	public ACLAgentAnswerer(ACLRepresentation aclRepresentation, PayloadEncoding payloadEncoding) {
 		super(aclRepresentation, payloadEncoding);
 	}

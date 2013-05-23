@@ -1,9 +1,39 @@
+/* 
+ * $Id$
+ * 
+ * Janus platform is an open-source multiagent platform.
+ * More details on <http://www.janus-project.org>
+ * Copyright (C) 2012 Janus Core Developers
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.janusproject.acl.encoding;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+/** Provides utilities to convert dates for ACL.
+ * 
+ * @author $Author: madeline$
+ * @author $Author: kleroy$
+ * @author $Author: ptalagrand$
+ * @author $Author: ngaud$
+ * @version $FullVersion$
+ * @mavengroupid $Groupid$
+ * @mavenartifactid $ArtifactId$
+ */
 public class ACLDateUtil {
 	private final static long year = 365*24*60*60*1000L;
     private final static long month = 30*24*60*60*1000L;
@@ -12,6 +42,13 @@ public class ACLDateUtil {
     private final static long minute = 60*1000;
     private final static long sec = 1000;
     
+    /**
+     * Replies the token that is representing a time in ACL format of
+     * the specified date.
+     * 
+     * @param date
+     * @return the ACL time token from <var>date</var>.
+     */
 	public static String toDateTimeToken(Date date) {
 		if (date == null) {
 			return null;
@@ -34,6 +71,12 @@ public class ACLDateUtil {
         return formatedDate.toString();
 	}
 	
+	/**
+	 * Parse an ACL time token to produce a Java date.
+	 * 
+	 * @param dateTimeToken is the ACL time to parse.
+	 * @return the Java representation of <var>dataTimeToken</var>
+	 */
 	public static Date toDate(String dateTimeToken) {
 		if ("".equals(dateTimeToken)) { //$NON-NLS-1$
 			return null;
@@ -93,6 +136,16 @@ public class ACLDateUtil {
 		return s;
 	}
 
+	/** Replies if the given string-representation of a date
+	 * contains the designator of a type.
+	 * <p>
+	 * The type designator is an alphabetic character (ie. a
+	 * letter) at the end of the string.
+	 * 
+	 * @param s is the string-representation to parse
+	 * @return <code>true</code> if a type designator is inside;
+	 * <code>false</code> otherwise.
+	 */
 	public static boolean containsTypeDesignator(String s) {
         char a = s.charAt(s.length()-1);
         return ((a >= 'a' && a <= 'z') || (a >= 'A' && a <= 'Z'));

@@ -28,7 +28,7 @@ package org.janusproject.acl.encoding.bitefficient.constant;
  * @see <a href="http://www.fipa.org/specs/fipa00069/SC00069G.html">FIPA ACL Message Representation in Bit-Efficient Specification</a> 
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -37,21 +37,53 @@ package org.janusproject.acl.encoding.bitefficient.constant;
 
 public enum BinString {
 
+	/** Begin a string.
+	 * <p>
+	 * Code: {@code 0x14}.
+	 */
 	STRING_BEGIN((byte) 0x14),
+	/** End a string.
+	 * <p>
+	 * Code: {@code 0x00}.
+	 */
 	STRING_END((byte) 0x00),
+	/** Begin an index string.
+	 * <p>
+	 * Code: {@code 0x15}.
+	 */
 	INDEX_STRING_BEGIN((byte) 0x15),
+	/** Begin a len8 byte sequence.
+	 * <p>
+	 * Code: {@code 0x16}.
+	 */
 	LEN8_BYTE_SEQ_BEGIN((byte) 0x16),
+	/** Begin a len16 byte sequence.
+	 * <p>
+	 * Code: {@code 0x17}.
+	 */
 	LEN16_BYTE_SEQ_BEGIN((byte) 0x17),
+	/** Begin an encoded index byte length.
+	 * <p>
+	 * Code: {@code 0x18}.
+	 */
 	INDEX_BYTE_LENGTH_ENCODED_BEGIN((byte) 0x18),
+	/** Begin a len32 byte sequence.
+	 * <p>
+	 * Code: {@code 0x19}.
+	 */
 	LEN32_BYTE_SEQ_BEGIN((byte) 0x19);
 	
 	private final byte code;
 	
-	BinString(byte code){
+	private BinString(byte code){
 		this.code = code;
 	}
 	
-	public byte getCode(){
+	/** Replies the code from the FIPA specification.
+	 * 
+	 * @return the code.
+	 */
+	public byte getCode() {
 		return this.code;
 	}
 	

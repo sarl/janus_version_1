@@ -31,6 +31,7 @@ import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 
 /**
+ * Answerer.
  * 
  * @author $Author: bfeld$
  * @author $Author: ngrenie$

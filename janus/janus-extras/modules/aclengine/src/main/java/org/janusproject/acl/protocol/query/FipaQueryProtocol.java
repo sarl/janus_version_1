@@ -1,3 +1,23 @@
+/* 
+ * $Id$
+ * 
+ * Janus platform is an open-source multiagent platform.
+ * More details on <http://www.janus-project.org>
+ * Copyright (C) 2012 Janus Core Developers
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.janusproject.acl.protocol.query;
 
 import org.arakhne.vmutil.locale.Locale;
@@ -15,7 +35,7 @@ import org.janusproject.kernel.address.AgentAddress;
  * @see <a href="http://fipa.org/specs/fipa00027/SC00027H.html">FIPA Query Interaction Protocol Specification</a>
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -134,12 +154,12 @@ public class FipaQueryProtocol extends AbstractFipaProtocol {
 	public ACLMessage getQuery() {
 		if (isInitiator()) {
 			return this.query;
-		} else if (isParticipant()) {
+		}
+		if (isParticipant()) {
 			if (getState() == QueryProtocolState.NOT_STARTED) {
 				return checkPendingQuery();
-			} else {
-				return this.query;
 			}
+			return this.query;
 		}
 		
 		return null;
@@ -260,12 +280,12 @@ public class FipaQueryProtocol extends AbstractFipaProtocol {
 	public ACLMessage getAnswer() {
 		if (isParticipant()) {
 			return this.answer;
-		} else if (isInitiator()) {
+		}
+		if (isInitiator()) {
 			if (this.answer != null) {
 				return this.answer;
-			} else {
-				return checkPendingAnswer();
 			}
+			return checkPendingAnswer();
 		}
 		
 		return null;
@@ -412,12 +432,12 @@ public class FipaQueryProtocol extends AbstractFipaProtocol {
 	public ACLMessage getResult() {
 		if (isParticipant()) {
 			return this.result;
-		} else if (isInitiator()) {
+		}
+		if (isInitiator()) {
 			if (this.result != null) {
 				return this.result;
-			} else {
-				return checkPendingResult();
 			}
+			return checkPendingResult();
 		}
 		
 		return null;
@@ -449,7 +469,6 @@ public class FipaQueryProtocol extends AbstractFipaProtocol {
 	 * This method can by called by both initiator and participant.
 	 * 
 	 * @param notUnderstood 
-	 * @param content
 	 */
 	public void notUnderstood(ACLMessage notUnderstood) {
 		if ((getState() != RequestProtocolState.DONE) && (getState() != RequestProtocolState.CANCELED) 
@@ -477,9 +496,8 @@ public class FipaQueryProtocol extends AbstractFipaProtocol {
 	public ACLMessage getNotUnderstood() {
 		if (this.notUnderstood != null) {
 			return this.notUnderstood;
-		} else {
-			return checkPendingNotUnderstood();
 		}
+		return checkPendingNotUnderstood();
 	}
 	
 	/**

@@ -22,13 +22,14 @@
 package org.janusproject.acl.encoding.bitefficient.constant;
 
 /**
- * This enumeration describes all available constant for UserDefinedMsgType  as defined by FIPA for Bit-Efficient encoding, 
+ * This enumeration describes all available constant for UserDefinedMsgType  
+ * as defined by FIPA for Bit-Efficient encoding, 
  * and their setter (used for decoding process - java reflection tips)
  * 
  * @see <a href="http://www.fipa.org/specs/fipa00069/SC00069G.html">FIPA ACL Message Representation in Bit-Efficient Specification</a> 
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -37,6 +38,10 @@ package org.janusproject.acl.encoding.bitefficient.constant;
 
 public enum UserDefinedMsgType {
 
+	/** Start a name of message type.
+	 * <p>
+	 * Code: {@code 0x00}.
+	 */
 	MSG_TYPE_NAME_BEGIN((byte) 0x00);
 	
 	private final byte code;
@@ -45,6 +50,10 @@ public enum UserDefinedMsgType {
 		this.code = code;
 	}
 	
+	/** Replies the code from the FIPA specification.
+	 * 
+	 * @return the code.
+	 */
 	public byte getCode(){
 		return this.code;
 	}

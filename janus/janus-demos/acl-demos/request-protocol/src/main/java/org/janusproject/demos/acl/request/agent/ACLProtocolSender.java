@@ -36,9 +36,7 @@ import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
 
-/**
- * 
- * 
+/** Agent that is sending.
  * 
  * @author $Author: madeline$
  * @author $Author: kleroy$

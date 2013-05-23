@@ -46,9 +46,10 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.util.FileManager;
 
-/**
+/** Role that is answering.
+ * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -154,38 +155,47 @@ public class Answerer extends Role {
 		return new ACLMessage(content, performative);
 	}
 	
+	@SuppressWarnings("resource")
 	private static String getQueryResult(ACLMessage query) {
 		OntModel m = ModelFactory.createOntologyModel();
 		 
 		InputStream in = FileManager.get().open("src/main/resources/pizza.owl");  //$NON-NLS-1$
-		
 		if (in == null) {
 			throw new IllegalArgumentException(Locale.getString(Answerer.class, "ERROR_OWL_FILE")); //$NON-NLS-1$
 		}
-		 
-		m.read(in, ""); //$NON-NLS-1$
-		
-		Query sparqlQuery = QueryFactory.create(query.getContent().getContent().toString());
-		QueryExecution qexec = QueryExecutionFactory.create(sparqlQuery, m);
-		
-		StringBuffer sb = new StringBuffer();
-		
 		try {
-            ResultSet results = qexec.execSelect();
-            while ( results.hasNext() ) {
-                QuerySolution soln = results.nextSolution();
-                sb.append(soln);
-            }
-        } finally {
-            qexec.close();
-            try {
+			 
+			m.read(in, ""); //$NON-NLS-1$
+			
+			Query sparqlQuery = QueryFactory.create(query.getContent().getContent().toString());
+			QueryExecution qexec = QueryExecutionFactory.create(sparqlQuery, m);
+			
+			StringBuffer sb = new StringBuffer();
+			
+			try {
+	            ResultSet results = qexec.execSelect();
+	            while ( results.hasNext() ) {
+	                QuerySolution soln = results.nextSolution();
+	                sb.append(soln);
+	            }
+	        } finally {
+	            qexec.close();
+	            try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+	        }
+			return sb.toString();
+		}
+		finally {
+			try {
 				in.close();
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 			}
-        }
-		
-		return sb.toString();
+		}
 	}
 	
 	private void print(String str){

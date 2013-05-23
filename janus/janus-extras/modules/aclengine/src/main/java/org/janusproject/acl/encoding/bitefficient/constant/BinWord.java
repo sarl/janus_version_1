@@ -28,7 +28,7 @@ package org.janusproject.acl.encoding.bitefficient.constant;
  * @see <a href="http://www.fipa.org/specs/fipa00069/SC00069G.html">FIPA ACL Message Representation in Bit-Efficient Specification</a> 
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -37,17 +37,33 @@ package org.janusproject.acl.encoding.bitefficient.constant;
 
 public enum BinWord {
 
+	/** Begin a word.
+	 * <p>
+	 * Code: {@code 0x10}.
+	 */
 	WORD_BEGIN((byte) 0x10),
+	/** End a word.
+	 * <p>
+	 * Code: {@code 0x00}.
+	 */
 	WORD_END((byte) 0x00),
+	/** Begin an index.
+	 * <p>
+	 * Code: {@code 0x11}.
+	 */
 	INDEX_BEGIN((byte) 0x11);
 	
 	private final byte code;
 	
-	BinWord(byte code){
+	private BinWord(byte code){
 		this.code = code;
 	}
 	
-	public byte getCode(){
+	/** Replies the code from the FIPA specification.
+	 * 
+	 * @return the code.
+	 */
+	public byte getCode() {
 		return this.code;
 	}
 	

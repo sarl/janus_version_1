@@ -28,7 +28,7 @@ package org.janusproject.acl.encoding.bitefficient.constant;
  * @see <a href="http://www.fipa.org/specs/fipa00069/SC00069G.html">FIPA ACL Message Representation in Bit-Efficient Specification</a> 
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -37,15 +37,23 @@ package org.janusproject.acl.encoding.bitefficient.constant;
 
 public enum BinExpression {
 
+	/** Begin a binary string.
+	 * <p>
+	 * Code: {@code 0xFF}.
+	 */
 	BIN_STRING_BEGIN((byte) 0xFF);
 	
 	private final byte code;
 	
-	BinExpression(byte code){
+	private BinExpression(byte code){
 		this.code = code;
 	}
 	
-	public byte getCode(){
+	/** Replies the code from the FIPA specification.
+	 * 
+	 * @return the code.
+	 */
+	public byte getCode() {
 		return this.code;
 	}
 	

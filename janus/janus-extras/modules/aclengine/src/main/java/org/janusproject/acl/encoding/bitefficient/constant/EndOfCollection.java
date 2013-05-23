@@ -28,7 +28,7 @@ package org.janusproject.acl.encoding.bitefficient.constant;
  * @see <a href="http://www.fipa.org/specs/fipa00069/SC00069G.html">FIPA ACL Message Representation in Bit-Efficient Specification</a> 
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -37,14 +37,22 @@ package org.janusproject.acl.encoding.bitefficient.constant;
 
 public enum EndOfCollection {
 
+	/** End of collection.
+	 * <p>
+	 * Code: {@code 0x01}.
+	 */
 	END_OF_COLLECTION((byte) 0x01);
 	
 	private final byte code;
 	
-	EndOfCollection(byte code){
+	private EndOfCollection(byte code) {
 		this.code = code;
 	}
 	
+	/** Replies the code from the FIPA specification.
+	 * 
+	 * @return the code.
+	 */
 	public byte getCode(){
 		return this.code;
 	}

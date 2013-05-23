@@ -118,7 +118,7 @@ public class FipaProposeProtocol extends AbstractFipaProtocol {
 	 * 
 	 * @param content
 	 * 
-	 * @see #agree(Object)
+	 * @see #accept(Object)
 	 */
 	public void reject(Object content) {
 
@@ -267,7 +267,6 @@ public class FipaProposeProtocol extends AbstractFipaProtocol {
 	 * 
 	 * @see #failure(Object)
 	 * @see #informDone(Object)
-	 * @see #informResult(Object)
 	 */
 	public ProtocolResult getResult() {
 

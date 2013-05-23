@@ -22,13 +22,14 @@
 package org.janusproject.acl.encoding.bitefficient.constant;
 
 /**
- * This enumeration describes all available constant for PredefinedMsgParam as defined by FIPA for Bit-Efficient encoding, 
+ * This enumeration describes all available constant 
+ * for PredefinedMsgParam as defined by FIPA for Bit-Efficient encoding, 
  * and their setter (used for decoding process - java reflection tips)
  * 
  * @see <a href="http://www.fipa.org/specs/fipa00069/SC00069G.html">FIPA ACL Message Representation in Bit-Efficient Specification</a> 
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -37,25 +38,89 @@ package org.janusproject.acl.encoding.bitefficient.constant;
 
 public enum PredefinedMsgParam {
 
-	 PARAM_SENDER ( (byte) 0x02),
-	 PARAM_RECEIVER ( (byte) 0x03),
-	 PARAM_CONTENT ( (byte) 0x04),
-	 PARAM_REPLY_WITH ( (byte) 0x05),
-	 PARAM_REPLY_BY ( (byte) 0x06),
-	 PARAM_IN_REPLY_TO ( (byte) 0x07),
-	 PARAM_REPLY_TO ( (byte) 0x08),
-	 PARAM_LANGUAGE ( (byte) 0x09),
-	 PARAM_ENCODING ( (byte) 0x0A),
-	 PARAM_ONTOLOGY ( (byte) 0x0B),
-	 PARAM_PROTOCOL ( (byte) 0x0C),
-	 PARAM_CONVERSATION_ID ( (byte) 0x0D);
-	
+	/**
+	 * The parameter is the sender.
+	 * <p>
+	 * Code: {@code 0x02}.
+	 */
+	PARAM_SENDER ( (byte) 0x02),
+	/**
+	 * The parameter is the receiver.
+	 * <p>
+	 * Code: {@code 0x03}.
+	 */
+	PARAM_RECEIVER ( (byte) 0x03),
+	/**
+	 * The parameter is the content.
+	 * <p>
+	 * Code: {@code 0x04}.
+	 */
+	PARAM_CONTENT ( (byte) 0x04),
+	/**
+	 * The parameter is the reply-with.
+	 * <p>
+	 * Code: {@code 0x05}.
+	 */
+	PARAM_REPLY_WITH ( (byte) 0x05),
+	/**
+	 * The parameter is the reply-by.
+	 * <p>
+	 * Code: {@code 0x06}.
+	 */
+	PARAM_REPLY_BY ( (byte) 0x06),
+	/**
+	 * The parameter is the in-reply-to.
+	 * <p>
+	 * Code: {@code 0x07}.
+	 */
+	PARAM_IN_REPLY_TO ( (byte) 0x07),
+	/**
+	 * The parameter is the reply-to.
+	 * <p>
+	 * Code: {@code 0x08}.
+	 */
+	PARAM_REPLY_TO ( (byte) 0x08),
+	/**
+	 * The parameter is the language.
+	 * <p>
+	 * Code: {@code 0x09}.
+	 */
+	PARAM_LANGUAGE ( (byte) 0x09),
+	/**
+	 * The parameter is the encoding.
+	 * <p>
+	 * Code: {@code 0x0A}.
+	 */
+	PARAM_ENCODING ( (byte) 0x0A),
+	/**
+	 * The parameter is the ontology id.
+	 * <p>
+	 * Code: {@code 0x0B}.
+	 */
+	PARAM_ONTOLOGY ( (byte) 0x0B),
+	/**
+	 * The parameter is the protocol id.
+	 * <p>
+	 * Code: {@code 0x0C}.
+	 */
+	PARAM_PROTOCOL ( (byte) 0x0C),
+	/**
+	 * The parameter is the conversation id.
+	 * <p>
+	 * Code: {@code 0x0D}.
+	 */
+	PARAM_CONVERSATION_ID ( (byte) 0x0D);
+
 	private final byte code;
-	
-	PredefinedMsgParam(byte code){
+
+	private PredefinedMsgParam(byte code){
 		this.code = code;
 	}
-	
+
+	/** Replies the code from the FIPA specification.
+	 * 
+	 * @return the code.
+	 */
 	public byte getCode(){
 		return this.code;
 	}

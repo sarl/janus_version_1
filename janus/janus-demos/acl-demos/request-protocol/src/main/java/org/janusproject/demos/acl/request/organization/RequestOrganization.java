@@ -25,9 +25,7 @@ import org.janusproject.demos.acl.request.role.Requester;
 import org.janusproject.kernel.crio.core.CRIOContext;
 import org.janusproject.kernel.crio.core.Organization;
 
-/**
- * 
- * 
+/** Organization that is supporting the request protocol.
  * 
  * @author $Author: madeline$
  * @author $Author: kleroy$

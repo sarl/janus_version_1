@@ -33,9 +33,10 @@ import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 
 
-/**
+/** Agent that is inquiring.
+ * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -47,6 +48,10 @@ public class ACLAgentInquirer extends ACLAgent {
 		
 	private QueryInfo queryInfo;
 	
+	/**
+	 * @param aclRepresentation
+	 * @param payloadEncoding
+	 */
 	public ACLAgentInquirer(ACLRepresentation aclRepresentation, PayloadEncoding payloadEncoding) {
 		super(aclRepresentation, payloadEncoding);
 	}

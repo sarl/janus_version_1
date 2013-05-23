@@ -40,7 +40,7 @@ import org.janusproject.acl.encoding.bitefficient.constant.Version;
  * @see <a href="http://fipa.org/specs/fipa00069/SC00069G.html">FIPA ACL Message Representation in Bit Efficient Specification</a>
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$

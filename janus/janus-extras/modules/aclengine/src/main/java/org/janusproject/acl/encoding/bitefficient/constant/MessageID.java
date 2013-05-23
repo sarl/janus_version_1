@@ -22,13 +22,19 @@
 package org.janusproject.acl.encoding.bitefficient.constant;
 
 /**
- * This enumeration describes all available constant for MessageID as defined by FIPA for Bit-Efficient encoding, 
- * and their setter (used for decoding process - java reflection tips)
+ * This enumeration describes all available constant for MessageID as
+ * defined by FIPA for Bit-Efficient encoding, 
+ * and their setter (used for decoding process - java reflection tips).
+ * <p>
+ * The first byte defines the message identifier. The identifier byte
+ * can be used to separate bit-efficient ACL messages
+ * from (for example) string-based messages and separate different
+ * coding schemes.
  * 
  * @see <a href="http://www.fipa.org/specs/fipa00069/SC00069G.html">FIPA ACL Message Representation in Bit-Efficient Specification</a> 
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -36,25 +42,35 @@ package org.janusproject.acl.encoding.bitefficient.constant;
  */
 public enum MessageID {
 	
-	/*
-	 * The first byte defines the message identifier. The identifier byte can be used to separate bit-efficient ACL messages
-	 * from (for example) string-based messages and separate different coding schemes. 
-	 * The value 0xFA defines a bit- efficient coding scheme without dynamic code tables,
-	 * the value 0xFB defines a bit-efficient coding scheme with dynamic code tables. 
-	 * The message identifier 0xFC is used when dynamic code tables are being used, 
-	 * but the sender does not want to update code tables (even if message contains strings that should be added to code table).
+	/** The value 0xFA defines a bit- efficient coding scheme without dynamic code tables.
+	 * <p>
+	 * Code: {@code 0xFA}.
 	 */
 	BITEFFICIENT((byte) 0xFA),
+	/** The value 0xFB defines a bit-efficient coding scheme with dynamic code tables.
+	 * <p>
+	 * Code: {@code 0xFB}.
+	 */
 	BITEFFICIENT_CODETABLE ((byte) 0xFB),
+	/** The message identifier 0xFC is used when dynamic code tables are being used, 
+	 * but the sender does not want to update code tables (even if message contains
+	 * strings that should be added to code table).
+	 * <p>
+	 * Code: {@code 0xFC}.
+	 */ 
 	BITEFFICIENT_NO_CODETABLE ((byte) 0xFC);
 	
 	private final byte code;
 	
-	MessageID(byte code){
+	private MessageID(byte code){
 		this.code = code;
 	}
 	
-	public byte getCode(){
+	/** Replies the code from the FIPA specification.
+	 * 
+	 * @return the code.
+	 */
+	public byte getCode() {
 		return this.code;
 	}
 	

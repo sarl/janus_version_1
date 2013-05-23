@@ -42,7 +42,8 @@ import org.janusproject.kernel.status.StatusFactory;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-/**
+/** OSGi activator for the quury protocol.
+ * 
  * @author $Author: ngaud$
  * @version $Name$ $Revision$ $Date$
  * @mavengroupid $GroupId$

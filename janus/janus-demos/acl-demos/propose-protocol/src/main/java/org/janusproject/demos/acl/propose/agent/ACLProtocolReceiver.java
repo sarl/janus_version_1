@@ -35,7 +35,7 @@ import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
 
 
-/**
+/** Agents that is receiving the proposals.
  * 
  * @author $Author: bfeld$
  * @author $Author: ngrenie$

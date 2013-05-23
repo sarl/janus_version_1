@@ -22,13 +22,14 @@
 package org.janusproject.acl.encoding.bitefficient.constant;
 
 /**
- * This enumeration describes all available constant for Version as defined by FIPA for Bit-Efficient encoding, 
+ * This enumeration describes all available constant for
+ * Version as defined by FIPA for Bit-Efficient encoding, 
  * and their setter (used for decoding process - java reflection tips)
  * 
  * @see <a href="http://www.fipa.org/specs/fipa00069/SC00069G.html">FIPA ACL Message Representation in Bit-Efficient Specification</a> 
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
@@ -36,18 +37,29 @@ package org.janusproject.acl.encoding.bitefficient.constant;
  */
 
 public enum Version {
-	/*
-	 *The version number byte contains the major version number in the upper four bits and minor version number in the lower four bits. 
-	 *version 1.0 (coded as 0x10).
+	
+	/**
+	 * The version number byte contains the major version
+	 * number in the upper four bits and minor version
+	 * number in the lower four bits.
+	 * <p> 
+	 * Version 1.0 (coded as {@code 0x10}).
 	 */
 	VERSION((byte) 0x10);
 	
 	private final byte code;
 	
-	Version(byte code){
+	/**
+	 * @param code is the constant.
+	 */
+	private Version(byte code){
 		this.code = code;
 	}
 	
+	/** Replies the code from the FIPA specification.
+	 * 
+	 * @return the code.
+	 */
 	public byte getCode(){
 		return this.code;
 	}

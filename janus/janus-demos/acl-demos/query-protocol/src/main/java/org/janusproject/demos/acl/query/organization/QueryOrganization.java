@@ -25,9 +25,10 @@ import org.janusproject.demos.acl.query.role.Inquirer;
 import org.janusproject.kernel.crio.core.CRIOContext;
 import org.janusproject.kernel.crio.core.Organization;
 
-/**
+/** Organization that is supporting the query protocol.
+ * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$

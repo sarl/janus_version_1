@@ -29,7 +29,7 @@ import org.janusproject.acl.protocol.ProtocolState;
  * @see ProtocolState
  * 
  * @author $Author: flacreus$
- * @author $Author: sroth-01$
+ * @author $Author: sroth$
  * @author $Author: cstentz$
  * @version $FullVersion$
  * @mavengroupid $Groupid$
