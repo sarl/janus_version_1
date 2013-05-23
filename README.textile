@@ -45,19 +45,15 @@ To use the Janus platform inside your Maven project, you must:
 
 Add a dependency to the Janus platform (replace @X.X@ by the correct version number):
 
-
-<pre>
 <dependency>
     <groupId>org.janus-project.kernel</groupId>
     <artifactId>kernel</artifactId>
     <version>X.X</version>
 </dependency>
-</pre>
 
 
 Add the Maven repositories of Janus:
 
-<pre>
 <repositories>
     <repository>
         <id>org.janus-project.maven</id>
@@ -75,7 +71,6 @@ Add the Maven repositories of Janus:
         </snapshots>
     </pluginRepository>
 </pluginRepositories>
-</pre>
 
 
 h1. Using Janus outside the Maven tools
