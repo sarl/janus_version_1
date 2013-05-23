@@ -42,14 +42,16 @@ h2. Cleaning on Unix
 h1. Using Janus in a Maven project
 
 To use the Janus platform inside your Maven project, you must:
-* Add a dependency to the Janus platform (replace @X.X@ by the correct version number):
-<pre><code><dependency>
+
+Add a dependency to the Janus platform (replace @X.X@ by the correct version number):
+b. <pre><dependency>
     <groupId>org.janus-project.kernel</groupId>
     <artifactId>kernel</artifactId>
     <version>X.X</version>
-</dependency></code></pre>
-#_ Add the Maven repositories of Janus:
-<pre><code><repositories>
+</dependency></pre>
+
+
+Add the Maven repositories of Janus: bq. <pre><repositories>
 	<repository>
 		<id>org.janus-project.maven</id>
 		<name>Janus Project Snapshots</name>
@@ -65,7 +67,7 @@ To use the Janus platform inside your Maven project, you must:
 			<enabled>true</enabled>
 		</snapshots>
 	</pluginRepository>
-</pluginRepositories></code></pre>
+</pluginRepositories></pre>
 
 
 h1. Using Janus outside the Maven tools
