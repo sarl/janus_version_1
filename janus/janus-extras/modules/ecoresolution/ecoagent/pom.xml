@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.janus-project.extras.modules.ecoresolution</groupId>
 		<artifactId>ecoresolution</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>0.6</version>
 	</parent>
 
 	<artifactId>ecoagent</artifactId>

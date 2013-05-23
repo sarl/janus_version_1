@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.janus-project.demos.simulation</groupId>
 		<artifactId>simulation-demos</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>0.6</version>
 	</parent>
 
 	<artifactId>preypredator</artifactId>
@@ -30,7 +30,7 @@
 							META-INF/NOTICE.${project.artifactId}.txt=target/classes/META-INF/NOTICE.janus.txt,
 						</Include-Resource>
 						<Import-Package>
-							org.janusproject.kernel*;version="${project.version}",*
+							org.janusproject.kernel*;version="${janus.version}",*
 						</Import-Package>
 					</instructions>
 					<supportedProjectTypes>

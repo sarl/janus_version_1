@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.janus-project.demos.acl-demos</groupId>
 		<artifactId>acl-demos</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>0.6</version>
 	</parent>
 
 	<artifactId>propose-protocol</artifactId>
@@ -32,7 +32,7 @@
 							META-INF/NOTICE.${project.artifactId}.txt=target/classes/META-INF/NOTICE.janus.txt,
 						</Include-Resource>
 						<Import-Package>
-							org.janusproject.kernel*;version="${project.version}",*
+							org.janusproject.kernel*;version="${janus.version}",*
 						</Import-Package>
 					</instructions>
 					<supportedProjectTypes>
@@ -102,56 +102,5 @@
 
 
 	</dependencies>
-
-	<developers>
-		<developer>
-			<id>madeline</id>
-			<name>Mickael Adeline</name>
-			<email>mickael.adeline@utbm.fr</email>
-			<url></url>
-			<organization>
-				Laboratoire Syst&amp;egrave;mes
-				et Transports - Universit&amp;eacute;
-				de
-				Technologie de Belfort-Montb&amp;eacute;liard
-			</organization>
-			<organizationUrl>http://www.multiagent.fr</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>kleroy</id>
-			<name>Kevin Le-Roy</name>
-			<email>kevin.le-roy@utbm.fr</email>
-			<url></url>
-			<organization>
-				Laboratoire Syst&amp;egrave;mes
-				et Transports - Universit&amp;eacute;
-				de
-				Technologie de Belfort-Montb&amp;eacute;liard
-			</organization>
-			<organizationUrl>http://www.multiagent.fr</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>ptalagrand</id>
-			<name>Paul Talagrand</name>
-			<email>paul.talagrand@utbm.fr</email>
-			<url></url>
-			<organization>
-				Laboratoire Syst&amp;egrave;mes
-				et Transports - Universit&amp;eacute;
-				de
-				Technologie de Belfort-Montb&amp;eacute;liard
-			</organization>
-			<organizationUrl>http://www.multiagent.fr</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-	</developers>
 
 </project>

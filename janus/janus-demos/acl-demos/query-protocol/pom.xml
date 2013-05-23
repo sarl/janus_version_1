@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.janus-project.demos.acl-demos</groupId>
 		<artifactId>acl-demos</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>0.6</version>
 	</parent>
 
 	<artifactId>query-protocol</artifactId>
@@ -32,7 +32,7 @@
 							META-INF/NOTICE.${project.artifactId}.txt=target/classes/META-INF/NOTICE.janus.txt,
 						</Include-Resource>
 						<Import-Package>
-							org.janusproject.kernel*;version="${project.version}",*
+							org.janusproject.kernel*;version="${janus.version}",*
 						</Import-Package>
 					</instructions>
 					<supportedProjectTypes>
@@ -121,56 +121,5 @@
 			<artifactId>jena-arq</artifactId>
 		</dependency>
 	</dependencies>
-
-	<developers>
-		<developer>
-			<id>flacreus</id>
-			<name>Florian Lacreuse</name>
-			<email>florian.lacreuse@utbm.fr</email>
-			<url></url>
-			<organization>
-				Laboratoire Syst&amp;egrave;mes
-				et Transports - Universit&amp;eacute;
-				de
-				Technologie de Belfort-Montb&amp;eacute;liard
-			</organization>
-			<organizationUrl>http://www.multiagent.fr</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>sroth-01</id>
-			<name>Sebastien Roth</name>
-			<email>sebastien.roth-01@utbm.fr</email>
-			<url></url>
-			<organization>
-				Laboratoire Syst&amp;egrave;mes
-				et Transports - Universit&amp;eacute;
-				de
-				Technologie de Belfort-Montb&amp;eacute;liard
-			</organization>
-			<organizationUrl>http://www.multiagent.fr</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>cstentz</id>
-			<name>Claire-Helene Stentz</name>
-			<email>claire-helene.stentz@utbm.fr</email>
-			<url></url>
-			<organization>
-				Laboratoire Syst&amp;egrave;mes
-				et Transports - Universit&amp;eacute;
-				de
-				Technologie de Belfort-Montb&amp;eacute;liard
-			</organization>
-			<organizationUrl>http://www.multiagent.fr</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-	</developers>
 
 </project>

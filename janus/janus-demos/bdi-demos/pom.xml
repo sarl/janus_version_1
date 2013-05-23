@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.janus-project.demos</groupId>
 		<artifactId>janus-demos</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>0.6</version>
 	</parent>
 
 	<packaging>pom</packaging>

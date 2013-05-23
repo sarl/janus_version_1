@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.janus-project.demos.scriptedagent.groovy</groupId>
 		<artifactId>groovy-demos</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>0.6</version>
 	</parent>
 
 	<artifactId>groovy-simple-message</artifactId>
@@ -15,7 +15,7 @@
 	<url>http://www.janus-project.org</url>
 
 	<properties>
-		<groovyengine.version>${project.version}</groovyengine.version>
+		<groovyengine.version>${janus.version}</groovyengine.version>
 	</properties>
 
 
@@ -36,7 +36,7 @@
 							META-INF/NOTICE.${project.artifactId}.txt=target/classes/META-INF/NOTICE.janus.txt,
 						</Include-Resource>
 						<Import-Package>
-							org.janusproject.kernel*;version="${project.version}",*
+							org.janusproject.kernel*;version="${janus.version}",*
 						</Import-Package>
 					</instructions>
 					<supportedProjectTypes>
@@ -99,40 +99,5 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-
-	<developers>
-		<developer>
-			<id>lcabasson</id>
-			<name>Lionel.Cabasson</name>
-			<email>marshall777@gmail.com</email>
-			<url></url>
-			<organization>
-				Laboratoire Syst&amp;egrave;mes
-				et Transports - Universit&amp;eacute;
-				de
-				Technologie de Belfort-Montb&amp;eacute;liard
-			</organization>
-			<organizationUrl>http://www.multiagent.fr</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>cwintz</id>
-			<name>Camille Wintz</name>
-			<email>camille.wintz@live.fr</email>
-			<url></url>
-			<organization>
-				Laboratoire Syst&amp;egrave;mes
-				et Transports - Universit&amp;eacute;
-				de
-				Technologie de Belfort-Montb&amp;eacute;liard
-			</organization>
-			<organizationUrl>http://www.multiagent.fr</organizationUrl>
-			<roles>
-				<role>Developer</role>
-			</roles>
-		</developer>
-	</developers>
 
 </project>
