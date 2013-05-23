@@ -1,0 +1,41 @@
+h1. Janus Multiagent Platform
+
+Janus is a multi-agent platform fully implemented in Java 1.6. Janus enables developers to quickly create web, enterprise and desktop multiagent-based applications. It provides a comprehensive set of features to develop, run, display and monitor multiagent-based applications. Janus-based applications can be distributed across a network. Janus could be used as an agent-oriented platform, an organizational platform, and/or an holonic platform. Indeed Janus is built upon the "CRIO organizational metamodel":http://www.aspecs.org/CRIO in which the concepts of role and organization are first-class entities. It also natively manages the concept of recursive agents and holon.
+
+Janus is free for non-commercial use and distributed under the terms of the "GPLv3.":http://www.janus-project.org/Licensing:Janus
+
+Janus is jointly developed by the multiagent teams of the "Laboratoire Systèmes et Transports":http://www.multiagent.fr and the "Centro de Investigación de Tecnologías Avanzadas de Tucumán.":http://citat.org.ar
+
+h1. Building the Janus Platform from CLI
+
+h2. Requirements
+
+* Java Development Toolkit (JDK) 1.6, but not the version 1.7.
+* Maven 3.0 or higher.
+
+h2. Compilation on Windows
+
+# Open a DOS terminal
+# Go into the directory where the source code is located (inside which this README file is, also).
+# Type the following command line: @.\build@
+
+h2. Compilation on Unix
+
+# Open a Shell terminal
+# Go into the directory where the source code is located (inside which this README file is, also).
+# Type the following command line: @sh ./build.sh@
+
+h1. Cleaning the Directories from CLI
+
+h2. Cleaning on Windows
+
+# Open a DOS terminal
+# Go into the directory where the source code is located (inside which this README file is, also).
+# Type the following command line: @.\clean@
+
+h2. Cleaning on Unix
+
+# Open a Shell terminal
+# Go into the directory where the source code is located (inside which this README file is, also).
+# Type the following command line: @sh ./clean.sh@
+
