@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.janusproject.extras.ui.eclipse.feature_0.6.0.jar" id="org.janusproject.extras.ui.eclipse.feature" version="0.6.0">
+   <feature url="features/org.janusproject.extras.ui.eclipse.feature_1.0.0.SNAPSHOT.jar" id="org.janusproject.extras.ui.eclipse.feature" version="1.0.0.SNAPSHOT">
       <category name="example_category_id"/>
    </feature>
    <category-def name="example_category_id" label="Example Category">

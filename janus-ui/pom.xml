@@ -6,7 +6,7 @@
 	<groupId>org.janus-project.extras</groupId>
 	<artifactId>ui</artifactId>
 	<packaging>pom</packaging>
-	<version>0.6</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>User Interfaces for Janus</name>
 	<inceptionYear>2004</inceptionYear>
 	<url>http://www.janus-project.org</url>
@@ -15,8 +15,8 @@
 		<year>2013</year>
 		<copyrighters>Janus Core Developers</copyrighters>
 		<felix.main.version>4.0.3</felix.main.version>
-		<janus.version>0.6</janus.version>
-		<janus.version.osgi>0.6.0</janus.version.osgi>
+		<janus.version>1.0-SNAPSHOT</janus.version>
+		<janus.version.osgi>1.0.0-SNAPSHOT</janus.version.osgi>
 	</properties>
 
 	<!-- ======================================= -->

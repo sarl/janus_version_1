@@ -6,7 +6,7 @@
 	<groupId>org.janus-project</groupId>
 	<artifactId>janus</artifactId>
 	<packaging>pom</packaging>
-	<version>0.6</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>Janus Project</name>
 	<inceptionYear>2004</inceptionYear>
 	<url>http://www.janus-project.org</url>
@@ -17,8 +17,8 @@
 		<copyrighters>Janus Core Developers</copyrighters>
 		<website>http://www.janus-project.org</website><!--  do not remove this property it is useful in the presentation message of the kernelagent -->
 		<felix.main.version>4.0.3</felix.main.version>
-		<janus.version>0.6</janus.version>
-		<janus.version.osgi>0.6.0</janus.version.osgi>
+		<janus.version>1.0-SNAPSHOT</janus.version>
+		<janus.version.osgi>1.0.0-SNAPSHOT</janus.version.osgi>
 		<android.platform>15</android.platform>
 		<android.sdk.path>/opt/android-sdk</android.sdk.path>
 		<android.emulator.avd>acer500</android.emulator.avd>
@@ -883,7 +883,7 @@
 
 			<!-- ********** ** JDOM ** ********** -->
 			<dependency>
-				<groupId>jdom</groupId>
+				<groupId>org.jdom</groupId>
 				<artifactId>jdom</artifactId>
 				<version>1.1</version>
 			</dependency>
@@ -1133,6 +1133,25 @@
 			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
+		    <name>Boris Feld</name>
+		    <email>lothiraldan@gmail.com</email>
+		    <properties>
+		        <id>bfeld</id>
+		        <contributions>ZeroMQ network layer, json and bson acl encoder
+		            and FIPA propose protocol</contributions>
+		    </properties>
+		    <roles>
+		        <role>Contributor</role>
+		    </roles>
+		    <organization>
+		        Computer Science Department,
+		        Universit&amp;eacute; de
+		        Technologie de
+		        Belfort-Montba&amp;eacute;liard
+		    </organization>
+		    <organizationUrl>http://www.utbm.fr</organizationUrl>
+		</contributor>
+		<contributor>
 			<name>Robin Geffroy</name>
 			<email>robin.geffroy@gmail.com</email>
 			<properties>
@@ -1149,6 +1168,24 @@
 				Belfort-Montba&amp;eacute;liard
 			</organization>
 			<organizationUrl>http://www.utbm.fr</organizationUrl>
+		</contributor>
+		<contributor>
+		    <name>Nicolas Grenie</name>
+		    <email>nicolas.grenie@utbm.fr</email>
+		    <properties>
+		        <id>ngrenie</id>
+		        <contributions>Json and bson acl encoder and FIPA propose protocol.</contributions>
+		    </properties>
+		    <roles>
+		        <role>Contributor</role>
+		    </roles>
+		    <organization>
+		        Computer Science Department,
+		        Universit&amp;eacute; de
+		        Technologie de
+		        Belfort-Montba&amp;eacute;liard
+		    </organization>
+		    <organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
 			<name>Florian Lacreuse</name>
@@ -1323,6 +1360,24 @@
 				Belfort-Montba&amp;eacute;liard
 			</organization>
 			<organizationUrl>http://www.utbm.fr</organizationUrl>
+		</contributor>
+		<contributor>
+		    <name>Nicolas Grenie</name>
+		    <email>nicolas.grenie@utbm.fr</email>
+		    <properties>
+		        <id>ngrenie</id>
+		        <contributions>Json and bson acl encoder and FIPA propose protocol.</contributions>
+		    </properties>
+		    <roles>
+		        <role>Contributor</role>
+		    </roles>
+		    <organization>
+		        Computer Science Department,
+		        Universit&amp;eacute; de
+		        Technologie de
+		        Belfort-Montba&amp;eacute;liard
+		    </organization>
+		    <organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 	</contributors>
 
