@@ -6,6 +6,11 @@ Janus is free for non-commercial use and distributed under the terms of the "GPL
 
 Janus is jointly developed by the multiagent teams of the "Laboratoire Systèmes et Transports":http://www.multiagent.fr and the "Centro de Investigación de Tecnologías Avanzadas de Tucumán.":http://citat.org.ar
 
+h1. Issues
+
+Issues related to the Janus platform are tracked by our "JIRA website.":http://www.janus-project.org
+You must use this issue tracker to report and follow your issues.
+
 h1. Building the Janus Platform from CLI with Maven
 
 h2. Requirements
