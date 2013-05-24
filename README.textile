@@ -2,13 +2,14 @@ h1. Janus Multiagent Platform
 
 Janus is a multi-agent platform fully implemented in Java 1.6. Janus enables developers to quickly create web, enterprise and desktop multiagent-based applications. It provides a comprehensive set of features to develop, run, display and monitor multiagent-based applications. Janus-based applications can be distributed across a network. Janus could be used as an agent-oriented platform, an organizational platform, and/or an holonic platform. Indeed Janus is built upon the "CRIO organizational metamodel":http://www.aspecs.org/CRIO in which the concepts of role and organization are first-class entities. It also natively manages the concept of recursive agents and holon.
 
-Janus is free for non-commercial use and distributed under the terms of the "GPLv3.":http://www.janus-project.org/Licensing:Janus
+Janus is free for non-commercial use *only* and distributed under the terms of the "GPLv3.":http://www.janus-project.org/Licensing:Janus
+We also provide a range of commercial licenses that allow to integrate Janus into other commercial products or projects without any obligation to publish the source code of your derivative work on the Internet, as the GPLv3 normally requires.
 
 Janus is jointly developed by the multiagent teams of the "Laboratoire Systèmes et Transports":http://www.multiagent.fr and the "Centro de Investigación de Tecnologías Avanzadas de Tucumán.":http://citat.org.ar
 
 h1. Issues
 
-Issues related to the Janus platform are tracked by our "JIRA website.":http://www.janus-project.org
+Issues related to the Janus platform are tracked by our "JIRA website.":http://www.janus-project.org/jira
 You must use this issue tracker to report and follow your issues.
 
 h1. Building the Janus Platform from CLI with Maven
