@@ -1261,7 +1261,7 @@
 			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
-			<name>Sebastien Roth</name>
+			<name>S&amp;eacute;bastien Roth</name>
 			<email>sebastien.roth-01@utbm.fr</email>
 			<properties>
 				<id>sroth</id>
@@ -1279,7 +1279,7 @@
 			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
-			<name>Claire-Helene Stentz</name>
+			<name>Claire-H&amp;eacute;l&amp;egrave;ne Stentz</name>
 			<email>claire-helene.stentz@utbm.fr</email>
 			<properties>
 				<id>cstentz</id>
@@ -1360,24 +1360,6 @@
 				Belfort-Montba&amp;eacute;liard
 			</organization>
 			<organizationUrl>http://www.utbm.fr</organizationUrl>
-		</contributor>
-		<contributor>
-		    <name>Nicolas Grenie</name>
-		    <email>nicolas.grenie@utbm.fr</email>
-		    <properties>
-		        <id>ngrenie</id>
-		        <contributions>Json and bson acl encoder and FIPA propose protocol.</contributions>
-		    </properties>
-		    <roles>
-		        <role>Contributor</role>
-		    </roles>
-		    <organization>
-		        Computer Science Department,
-		        Universit&amp;eacute; de
-		        Technologie de
-		        Belfort-Montba&amp;eacute;liard
-		    </organization>
-		    <organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 	</contributors>
 
