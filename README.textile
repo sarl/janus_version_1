@@ -5,7 +5,7 @@ Janus is a multi-agent platform fully implemented in Java 1.6. Janus enables dev
 Janus is free for non-commercial use *only* and distributed under the terms of the "GPLv3.":http://www.janus-project.org/Licensing:Janus
 We also provide a range of commercial licenses that allow to integrate Janus into other commercial products or projects without any obligation to publish the source code of your derivative work on the Internet, as the GPLv3 normally requires.
 
-Janus is jointly developed by the multiagent teams of the "Laboratoire Systèmes et Transports":http://www.multiagent.fr and the "Centro de Investigación de Tecnologías Avanzadas de Tucumán.":http://citat.org.ar
+Janus is jointly developed by the multiagent teams of the "Laboratoire Systèmes et Transports":http://www.multiagent.fr (France) and the "Grupo de Investigación en Tecnologías Informáticas Avanzadas.":http://citat.org.ar (Argentina)
 
 h1. Issues
 
