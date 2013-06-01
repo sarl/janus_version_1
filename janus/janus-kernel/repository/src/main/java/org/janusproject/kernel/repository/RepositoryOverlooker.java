@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2012 Janus Core Developers
+ * Copyright (C) 2012-13 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +25,14 @@ package org.janusproject.kernel.repository;
  * was introduced to ease the overlooking on the repositories
  * without access to the repository itself.
  *  
+ * @param <T> is the type of the data inside the repository.
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  * @since 0.5
  */
-public interface RepositoryOverlooker {
+public interface RepositoryOverlooker<T> extends Iterable<T> {
 
 	/** Add a listener on repository changes.
 	 * 

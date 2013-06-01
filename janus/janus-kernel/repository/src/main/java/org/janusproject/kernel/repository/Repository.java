@@ -100,6 +100,6 @@ public interface Repository<ID,TARGET> extends Iterable<ID> {
 	 * @return overlooker on this repository.
 	 * @since 0.5
 	 */
-	public RepositoryOverlooker getOverlooker();
+	public RepositoryOverlooker<ID> getOverlooker();
 
 }

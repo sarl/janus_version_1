@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 import org.janusproject.kernel.repository.RepositoryChangeEvent;
 import org.janusproject.kernel.repository.RepositoryChangeListener;
 import org.janusproject.kernel.repository.RepositoryChangeEvent.ChangeType;
+import org.janusproject.kernel.repository.RepositoryOverlooker;
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.util.sizediterator.EmptyIterator;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
@@ -206,6 +207,13 @@ public class AbstractCapacityContainerTest extends TestCase {
 		@Override
 		public Collection<Collection<CapacityImplementation>> values() {
 			return Collections.emptyList();
+		}
+
+		/** {@inheritDoc}
+		 */
+		@Override
+		public RepositoryOverlooker<Class<? extends Capacity>> getOverlooker() {
+			throw new UnsupportedOperationException();
 		}
 
 	}

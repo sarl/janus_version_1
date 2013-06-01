@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2004-2011 Janus Core Developers
+ * Copyright (C) 2004-2013 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ implements Repository<ID,DATA>, ModifiableCollectionSizedIteratorOwner<Entry<ID,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final RepositoryOverlooker getOverlooker() {
+	public final RepositoryOverlooker<ID> getOverlooker() {
 		return new Overlooker();
 	}
 	
@@ -139,14 +139,14 @@ implements Repository<ID,DATA>, ModifiableCollectionSizedIteratorOwner<Entry<ID,
 	 */
 	@Override
 	public final Iterator<ID> iterator() {
-		return new RepositoryIterator(getEntryIterator());
+		return new RepositoryIterator(getEntryIterator(), true);
 	}
 	
 	/** {@inheritDoc} 
 	 */
 	@Override
 	public SizedIterator<ID> sizedIterator() {
-		return new RepositoryIterator(getEntryIterator());
+		return new RepositoryIterator(getEntryIterator(), true);
 	}
 	
 	/** Replies the iterator on the repository entries.
@@ -198,12 +198,15 @@ implements Repository<ID,DATA>, ModifiableCollectionSizedIteratorOwner<Entry<ID,
 	private class RepositoryIterator implements SizedIterator<ID> {
 
 		private final SizedIterator<? extends Entry<ID,?>> iterator;
+		private final boolean modifiable;
 		
 		/**
 		 * @param it
+		 * @param modifiable
 		 */
-		public RepositoryIterator(SizedIterator<? extends Entry<ID,?>> it) {
+		public RepositoryIterator(SizedIterator<? extends Entry<ID,?>> it, boolean modifiable) {
 			this.iterator = it;
+			this.modifiable = modifiable;
 		}
 		
 		/**
@@ -243,7 +246,10 @@ implements Repository<ID,DATA>, ModifiableCollectionSizedIteratorOwner<Entry<ID,
 		 */
 		@Override
 		public void remove() {
-			this.iterator.remove();
+			if (this.modifiable)
+				this.iterator.remove();
+			else
+				throw new UnsupportedOperationException();
 		}
 
 	} /* class RepositoryIterator */
@@ -254,7 +260,7 @@ implements Repository<ID,DATA>, ModifiableCollectionSizedIteratorOwner<Entry<ID,
 	 * @mavengroupid $GroupId$
 	 * @mavenartifactid $ArtifactId$
 	 */
-	private class Overlooker implements RepositoryOverlooker {
+	private class Overlooker implements RepositoryOverlooker<ID> {
 
 		/**
 		 */
@@ -276,6 +282,13 @@ implements Repository<ID,DATA>, ModifiableCollectionSizedIteratorOwner<Entry<ID,
 		@Override
 		public void removeRepositoryChangeListener(RepositoryChangeListener listener) {
 			AbstractRepository.this.removeRepositoryChangeListener(listener);
+		}
+
+		/** {@inheritDoc}
+		 */
+		@Override
+		public Iterator<ID> iterator() {
+			return new RepositoryIterator(getEntryIterator(), false);
 		}
 		
 	}

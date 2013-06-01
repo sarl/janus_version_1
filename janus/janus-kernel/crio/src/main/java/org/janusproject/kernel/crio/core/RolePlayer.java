@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2012 Janus Core Developers
+ * Copyright (C) 2010-2013 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -160,7 +160,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 * 
 	 * @return the overlooker on the group repository.
 	 */
-	protected final RepositoryOverlooker getGroupRepository() {
+	protected final RepositoryOverlooker<GroupAddress> getGroupRepository() {
 		return getCRIOContext().getGroupRepository().getOverlooker();
 	}
 
@@ -168,7 +168,7 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 * 
 	 * @return the overlooker on the organization repository.
 	 */
-	protected final RepositoryOverlooker getOrganizationRepository() {
+	protected final RepositoryOverlooker<Class<? extends Organization>> getOrganizationRepository() {
 		return getCRIOContext().getOrganizationRepository().getOverlooker();
 	}
 

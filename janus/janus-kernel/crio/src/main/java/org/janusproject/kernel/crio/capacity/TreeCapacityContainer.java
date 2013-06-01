@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.janusproject.kernel.repository.RepositoryChangeListener;
+import org.janusproject.kernel.repository.RepositoryOverlooker;
 import org.janusproject.kernel.util.comparator.GenericComparator;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
 import org.janusproject.kernel.util.sizediterator.UnmodifiableIterator;
@@ -188,6 +190,59 @@ extends AbstractCapacityContainer {
 	@Override
 	public Collection<Collection<CapacityImplementation>> values() {
 		return Collections.unmodifiableCollection(this.content.values());
+	}
+	
+	/** {@inheritDoc}
+	 */
+	@Override
+	public RepositoryOverlooker<Class<? extends Capacity>> getOverlooker() {
+		return new Overlooker();
+	}
+
+	/**
+	 * Stores the capacities of a given entity and their associated implementation.
+	 * <p>
+	 * The default capacity implementation selection policy is an instance of
+	 * {@link FirstCapacityImplementationSelectionPolicy}.
+	 * 
+	 * @author $Author: sgalland$
+	 * @version $FullVersion$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 * @see Capacity
+	 */
+	private class Overlooker implements RepositoryOverlooker<Class<? extends Capacity>> {
+		
+		/**
+		 */
+		public Overlooker() {
+			//
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void addRepositoryChangeListener(RepositoryChangeListener listener) {
+			TreeCapacityContainer.this.addRepositoryChangeListener(listener);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void removeRepositoryChangeListener(RepositoryChangeListener listener) {
+			TreeCapacityContainer.this.removeRepositoryChangeListener(listener);
+		}
+
+		/** {@inheritDoc}
+		 */
+		@SuppressWarnings("synthetic-access")
+		@Override
+		public Iterator<Class<? extends Capacity>> iterator() {
+			return Collections.unmodifiableMap(TreeCapacityContainer.this.content).keySet().iterator();
+		}
+		
 	}
 
 }
