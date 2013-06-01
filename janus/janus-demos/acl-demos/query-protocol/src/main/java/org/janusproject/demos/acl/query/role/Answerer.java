@@ -155,7 +155,6 @@ public class Answerer extends Role {
 		return new ACLMessage(content, performative);
 	}
 	
-	@SuppressWarnings("resource")
 	private static String getQueryResult(ACLMessage query) {
 		OntModel m = ModelFactory.createOntologyModel();
 		 

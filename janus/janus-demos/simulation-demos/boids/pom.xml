@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>boids</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 	<name>Boids Simulation demo</name>
 	<inceptionYear>2004</inceptionYear>
 	

@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>preypredator</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 	<name>Prey-predator Demonstration</name>
 	<inceptionYear>2004</inceptionYear>
 

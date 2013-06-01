@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>market-selective</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 	<name>Advanced Market MAS demo</name>
 	<inceptionYear>2004</inceptionYear>
 

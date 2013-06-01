@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>acl-base-demo</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 	<name>Basic ACL Janus demo</name>
 	<inceptionYear>2012</inceptionYear>
 

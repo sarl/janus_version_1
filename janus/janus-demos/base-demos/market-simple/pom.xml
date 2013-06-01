@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>market-simple</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 	<name>Market MAS demo</name>
 	<inceptionYear>2004</inceptionYear>
 

@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>helloagents</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 	<name>Hello Agents Demo</name>
 	<inceptionYear>2013</inceptionYear>
 

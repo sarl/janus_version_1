@@ -10,7 +10,7 @@
 
 	<groupId>org.janus-project.extras.modules.aclengine</groupId>
 	<artifactId>aclengine</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 	<name>ACL Engine</name>
 	<inceptionYear>2011</inceptionYear>
 

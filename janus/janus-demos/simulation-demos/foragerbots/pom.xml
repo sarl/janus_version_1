@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>foragerbots</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 	<name>Forager Bots</name>
 	<description>Simulation of Forager Bots</description>
 	<inceptionYear>2010</inceptionYear>
