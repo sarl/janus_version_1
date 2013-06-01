@@ -47,6 +47,9 @@
 					<assetsDirectory>${project.basedir}/assets</assetsDirectory>
 					<resourceDirectory>${project.basedir}/res</resourceDirectory>
 					<nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory>
+					<deleteConflictingFiles>true</deleteConflictingFiles>
+					<undeployBeforeDeploy>true</undeployBeforeDeploy>
+					<ignoreOptionalWarningsInGenFolder>true</ignoreOptionalWarningsInGenFolder>
 					<sdk>
 						<path>${android.sdk.path}</path>
 						<platform>${android.platform}</platform>
@@ -54,10 +57,22 @@
 					<emulator>
 						<avd>${android.emulator.avd}</avd>
 					</emulator>
-					<deleteConflictingFiles>true</deleteConflictingFiles>
-					<undeployBeforeDeploy>true</undeployBeforeDeploy>
+					<manifest>
+						<versionName>${project.version}</versionName>
+						<versionCodeAutoIncrement>false</versionCodeAutoIncrement>
+						<versionCodeUpdateFromVersion>true</versionCodeUpdateFromVersion>
+					</manifest>
 				</configuration>
 				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>update-manifest</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>manifest-update</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>

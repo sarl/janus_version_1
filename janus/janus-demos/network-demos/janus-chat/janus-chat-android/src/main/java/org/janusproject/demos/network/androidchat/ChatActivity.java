@@ -32,10 +32,10 @@ import org.janusproject.demos.network.januschat.ChatUtil;
 import org.janusproject.demos.network.januschat.ChatterListener;
 import org.janusproject.demos.network.januschat.agent.ChatChannel;
 import org.janusproject.demos.network.januschat.agent.IncomingChatListener;
-import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.KernelEvent;
 import org.janusproject.kernel.KernelListener;
+import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.network.jxme.agent.JxtaJxmeKernelAgentFactory;
@@ -45,8 +45,8 @@ import android.accounts.AccountManager;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -69,7 +69,6 @@ import android.view.MenuItem.OnMenuItemClickListener;
 public class ChatActivity extends Activity {
 
 	private static final String TAG = "janus-chat"; //$NON-NLS-1$
-	private static final int JOIN_ROOM_DIALOG_ID = 0;
 
 	private AgentAddress myself = null;
 	private Listener listener = null;
@@ -286,38 +285,9 @@ public class ChatActivity extends Activity {
 	 * Select and join a room.
 	 */
 	public void joinRoom() {
-		showDialog(JOIN_ROOM_DIALOG_ID);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		Dialog dialog = null;
-		switch (id) {
-			case JOIN_ROOM_DIALOG_ID:
-				dialog = new JoinRoomDialog(this);
-				break;
-			default:
-				break;
-		}
-		return dialog;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void onPrepareDialog(int id, Dialog dialog) {
-		switch (id) {
-		case JOIN_ROOM_DIALOG_ID:
-			JoinRoomDialog roomDialog = (JoinRoomDialog) dialog;
-			roomDialog.refresh();
-			break;
-		default:
-			break;
-		}
+		FragmentManager fm = getFragmentManager();
+        JoinRoomDialog joinRoomDialog = new JoinRoomDialog();
+        joinRoomDialog.show(fm, "fragment_join_room"); //$NON-NLS-1$
 	}
 
 	/**

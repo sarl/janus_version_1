@@ -30,11 +30,14 @@ import org.janusproject.demos.network.januschat.agent.ChatChannel;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.crio.core.GroupAddress;
 
-import android.app.Dialog;
+import android.app.DialogFragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /** Dialog to join a room.
@@ -44,36 +47,47 @@ import android.widget.ListView;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public class JoinRoomDialog extends Dialog implements OnItemClickListener {
+public class JoinRoomDialog extends DialogFragment implements OnItemClickListener {
 
 	private final List<Object> rooms = new ArrayList<Object>();
-	private final AgentAddress myself;
+	private AgentAddress myself = null;
 	
 	/**
-	 * @param context
 	 */
-	public JoinRoomDialog(ChatActivity context) {
-		super(context);
+	public JoinRoomDialog() {
+		super();
+	}
+	
+	@Override
+	public View onCreateView(
+			LayoutInflater inflater, 
+			ViewGroup container,
+            Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.roomselection, container);
 		
-		this.myself = context.myself();
+		ChatActivity chatActivity = (ChatActivity)container.getContext();
 		
-		setContentView(R.layout.roomselection);
+		this.myself = chatActivity.myself();
 		
 		setCancelable(true);
-		setCanceledOnTouchOutside(true);
-		setTitle(Locale.getString("TITLE")); //$NON-NLS-1$
+		getDialog().setTitle(Locale.getString("TITLE")); //$NON-NLS-1$
 		
-		ListView view = (ListView)findViewById(R.id.roomList);
-		view.setAdapter(new ArrayAdapter<Object>(
-				context,
+		ListView listView = (ListView)view.findViewById(R.id.roomList);
+		listView.setAdapter(new ArrayAdapter<Object>(
+				chatActivity,
 				android.R.layout.simple_list_item_1,
 				this.rooms));
-		view.setOnItemClickListener(this);
+		listView.setOnItemClickListener(this);
+		
+		return view;
 	}
-
-	/** Initialize the dialog content.
+	
+	/** {@inheritDoc}
 	 */
-	public void refresh() {
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		
 		ChatChannel channel = ChatUtil.getChannelFor(this.myself);
 		Collection<GroupAddress> myRooms = channel.getParticipatingChatrooms();
 		this.rooms.clear();
@@ -82,8 +96,8 @@ public class JoinRoomDialog extends Dialog implements OnItemClickListener {
 				this.rooms.add(room);
 			}
 		}
-		ListView view = (ListView)findViewById(R.id.roomList);
-		view.setEnabled(!this.rooms.isEmpty());
+		ListView listView = (ListView)view.findViewById(R.id.roomList);
+		listView.setEnabled(!this.rooms.isEmpty());
 		if (this.rooms.isEmpty()) {
 			this.rooms.add(Locale.getString("NO_ROOM")); //$NON-NLS-1$
 		}

@@ -1,53 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/frameLayout1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="horizontal" >
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical" >
+	android:id="@+id/frameLayout1" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:orientation="horizontal"
+	android:baselineAligned="false">
+	<LinearLayout android:id="@+id/linearLayout1"
+		android:layout_width="0dp" android:layout_height="match_parent"
+		android:layout_weight="1" android:orientation="vertical"
+		android:baselineAligned="false">
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+		<LinearLayout android:id="@+id/linearLayout2"
+			android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/messageEditor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/MessageTextHint"
-                android:singleLine="true" >
-                <requestFocus />
-            </EditText>
+			<EditText android:id="@+id/messageEditor"
+				android:layout_width="0dp" android:layout_height="wrap_content"
+				android:layout_weight="1" android:hint="@string/MessageTextHint"
+				android:singleLine="true" android:baselineAligned="false">
+				<requestFocus />
+			</EditText>
 
-            <Button
-                android:id="@+id/sendButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Send" />
-        </LinearLayout>
+			<Button android:id="@+id/sendButton" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="@string/Send" />
+		</LinearLayout>
 
-        <TextView
-            android:id="@+id/chatText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/backgroundColor"
-            android:text=""
-            android:textColor="@color/standardColor" />
+		<TextView android:id="@+id/chatText" android:layout_width="match_parent"
+			android:layout_height="match_parent" android:background="@color/backgroundColor"
+			android:text="" android:textColor="@color/standardColor" />
 
-    </LinearLayout>
+	</LinearLayout>
 
-    <ListView
-        android:id="@+id/roomMembers"
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
-        android:layout_weight="1" >
-    </ListView>
+	<ListView android:id="@+id/roomMembers" android:layout_width="0dip"
+		android:layout_height="match_parent" android:layout_weight="1">
+	</ListView>
 
 </LinearLayout>
