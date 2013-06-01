@@ -90,7 +90,7 @@ import net.jxta.protocol.PeerGroupAdvertisement;
 import org.janusproject.kernel.crio.core.GroupAddress;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
-import org.janusproject.kernel.network.jxta.JanusJxtaConstants;
+import org.janusproject.kernel.network.JanusNetworkConstants;
 import org.janusproject.kernel.util.throwable.Throwables;
 
 /**
@@ -250,11 +250,11 @@ class PeerGroupUtil {
 		}
 
 		StructuredTextDocument orgClass = (StructuredTextDocument) StructuredDocumentFactory.newStructuredDocument(MimeMediaType.XMLUTF8, "Param"); //$NON-NLS-1$
-		orgClass.appendChild(orgClass.createElement(JanusJxtaConstants.TAG_JANUS_ORG, janusGroupAddress.getOrganization().getName()));
-		orgClass.appendChild(orgClass.createElement(JanusJxtaConstants.TAG_JANUS_GROUP_ID, janusGroupAddress.getUUID().toString()));
+		orgClass.appendChild(orgClass.createElement(JanusNetworkConstants.TAG_JANUS_ORG, janusGroupAddress.getOrganization().getName()));
+		orgClass.appendChild(orgClass.createElement(JanusNetworkConstants.TAG_JANUS_GROUP_ID, janusGroupAddress.getUUID().toString()));
 
 		if (janusGroupAddress.getName() != null) {
-			orgClass.appendChild(orgClass.createElement(JanusJxtaConstants.TAG_JANUS_GROUP_NAME, janusGroupAddress.getName()));
+			orgClass.appendChild(orgClass.createElement(JanusNetworkConstants.TAG_JANUS_GROUP_NAME, janusGroupAddress.getName()));
 		}
 
 		ByteArrayOutputStream out;
@@ -262,14 +262,14 @@ class PeerGroupUtil {
 
 		// obtain conditions serialization
 		if (obtainConditions != null && obtainConditions.size() > 0) {
-			Element eObtainConditions = orgClass.createElement(JanusJxtaConstants.TAG_JANUS_OBTAIN_CONDITIONS);
+			Element eObtainConditions = orgClass.createElement(JanusNetworkConstants.TAG_JANUS_OBTAIN_CONDITIONS);
 			Element obtainCondition;
 			for (GroupCondition obtain : obtainConditions) {
 				out = new ByteArrayOutputStream();
 				oos = new ObjectOutputStream(out);
 				oos.writeObject(obtain);
 				oos.close();
-				obtainCondition = orgClass.createElement(JanusJxtaConstants.TAG_JANUS_CONDITION, new String(out.toByteArray()));
+				obtainCondition = orgClass.createElement(JanusNetworkConstants.TAG_JANUS_CONDITION, new String(out.toByteArray()));
 				eObtainConditions.appendChild(obtainCondition);
 			}
 			orgClass.appendChild(eObtainConditions);
@@ -277,14 +277,14 @@ class PeerGroupUtil {
 
 		// leave conditions serialization
 		if (leaveConditions != null && leaveConditions.size() > 0) {
-			Element eLeaveConditions = orgClass.createElement(JanusJxtaConstants.TAG_JANUS_LEAVE_CONDITIONS);
+			Element eLeaveConditions = orgClass.createElement(JanusNetworkConstants.TAG_JANUS_LEAVE_CONDITIONS);
 			Element leaveCondition;
 			for (GroupCondition leave : leaveConditions) {
 				out = new ByteArrayOutputStream();
 				oos = new ObjectOutputStream(out);
 				oos.writeObject(leave);
 				oos.close();
-				leaveCondition = orgClass.createElement(JanusJxtaConstants.TAG_JANUS_CONDITION, new String(out.toByteArray()));
+				leaveCondition = orgClass.createElement(JanusNetworkConstants.TAG_JANUS_CONDITION, new String(out.toByteArray()));
 				eLeaveConditions.appendChild(leaveCondition);
 			}
 			orgClass.appendChild(eLeaveConditions);
@@ -296,7 +296,7 @@ class PeerGroupUtil {
 			oos = new ObjectOutputStream(out);
 			oos.writeObject(membership);
 			oos.close();
-			orgClass.appendChild(orgClass.createElement(JanusJxtaConstants.TAG_JANUS_MEMBERSHIPSERVICE, new String(out.toByteArray())));
+			orgClass.appendChild(orgClass.createElement(JanusNetworkConstants.TAG_JANUS_MEMBERSHIPSERVICE, new String(out.toByteArray())));
 		}
 		pga.putServiceParam(Utils.JANUS_ORG_CLASS, orgClass);
 

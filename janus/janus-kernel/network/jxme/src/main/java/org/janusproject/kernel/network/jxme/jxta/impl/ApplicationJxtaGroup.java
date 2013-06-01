@@ -40,8 +40,8 @@ import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.message.Message;
+import org.janusproject.kernel.network.JanusNetworkConstants;
 import org.janusproject.kernel.network.jxme.jxta.JXTANetworkHandler;
-import org.janusproject.kernel.network.jxta.JanusJxtaConstants;
 
 /**
  * JXTA group associated to a whole application.
@@ -109,25 +109,25 @@ class ApplicationJxtaGroup extends JanusJXTAGroup implements DiscoveryListener {
 			Object obj;
 			while (ee.hasMoreElements()) {
 				LiteXMLElement xmle = ee.nextElement();
-				if (JanusJxtaConstants.TAG_JANUS_ORG.equals(xmle.getKey())) {
+				if (JanusNetworkConstants.TAG_JANUS_ORG.equals(xmle.getKey())) {
 					obj = xmle.getValue();
 					janusorg = (obj==null) ? null : obj.toString();
 				}
-				else if (JanusJxtaConstants.TAG_JANUS_GROUP_ID.equals(xmle.getKey())) {
+				else if (JanusNetworkConstants.TAG_JANUS_GROUP_ID.equals(xmle.getKey())) {
 					obj = xmle.getValue();
 					janusGId = (obj==null) ? null : obj.toString();
 				}
-				else if(JanusJxtaConstants.TAG_JANUS_GROUP_NAME.equals(xmle.getKey())) {
+				else if(JanusNetworkConstants.TAG_JANUS_GROUP_NAME.equals(xmle.getKey())) {
 					obj = xmle.getValue();
 					janusGroupName = (obj==null) ? null : obj.toString();
 				}
-				else if (JanusJxtaConstants.TAG_JANUS_OBTAIN_CONDITIONS.equals(xmle.getKey())) {// obtain conditions deserialization
+				else if (JanusNetworkConstants.TAG_JANUS_OBTAIN_CONDITIONS.equals(xmle.getKey())) {// obtain conditions deserialization
 
 					Enumeration<LiteXMLElement> eObtainConditions = xmle.getChildren();
 					LiteXMLElement eObtainCondition;
 					while (eObtainConditions.hasMoreElements()) {
 						eObtainCondition = eObtainConditions.nextElement();
-						if (JanusJxtaConstants.TAG_JANUS_CONDITION.equals(eObtainCondition.getKey())) {
+						if (JanusNetworkConstants.TAG_JANUS_CONDITION.equals(eObtainCondition.getKey())) {
 							in = new ByteArrayInputStream(eObtainCondition.getValue().toString().getBytes());
 							try {
 								ois = new ObjectInputStream(in);
@@ -144,13 +144,13 @@ class ApplicationJxtaGroup extends JanusJXTAGroup implements DiscoveryListener {
 					}
 
 				}
-				else if (JanusJxtaConstants.TAG_JANUS_LEAVE_CONDITIONS.equals(xmle.getKey())) {// leave conditions deserialization
+				else if (JanusNetworkConstants.TAG_JANUS_LEAVE_CONDITIONS.equals(xmle.getKey())) {// leave conditions deserialization
 
 					Enumeration<LiteXMLElement> eLeaveConditions = xmle.getChildren();
 					LiteXMLElement eLeaveCondition;
 					while (eLeaveConditions.hasMoreElements()) {
 						eLeaveCondition = eLeaveConditions.nextElement();
-						if (JanusJxtaConstants.TAG_JANUS_CONDITION.equals(eLeaveCondition.getKey())) {
+						if (JanusNetworkConstants.TAG_JANUS_CONDITION.equals(eLeaveCondition.getKey())) {
 							in = new ByteArrayInputStream(eLeaveCondition.getValue().toString().getBytes());
 							try {
 								ois = new ObjectInputStream(in);
@@ -167,7 +167,7 @@ class ApplicationJxtaGroup extends JanusJXTAGroup implements DiscoveryListener {
 					}
 
 				}
-				else if (JanusJxtaConstants.TAG_JANUS_MEMBERSHIPSERVICE.equals(xmle.getKey())) {// Membership deserialization
+				else if (JanusNetworkConstants.TAG_JANUS_MEMBERSHIPSERVICE.equals(xmle.getKey())) {// Membership deserialization
 					in = new ByteArrayInputStream(xmle.getValue().toString().getBytes());
 					try {
 						ois = new ObjectInputStream(in);

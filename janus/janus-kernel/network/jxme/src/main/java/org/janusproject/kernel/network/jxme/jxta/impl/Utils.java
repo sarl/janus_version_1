@@ -32,7 +32,7 @@ import net.jxta.id.IDFactory;
 import net.jxta.peergroup.PeerGroup;
 import net.jxta.peergroup.PeerGroupID;
 
-import org.janusproject.kernel.network.jxta.JanusJxtaConstants;
+import org.janusproject.kernel.network.JanusNetworkConstants;
 
 /** Several utilities dedicated to the JXTA support in Janus.
  * 
@@ -50,7 +50,7 @@ class Utils {
 
 	/** Identifier of the Janus features on JXTA.
 	 */
-	public static final ID JANUS_ORG_CLASS = ID.create(URI.create(PeerGroup.WK_ID_PREFIX + JanusJxtaConstants.JANUS_ORG_CLASS_ID_POSTFIX));
+	public static final ID JANUS_ORG_CLASS = ID.create(URI.create(PeerGroup.WK_ID_PREFIX + JanusNetworkConstants.JANUS_ORG_CLASS_ID_POSTFIX));
 
 	/**
 	 * Given a group name generates a Peer Group ID who's value is chosen based

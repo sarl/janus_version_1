@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2012 Janus Core Developers
+ * Copyright (C) 2010-2013 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.janusproject.kernel.network.jxta;
+package org.janusproject.kernel.network;
 
 import java.util.Collection;
 
@@ -84,6 +84,24 @@ public interface NetworkAdapter extends DistantKernelHandler {
 	 *         properly.
 	 */
 	public Status informLocalGroupRemoved(GroupAddress ga);
+
+	/**
+	 * Request the adapter to inform distant kernels that the agent was added
+	 * locally.
+	 * 
+	 * @param agentAdress
+	 * @since 1.0
+	 */
+	public void informLocalAgentAdded(AgentAddress agentAdress);
+
+	/**
+	 * Request the adapter to inform distant kernels that the agent was removed
+	 * locally.
+	 * 
+	 * @param agentAddress
+	 * @since 1.0
+	 */
+	public void informLocalAgentRemoved(AgentAddress agentAddress);
 
 	/**
 	 * Set the listener associated to this adapter.

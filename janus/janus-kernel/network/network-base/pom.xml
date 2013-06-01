@@ -8,8 +8,8 @@
 	</parent>
 	
 	<groupId>org.janus-project.kernel.network</groupId>
-	<artifactId>jxta-base</artifactId>
-	<name>JXTA Base API for Janus</name>
+	<artifactId>network-base</artifactId>
+	<name>Network Base API for Janus</name>
 	
 	<dependencies>
 		<dependency>

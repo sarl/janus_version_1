@@ -130,4 +130,20 @@ public class DefaultJxtaNetworkAdapter extends AbstractJxtaNetworkAdapter implem
 		return EmptyIterator.singleton();
 	}
 
+	/** {@inheritDoc}
+	 */
+	@Override
+	public void informLocalAgentAdded(AgentAddress agentAdress) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/** {@inheritDoc}
+	 */
+	@Override
+	public void informLocalAgentRemoved(AgentAddress agentAddress) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

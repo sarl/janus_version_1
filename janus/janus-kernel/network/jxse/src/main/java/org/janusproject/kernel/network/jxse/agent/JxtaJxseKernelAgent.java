@@ -42,8 +42,8 @@ import org.janusproject.kernel.crio.organization.Group;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.network.jxta.NetworkAdapter;
-import org.janusproject.kernel.network.jxta.NetworkListener;
+import org.janusproject.kernel.network.NetworkAdapter;
+import org.janusproject.kernel.network.NetworkListener;
 import org.janusproject.kernel.repository.RepositoryChangeEvent;
 import org.janusproject.kernel.repository.RepositoryChangeEvent.ChangeType;
 import org.janusproject.kernel.repository.RepositoryChangeListener;
@@ -114,6 +114,7 @@ public class JxtaJxseKernelAgent extends KernelAgent implements RepositoryChange
 			throw new IllegalStateException(e);
 		}
 		getGroupRepository().addRepositoryChangeListener(this);
+		getAgentRepository().addRepositoryChangeListener(this);
 		submitTaskWithFixedDelay(new GroupCleaner(),
 				EMPTY_GROUP_CLEANING_DELAY*60,
 				EMPTY_GROUP_CLEANING_DELAY*60,
@@ -149,6 +150,10 @@ public class JxtaJxseKernelAgent extends KernelAgent implements RepositoryChange
 					logger.fine(Throwables.toString(e));
 				}
 			}
+			else if (evt.getChangedObject() instanceof AgentAddress) {
+				AgentAddress adr = (AgentAddress) evt.getChangedObject();					
+				this.adapter.informLocalAgentAdded(adr);
+			}
 		}
 		else if (evt.getType() == ChangeType.REMOVE) {
 			if (evt.getChangedObject() instanceof GroupAddress) {
@@ -162,6 +167,10 @@ public class JxtaJxseKernelAgent extends KernelAgent implements RepositoryChange
 				catch (Exception e) {
 					logger.fine(Throwables.toString(e));
 				}
+			}
+			else if (evt.getChangedObject() instanceof AgentAddress) {
+				AgentAddress adr = (AgentAddress) evt.getChangedObject();					
+				this.adapter.informLocalAgentRemoved(adr);
 			}
 		}
 	}

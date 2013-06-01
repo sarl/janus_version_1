@@ -35,7 +35,7 @@ import net.jxta.platform.ModuleClassID;
 import net.jxta.platform.NetworkManager.ConfigMode;
 
 import org.janusproject.kernel.configuration.JanusProperty;
-import org.janusproject.kernel.network.jxta.JanusJxtaConstants;
+import org.janusproject.kernel.network.JanusNetworkConstants;
 
 /** Several utilities dedicated to the JXTA support in Janus.
  * 
@@ -51,7 +51,7 @@ class Utils {
 
 	/** Identifier of the Janus features on JXTA.
 	 */
-	public static final ModuleClassID JANUS_ORG_CLASS = ModuleClassID.create(URI.create(PeerGroup.WK_ID_PREFIX + JanusJxtaConstants.JANUS_ORG_CLASS_ID_POSTFIX));
+	public static final ModuleClassID JANUS_ORG_CLASS = ModuleClassID.create(URI.create(PeerGroup.WK_ID_PREFIX + JanusNetworkConstants.JANUS_ORG_CLASS_ID_POSTFIX));
 
 	/** Replies the JXTA mode from the given set of properties.
 	 * 

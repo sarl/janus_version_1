@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2011 Janus Core Developers
+ * Copyright (C) 2010-2013 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.janusproject.kernel.network.jxta;
+package org.janusproject.kernel.network;
 
 
 
@@ -30,7 +30,7 @@ package org.janusproject.kernel.network.jxta;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public interface JanusJxtaConstants {
+public interface JanusNetworkConstants {
 
 	/**
 	 * The unique PeerGroupID for the World of Janus.
@@ -41,31 +41,31 @@ public interface JanusJxtaConstants {
 	 */
 	public static final String JANUS_ORG_CLASS_ID_POSTFIX = "0010000505"; //$NON-NLS-1$
 	
-	/** Parameter name in an JXTA advertisement for the Janus features.
+	/** Parameter name in a network advertisement for the Janus features.
 	 */
 	public static final String TAG_JANUS_ORG = "JanusOrgClass"; //$NON-NLS-1$
 
-	/** Parameter name in an JXTA advertisement for the Janus group id.
+	/** Parameter name in a network advertisement for the Janus group id.
 	 */
 	public static final String TAG_JANUS_GROUP_ID = "JanusGroupId"; //$NON-NLS-1$
 
-	/** Parameter name in an JXTA advertisement for the Janus group name.
+	/** Parameter name in a network advertisement for the Janus group name.
 	 */
 	public static final String TAG_JANUS_GROUP_NAME = "JanusGroupName"; //$NON-NLS-1$
 
-	/** Parameter name in an JXTA advertisement for the entering conditions in a Janus group.
+	/** Parameter name in a network advertisement for the entering conditions in a Janus group.
 	 */
 	public static final String TAG_JANUS_OBTAIN_CONDITIONS = "obtainConditions"; //$NON-NLS-1$
 
-	/** Parameter name in an JXTA advertisement for the exiting conditions from a Janus group.
+	/** Parameter name in a network advertisement for the exiting conditions from a Janus group.
 	 */
 	public static final String TAG_JANUS_LEAVE_CONDITIONS = "leaveConditions"; //$NON-NLS-1$
 
-	/** Parameter name in an JXTA advertisement for the conditions associated to a Janus group.
+	/** Parameter name in a network advertisement for the conditions associated to a Janus group.
 	 */
 	public static final String TAG_JANUS_CONDITION = "condition"; //$NON-NLS-1$
 
-	/** Parameter name in an JXTA advertisement for the membership checker for a Janus group.
+	/** Parameter name in a network advertisement for the membership checker for a Janus group.
 	 */
 	public static final String TAG_JANUS_MEMBERSHIPSERVICE = "membership"; //$NON-NLS-1$	
 
