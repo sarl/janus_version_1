@@ -15,23 +15,17 @@
 	<properties>
 		<year>2013</year>
 		<copyrighters>Janus Core Developers</copyrighters>
-		<website>http://www.janus-project.org</website><!--  do not remove this property it is useful in the presentation message of the kernelagent -->
+		<website>http://www.janus-project.org</website><!-- do not remove this 
+			property it is useful in the presentation message of the kernelagent -->
 		<felix.main.version>4.0.3</felix.main.version>
 		<janus.version>1.0-SNAPSHOT</janus.version>
 		<janus.version.osgi>1.0.0-SNAPSHOT</janus.version.osgi>
 		<android.platform>15</android.platform>
 		<android.sdk.path>/opt/android-sdk</android.sdk.path>
 		<android.emulator.avd>acer500</android.emulator.avd>
+		<native.os>${os.name}</native.os>
 	</properties>
 
-	<!-- ======================================= -->
-	<!-- ==== Project Information === -->
-	<!-- ======================================= -->
-
-	<modules>
-		<module>janus-kernel</module>
-		<module>janus-extras</module>
-	</modules>
 	<profiles>
 		<profile>
 			<id>default-profile</id>
@@ -44,7 +38,27 @@
 				<module>janus-demos</module>
 			</modules>
 		</profile>
+		<profile>
+			<id>Windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<properties>
+				<native.os>Windows</native.os>
+			</properties>
+		</profile>
 	</profiles>
+
+	<!-- ======================================= -->
+	<!-- ==== Project Information === -->
+	<!-- ======================================= -->
+
+	<modules>
+		<module>janus-kernel</module>
+		<module>janus-extras</module>
+	</modules>
 
 	<organization>
 		<name>Janus Platform Consortium</name>
@@ -414,8 +428,7 @@
 				<plugin>
 					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
-					<!-- For Android 3.2 -->
-					<version>3.2.0</version>
+					<version>3.6.0</version>
 				</plugin>
 
 				<!-- This plugin's configuration is used to store Eclipse m2e settings 
@@ -466,6 +479,20 @@
 										<goals>
 											<goal>manifest</goal>
 											<goal>bundle</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute />
+									</action>
+								</pluginExecution>
+
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+										<artifactId>android-maven-plugin</artifactId>
+										<versionRange>[0.1-SNAPSHOT,)</versionRange>
+										<goals>
+											<goal>manifest-update</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
@@ -598,7 +625,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel.network</groupId>
-				<artifactId>jxta-base</artifactId>
+				<artifactId>network-base</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
@@ -609,6 +636,11 @@
 			<dependency>
 				<groupId>org.janus-project.kernel.network</groupId>
 				<artifactId>jxme</artifactId>
+				<version>${janus.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.janus-project.kernel.network</groupId>
+				<artifactId>zeromq</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
@@ -738,6 +770,12 @@
 				<groupId>org.arakhne.afc</groupId>
 				<artifactId>arakhneVmutils</artifactId>
 				<version>7.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.arakhne.afc</groupId>
+				<artifactId>arakhneText</artifactId>
+				<version>4.2</version>
 			</dependency>
 
 			<dependency>
@@ -880,18 +918,31 @@
 				<artifactId>easymock</artifactId>
 				<version>3.1</version>
 			</dependency>
-			
+
 			<!-- *****************JACKSON************ -->
-			  <dependency>
-				   <groupId>org.codehaus.jackson</groupId>
-				   <artifactId>jackson-mapper-asl</artifactId>
-				   <version>1.9.11</version>
-			  </dependency>
-		   
 			<dependency>
-			  <groupId>de.undercouch</groupId>
-			  <artifactId>bson4jackson</artifactId>
-			  <version>1.3.0</version>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-mapper-asl</artifactId>
+				<version>1.9.11</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.undercouch</groupId>
+				<artifactId>bson4jackson</artifactId>
+				<version>1.3.0</version>
+			</dependency>
+
+			<!-- *****************ZEROMQ************ -->
+			<dependency>
+				<groupId>org.zeromq</groupId>
+				<artifactId>jzmq</artifactId>
+				<version>2.2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.zeromq</groupId>
+				<artifactId>jzmq</artifactId>
+				<classifier>native-${os.arch}-${native.os}-null-null</classifier>
+				<version>2.2.0</version>
 			</dependency>
 
 			<!-- ********** ** JDOM ** ********** -->
@@ -932,7 +983,7 @@
 			<dependency>
 				<groupId>com.google.android</groupId>
 				<artifactId>android</artifactId>
-				<version>4.0.1.2</version>
+				<version>4.1.1.4</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -1146,23 +1197,24 @@
 			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
-		    <name>Boris Feld</name>
-		    <email>lothiraldan@gmail.com</email>
-		    <properties>
-		        <id>bfeld</id>
-		        <contributions>ZeroMQ network layer, json and bson acl encoder
-		            and FIPA propose protocol</contributions>
-		    </properties>
-		    <roles>
-		        <role>Contributor</role>
-		    </roles>
-		    <organization>
+			<name>Boris Feld</name>
+			<email>lothiraldan@gmail.com</email>
+			<properties>
+				<id>bfeld</id>
+				<contributions>ZeroMQ network layer, json and bson acl encoder
+					and
+					FIPA propose protocol</contributions>
+			</properties>
+			<roles>
+				<role>Contributor</role>
+			</roles>
+			<organization>
 		        Computer Science Department,
 		        Universit&amp;eacute; de
 		        Technologie de
 		        Belfort-Montba&amp;eacute;liard
 		    </organization>
-		    <organizationUrl>http://www.utbm.fr</organizationUrl>
+			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
 			<name>Robin Geffroy</name>
@@ -1183,22 +1235,22 @@
 			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
-		    <name>Nicolas Grenie</name>
-		    <email>nicolas.grenie@utbm.fr</email>
-		    <properties>
-		        <id>ngrenie</id>
-		        <contributions>Json and bson acl encoder and FIPA propose protocol.</contributions>
-		    </properties>
-		    <roles>
-		        <role>Contributor</role>
-		    </roles>
-		    <organization>
+			<name>Nicolas Grenie</name>
+			<email>nicolas.grenie@utbm.fr</email>
+			<properties>
+				<id>ngrenie</id>
+				<contributions>Json and bson acl encoder and FIPA propose protocol.</contributions>
+			</properties>
+			<roles>
+				<role>Contributor</role>
+			</roles>
+			<organization>
 		        Computer Science Department,
 		        Universit&amp;eacute; de
 		        Technologie de
 		        Belfort-Montba&amp;eacute;liard
 		    </organization>
-		    <organizationUrl>http://www.utbm.fr</organizationUrl>
+			<organizationUrl>http://www.utbm.fr</organizationUrl>
 		</contributor>
 		<contributor>
 			<name>Florian Lacreuse</name>

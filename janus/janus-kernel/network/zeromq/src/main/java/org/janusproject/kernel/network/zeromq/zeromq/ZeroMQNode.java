@@ -1,3 +1,23 @@
+/* 
+ * $Id$
+ * 
+ * Janus platform is an open-source multiagent platform.
+ * More details on <http://www.janus-project.org>
+ * Copyright (C) 2012-2013 Janus Core Developers
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.janusproject.kernel.network.zeromq.zeromq;
 
 import java.io.IOException;
@@ -7,16 +27,16 @@ import java.io.Writer;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
+import org.arakhne.vmutil.MACNumber;
+import org.arakhne.vmutil.locale.Locale;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.janusproject.kernel.address.AgentAddress;
@@ -26,209 +46,285 @@ import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.network.jxta.NetworkListener;
+import org.janusproject.kernel.network.NetworkListener;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Poller;
 import org.zeromq.ZMQ.Socket;
 import org.zeromq.ZMQException;
 
+/** Description of a ZeroMQ node.
+ * 
+ * @author $Author: bfeld$
+ * @author $Author: sgalland$
+ * @version $Name$ $Revision$ $Date$
+ * @mavengroupid $GroupId$
+ * @mavenartifactid $ArtifactId$
+ */
 public class ZeroMQNode {
 	// Node infos
-	UUID id;
+	private UUID id = null;
 
 	// UDP Broadcasting
-	InetAddress group;
-	MulticastSocket udp_listener;
+	private InetAddress multicastGroup = null;
+	private MulticastSocket udpListener = null;
 
 	// ZMQ Part
-	Context context;
-	Poller poller;
-	Socket pub_socket;
-	Integer pub_port;
-	Socket sub_socket;
-	Socket server_socket;
-	Integer server_port;
+	private Context context = null;
+	private Poller poller = null;
+	private Socket pubSocket = null;
+	private Integer pubPort = null;
+	private Socket serverSocket = null;
+	private Integer serverPort = null;
+	private Socket subSocket = null;
 
-	Integer sub_pollin_id;
-	Integer server_pollin_id;
+	private Integer subPollinId = null;
+	private Integer serverPollinId = null;
 
 	// Logging
-	Logger logger;
+	private Logger logger = null;
 
-	boolean ready = false;
+	private final AtomicBoolean ready = new AtomicBoolean(false);
 
-	private NetworkListener listener;
+	private NetworkListener listener = null;
 
-	private String appName;
+	private String applicationName = null;
 
-	public void init(AgentAddress kernelAddress) {
-
+	/**
+	 * Initialize a zeromq node.
+	 * 
+	 * @param kernelAddress is the address of the Janus kernel that is owning this node.
+	 * @param multicastGroupAddress is the address of the multicast group to join.
+	 * @throws IOException
+	 */
+	public void init(AgentAddress kernelAddress, InetAddress multicastGroupAddress) throws IOException {
 		// Node infos
 		this.id = kernelAddress.getUUID();
+		this.multicastGroup = multicastGroupAddress;
+
+		// UDP Broadcasting
+		this.udpListener = new MulticastSocket(1600);
+		this.udpListener.joinGroup(this.multicastGroup);
+		this.udpListener.setSoTimeout(1);
 
 		// Logger
 		this.logger = Logger.getLogger(this.id.toString());
-
-		// UDP Broadcasting
-		try {
-			this.group = InetAddress.getByName("237.252.249.227");
-			this.udp_listener = new MulticastSocket(1600);
-			this.udp_listener.joinGroup(this.group);
-			this.udp_listener.setSoTimeout(1);
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			System.exit(1);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
 
 		// ZMQ
 		this.context = ZMQ.context(1);
 
 		try {
-			this.pub_socket = this.context.socket(ZMQ.PUB);
-			this.pub_port = this.pub_socket.bindToRandomPort("tcp://*");
-			this.server_socket = this.context.socket(ZMQ.ROUTER);
-			this.server_port = this.server_socket.bindToRandomPort("tcp://*");
-			this.sub_socket = this.context.socket(ZMQ.SUB);
+			this.pubSocket = this.context.socket(ZMQ.PUB);
+			this.pubPort = this.pubSocket.bindToRandomPort("tcp://*"); //$NON-NLS-1$
+			this.serverSocket = this.context.socket(ZMQ.ROUTER);
+			this.serverPort = this.serverSocket.bindToRandomPort("tcp://*"); //$NON-NLS-1$
+			this.subSocket = this.context.socket(ZMQ.SUB);
 
 			// Set sockets identity
-			this.pub_socket.setIdentity(this.id.toString().getBytes());
-			this.server_socket.setIdentity(this.id.toString().getBytes());
-			this.sub_socket.setIdentity(this.id.toString().getBytes());
+			this.pubSocket.setIdentity(this.id.toString().getBytes());
+			this.serverSocket.setIdentity(this.id.toString().getBytes());
+			this.subSocket.setIdentity(this.id.toString().getBytes());
 		} catch (ZMQException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
 
-		this.poller = context.poller(2);
-		this.sub_pollin_id = this.poller.register(this.sub_socket,
+		this.poller = new Poller(2);
+		this.subPollinId = this.poller.register(this.subSocket,
 				Poller.POLLIN);
-		this.server_pollin_id = this.poller.register(this.server_socket,
+		this.serverPollinId = this.poller.register(this.serverSocket,
 				Poller.POLLIN);
 	}
 
-	private Map<String, Object> register_infos() {
+	/**
+	 * Destroy a zeromq node and reset its properties.
+	 * 
+	 * @throws IOException
+	 */
+	public void destroy() throws IOException {
+		this.subPollinId = null;
+		this.serverPollinId = null;
+		this.poller.unregister(this.serverSocket);
+		this.poller = null;
+
+		this.subSocket.close();
+		this.subSocket = null;
+		this.serverPort = null;
+		this.serverSocket.close();
+		this.serverSocket = null;
+		this.pubPort = null;
+		this.pubSocket.close();
+		this.pubSocket = null;
+		
+		this.context.close();
+		this.context = null;
+
+		this.udpListener.leaveGroup(this.multicastGroup);
+		this.udpListener.close();
+		this.udpListener = null;
+
+		this.logger = null;
+
+		this.multicastGroup = null;
+		this.id = null;
+	}
+
+	private Map<String, Object> getRegistrationInfos() {
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("id", this.id);
-		data.put("pub_port", this.pub_port);
-		data.put("server_port", this.server_port);
+		data.put("id", this.id); //$NON-NLS-1$
+		data.put("pub_port", this.pubPort); //$NON-NLS-1$
+		data.put("server_port", this.serverPort); //$NON-NLS-1$
 		return data;
 	}
 
-	public void register() {
-		System.out.println("Register");
-		if(this.appName != null) {
-			this.sub_socket.subscribe(this.appName.getBytes());
+	/** Register this node other the network.
+	 * 
+	 * @throws IOException
+	 */
+	public void register() throws IOException {
+		if(this.applicationName != null && !this.applicationName.isEmpty()) {
+			this.subSocket.subscribe(this.applicationName.getBytes());
 		}
+
 		byte[] buf = null;
 		DatagramPacket packet;
-		logger.info("Send " + fromMap(register_infos()));
-		buf = fromMap(register_infos()).getBytes();
-		packet = new DatagramPacket(buf, buf.length, this.group, 1600);
+		this.logger.info(Locale.getString("SEND", fromMap(getRegistrationInfos()))); //$NON-NLS-1$
+		buf = fromMap(getRegistrationInfos()).getBytes();
+		packet = new DatagramPacket(buf, buf.length, this.multicastGroup, 1600);
 
-		try {
-			udp_listener.send(packet);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		this.udpListener.send(packet);
 
-		ready = true;
+		this.ready.set(true);
 	}
 
-	private void process_register(Map<String, Object> data, String hostname,
-			boolean reply) {
-		if (((String) data.get("id")).equals(this.id.toString())) {
-			logger.info("Get our own register packet");
+	/** Unregister this node other the network.
+	 * 
+	 * @throws IOException
+	 */
+	public void unregister() throws IOException {
+		this.ready.set(false);
+
+		//TODO: send unregistration other the multicast group
+		/*byte[] buf = null;
+		DatagramPacket packet;
+		this.logger.info(Locale.getString("SEND", fromMap(getRegistrationInfos()))); //$NON-NLS-1$
+		buf = fromMap(getRegistrationInfos()).getBytes();
+		packet = new DatagramPacket(buf, buf.length, this.multicastGroup, 1600);
+
+		this.udpListener.send(packet);*/
+
+		if(this.applicationName != null && !this.applicationName.isEmpty()) {
+			this.subSocket.unsubscribe(this.applicationName.getBytes());
+		}
+
+	}
+
+	private void processRegistration(Map<String, Object> data, String hostname,
+			boolean reply) throws IOException {
+		if (((String) data.get("id")).equals(this.id.toString())) { //$NON-NLS-1$
+			this.logger.warning(Locale.getString("MYSELF_REGISTRATION_PACK")); //$NON-NLS-1$
 			return;
 		}
-		logger.info("Get register packet " + data.toString());
+		this.logger.info(Locale.getString("REGISTRATION_PACK", data)); //$NON-NLS-1$
 
-		this.connect_sub_socket(data, hostname);
+		connectSubSocket(data, hostname);
 
 		if (reply) {
-			this.send_register_to(data, hostname);
+			sendRegistrationTo(data, hostname);
 		}
 
 	}
 
-	private void connect_sub_socket(Map<String, Object> data, String hostname) {
-		String pub_address = String.format("tcp://%s:%s", hostname,
-				(Integer) data.get("pub_port"));
-		logger.info("Connect sub socket to " + pub_address);
-		this.sub_socket.connect(pub_address);
+	private void connectSubSocket(Map<String, Object> data, String hostname) {
+		String pubAddress = String.format("tcp://%s:%s", hostname, //$NON-NLS-1$
+				data.get("pub_port")); //$NON-NLS-1$
+		this.logger.info(Locale.getString("CONNECT_SUBSOCKET", pubAddress)); //$NON-NLS-1$
+		this.subSocket.connect(pubAddress);
 	}
 
-	private void send_register_to(Map<String, Object> data, String hostname) {
-		String server_address = String.format("tcp://%s:%s", hostname,
-				(Integer) data.get("server_port"));
+	private static InetAddress getPrimaryIP() throws IOException {
+		for(InetAddress adr : MACNumber.getPrimaryAdapterAddresses()) {
+			return adr;
+		}
+		return InetAddress.getLocalHost();
+	}
+
+	private void sendRegistrationTo(Map<String, Object> data, String hostname) throws IOException {
+		String serverAddress = String.format("tcp://%s:%s", hostname, //$NON-NLS-1$
+				data.get("server_port")); //$NON-NLS-1$
 		Socket client = this.context.socket(ZMQ.DEALER);
-		logger.info("Send register info to " + server_address);
-		client.connect(server_address);
+		try {
+			this.logger.info(Locale.getString("SEND_REGISTRATION", serverAddress)); //$NON-NLS-1$
+			client.connect(serverAddress);
 
-		// Register info
-		Map<String, Object> infos = this.register_infos();
-		// TODO: Find correct local address
-		infos.put("address", "127.0.0.1");
+			// Register info
+			Map<String, Object> infos = this.getRegistrationInfos();
+			infos.put("address", getPrimaryIP()); //$NON-NLS-1$
 
-		// Send packet
-		client.send("".getBytes(), ZMQ.SNDMORE);
-		client.send("register".getBytes(), ZMQ.SNDMORE);
-		client.send(fromMap(infos).getBytes(), 0);
+			// Send packet
+			client.send("".getBytes(), ZMQ.SNDMORE); //$NON-NLS-1$
+			client.send("register".getBytes(), ZMQ.SNDMORE); //$NON-NLS-1$
+			client.send(fromMap(infos).getBytes(), 0);
+		}
+		finally {
+			client.close();
+		}
 	}
 
+	/** Run the ZeroMQ node behavior.
+	 */
 	public void run() {
 
-		if (!ready) {
+		if (!this.ready.get()) {
 			return;
 		}
 
-		receive_udp();
+		try {
+			receiveUDP();
 
-		byte[] message;
-		// Poll ZMQ sockets
-		// TODO: Change unit depending on ZEROMQ version
-		this.poller.poll(2000);
+			byte[] message;
+			// Poll ZMQ sockets
+			// TODO: Change unit depending on ZEROMQ version
+			this.poller.poll(2000);
 
-		// Sub socket
-		if (this.poller.pollin(this.sub_pollin_id)) {
-			String dest = new String(this.sub_socket.recv(0));
-			String message_type = new String(this.sub_socket.recv(0));
-			message = this.sub_socket.recv(0);
-			this.process_sub_message(dest, message_type, message);
-		}
-		// Server socket
-		if (this.poller.pollin(this.server_pollin_id)) {
-			message = this.server_socket.recv(0);
-			this.logger.info("Get message from server " + message);
-			if (new String(message).equals("")) {
-				this.logger.info("Null message");
-				String message_type = new String(this.server_socket.recv(0));
+			// Sub socket
+			if (this.poller.pollin(this.subPollinId)) {
+				String dest = new String(this.subSocket.recv(0));
+				String message_type = new String(this.subSocket.recv(0));
+				message = this.subSocket.recv(0);
+				this.processSubMessage(dest, message_type, message);
+			}
+			// Server socket
+			if (this.poller.pollin(this.serverPollinId)) {
+				message = this.serverSocket.recv(0);
+				this.logger.info(Locale.getString("GET_MESSAGE", message)); //$NON-NLS-1$
+				if ("".equals(new String(message))) { //$NON-NLS-1$
+					String messageType = new String(this.serverSocket.recv(0));
+					this.logger.info(Locale.getString("MESSAGE_TYPE", messageType)); //$NON-NLS-1$
 
-				this.logger.info("Message type " + message_type);
-
-				if (message_type.equals("register")) {
-					Map<String, Object> payload = fromBytes(this.server_socket
-							.recv(0));
-					this.process_register(payload,
-							(String) payload.get("address"), false);
+					if ("register".equals(messageType)) { //$NON-NLS-1$
+						Map<String, Object> payload = fromBytes(this.serverSocket
+								.recv(0));
+						processRegistration(payload,
+								(String) payload.get("address"), false); //$NON-NLS-1$
+					}
 				}
 			}
 		}
+		catch(IOException e) {
+			this.logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
 
 	}
 
-	private void receive_udp() {
+	private void receiveUDP() throws IOException {
 		boolean interupted = false;
 
 		// Receive udp
 		byte[] buf = new byte[1000];
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		try {
-			this.udp_listener.receive(packet);
+			this.udpListener.receive(packet);
 		} catch (InterruptedIOException e) {
 			interupted = true;
 		} catch (IOException e) {
@@ -238,40 +334,40 @@ public class ZeroMQNode {
 
 		if (!interupted) {
 			// Process udp packet
-			this.process_register(fromBytes(buf), packet.getAddress()
+			processRegistration(fromBytes(buf), packet.getAddress()
 					.getCanonicalHostName(), true);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	private void process_sub_message(String dest, String message_type,
-			byte[] data) {
-		this.logger.info("Process sub message to  " + dest + " " + message_type
-				+ "/" + data);
-		if (message_type.equals("localGroupCreated")) {
+	private void processSubMessage(String dest, String messageType,
+			byte[] data) throws IOException {
+		this.logger.info(Locale.getString("PROCESS_SUBMESSAGE", dest, messageType, data)); //$NON-NLS-1$
+		if ("localGroupCreated".equals(messageType)) { //$NON-NLS-1$
 			Map<String, Object> message = fromBytes(data);
-			String organizationClass = (String) message.get("organization");
-			UUID uuid = UUID.fromString((String) message.get("groupId"));
-			String groupName = (String) message.get("groupName");
+			String organizationClass = (String) message.get("organization"); //$NON-NLS-1$
+			UUID uuid = UUID.fromString((String) message.get("groupId")); //$NON-NLS-1$
+			String groupName = (String) message.get("groupName"); //$NON-NLS-1$
 			Collection<? extends GroupCondition> obtainConditions = (Collection<? extends GroupCondition>) message
-					.get("obtainConditions");
+					.get("obtainConditions"); //$NON-NLS-1$
 			Collection<? extends GroupCondition> leaveConditions = (Collection<? extends GroupCondition>) message
-					.get("leaveConditions");
-			Boolean persistence = (Boolean) message.get("persistent");
+					.get("leaveConditions"); //$NON-NLS-1$
+			Boolean persistence = (Boolean) message.get("persistent"); //$NON-NLS-1$
 			MembershipService membership = (MembershipService) SerializationUtil
-					.decode((String) message.get("membership"));
+					.decode((String) message.get("membership")); //$NON-NLS-1$
 			try {
-				this.informDistantGroupDiscovered(organizationClass, uuid,
+				informDistantGroupDiscovered(organizationClass, uuid,
 						groupName, obtainConditions, leaveConditions,
 						persistence, membership);
-				this.logger.info("Inform distant group discovered ok");
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				this.logger.info(Locale.getString("DISTANT_GROUP_DISCOVERED", uuid)); //$NON-NLS-1$
 			}
-		} else if (message_type.equals("broadcast")) {
+			catch (ClassNotFoundException e) {
+				this.logger.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			}
+		}
+		else if ("broadcast".equals(messageType)) { //$NON-NLS-1$
 			Message m = (Message) SerializationUtil.decode(new String(data));
-			this.logger.info("Get broadcast message : " + m);
+			this.logger.info(Locale.getString("RECEIVE_BROADCAST_MESSAGE", m)); //$NON-NLS-1$
 			if (m.getReceiver() instanceof RoleAddress) {
 				RoleAddress address = m.getReceiver();
 				Class<? extends Role> receiverRole = address.getRole();
@@ -281,65 +377,90 @@ public class ZeroMQNode {
 		}
 	}
 
-	public void publish(String dest, String message_type, byte[] data) {
-		this.logger.info(String.format("Publish %s with data %s to %s",
-				message_type, new String(data), dest));
-		this.pub_socket.send(dest.getBytes(), ZMQ.SNDMORE);
-		this.pub_socket.send(message_type.getBytes(), ZMQ.SNDMORE);
-		this.pub_socket.send(data, 0);
-	}
-	
-	public void applicationPublish(String message_type, Map<String, Object> data) {
-		this.publish(this.appName, message_type, data);
+	/** Publish the given data on the socket of the given dest.
+	 * 
+	 * @param dest is the identifier of the dest.
+	 * @param messageType
+	 * @param data
+	 */
+	public void publish(UUID dest, String messageType, byte[] data) {
+		publish(dest.toString(), messageType, data);
 	}
 
-	public void publish(String dest, String message_type,
-			Map<String, Object> data) {
-		this.publish(dest, message_type, fromMap(data).getBytes());
+	private void publish(String dest, String messageType, byte[] data) {
+		this.logger.info(
+				Locale.getString("PUBLISH", messageType, new String(data), dest)); //$NON-NLS-1$
+		this.pubSocket.send(dest.toString().getBytes(), ZMQ.SNDMORE);
+		this.pubSocket.send(messageType.getBytes(), ZMQ.SNDMORE);
+		this.pubSocket.send(data, 0);
+	}
+
+	/** Publish the given data on the application socket.
+	 * 
+	 * @param messageType
+	 * @param data
+	 * @throws IOException
+	 */
+	public void publishToApplication(String messageType, Map<String, Object> data) throws IOException {
+		publish(this.applicationName, messageType, fromMap(data).getBytes());
+	}
+
+	/** Publish the given data to the given dest.
+	 * 
+	 * @param dest
+	 * @param messageType
+	 * @param data
+	 * @throws IOException
+	 */
+	public void publish(String dest, String messageType, Map<String, Object> data) throws IOException {
+		publish(dest, messageType, fromMap(data).getBytes());
+	}
+
+	/** Subscribe to the sub socket associated to the specified agent address.
+	 *  
+	 * @param agentAddress
+	 */
+	public void subscribe(UUID agentAddress) {
+		this.logger.info(Locale.getString("SUBSCRIBE_TO", agentAddress)); //$NON-NLS-1$
+		this.subSocket.subscribe(agentAddress.toString()
+				.getBytes());
+	}
+
+	/** Unsubscribe to the socket associated to the specified agent address.
+	 *  
+	 * @param agentAddress
+	 */
+	public void unsubscribe(UUID agentAddress) {
+		this.logger.info(Locale.getString("UNSUBSCRIBE_TO", agentAddress)); //$NON-NLS-1$
+		this.subSocket.unsubscribe(agentAddress.toString()
+				.getBytes());
 	}
 
 	// Encoding/Decoding utils
-	private String fromMap(Map<String, Object> m) {
+	private static String fromMap(Map<String, Object> m) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		Writer strWriter = new StringWriter();
 		try {
 			mapper.writeValue(strWriter, m);
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		finally {
+			strWriter.close();
 		}
 		return strWriter.toString();
 	}
 
-	private Map<String, Object> fromBytes(byte[] byteMsg) {
+	private static Map<String, Object> fromBytes(byte[] byteMsg) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		try {
-			return mapper.readValue(byteMsg,
-					new TypeReference<Map<String, Object>>() {
-					});
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		return mapper.readValue(byteMsg, new TypeReferenceImpl());
 	}
 
 	// Connection with listener
 
+	/** Set the listener to notify when a network event occurs.
+	 * 
+	 * @param listener
+	 */
 	public void setNetworkAdapterListener(NetworkListener listener) {
-		System.out.println("Set listener " + listener);
 		this.listener = listener;
 	}
 
@@ -356,10 +477,10 @@ public class ZeroMQNode {
 	 *            are the conditions to enter in the distant group.
 	 * @param leaveConditions
 	 *            are the conditions to leave from the distant group.
+	 * @param persistence indicates if the group may be persistent. A <code>null</code>
+	 * value indicates to use the default configuration.
 	 * @param membership
 	 *            is the membership checker of the distant group.
-	 * @param advertisement
-	 *            is the JXTA advertisement.
 	 * @throws ClassNotFoundException
 	 */
 	@SuppressWarnings("unchecked")
@@ -368,7 +489,7 @@ public class ZeroMQNode {
 			Collection<? extends GroupCondition> obtainConditions,
 			Collection<? extends GroupCondition> leaveConditions,
 			Boolean persistence, MembershipService membership)
-			throws ClassNotFoundException {
+					throws ClassNotFoundException {
 		if (this.listener != null) {
 			Class<? extends Organization> org = (Class<? extends Organization>) Class
 					.forName(organizationClass);
@@ -377,7 +498,30 @@ public class ZeroMQNode {
 		}
 	}
 
-	public void setAppName(String appName) {
-		this.appName = appName;
+	/** Change the name of the application supported by this node.
+	 * 
+	 * @param appName
+	 */
+	public void setApplicationName(String appName) {
+		this.applicationName = appName;
 	}
+
+	/** Description of a ZeroMQ node.
+	 * 
+	 * @author $Author: bfeld$
+	 * @author $Author: sgalland$
+	 * @version $Name$ $Revision$ $Date$
+	 * @mavengroupid $GroupId$
+	 * @mavenartifactid $ArtifactId$
+	 */
+	private static class TypeReferenceImpl extends TypeReference<Map<String, Object>> {
+
+		/**
+		 */
+		public TypeReferenceImpl() {
+			//
+		}
+
+	}
+
 }

@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2011-12 Janus Core Developers
+ * Copyright (C) 2012-2013 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,9 +35,9 @@ import org.janusproject.kernel.message.Message;
 
 /**
  * Interface linking the JXTA network linking the JXTA Network adapter with 
- * the rest of the JXTA implementation
+ * the rest of the JXTA implementation.
  * 
- * @author $Author: ngaud$
+ * @author $Author: bfeld$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
@@ -73,7 +73,6 @@ public interface ZeroMQNetworkHandler extends EventListener {
 	 * @param obtainConditions are the conditions to enter in the distant group.
 	 * @param leaveConditions are the conditions to leave from the distant group.
 	 * @param membership describes how the distant group accept members.
-	 * @param advertisement is the JXTA advertisement.
 	 * @throws ClassNotFoundException
 	 */
 	public void informDistantGroupDiscovered(String organization, UUID groupId, String groupName, Collection<? extends GroupCondition> obtainConditions, Collection<? extends GroupCondition> leaveConditions, MembershipService membership) throws ClassNotFoundException;

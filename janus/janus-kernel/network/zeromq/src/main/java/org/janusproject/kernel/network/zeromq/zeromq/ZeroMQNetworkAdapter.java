@@ -1,10 +1,34 @@
+/* 
+ * $Id$
+ * 
+ * Janus platform is an open-source multiagent platform.
+ * More details on <http://www.janus-project.org>
+ * Copyright (C) 2012-2013 Janus Core Developers
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.janusproject.kernel.network.zeromq.zeromq;
 
+import java.io.IOException;
+import java.net.InetAddress;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.arakhne.vmutil.locale.Locale;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.configuration.JanusProperties;
@@ -15,62 +39,70 @@ import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.network.jxta.NetworkAdapter;
-import org.janusproject.kernel.network.jxta.NetworkListener;
+import org.janusproject.kernel.network.NetworkAdapter;
+import org.janusproject.kernel.network.NetworkListener;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;
+import org.janusproject.kernel.util.sizediterator.EmptyIterator;
 import org.janusproject.kernel.util.sizediterator.SizedIterator;
 
+/** Object that is listening on the networking events from the local kernels
+ * to notify the distant kernels.
+ * 
+ * @author $Author: bfeld$
+ * @author $Author: sgalland$
+ * @version $Name$ $Revision$ $Date$
+ * @mavengroupid $GroupId$
+ * @mavenartifactid $ArtifactId$
+ */
 public class ZeroMQNetworkAdapter implements NetworkAdapter {
 
-	ZeroMQNode node;
-	private Logger logger;
+	private final ZeroMQNode node;
+	private final Logger logger;
 	private JanusProperties janusProperties = null;
 
+	/**
+	 * @param node is the zeromq node associated to this object.
+	 */
 	public ZeroMQNetworkAdapter(ZeroMQNode node) {
 		super();
 		this.node = node;
-		this.logger = Logger.getLogger("ZeroMQAdapter");
+		this.logger = Logger.getLogger("ZeroMQAdapter"); //$NON-NLS-1$
 	}
 
 	@Override
 	public SizedIterator<AgentAddress> getRemoteKernels() {
-		// TODO Auto-generated method stub
-		return null;
+		this.logger.log(Level.SEVERE, Locale.getString("UNSUPPORTED_ACTION", "getRemoteKernels"));  //$NON-NLS-1$//$NON-NLS-2$
+		return EmptyIterator.singleton();
 	}
 
 	@Override
 	public void informLocalRoleTaken(GroupAddress groupAddress,
 			Class<? extends Role> role, AgentAddress agentAddress) {
-		this.node.logger.info("Agent " + agentAddress + " has take "
-				+ role.getName());
+		this.logger.log(Level.SEVERE, Locale.getString("UNSUPPORTED_ACTION", "informLocalRoleTaken"));  //$NON-NLS-1$//$NON-NLS-2$
 	}
 
 	@Override
 	public void informLocalRoleReleased(GroupAddress groupAddress,
 			Class<? extends Role> role, AgentAddress agentAddress) {
-		this.node.sub_socket.unsubscribe(agentAddress.getUUID().toString()
-				.getBytes());
+		this.node.unsubscribe(agentAddress.getUUID());
 
 	}
 
 	@Override
 	public Address sendMessage(Message message) {
-		this.logger.info("Send message: " + message);
-		this.node.publish(message.getReceiver().getUUID().toString(),
-				"message", SerializationUtil.encode(message).getBytes());
+		this.node.publish(message.getReceiver().getUUID(),
+				"message", SerializationUtil.encode(message).getBytes()); //$NON-NLS-1$
 		return null;
 	}
 
 	@Override
 	public void broadcastMessage(Message message) {
 		Address adr = message.getSender();
-		this.logger.info("Message :" + message.getClass());
 		if (adr instanceof RoleAddress) {
 			GroupAddress group = ((RoleAddress) adr).getGroup();
-			this.logger.info("Broadcast message : " + message + " to "
-					+ group.getUUID().toString());
-			this.node.publish(group.getUUID().toString(), "broadcast",
+			this.logger.info(Locale.getString("BROADCAST_MESSAGE", message, group.getUUID())); //$NON-NLS-1$
+			this.node.publish(group.getUUID(), "broadcast", //$NON-NLS-1$
 					SerializationUtil.encode(message).getBytes());
 		}
 	}
@@ -78,16 +110,17 @@ public class ZeroMQNetworkAdapter implements NetworkAdapter {
 	@Override
 	public void initializeNetwork(AgentAddress kernelAddress,
 			JanusProperties properties) throws Exception {
-		// TODO Auto-generated method stub
-		System.out.println("Initialize network");
-		this.node.init(kernelAddress);
+		this.logger.info(Locale.getString("INITIALIZE_NETWORK")); //$NON-NLS-1$
+		String strAdr = properties.getProperty(JanusProperty.ZEROMQ_MULICAT_GROUP_ADDRESS);
+		InetAddress groupAdr = InetAddress.getByName(strAdr);
+		this.node.init(kernelAddress, groupAdr);
 		this.node.register();
 	}
 
 	@Override
 	public void shutdownNetwork() throws Exception {
-		// TODO Auto-generated method stub
-
+		this.node.unregister();
+		this.node.destroy();
 	}
 
 	@Override
@@ -95,42 +128,44 @@ public class ZeroMQNetworkAdapter implements NetworkAdapter {
 			Collection<? extends GroupCondition> obtainConditions,
 			Collection<? extends GroupCondition> leaveConditions,
 			MembershipService membership) {
-		this.logger.info("new group " + ga.getUUID() + " : " + ga.getName());
+		this.logger.info(Locale.getString("NEW_GROUP", ga.getUUID(), ga.getName())); //$NON-NLS-1$
 		// Register to group address
-		this.node.logger.info("Subscribe to: " + ga.getUUID().toString());
-		this.node.sub_socket.subscribe(ga.getUUID().toString().getBytes());
+		this.node.subscribe(ga.getUUID());
 
 		// Send created group on network
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("organization", ga.getOrganization());
-		data.put("groupId", ga.getUUID());
-		data.put("groupName", ga.getName());
-		data.put("obtainConditions", obtainConditions);
-		data.put("leaveConditions", leaveConditions);
-		data.put("membership", SerializationUtil.encode(membership));
-		data.put("persistent", Boolean.valueOf(this.janusProperties
+		data.put("organization", ga.getOrganization()); //$NON-NLS-1$
+		data.put("groupId", ga.getUUID()); //$NON-NLS-1$
+		data.put("groupName", ga.getName()); //$NON-NLS-1$
+		data.put("obtainConditions", obtainConditions); //$NON-NLS-1$
+		data.put("leaveConditions", leaveConditions); //$NON-NLS-1$
+		data.put("membership", SerializationUtil.encode(membership)); //$NON-NLS-1$
+		data.put("persistent", Boolean.valueOf(this.janusProperties //$NON-NLS-1$
 				.getProperty(JanusProperty.GROUP_PERSISTENCE)));
-		this.node.applicationPublish("localGroupCreated", data);
-		this.node.sub_socket.subscribe(ga.getUUID().toString().getBytes());
-		return StatusFactory.ok("ok");
+		try {
+			this.node.publishToApplication("localGroupCreated", data); //$NON-NLS-1$
+		}
+		catch (IOException e) {
+			return StatusFactory.error(this, e.getLocalizedMessage(), e);
+		}
+		return StatusFactory.ok(this);
 	}
 
 	@Override
 	public Status informLocalGroupRemoved(GroupAddress ga) {
-		this.node.sub_socket.unsubscribe(ga.getUUID().toString().getBytes());
-		return StatusFactory.ok("ok");
+		this.node.unsubscribe(ga.getUUID());
+		return StatusFactory.ok(this);
 	}
 
 	@Override
 	public void setNetworkAdapterListener(NetworkListener listener) {
-		System.out.println(listener);
 		this.node.setNetworkAdapterListener(listener);
 	}
 
 	@Override
 	public void setJanusProperties(JanusProperties properties) {
 		this.janusProperties = properties;
-		this.node.setAppName(properties.getProperty(JanusProperty.JANUS_APPLICATION_NAME));
+		this.node.setApplicationName(properties.getProperty(JanusProperty.JANUS_APPLICATION_NAME));
 	}
 
 	// Deprecated functions
@@ -147,7 +182,7 @@ public class ZeroMQNetworkAdapter implements NetworkAdapter {
 	}
 
 	@Override
-	public void informLocalAgent(AgentAddress agentAdress) {
+	public void informLocalAgentAdded(AgentAddress agentAdress) {
 		// TODO Auto-generated method stub
 	}
 

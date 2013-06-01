@@ -2,15 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- CAUTION: this module has not the org.janus-project.kernel:janus-kernel 
-		maven module as parent to avoid dependency on it. Indeed if this modules 
-		has org.janus-project.kernel:janus-kernel as parent, assembly in org.janus-project.kernel:janus-kernel 
-		is impossible due to the Maven dependency specifications. -->
 	<parent>
-		<artifactId>janus</artifactId>
-		<groupId>org.janus-project</groupId>
+		<groupId>org.janus-project.kernel</groupId>
+		<artifactId>network</artifactId>
 		<version>1.0-SNAPSHOT</version>
-		<relativePath>../../../pom.xml</relativePath>
 	</parent>
 
 
@@ -23,27 +18,19 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>kernel</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.janus-project.kernel.network</groupId>
-			<artifactId>jxta-base</artifactId>
+			<artifactId>network-base</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.zeromq</groupId>
 			<artifactId>jzmq</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
-			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.zeromq</groupId>
 			<artifactId>jzmq</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
-			<classifier>native-${os.arch}-${native.os}</classifier>
+			<classifier>native-${os.arch}-${native.os}-null-null</classifier>
 		</dependency>
 
 		<dependency>
@@ -56,33 +43,5 @@
 			<artifactId>arakhneText</artifactId>
 		</dependency>
 	</dependencies>
-
-	<properties>
-		<native.os>${os.name}</native.os>
-	</properties>
-
-	<profiles>
-		<profile>
-			<id>Windows</id>
-			<activation>
-				<os>
-					<family>windows</family>
-				</os>
-			</activation>
-			<properties>
-				<native.os>Windows</native.os>
-			</properties>
-		</profile>
-	</profiles>
-
-	<repositories>
-		<repository>
-			<id>repository.snapshots.oss.sonatype.org</id>
-			<url>http://oss.sonatype.org/content/repositories/snapshots/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 
 </project>

@@ -3,7 +3,7 @@
  * 
  * Janus platform is an open-source multiagent platform.
  * More details on <http://www.janus-project.org>
- * Copyright (C) 2010-2012 Janus Core Developers
+ * Copyright (C) 2012-2013 Janus Core Developers
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,8 +44,8 @@ import org.janusproject.kernel.crio.organization.Group;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;
 import org.janusproject.kernel.message.Message;
-import org.janusproject.kernel.network.jxta.NetworkAdapter;
-import org.janusproject.kernel.network.jxta.NetworkListener;
+import org.janusproject.kernel.network.NetworkAdapter;
+import org.janusproject.kernel.network.NetworkListener;
 import org.janusproject.kernel.network.zeromq.zeromq.ZeroMQNode;
 import org.janusproject.kernel.repository.RepositoryChangeEvent;
 import org.janusproject.kernel.repository.RepositoryChangeEvent.ChangeType;
@@ -63,6 +63,7 @@ import org.janusproject.kernel.util.throwable.Throwables;
  * <p>
  * This kernel agent supports networking.
  * 
+ * @author $Author: bfeld$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
@@ -129,6 +130,7 @@ public class ZeroMQKernelAgent extends KernelAgent implements
 				EMPTY_GROUP_CLEANING_DELAY * 60, TimeUnit.SECONDS);
 	}
 
+	@Override
 	public Status live() {	
 		Status status = super.live();
 		if(status.isSuccess()) {
@@ -171,7 +173,7 @@ public class ZeroMQKernelAgent extends KernelAgent implements
 			} else if (evt.getChangedObject() instanceof AgentAddress) {
 				try {
 					AgentAddress aagent = (AgentAddress) evt.getChangedObject();
-					this.adapter.informLocalAgent(aagent);
+					this.adapter.informLocalAgentAdded(aagent);
 				} catch (AssertionError ae) {
 					throw ae;
 				} catch (Exception e) {
@@ -201,13 +203,6 @@ public class ZeroMQKernelAgent extends KernelAgent implements
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.janusproject.kernel.network.api.NetworkAdapterListener#
-	 * distantGroupDiscovered(java.lang.Class, java.util.UUID)
-	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void distantGroupDiscovered(
 			Class<? extends Organization> organization, UUID id,
@@ -226,7 +221,6 @@ public class ZeroMQKernelAgent extends KernelAgent implements
 				this.adapter.informLocalGroupCreated(group,
 						new ArrayList<GroupCondition>(),
 						new ArrayList<GroupCondition>(), membership);
-				System.out.println("Group: " + group);
 			}
 		}
 	}
@@ -249,8 +243,9 @@ public class ZeroMQKernelAgent extends KernelAgent implements
 
 	@Override
 	public String toString() {
-		return String.format("ZeroMQKernelAgent [adapter=%s, node=%s]",
-				adapter, node);
+		return String.format(
+				"ZeroMQKernelAgent [adapter=%s, node=%s]", //$NON-NLS-1$
+				this.adapter, this.node);
 	}
 
 	/**
