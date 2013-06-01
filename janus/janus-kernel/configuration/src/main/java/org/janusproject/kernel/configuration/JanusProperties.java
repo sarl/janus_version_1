@@ -171,6 +171,16 @@ public class JanusProperties extends Properties {
 	 */
 	public static final String DEFAULT_JXTA_MODE = "EDGE"; //$NON-NLS-1$
 
+	/** This constants indicates the default address of the multicast group
+	 * used by the ZeroMQ networking layer.
+	 * <p>
+	 * Value: <code>237.252.249.227</code>.
+	 * 
+	 * @see JanusProperty#ZEROMQ_MULICAT_GROUP_ADDRESS
+	 * @since 1.0
+	 */
+	public static final String DEFAULT_ZEROMQ_MULICAT_GROUP_ADDRESS = "237.252.249.227"; //$NON-NLS-1$
+
 	/** Timeout delay (in milliseconds) to await a kernel agent
 	 * to be killed.
 	 * <p>
@@ -604,6 +614,9 @@ public class JanusProperties extends Properties {
 		case JXTA_LEVEL:
 			defVal = DEFAULT_LOGGING_LEVEL;
 			break;
+		case ZEROMQ_MULICAT_GROUP_ADDRESS:
+			defVal = DEFAULT_ZEROMQ_MULICAT_GROUP_ADDRESS;
+			break;
 		case JANUS_KERNEL_HOME:
 		case JANUS_APPLICATION_HOME:
 		case JANUS_HOME:
@@ -661,6 +674,7 @@ public class JanusProperties extends Properties {
 		case JXTA_WOJ_ID:
 		case JXTA_LEVEL:
 		case JXTA_LOGGING:
+		case ZEROMQ_MULICAT_GROUP_ADDRESS:
 			return new JanusProperty[0];
 		default:
 		}
@@ -708,6 +722,7 @@ public class JanusProperties extends Properties {
 		case JXTA_APPLICATION_ID:
 		case JXTA_LEVEL:
 		case JXTA_LOGGING:
+		case ZEROMQ_MULICAT_GROUP_ADDRESS:
 			return getProperty(property.getPropertyName(), defaultValue);
 		default:
 		}
