@@ -346,7 +346,6 @@ public class FipaProposeProtocol extends AbstractFipaProtocol {
 
 		getRefAclAgent().sendACLMessage(message, to);
 	}
-	
 
 	
 	/**
@@ -356,4 +355,5 @@ public class FipaProposeProtocol extends AbstractFipaProtocol {
 	protected void setFinalStep() {
 		this.setState(ProposeProtocolState.DONE);
 	}
+
 }

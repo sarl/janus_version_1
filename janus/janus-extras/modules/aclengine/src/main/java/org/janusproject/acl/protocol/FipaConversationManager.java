@@ -79,6 +79,7 @@ public class FipaConversationManager {
 	public FipaConversationManager(final ACLAgent agent) {
 		this.agent = agent;
 		this.conversations = new ArrayList<AbstractFipaProtocol>();
+		this.logger = Logger.getLogger(this.getClass().getName());
 	}
 	
 	/**
@@ -99,6 +100,12 @@ public class FipaConversationManager {
 		else if (EnumFipaProtocol.FIPA_CONTRACT_NET == protocolType) {
 			protocol = new FipaContractNetProtocol(this.agent);
 			protocol.setState(ContractNetProtocolState.NOT_STARTED);
+			protocol.setRefAclAgent(this.agent);
+			this.conversations.add(protocol);
+			return protocol;
+		} else if (EnumFipaProtocol.FIPA_PROPOSE == protocolType) {
+			protocol = new FipaProposeProtocol(this.agent);
+			protocol.setState(ProposeProtocolState.NOT_STARTED);
 			protocol.setRefAclAgent(this.agent);
 			this.conversations.add(protocol);
 			return protocol;
@@ -125,7 +132,9 @@ public class FipaConversationManager {
 	 */
 	public AbstractFipaProtocol createConversation(EnumFipaProtocol protocolType, String name) {	
 		AbstractFipaProtocol protocol = createProtocol(protocolType);
-		protocol.setName(name);
+		if(protocol != null) {
+			protocol.setName(name);
+		}
 		return protocol;
 	}
 	

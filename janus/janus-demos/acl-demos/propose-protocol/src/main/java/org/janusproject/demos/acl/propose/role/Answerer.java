@@ -86,9 +86,9 @@ public class Answerer extends Role {
 			}
 			case SENDING_ANSWER:
 			{
-				System.out.println(this.proposal.getContent().toString().equalsIgnoreCase(Locale.getString("PROPOSALCONTENT"))); //$NON-NLS-1$
+				System.out.println(this.proposal.getContent().toString().equalsIgnoreCase(Locale.getString("PROPOSALCONTENT")));
 				if( this.proposal.getContent().toString().equalsIgnoreCase(Locale.getString("PROPOSALCONTENT"))) { //$NON-NLS-1$
-					this.proposeProtocol.accept(Locale.getString("AGREE")); //$NON-NLS-1$
+					this.proposeProtocol.accept(Locale.getString("AGREE"));
 					log(Locale.getString("AGREEMENTSENT")); //$NON-NLS-1$
 					return State.DONE;
 				}

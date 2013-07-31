@@ -89,21 +89,16 @@
 		</dependency>
 		
 		<!-- Used for BSON encoder -->
-		
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 		</dependency>
-		
+
 		<dependency>
 		  <groupId>de.undercouch</groupId>
 		  <artifactId>bson4jackson</artifactId>
 		</dependency>
-            
+
 	</dependencies>
 
-	<!-- ======================================= -->
-	<!-- ==== Developers === -->
-	<!-- ======================================= -->
-	
 </project>

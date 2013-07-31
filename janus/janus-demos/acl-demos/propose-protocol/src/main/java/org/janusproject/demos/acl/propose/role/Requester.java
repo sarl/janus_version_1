@@ -77,7 +77,7 @@ public class Requester extends Role {
 		{
 			case SENDING_REQUEST: 
 			{	
-				this.proposeProtocol.propose(Locale.getString("PROPOSAL")); //$NON-NLS-1$
+				this.proposeProtocol.propose(Locale.getString("PROPOSAL"));
 				
 				log(Locale.getString("PROPOSALSENT")); //$NON-NLS-1$
 				

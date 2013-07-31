@@ -250,6 +250,12 @@ public class ACLEncodingService
 		} 
     	else if (aclRepresentation.equalsIgnoreCase(ACLRepresentation.XML.getValue())) {
     		this.contentEncodingService = new XMLACLCodec();
+    	}
+    	else if (aclRepresentation.equalsIgnoreCase(ACLRepresentation.JSON.getValue())) {
+    		this.contentEncodingService = new JSONACLCodec();
+    	}
+    	else if (aclRepresentation.equalsIgnoreCase(ACLRepresentation.BSON.getValue())) {
+    		this.contentEncodingService = new BSONACLCodec();
 		} else {
 			throw new UnspecifiedACLMessageRepresentationException();
 		}
@@ -279,8 +285,17 @@ public class ACLEncodingService
 		} 
     	else if (aclRepresentation.equalsIgnoreCase(ACLRepresentation.XML.getValue())) {
     		this.contentEncodingService = new XMLACLCodec();
+    		this.envelopeEncodingService = new XMLEnvelopeCodec();
+    	}
+    	else if (aclRepresentation.equalsIgnoreCase(ACLRepresentation.JSON.getValue())) {
+    		this.contentEncodingService = new JSONACLCodec();
     		this.envelopeEncodingService = new BitEfficientEnvelopeCodec();
-		} else {
+		}
+    	else if (aclRepresentation.equalsIgnoreCase(ACLRepresentation.BSON.getValue())) {
+    		this.contentEncodingService = new BSONACLCodec();
+    		this.envelopeEncodingService = new BitEfficientEnvelopeCodec();
+    	}
+    	else {
 			throw new UnspecifiedACLMessageRepresentationException();
 		}
     }
