@@ -31,6 +31,8 @@ import org.janusproject.acl.ACLMessage;
 import org.janusproject.acl.Performative;
 import org.janusproject.acl.protocol.cnp.ContractNetProtocolState;
 import org.janusproject.acl.protocol.cnp.FipaContractNetProtocol;
+import org.janusproject.acl.protocol.propose.FipaProposeProtocol;
+import org.janusproject.acl.protocol.propose.ProposeProtocolState;
 import org.janusproject.acl.protocol.query.FipaQueryProtocol;
 import org.janusproject.acl.protocol.query.QueryProtocolState;
 import org.janusproject.acl.protocol.request.FipaRequestProtocol;
