@@ -16,6 +16,7 @@
 	
 	<modules>
 		<module>janus-chat</module>
+		<module>meeting-scheduler</module>
 	</modules>
 
 </project>
