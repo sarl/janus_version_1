@@ -105,6 +105,13 @@ public class Inquirer extends Role {
 			leaveMe();
 			break;
 			
+		case CANCELED:
+		case CANCELING:
+		case REFUSED:
+		case SENDING_ANSWER:
+		case SENDING_QUERY:
+		case SENDING_RESULT:
+		case WAITING_QUERY:
 		default:
 			break;
 		}

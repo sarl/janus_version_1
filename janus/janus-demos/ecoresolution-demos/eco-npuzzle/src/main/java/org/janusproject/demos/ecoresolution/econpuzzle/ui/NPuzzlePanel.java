@@ -454,6 +454,8 @@ public class NPuzzlePanel extends JPanel implements ChannelInteractableListener,
 					backColor = Color.GREEN;
 					frontColor = Color.BLACK;
 					break;
+				case INITIALIZED:
+				case INITIALIZING:
 				default:
 					backColor = Color.DARK_GRAY;
 					frontColor = Color.WHITE;

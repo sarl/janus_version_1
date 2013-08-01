@@ -50,11 +50,11 @@ public enum ACLRepresentation {
 	/**
 	 *
 	 */
-	JSON("set.acl.rep.json.std"),
-	/*
+	JSON("set.acl.rep.json.std"), //$NON-NLS-1$
+	/**
 	 *
 	 */
-	BSON("set.acl.rep.bson.std"),
+	BSON("set.acl.rep.bson.std"), //$NON-NLS-1$
 	/**
 	 *
 	 */

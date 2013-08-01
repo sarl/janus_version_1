@@ -42,7 +42,6 @@ public interface ObjectManipulator {
 	 * <p>
 	 * The concept of substance combination depends on the semantic of the substance.
 	 * 
-	 * @param <N> is the type 
 	 * @param s1 is the substance to combine and which may receive the result.
 	 * @param s2 is the substance to combine with.
 	 * @param additionOperation indicates if the combination is an addition
@@ -50,6 +49,6 @@ public interface ObjectManipulator {
 	 * @return the change amount in <var>s1</var>. It is a substance lower or equal to <var>s2</var>,
 	 * or <code>null</code> if the operation is not possible.
 	 */
-	public <N extends Number> Substance combine(Substance s1, Substance s2, boolean additionOperation);
+	public Substance combine(Substance s1, Substance s2, boolean additionOperation);
 		
 }

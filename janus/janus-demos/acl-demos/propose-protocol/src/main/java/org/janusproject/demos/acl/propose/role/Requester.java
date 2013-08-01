@@ -73,11 +73,10 @@ public class Requester extends Role {
 			leaveMe();
 		}
 		
-		switch (this.state) 
-		{
+		switch (this.state) {
 			case SENDING_REQUEST: 
 			{	
-				this.proposeProtocol.propose(Locale.getString("PROPOSAL"));
+				this.proposeProtocol.propose(Locale.getString("PROPOSAL")); //$NON-NLS-1$
 				
 				log(Locale.getString("PROPOSALSENT")); //$NON-NLS-1$
 				
@@ -112,6 +111,7 @@ public class Requester extends Role {
 				leaveMe();
 				return this.state;	
 			}
+		case DONE:
 		default:
 			return this.state;
 		}

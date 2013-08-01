@@ -160,6 +160,7 @@ public class Provider extends Role {
 			print(Locale.getString(Provider.class, "CONTRACT_REFUSED")); //$NON-NLS-1$
 			leaveMe();
 			return State.NIL;
+		case NIL:
 		default:
 			return this.state;
 		}

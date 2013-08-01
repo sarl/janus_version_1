@@ -76,8 +76,7 @@ public class Requester extends Role {
 			leaveMe();
 		}
 		
-		switch (this.state) 
-		{
+		switch (this.state) {
 			case SENDING_REQUEST: 
 			{	
 				//requestProtocol.request( "evil" );
@@ -121,6 +120,10 @@ public class Requester extends Role {
 				leaveMe();
 				return this.state;
 			}
+			
+		case CANCELED:
+		case CANCELING:
+		case REFUSED:
 		default:
 			return this.state;
 		}

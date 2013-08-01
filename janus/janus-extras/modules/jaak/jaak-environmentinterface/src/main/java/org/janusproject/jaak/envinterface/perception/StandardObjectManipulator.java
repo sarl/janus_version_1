@@ -54,7 +54,7 @@ public class StandardObjectManipulator implements ObjectManipulator {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public <N extends Number> Substance combine(Substance s1, Substance s2, boolean additionOperation) {
+	public Substance combine(Substance s1, Substance s2, boolean additionOperation) {
 		if (additionOperation)
 			return s1.increment(s2);
 		return s1.decrement(s2);

@@ -111,6 +111,7 @@ public class Provider extends Role {
 		case CONTRACT_PASSED:
 			leaveMe();
 			return State.NIL;
+		case NIL:
 		default:
 			return this.state;
 		}			

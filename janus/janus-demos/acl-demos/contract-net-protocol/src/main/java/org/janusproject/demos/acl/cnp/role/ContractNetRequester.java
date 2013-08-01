@@ -129,6 +129,10 @@ public class ContractNetRequester extends Role {
 				leaveMe();
 				return this.state;
 			}
+		case CANCELED:
+		case CANCELING:
+		case NOT_STARTED:
+		case REFUSED:
 			default: {
 				return this.state;
 			}

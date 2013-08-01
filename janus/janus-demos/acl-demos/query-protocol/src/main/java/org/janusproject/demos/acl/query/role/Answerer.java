@@ -127,8 +127,13 @@ public class Answerer extends Role {
 			break;
 			
 		case DONE:
-			break;
-			
+		case CANCELED:
+		case CANCELING:
+		case REFUSED:
+		case SENDING_QUERY:
+		case WAITING_ANSWER:
+		case WAITING_QUERY:
+		case WAITING_RESULT:
 		default:
 			break;
 		}

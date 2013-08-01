@@ -133,6 +133,9 @@ public class ContractNetBroker extends Role {
 			leaveMe();
 			return this.state;
 		}
+		case CANCELED:
+		case CANCELING:
+		case NOT_STARTED:
 		default:
 			return this.state;
 		}

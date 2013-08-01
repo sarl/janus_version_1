@@ -155,6 +155,8 @@ public class Terrain extends Role {
 					case END_OF_GAME:
 						leaveMe();
 						break;
+					case MOVE:
+					case READY_TO_SIMULATE:
 					default:
 						// ignore message
 					}

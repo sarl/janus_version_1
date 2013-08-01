@@ -86,12 +86,16 @@ public class Prey extends AnimatRole {
 					case READY_TO_SIMULATE:
 						this.state = State.ESCAPE;
 						break;
+					case I_AM_PREDATOR:
+					case I_AM_PREY:
+					case MOVE:
 					default:
 						// ignore message
 					}
 				}
 			}
 			break;
+		case ESCAPE:
 		default:
 			boolean eog = false;
 

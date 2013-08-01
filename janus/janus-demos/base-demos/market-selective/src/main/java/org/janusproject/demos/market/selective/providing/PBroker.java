@@ -203,7 +203,8 @@ public class PBroker extends Role {
 				}
 			}
 			return State.WAIT_CONTRACT_GROUP;
-
+			
+		case NOTIFY_PROVIDERS:
 		default:
 			return this.state;
 		}

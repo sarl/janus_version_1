@@ -123,6 +123,7 @@ public class Client extends Role {
 				return State.NIL;
 			}
 			return State.WAITING_CONTRACT_PASSED;
+		case NIL:
 		default:
 			return State.NIL;
 		}				

@@ -245,7 +245,12 @@ public class BrokerPlan extends BDIPlan{
 				}
 			}
 			break;
-
+			
+		case BYE_BYE:
+		case CONTACT_PROVIDER:
+		case FORWARD_CONTRACT_GROUP:
+		case RESPOND_TO_CLIENT:
+		case SELECT_PROPOSAL:
 		default:
 			break;
 		}
