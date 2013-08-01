@@ -111,26 +111,6 @@
 
 		<dependency>
 			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>message</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>logger</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>mailbox</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>probe</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
 			<artifactId>osgi</artifactId>
 		</dependency>
 

@@ -10,61 +10,22 @@
 		Maven dependency specifications.
 	-->
 	<parent>
-		<artifactId>janus</artifactId>
-		<groupId>org.janus-project</groupId>
+		<artifactId>janus-kernel</artifactId>
+		<groupId>org.janus-project.kernel</groupId>
 		<version>1.0-SNAPSHOT</version>
-		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
 
 
-	<groupId>org.janus-project.kernel</groupId>
 	<artifactId>kernel</artifactId>
 	<packaging>jar</packaging>
-	<name>Agent Kernel</name>
+	<name>Janus Kernel</name>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>address</artifactId>
+			<groupId>org.arakhne.afc</groupId>
+			<artifactId>arakhneVmutils</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>configuration</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>logger</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>schedule</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>repository</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>probe</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>agentsignal</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>message</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>crio</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>channels</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -72,4 +33,29 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<!-- to create a jar with all dependencies -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>with-dependencies.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
 </project>

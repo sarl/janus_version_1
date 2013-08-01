@@ -96,16 +96,6 @@
 
 		<dependency>
 			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>logger</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>kernel</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
 			<artifactId>osgi</artifactId>
 		</dependency>
 

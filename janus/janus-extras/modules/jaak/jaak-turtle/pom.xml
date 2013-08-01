@@ -17,19 +17,6 @@
 			<groupId>org.janus-project.extras.modules.jaak</groupId>
 			<artifactId>jaak-environmentinterface</artifactId>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>address</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>crio</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>kernel</artifactId>
-		</dependency>
 	</dependencies>
 	
 </project>

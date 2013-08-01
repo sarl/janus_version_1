@@ -49,12 +49,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>address</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>message</artifactId>
+			<artifactId>kernel</artifactId>
 		</dependency>
 	</dependencies>
 

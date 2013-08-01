@@ -10,16 +10,14 @@
 	<groupId>org.janus-project.extras.modules.jaak</groupId>
 	<artifactId>jaak</artifactId>
 	<name>Jaak Simulation</name>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 	
-	<modules>
-		<module>jaak-util</module>
-		<module>jaak-environmentinterface</module>
-		<module>jaak-environment</module>
-		<module>jaak-turtle</module>
-		<module>jaak-spawner</module>
-		<module>jaak-kernel</module>
-	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>kernel</artifactId>
+		</dependency>
+	</dependencies>
 	
 	<build>
 		<plugins>
@@ -29,7 +27,6 @@
 				<configuration>
 					<descriptors>
 						<descriptor>with-dependencies.xml</descriptor>
-						<descriptor>sources.xml</descriptor>
 					</descriptors>
 				</configuration>
 				<executions>

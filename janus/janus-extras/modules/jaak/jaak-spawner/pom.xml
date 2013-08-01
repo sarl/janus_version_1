@@ -21,10 +21,5 @@
 			<groupId>org.janus-project.extras.modules.jaak</groupId>
 			<artifactId>jaak-turtle</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>timemanager</artifactId>
-		</dependency>
 	</dependencies>
 </project>

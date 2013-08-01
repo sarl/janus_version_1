@@ -55,24 +55,10 @@
 
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.janus-project.extras.modules.jaak</groupId>
-			<artifactId>jaak-environmentinterface</artifactId>
+			<artifactId>jaak</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.janus-project.extras.modules.jaak</groupId>
-			<artifactId>jaak-turtle</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.extras.modules.jaak</groupId>
-			<artifactId>jaak-spawner</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.janus-project.extras.modules.jaak</groupId>
-			<artifactId>jaak-kernel</artifactId>
-		</dependency>
-
 	</dependencies>
   
 </project>

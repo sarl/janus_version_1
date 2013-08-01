@@ -13,30 +13,9 @@
 	<packaging>pom</packaging>
 	<groupId>org.janus-project.kernel</groupId>
 	<artifactId>janus-kernel</artifactId>
-	<name>Janus Kernel</name>
+	<name>Janus Kernel and Internal Services</name>
 
-	<!-- CAUTION: theses modules have not the org.janus-project.kernel:janus-kernel 
-		maven module as parent to avoid dependency on it form the child modules. 
-		Indeed if the child modules has org.janus-project.kernel:janus-kernel as 
-		parent, assembly is impossible due to the Maven dependency specifications. -->
 	<modules>
-		<module>util</module>
-		<module>logger</module>
-		<module>address</module>
-		<module>condition</module>
-		<module>agentmemory</module>
-		<module>agentsignal</module>
-		<module>repository</module>
-		<module>probe</module>
-		<module>schedule</module>
-		<module>status</module>
-		<module>timemanager</module>
-		<module>message</module>
-		<module>mailbox</module>
-		<module>credential</module>
-		<module>channels</module>
-		<module>configuration</module>
-		<module>crio</module>
 		<module>kernel</module>
 		<module>osgi</module>
 	</modules>
@@ -51,31 +30,5 @@
 			</modules>
 		</profile>
 	</profiles>
-
-	<build>
-		<plugins>
-			<plugin>
-				<!-- to create a jar with all dependencies -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptors>
-						<descriptor>without-dependencies.xml</descriptor>
-						<descriptor>with-dependencies.xml</descriptor>
-						<descriptor>sources.xml</descriptor>
-					</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>attached</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>

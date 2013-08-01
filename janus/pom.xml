@@ -525,97 +525,12 @@
 			<!-- ********** ** JANUS KERNEL ** ********** -->
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>address</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>channels</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>configuration</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>condition</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>util</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>logger</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>agentmemory</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>agentsignal</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>repository</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>probe</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>locale</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>schedule</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>status</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>timemanager</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>mailbox</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>message</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>credential</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>crio</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>kernel</artifactId>
+				<version>${janus.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.janus-project.kernel</groupId>
+				<artifactId>osgi</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
@@ -642,11 +557,6 @@
 				<groupId>org.janus-project.kernel.network</groupId>
 				<artifactId>zeromq</artifactId>
 				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
-				<artifactId>osgi</artifactId>
-				<version>${janus.version.osgi}</version>
 			</dependency>
 
 			<!-- ********** ** JANUS EXTRAS ** ********** -->
@@ -687,32 +597,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.extras.modules.jaak</groupId>
-				<artifactId>jaak-util</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.extras.modules.jaak</groupId>
-				<artifactId>jaak-environmentinterface</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.extras.modules.jaak</groupId>
-				<artifactId>jaak-turtle</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.extras.modules.jaak</groupId>
-				<artifactId>jaak-environment</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.extras.modules.jaak</groupId>
-				<artifactId>jaak-spawner</artifactId>
-				<version>${janus.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.janus-project.extras.modules.jaak</groupId>
-				<artifactId>jaak-kernel</artifactId>
+				<artifactId>jaak</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 
@@ -919,11 +804,11 @@
 			</dependency>
 
 			<!-- ********** ** EASYMOCK ** ********** -->
-			<dependency>
+			<!-- <dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>easymock</artifactId>
 				<version>3.1</version>
-			</dependency>
+			</dependency> -->
 
 			<!-- *****************JACKSON************ -->
 			<dependency>

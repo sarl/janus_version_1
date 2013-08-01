@@ -74,41 +74,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.arakhne.afc</groupId>
-			<artifactId>arakhneVmutils</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>logger</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>address</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>util</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>agentmemory</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>message</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>crio</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.janus-project.kernel</groupId>
 			<artifactId>kernel</artifactId>
 		</dependency>

@@ -79,32 +79,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>address</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>status</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>logger</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>crio</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
 			<artifactId>kernel</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>message</artifactId>
 		</dependency>
 
 		<dependency>
