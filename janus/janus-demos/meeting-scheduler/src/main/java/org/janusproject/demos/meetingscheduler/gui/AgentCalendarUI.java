@@ -58,7 +58,7 @@ import com.miginfocom.util.states.ToolTipProvider;
  * @mavenartifactid $ArtifactId$
  * 
  */
-public class agentCalendarUI extends JFrame implements MeetingListener,
+public class AgentCalendarUI extends JFrame implements MeetingListener,
 		ActivityMoveListener, ActivityDragResizeListener {
 
 	private static final long serialVersionUID = 1366912984828214678L;
@@ -73,7 +73,7 @@ public class agentCalendarUI extends JFrame implements MeetingListener,
 
 	private KernelWatcher kw;
 
-	public agentCalendarUI(String name, KernelWatcher kw) {
+	public AgentCalendarUI(String name, KernelWatcher kw) {
 		setTitle("Calendar of " + name);
 
 		// Base
@@ -316,9 +316,11 @@ public class agentCalendarUI extends JFrame implements MeetingListener,
 										0.0f),
 								new com.miginfocom.util.gfx.geometry.numbers.AtEnd(
 										0.0f), null, null, null),
-						(java.awt.Paint[]) new java.awt.Paint[] { new com.miginfocom.util.gfx.ShapeGradientPaint(
-								new java.awt.Color(161, 161, 161),
-								new java.awt.Color(191, 191, 191), 0.0f, 1.0f,
+						(java.awt.Paint[]) new java.awt.Paint[] {
+							new com.miginfocom.util.gfx.ShapeGradientPaint(
+								new Color(161, 161, 161),
+								new Color(191, 191, 191),
+								0.0f, 1.0f,
 								0.5f, false) },
 						new java.awt.Paint[] { new java.awt.Color(255, 255, 255) },
 						new com.miginfocom.util.repetition.DefaultRepetition(0,
@@ -367,7 +369,7 @@ public class agentCalendarUI extends JFrame implements MeetingListener,
 								0.90000004f)) });
 		overviewNorthHeader
 				.setBackgroundPaint(new com.miginfocom.util.gfx.ShapeGradientPaint(
-						new java.awt.Color(218, 226, 233), new java.awt.Color(
+						new Color(218, 226, 233), new Color(
 								235, 239, 243), 90.0f, 1.0f, 0.5f, false));
 		overviewNorthHeader
 				.setExpandToCorner(com.miginfocom.calendar.datearea.DateAreaContainer.CORNER_EXPAND_BOTH);
@@ -1127,7 +1129,7 @@ public class agentCalendarUI extends JFrame implements MeetingListener,
 	}
 
 	protected void newMeetingButtonActionPerformed(ActionEvent evt) {
-		initiateMeetingFrame initmeetingFrame = new initiateMeetingFrame(name,
+		InitiateMeetingFrame initmeetingFrame = new InitiateMeetingFrame(name,
 				kw);
 		initmeetingFrame.setVisible(true);
 	}
@@ -1253,7 +1255,7 @@ public class agentCalendarUI extends JFrame implements MeetingListener,
 
 	@Override
 	public void incomingMeetingProposal(Meeting meeting) {
-		meetingProposalFrame meetingProposal = new meetingProposalFrame(
+		MeetingProposalFrame meetingProposal = new MeetingProposalFrame(
 				this.name, meeting, this.kw);
 		meetingProposal.setVisible(true);
 	}
@@ -1261,7 +1263,7 @@ public class agentCalendarUI extends JFrame implements MeetingListener,
 	@Override
 	public void chooseMeetingTimeSlot(UUID id,
 			Map<ImmutableDateRange, MeetingTimeSlot> slots) {
-		chooseMeetingtimeSlotFrame meetingTimeSlot = new chooseMeetingtimeSlotFrame(
+		ChooseMeetingtimeSlotFrame meetingTimeSlot = new ChooseMeetingtimeSlotFrame(
 				this.name, id, slots, this.kw);
 		meetingTimeSlot.setVisible(true);
 

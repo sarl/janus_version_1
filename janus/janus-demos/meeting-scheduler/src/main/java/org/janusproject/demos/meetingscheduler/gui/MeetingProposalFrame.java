@@ -46,7 +46,7 @@ import com.miginfocom.util.dates.ImmutableDateRange;
  * @mavenartifactid $ArtifactId$
  *
  */
-public class meetingProposalFrame extends JFrame implements ActionListener {
+public class MeetingProposalFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = -8269547358309700827L;
 	private JTable propList;
@@ -57,7 +57,7 @@ public class meetingProposalFrame extends JFrame implements ActionListener {
 	private KernelWatcher kw;
 	private String who;
 
-	public meetingProposalFrame(String who, Meeting meeting, KernelWatcher kw) {
+	public MeetingProposalFrame(String who, Meeting meeting, KernelWatcher kw) {
 		this.meeting = meeting;
 		this.kw = kw;
 		this.who = who;

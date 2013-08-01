@@ -790,6 +790,12 @@
 				<version>1.5.2</version>
 			</dependency>
 
+			<dependency>
+				<groupId>com.migcalendar</groupId>
+				<artifactId>migcalendar</artifactId>
+				<version>6.9.3</version>
+			</dependency>
+
 			<!-- ********** ** JRUBY ** ********** -->
 			<dependency>
 				<groupId>org.jruby</groupId>
@@ -966,19 +972,6 @@
 				<version>2.3</version>
 			</dependency>
 
-			<!-- *****************JACKSON************ -->
-			<dependency>
-				<groupId>org.codehaus.jackson</groupId>
-				<artifactId>jackson-mapper-asl</artifactId>
-				<version>1.9.11</version>
-			</dependency>
-
-			<dependency>
-				<groupId>de.undercouch</groupId>
-				<artifactId>bson4jackson</artifactId>
-				<version>1.3.0</version>
-			</dependency>
-
 			<!-- *****************ANDROID************ -->
 			<dependency>
 				<groupId>com.google.android</groupId>
@@ -1054,13 +1047,12 @@
 		<developer>
 			<id>srodriguez</id>
 			<name>Sebastian Rodriguez</name>
-			<email>sebastian@sebastianrodriguez.com.ar</email>
-			<url>http://www.sebastianrodriguez.com.ar</url>
+			<email>srodriguez@citat.org.ar</email>
+			<url>http://citat.org.ar/members/sebastian-rodriguez/</url>
 			<organization>
-				Centro de Investigación de Tecnologias Avanzadas de
-				Tucumán
+				Grupo de Investigaci&amp;oacute;n en Tecnolog&amp;iacute;as Inform&amp;aacute;ticas Avanzadas de Tucum&amp;aacute;n
 			</organization>
-			<organizationUrl>http://citat.frt.utn.edu.ar/</organizationUrl>
+			<organizationUrl>http://citat.org.ar/</organizationUrl>
 			<roles>
 				<role>Co-founder</role>
 				<role>Architect</role>
@@ -1110,7 +1102,7 @@
 			<email>mickael.adeline@utbm.fr</email>
 			<properties>
 				<id>madeline</id>
-				<contributions>ACL engine for Janus 0.6</contributions>
+				<contributions>ACL engine for Janus 0.6, Meeting scheduler demo</contributions>
 			</properties>
 			<roles>
 				<role>Contributor</role>
@@ -1294,7 +1286,7 @@
 			<email>kevin.le-roy@utbm.fr</email>
 			<properties>
 				<id>kleroy</id>
-				<contributions>ACL engine for Janus 0.6</contributions>
+				<contributions>ACL engine for Janus 0.6, Meeting scheduler demo</contributions>
 			</properties>
 			<roles>
 				<role>Contributor</role>
@@ -1366,7 +1358,7 @@
 			<email>paul.talagrand@utbm.fr</email>
 			<properties>
 				<id>ptalagrand</id>
-				<contributions>ACL engine for Janus 0.6</contributions>
+				<contributions>ACL engine for Janus 0.6, meeting scheduler demo</contributions>
 			</properties>
 			<roles>
 				<role>Contributor</role>

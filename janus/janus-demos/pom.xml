@@ -23,5 +23,6 @@
 		<module>acl-demos</module>
 		<module>scriptedagent-demos</module>
 		<module>jaak-demos</module>
+		<module>meeting-scheduler</module>
 	</modules>
 </project>

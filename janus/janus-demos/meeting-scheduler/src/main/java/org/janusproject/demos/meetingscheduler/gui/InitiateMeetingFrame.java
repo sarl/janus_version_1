@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -53,17 +54,17 @@ import com.miginfocom.util.dates.ImmutableDateRange;
  * @mavenartifactid $ArtifactId$
  *
  */
-public class initiateMeetingFrame extends JFrame implements ActionListener,
+public class InitiateMeetingFrame extends JFrame implements ActionListener,
 		DateChangeListener {
 
 	private KernelWatcher kw;
 
-	private JList<String> participantList;
+	private JList/*<String>*/ participantList;
 
-	private JList<ImmutableDateRange> suggestedHoursList;
-	private JList<ImmutableDateRange> selectedHoursList;
-	private DefaultListModel<ImmutableDateRange> suggestedHoursListModel = new DefaultListModel<ImmutableDateRange>();
-	private DefaultListModel<ImmutableDateRange> selectedHoursListModel = new DefaultListModel<ImmutableDateRange>();
+	private JList/*<ImmutableDateRange>*/ suggestedHoursList;
+	private JList/*<ImmutableDateRange>*/ selectedHoursList;
+	private DefaultListModel/*<ImmutableDateRange>*/ suggestedHoursListModel = new DefaultListModel/*<ImmutableDateRange>*/();
+	private DefaultListModel/*<ImmutableDateRange>*/ selectedHoursListModel = new DefaultListModel/*<ImmutableDateRange>*/();
 
 	private String initiator_name;
 	private JTextField description_field;
@@ -79,7 +80,7 @@ public class initiateMeetingFrame extends JFrame implements ActionListener,
 
 	private static final long serialVersionUID = 234360639496126275L;
 
-	public initiateMeetingFrame(String name, KernelWatcher kw) {
+	public InitiateMeetingFrame(String name, KernelWatcher kw) {
 
 		// Init themes
 
@@ -105,9 +106,9 @@ public class initiateMeetingFrame extends JFrame implements ActionListener,
 		JPanel listbox = new JPanel();
 		listbox.setLayout(new BoxLayout(listbox, BoxLayout.LINE_AXIS));
 
-		suggestedHoursList = new JList<ImmutableDateRange>(
+		suggestedHoursList = new JList/*<ImmutableDateRange>*/(
 				suggestedHoursListModel);
-		selectedHoursList = new JList<ImmutableDateRange>(
+		selectedHoursList = new JList/*<ImmutableDateRange>*/(
 				selectedHoursListModel);
 		
 		suggestedHoursList.setCellRenderer(new DateRangeListCellRenderer());
@@ -138,7 +139,7 @@ public class initiateMeetingFrame extends JFrame implements ActionListener,
 
 		description_field = new JTextField("Description");
 
-		participantList = new JList<String>(this.kw.getAllAgentExcept(name)
+		participantList = new JList/*<String>*/(this.kw.getAllAgentExcept(name)
 				.toArray(new String[0]));
 		JScrollPane scrollPaneParticipants = new JScrollPane(participantList);
 
@@ -210,11 +211,15 @@ public class initiateMeetingFrame extends JFrame implements ActionListener,
 		}
 	}
 
+	private static <T> List<T> castArray(Class<T> type, Object[] t) {
+		return (List<T>)Arrays.asList(t);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		String cmd = evt.getActionCommand();
 		if (cmd == "SENDMEETING") {
-			List<String> participants = participantList.getSelectedValuesList();
+			List<String> participants = castArray(String.class, participantList.getSelectedValues()); 
 			if (participants.size() == 0) {
 				JOptionPane.showMessageDialog(this,
 						"You must choose at least one participant", "Error",
@@ -222,7 +227,7 @@ public class initiateMeetingFrame extends JFrame implements ActionListener,
 				return;
 			}
 
-			List<ImmutableDateRange> hours = Collections
+			List/*<ImmutableDateRange>*/ hours = Collections
 					.list(selectedHoursListModel.elements());
 			if (hours.size() == 0) {
 				JOptionPane.showMessageDialog(this,
@@ -245,14 +250,14 @@ public class initiateMeetingFrame extends JFrame implements ActionListener,
 					this.kw.getAgentByNames(participants));
 			this.dispose();
 		} else if (cmd == "ADDRIGHT") { // >>
-			for (ImmutableDateRange range : suggestedHoursList
-					.getSelectedValuesList()) {
+			for (ImmutableDateRange range : castArray(ImmutableDateRange.class, suggestedHoursList
+					.getSelectedValues())) {
 				selectedHoursListModel.addElement(range);
 				suggestedHoursListModel.removeElement(range);
 			}
 		} else if (cmd == "ADDLEFT") { // <<
-			for (ImmutableDateRange range : selectedHoursList
-					.getSelectedValuesList()) {
+			for (ImmutableDateRange range : castArray(ImmutableDateRange.class, selectedHoursList
+					.getSelectedValues())) {
 				suggestedHoursListModel.addElement(range);
 				selectedHoursListModel.removeElement(range);
 			}

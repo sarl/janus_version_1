@@ -34,7 +34,7 @@ import com.miginfocom.util.dates.ImmutableDateRange;
  * @mavenartifactid $ArtifactId$
  *
  */
-public class chooseMeetingtimeSlotFrame extends JFrame implements
+public class ChooseMeetingtimeSlotFrame extends JFrame implements
 		ActionListener {
 
 	private static final long serialVersionUID = -4757588276034608043L;
@@ -45,7 +45,7 @@ public class chooseMeetingtimeSlotFrame extends JFrame implements
 	private String who;
 	private UUID id;
 
-	public chooseMeetingtimeSlotFrame(String who, UUID id,
+	public ChooseMeetingtimeSlotFrame(String who, UUID id,
 			Map<ImmutableDateRange, MeetingTimeSlot> slots, KernelWatcher kw) {
 		this.slots = slots;
 		this.id = id;

@@ -23,7 +23,7 @@ package org.janusproject.demos.meetingscheduler;
 import java.util.logging.Level;
 
 import org.janusproject.demos.meetingscheduler.agent.MeetingAgent;
-import org.janusproject.demos.meetingscheduler.gui.agentCalendarUI;
+import org.janusproject.demos.meetingscheduler.gui.AgentCalendarUI;
 import org.janusproject.demos.meetingscheduler.util.KernelWatcher;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.agent.Kernels;
@@ -64,7 +64,7 @@ public class Launcher {
 		k.launchDifferedExecutionAgents();
 
 		// UI
-		agentCalendarUI ui = new agentCalendarUI(name, kw);
+		AgentCalendarUI ui = new AgentCalendarUI(name, kw);
 		ui.setVisible(true);
 	}
 }
