@@ -7,9 +7,13 @@
 # NetBean
 bin/
 
-# Subversion and CVS
+# Subversion, CVS, Git
 .svn/
 .cvs/
+.git/
+
+# Android
+gen/*
 
 # Maven
 target/
