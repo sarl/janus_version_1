@@ -26,3 +26,4 @@
 ./janus-demos/simulation-demos/foragerbots/src/main/janus/application/equinox/equinox.japp.properties
 ./janus-demos/simulation-demos/preypredator/src/main/janus/application/equinox/equinox.japp.properties
 
+./janus-maven-tools/archetype/crio-basic-app-archetype/src/main/resources/archetype-resources/pom.xml
