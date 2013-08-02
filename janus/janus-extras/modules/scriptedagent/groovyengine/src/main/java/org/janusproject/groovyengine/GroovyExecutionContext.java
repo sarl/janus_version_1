@@ -96,24 +96,24 @@ public class GroovyExecutionContext extends AbstractScriptExecutionContext {
 	@Override
 	public boolean isFunction(String functionName) {
 		GroovyScriptEngineImpl engine = (GroovyScriptEngineImpl)getScriptEngine();
-		GroovyClassLoader classLoader = engine.getClassLoader();
-		String name;
-		for(Class<?> type : classLoader.getLoadedClasses()) {
-			name = type.getName();
-			// The Groovy engine is naming the global classes with the prefix "Script"
-			if (name.startsWith("Script")) { //$NON-NLS-1$
-				try {
-					for(Method method : type.getDeclaredMethods()) {
-						if (functionName.equals(method.getName()))
-							return true;
-					}
-				}
-				catch (Throwable e) {
-					//
-				}
-			}
-		}
-		return false;
+        GroovyClassLoader classLoader = engine.getClassLoader();
+        String name;
+        for(Class<?> type : classLoader.getLoadedClasses()) {
+                name = type.getName();
+                // The Groovy engine is naming the global classes with the prefix "Script"
+                if (name.startsWith("Script")) { //$NON-NLS-1$
+                        try {
+                                for(Method method : type.getDeclaredMethods()) {
+                                        if (functionName.equals(method.getName()))
+                                                return true;
+                                }
+                        }
+                        catch (Throwable e) {
+                                //
+                        }
+                }
+        }
+        return false;
 	}
 
 	/**

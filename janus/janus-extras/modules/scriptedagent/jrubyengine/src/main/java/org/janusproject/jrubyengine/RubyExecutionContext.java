@@ -187,7 +187,7 @@ public class RubyExecutionContext extends AbstractScriptExecutionContext {
 			setStandardError(old);
 
             try {
-				old.close();
+				if (old!=null) old.close();
 				w.close();
 			} catch (IOException e) {
 				e.printStackTrace();

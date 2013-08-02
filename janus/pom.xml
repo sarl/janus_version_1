@@ -685,7 +685,7 @@
 			<dependency>
 				<groupId>org.jruby</groupId>
 				<artifactId>jruby</artifactId>
-				<version>1.6.7.2</version>
+				<version>1.7.4</version>
 			</dependency>
 
 
@@ -700,21 +700,21 @@
 			<dependency>
 				<groupId>org.python</groupId>
 				<artifactId>jython-standalone</artifactId>
-				<version>2.5.2</version>
+				<version>2.7-b1</version>
 			</dependency>
 
 			<!-- ********** ** COMMON LISP ** ********** -->
 			<dependency>
 				<groupId>org.armedbear.lisp</groupId>
 				<artifactId>abcl</artifactId>
-				<version>0.27.0</version>
+				<version>1.0.1</version>
 			</dependency>
 
-			<!-- ********** ** COMMON LISP ** ********** -->
+			<!-- ********** ** LUA ** ********** -->
 			<dependency>
 				<groupId>org.luaj</groupId>
 				<artifactId>luaj-jse</artifactId>
-				<version>2.0.2.patched_for_janus.1</version>
+				<version>3.0.b1.patched_for_janus.1</version>
 			</dependency>
 
 			<!-- ********** ** AETHER ** ********** -->

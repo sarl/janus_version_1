@@ -29,12 +29,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import junit.framework.TestCase;
+
 import org.arakhne.vmutil.FileSystem;
 import org.arakhne.vmutil.Resources;
 import org.janusproject.scriptedagent.ScriptErrorListener;
-import org.luaj.vm2.LuaValue;
-
-import junit.framework.TestCase;
 
 /**
  * @author $Author: sgalland$
@@ -110,18 +109,18 @@ public class LuaExecutionContextTest extends TestCase {
 	 */
 	public void testRunCommandString() throws Exception {
 		Object v = this.interpreter.runCommand("a = (nil == nil)"); //$NON-NLS-1$
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		this.listener.assertFalse();
 
 		v = this.interpreter.runCommand("a = 5+6"); //$NON-NLS-1$
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals(11, this.interpreter.getGlobalValue("a")); //$NON-NLS-1$
 		this.listener.assertFalse();
 		
 		StringWriter output = new StringWriter();
 		this.interpreter.setStandardOutput(output);
 		v = this.interpreter.runCommand("a = 6+6"); //$NON-NLS-1$
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals(12, this.interpreter.getGlobalValue("a")); //$NON-NLS-1$
 		assertEquals("", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
@@ -129,7 +128,7 @@ public class LuaExecutionContextTest extends TestCase {
 		output = new StringWriter();
 		this.interpreter.setStandardOutput(output);
 		v = this.interpreter.runCommand("print(7+10*2)"); //$NON-NLS-1$
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("27\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 	}
@@ -167,7 +166,7 @@ public class LuaExecutionContextTest extends TestCase {
 		output = new StringWriter();
 		this.interpreter.setStandardOutput(output);
 		v = this.interpreter.runScript(ADDITION_SCRIPT_NAME);
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 
@@ -175,7 +174,7 @@ public class LuaExecutionContextTest extends TestCase {
 		output = new StringWriter();
 		this.interpreter.setStandardOutput(output);
 		v = this.interpreter.runScript(HELLO_WORLD_SCRIPT_NAME);
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("hello world\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 
@@ -183,7 +182,7 @@ public class LuaExecutionContextTest extends TestCase {
 		output = new StringWriter();
 		this.interpreter.setStandardOutput(output);
 		v = this.interpreter.runScript(INTERPRETED_ADDITION_SCRIPT_NAME);
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("15\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 	}
@@ -196,7 +195,7 @@ public class LuaExecutionContextTest extends TestCase {
 		StringWriter output = new StringWriter();
 		this.interpreter.setStandardOutput(output);
 		Object v = this.interpreter.runScript(makeFile(ADDITION_SCRIPT_NAME));
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 
@@ -204,7 +203,7 @@ public class LuaExecutionContextTest extends TestCase {
 		output = new StringWriter();
 		this.interpreter.setStandardOutput(output);
 		v = this.interpreter.runScript(makeFile(HELLO_WORLD_SCRIPT_NAME));
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("hello world\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 
@@ -212,7 +211,7 @@ public class LuaExecutionContextTest extends TestCase {
 		output = new StringWriter();
 		this.interpreter.setStandardOutput(output);
 		v = this.interpreter.runScript(makeFile(INTERPRETED_ADDITION_SCRIPT_NAME));
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("15\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 	}
@@ -225,7 +224,7 @@ public class LuaExecutionContextTest extends TestCase {
 		StringWriter output = new StringWriter();
 		this.interpreter.setStandardOutput(output);
 		Object v = this.interpreter.runScript(makeURL(ADDITION_SCRIPT_NAME));
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 
@@ -233,7 +232,7 @@ public class LuaExecutionContextTest extends TestCase {
 		output = new StringWriter();
 		this.interpreter.setStandardOutput(output);
 		v = this.interpreter.runScript(makeURL(HELLO_WORLD_SCRIPT_NAME));
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("hello world\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 
@@ -241,7 +240,7 @@ public class LuaExecutionContextTest extends TestCase {
 		output = new StringWriter();
 		this.interpreter.setStandardOutput(output);
 		v = this.interpreter.runScript(makeURL(INTERPRETED_ADDITION_SCRIPT_NAME));
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("15\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 	}
@@ -282,7 +281,7 @@ public class LuaExecutionContextTest extends TestCase {
 				"add", //$NON-NLS-1$
 				18,
 				27);
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 
@@ -293,7 +292,7 @@ public class LuaExecutionContextTest extends TestCase {
 				MY_PRINT_SCRIPT_NAME,
 				"myprint", //$NON-NLS-1$
 				"ab\"c"); //$NON-NLS-1$
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("ab\"c\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 	}
@@ -334,7 +333,7 @@ public class LuaExecutionContextTest extends TestCase {
 				"add", //$NON-NLS-1$
 				18,
 				27);
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 
@@ -345,7 +344,7 @@ public class LuaExecutionContextTest extends TestCase {
 				makeFile(MY_PRINT_SCRIPT_NAME),
 				"myprint", //$NON-NLS-1$
 				"ab\"c"); //$NON-NLS-1$
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("ab\"c\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 	}
@@ -386,7 +385,7 @@ public class LuaExecutionContextTest extends TestCase {
 				"add", //$NON-NLS-1$
 				18,
 				27);
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 
@@ -397,7 +396,7 @@ public class LuaExecutionContextTest extends TestCase {
 				makeURL(MY_PRINT_SCRIPT_NAME),
 				"myprint", //$NON-NLS-1$
 				"ab\"c"); //$NON-NLS-1$
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("ab\"c\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 	}
@@ -414,7 +413,7 @@ public class LuaExecutionContextTest extends TestCase {
 				"printMyMsg", //$NON-NLS-1$
 				new TestObject(" was printed"), //$NON-NLS-1$
 				"my message"); //$NON-NLS-1$
-		assertEquals(LuaValue.NONE, v);
+		assertNull(v);
 		assertEquals("my message was printed\n", output.toString()); //$NON-NLS-1$
 		this.listener.assertFalse();
 	}
