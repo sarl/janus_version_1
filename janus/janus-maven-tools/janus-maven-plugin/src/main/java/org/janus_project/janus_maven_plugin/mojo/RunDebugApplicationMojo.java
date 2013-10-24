@@ -60,13 +60,13 @@ public class RunDebugApplicationMojo extends AbstractJanusModuleMojo {
 		File binForCmd = new File(binDir, launcherFileName);
 
 		try {
-			info(
-					"Running command ", //$NON-NLS-1$
-					cmdsToString("java", "-jar", binForCmd), //$NON-NLS-1$ //$NON-NLS-2$
-					" on dir ", //$NON-NLS-1$
-					runDir.getAbsolutePath());
+			getLog().info(
+					"Running command "+ //$NON-NLS-1$
+							cmdsToString("java", "-jar", binForCmd)+ //$NON-NLS-1$ //$NON-NLS-2$
+							" on dir "+ //$NON-NLS-1$
+							runDir.getAbsolutePath());
 
-			info("\n\n========================================\n          Start Applicaton\n========================================\n\n\n"); //$NON-NLS-1$
+			getLog().info("\n\n========================================\n          Start Applicaton\n========================================\n\n\n"); //$NON-NLS-1$
 
 			Commandline cl = new Commandline("java"); //$NON-NLS-1$
 			cl.addArguments(new String[] { "-jar", binForCmd.getAbsolutePath() }); //$NON-NLS-1$
@@ -74,13 +74,13 @@ public class RunDebugApplicationMojo extends AbstractJanusModuleMojo {
 			StreamConsumer output = new CommandLineUtils.StringStreamConsumer() {
 				@Override
 				public void consumeLine(String line) {
-					RunDebugApplicationMojo.this.info(line);
+					getLog().info(line);
 				}
 			};
 			StreamConsumer error = new CommandLineUtils.StringStreamConsumer() {
 				@Override
 				public void consumeLine(String line) {
-					RunDebugApplicationMojo.this.info(line);
+					getLog().info(line);
 				}
 			};
 

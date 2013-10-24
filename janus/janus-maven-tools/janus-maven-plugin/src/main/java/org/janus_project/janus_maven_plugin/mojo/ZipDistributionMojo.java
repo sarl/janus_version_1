@@ -75,7 +75,7 @@ public class ZipDistributionMojo extends AbstractDistributionMojo {
 				if (dbgFile.exists())
 					dbgFile.delete();
 
-				info("NOTICE: ", DIST_DIR, " is in full release mode"); //$NON-NLS-1$ //$NON-NLS-2$
+				getLog().info("NOTICE: " + DIST_DIR + " is in full release mode"); //$NON-NLS-1$ //$NON-NLS-2$
 			} catch (Exception e) {
 				Utils.createMojoException(e, "Error while creating release layout [", //$NON-NLS-1$
 						this.launcher.get(PROP_GROUPID), ",", //$NON-NLS-1$
@@ -95,7 +95,7 @@ public class ZipDistributionMojo extends AbstractDistributionMojo {
 			throw new MojoExecutionException("Unknown Layout: "+this.layout); //$NON-NLS-1$
 		}
 
-		info("OSGi layout: ", layout.getName()); //$NON-NLS-1$
+		getLog().info("OSGi layout: " + layout.getName()); //$NON-NLS-1$
 
 		String cacheDirectory = layout.getCacheDir();
 

@@ -28,19 +28,17 @@ import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
+import org.apache.maven.repository.RepositorySystem;
 import org.arakhne.maven.AbstractArakhneMojo;
 import org.codehaus.plexus.util.FileUtils;
 import org.janus_project.janus_maven_plugin.layouts.EquinoxLayout;
 import org.janus_project.janus_maven_plugin.layouts.FelixLayout;
 import org.janus_project.janus_maven_plugin.layouts.Layout;
-import org.sonatype.aether.RepositorySystem;
-import org.sonatype.aether.RepositorySystemSession;
-import org.sonatype.aether.repository.RemoteRepository;
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 /**
  * Abstract implementation of a maven mojo for the Janus platform.
@@ -69,6 +67,14 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 	public final static String DEBUG_VERSION_FILE = "debugVersion"; //$NON-NLS-1$
 
 	/**
+	 * The layout to use: "equinox" or "felix".
+	 * 
+	 * @parameter
+	 * @required
+	 */
+	protected String layout;
+
+	/**
 	 * Location of the file.
 	 * 
 	 * @parameter property="project.build.directory"
@@ -94,21 +100,13 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 	 */
 	protected Map<String, String> launcher;
 
-	/**
-	 * The resolver used to get the launcher artifact jar.
-	 * 
-	 * @component
-	 */
-	protected ArtifactResolver resolver;
-
-	/**
-	 * The layout to use.
-	 * 
-	 * @parameter
-	 * @required
-	 */
-	protected String layout;
-
+//	/**
+//	 * The resolver used to get the launcher artifact jar.
+//	 * 
+//	 * @component
+//	 */
+//	protected ArtifactResolver resolver;
+//
 	/**
 	 * Directory where the configuration files are stored. <br/>
 	 * 
@@ -157,7 +155,7 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 	 * @parameter default-value="${repositorySystemSession}"
 	 * @readonly
 	 */
-	private RepositorySystemSession repoSession;
+	private Object repoSession;
 
 	/**
 	 * The project's remote repositories to use for the resolution of plugins and their dependencies.
@@ -165,7 +163,7 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 	 * @parameter default-value="${project.remotePluginRepositories}"
 	 * @readonly
 	 */
-	private List<RemoteRepository> remoteRepos;
+	private List<?> remoteRepos;
 
 	/**
 	 * @component
@@ -178,21 +176,11 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 	 * @readonly
 	 */
 	private MavenProjectBuilder mavenProjectBuilder;
-
-	/**
-	 * 
-	 * @return the maven artificat
-	 * @throws MojoExecutionException
-	 */
-	protected org.sonatype.aether.artifact.Artifact resolveLauncher() throws MojoExecutionException {
-		String groupId = this.launcher.get(AbstractArakhneMojo.PROP_GROUPID);
-		String artifactId = this.launcher.get(AbstractArakhneMojo.PROP_ARTIFACTID);
-		String version = this.launcher.get(AbstractArakhneMojo.PROP_VERSION);
-
-		org.sonatype.aether.artifact.Artifact launcherArtifact = super.resolveArtifact(groupId, artifactId, version);
-
-		return launcherArtifact;
-	}
+	
+	/** The context of building, compatible with M2E and CLI.
+     * @component
+     */
+    private BuildContext buildContext;
 
 	/**
 	 * Replies the current OSGi layout.
@@ -212,6 +200,21 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 		throw new MojoExecutionException(
 				"Unable to determine the OSGi layout: "+this.layout); //$NON-NLS-1$
 	}
+	
+	 /**
+     * 
+     * @return the maven artificat
+     * @throws MojoExecutionException
+     */
+    protected Artifact resolveLauncher() throws MojoExecutionException {
+            String groupId = this.launcher.get(AbstractArakhneMojo.PROP_GROUPID);
+            String artifactId = this.launcher.get(AbstractArakhneMojo.PROP_ARTIFACTID);
+            String version = this.launcher.get(AbstractArakhneMojo.PROP_VERSION);
+
+            Artifact launcherArtifact = resolveArtifact(groupId, artifactId, version);
+
+            return launcherArtifact;
+    }
 
 	/**
 	 * Replies the directory where the janus distribution should be.
@@ -254,7 +257,7 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RepositorySystemSession getRepositorySystemSession() {
+	public Object getRepositorySystemSession() {
 		return this.repoSession;
 	}
 
@@ -262,7 +265,7 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<RemoteRepository> getRemoteRepositoryList() {
+	public List<?> getRemoteRepositoryList() {
 		return this.remoteRepos;
 	}
 
@@ -314,6 +317,13 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 		return this.mavenProjectBuilder;
 	}
 
+	/** {@inheritDoc}
+	 */
+	@Override
+	public BuildContext getBuildContext() {
+		return this.buildContext;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -328,4 +338,5 @@ public abstract class AbstractJanusModuleMojo extends AbstractArakhneMojo {
 		assertNotNull("artifactHandlerManager", this.artifactHandlerManager); //$NON-NLS-1$
 		assertNotNull("mavenProjectBuilder", this.mavenProjectBuilder); //$NON-NLS-1$
 	}
+
 }

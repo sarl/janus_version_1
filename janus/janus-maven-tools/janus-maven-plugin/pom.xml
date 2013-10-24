@@ -58,7 +58,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.arakhne.afc</groupId>
+			<groupId>org.arakhne.afc.maven</groupId>
 			<artifactId>maventools</artifactId>
 		</dependency>
 	</dependencies>

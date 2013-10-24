@@ -25,8 +25,8 @@ import java.io.UnsupportedEncodingException;
 import org.janusproject.acl.ACLMessage;
 import org.janusproject.acl.ACLMessageContent;
 import org.janusproject.acl.encoding.ACLMessageContentEncodingService;
-import org.jdom.Document;
-import org.jdom.Element;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 
 /**

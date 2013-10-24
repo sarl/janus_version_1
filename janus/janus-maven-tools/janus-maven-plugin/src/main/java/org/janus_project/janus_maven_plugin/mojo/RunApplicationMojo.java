@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
@@ -77,7 +78,7 @@ public class RunApplicationMojo extends AbstractJanusModuleMojo {
 			throw new MojoExecutionException(e.getLocalizedMessage(), e);
 		}
 
-		org.sonatype.aether.artifact.Artifact launcherArtifact = resolveLauncher();
+		Artifact launcherArtifact = resolveLauncher();
 		
 		String launcherFileName = launcherArtifact.getFile().getName();
 		String binDirPath = resolveLayout().getBinDir();
@@ -101,13 +102,13 @@ public class RunApplicationMojo extends AbstractJanusModuleMojo {
 			params.add("-jar"); //$NON-NLS-1$
 			params.add(binForCmd.getAbsolutePath());
 			
-			info(
-					"Running command java on ", //$NON-NLS-1$
-					params.toString(),
-					" in dir ", //$NON-NLS-1$
+			getLog().info(
+					"Running command java on "+ //$NON-NLS-1$
+					params.toString()+
+					" in dir "+ //$NON-NLS-1$
 					runDir.getAbsolutePath());
 
-			info("\n\n========================================\n          Start Applicaton\n========================================\n\n\n"); //$NON-NLS-1$
+			getLog().info("\n\n========================================\n          Start Applicaton\n========================================\n\n\n"); //$NON-NLS-1$
 
 			Commandline cl = new Commandline("java"); //$NON-NLS-1$
 			String[] paramTab = new String[params.size()];
@@ -117,13 +118,13 @@ public class RunApplicationMojo extends AbstractJanusModuleMojo {
 			StreamConsumer output = new CommandLineUtils.StringStreamConsumer() {
 				@Override
 				public void consumeLine(String line) {
-					RunApplicationMojo.this.info(line);
+					getLog().info(line);
 				}
 			};
 			StreamConsumer error = new CommandLineUtils.StringStreamConsumer() {
 				@Override
 				public void consumeLine(String line) {
-					RunApplicationMojo.this.info(line);
+					getLog().info(line);
 				}
 			};
 

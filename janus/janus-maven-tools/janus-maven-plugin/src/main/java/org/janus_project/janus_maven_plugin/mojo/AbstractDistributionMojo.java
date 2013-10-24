@@ -86,7 +86,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 		if (layout == null) {
 			throw new MojoExecutionException("Unknown Layout: "+this.layout); //$NON-NLS-1$
 		}
-		info("OSGi layout: ", layout.getName()); //$NON-NLS-1$
+		getLog().info("OSGi layout: "+layout.getName()); //$NON-NLS-1$
 		return layout;
 	}
 
@@ -101,14 +101,14 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 	 * @throws IOException
 	 */
 	protected void distributeBins(File outDir, Layout layout) throws MojoExecutionException, IOException {
-		org.sonatype.aether.artifact.Artifact launcherArtifact = resolveLauncher();
+		Artifact launcherArtifact = resolveLauncher();
 
 		File binDir = new File(outDir, layout.getBinDir());
 		binDir.mkdirs();
 
 		this.mavenProject.getProperties().put(PROP_USED_LAUNCHER_FILE_NAME, launcherArtifact.getFile().getName());
 
-		info("Copying bin file: ", launcherArtifact.getFile().getName()); //$NON-NLS-1$
+		getLog().info("Copying bin file: " + launcherArtifact.getFile().getName()); //$NON-NLS-1$
 		FileUtils.copyFileToDirectory(launcherArtifact.getFile().getAbsolutePath(), binDir.getAbsolutePath());
 	}
 
@@ -150,7 +150,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 		List<Dependency> deps = new ArrayList<Dependency>(odeps == null ? Collections.<Dependency> emptyList() : odeps);
 		File artifactFile;
 		Dependency dep;
-		org.sonatype.aether.artifact.Artifact depArtifact;
+		Artifact depArtifact;
 		Iterator<Dependency> iterator;
 		while (!deps.isEmpty()) {
 			iterator = deps.iterator();
@@ -228,11 +228,11 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 				if (!this.excludes.contains(a.getArtifactId())) {//verify if the dependencies is not in the excluded artifiacts
 					depFile = getOSGiBundle(a);
 					if (depFile != null) {
-						info("Bundle detected for ", a.toString(), ": ", depFile); //$NON-NLS-1$ //$NON-NLS-2$
+						getLog().info("Bundle detected for " + a.toString() + ": " + depFile); //$NON-NLS-1$ //$NON-NLS-2$
 						deps.add(depFile);
 					}
 				} else {
-					info("Excluding", a.toString()); //$NON-NLS-1$ 
+					getLog().info("Excluding " + a.toString()); //$NON-NLS-1$ 
 				}
 			}
 		} else {
@@ -240,7 +240,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 				a = i.next();
 				depFile = getOSGiBundle(a);
 				if (depFile != null) {
-					info("Bundle detected for ", a.toString(), ": ", depFile); //$NON-NLS-1$ //$NON-NLS-2$
+					getLog().info("Bundle detected for " + a.toString() + ": " + depFile); //$NON-NLS-1$ //$NON-NLS-2$
 					deps.add(depFile);
 				}
 			}
@@ -281,7 +281,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 		while (iterator.hasNext()) {
 			File d = iterator.next();
 			// conf file
-			info("Copying OSGi bundle: ", d.getAbsolutePath()); //$NON-NLS-1$
+			getLog().info("Copying OSGi bundle: " + d.getAbsolutePath()); //$NON-NLS-1$
 			FileUtils.copyFileToDirectory(d.getAbsolutePath(), bundleDir.getAbsolutePath());
 		}
 
@@ -311,7 +311,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 		}
 
 		File originalLayoutDir = new File(originalConfDir.getParentFile(), layout.getName());
-		debug("Resolving Absolute Path to layout directory ", originalLayoutDir.getAbsolutePath()); //$NON-NLS-1$
+		getLog().debug("Resolving Absolute Path to layout directory " + originalLayoutDir.getAbsolutePath()); //$NON-NLS-1$
 		if (!originalLayoutDir.exists()) {
 			throw new MojoExecutionException("Layout Configuration File can not be found. A configuration file must be provided."); //$NON-NLS-1$
 		}
@@ -326,7 +326,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 		}
 
 		File platformConfigFile = new File(confDir, this.platformConfigFileName);
-		info("Creating platform configuration file: ", platformConfigFile.getAbsoluteFile()); //$NON-NLS-1$
+		getLog().info("Creating platform configuration file: " + platformConfigFile.getAbsoluteFile()); //$NON-NLS-1$
 		Utils.merge(originalConfDir, platformConfigFile, true);
 
 		// Copying the layout configuration file
@@ -337,7 +337,7 @@ public abstract class AbstractDistributionMojo extends AbstractJanusModuleMojo {
 		boolean isSameConfigFile = (this.platformConfigFileName.equals(this.launcher));
 
 		File layoutConfigFile = new File(confDir, this.layoutConfigFileName);
-		info("Creating OSGi layout configuration file: ", layoutConfigFile.getAbsoluteFile()); //$NON-NLS-1$
+		getLog().info("Creating OSGi layout configuration file: " + layoutConfigFile.getAbsoluteFile()); //$NON-NLS-1$
 		Utils.merge(originalLayoutDir, layoutConfigFile, !isSameConfigFile);
 	}
 

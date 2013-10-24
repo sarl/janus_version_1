@@ -55,7 +55,7 @@ public class CleanDistributionMojo extends AbstractJanusModuleMojo {
 			File workingDir = new File(this.outputDirectory, WORKING_DIR);
 			if (workingDir.isDirectory()) {
 				try {
-					info("Deleting directory: ", workingDir.getAbsolutePath()); //$NON-NLS-1$
+					getLog().info("Deleting directory: "+workingDir.getAbsolutePath()); //$NON-NLS-1$
 					FileUtils.deleteDirectory(workingDir);
 				}
 				catch (IOException e) {
@@ -65,7 +65,7 @@ public class CleanDistributionMojo extends AbstractJanusModuleMojo {
 
 			File cleanDir = getJanusDistDirectory();
 			if (cleanDir.isDirectory()) {
-				info("Deleting directory: ", cleanDir.getAbsolutePath()); //$NON-NLS-1$
+				getLog().info("Deleting directory: "+cleanDir.getAbsolutePath()); //$NON-NLS-1$
 				FileUtils.deleteDirectory(cleanDir);
 			}
 
@@ -76,7 +76,7 @@ public class CleanDistributionMojo extends AbstractJanusModuleMojo {
 			File zip = new File(this.outputDirectory, realFilename.toString());
 
 			if (zip.exists()) {
-				info("Deleting file: ", zip.getAbsolutePath()); //$NON-NLS-1$
+				getLog().info("Deleting file: "+zip.getAbsolutePath()); //$NON-NLS-1$
 				FileUtils.forceDelete(zip);
 			}
 		}

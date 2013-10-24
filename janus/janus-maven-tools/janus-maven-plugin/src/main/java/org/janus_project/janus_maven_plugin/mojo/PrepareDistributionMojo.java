@@ -57,7 +57,7 @@ public class PrepareDistributionMojo extends AbstractDistributionMojo {
 			File dbgFile = new File(outDir, DEBUG_VERSION_FILE);
 			if (dbgFile.exists()) dbgFile.delete();
 			
-			info("NOTICE: ", DIST_DIR, " is in full release mode"); //$NON-NLS-1$ //$NON-NLS-2$
+			getLog().info("NOTICE: " + DIST_DIR + " is in full release mode"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		catch (Exception e) {
 			Utils.createMojoException(e,
