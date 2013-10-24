@@ -20,9 +20,8 @@
  */
 package org.janusproject.demos.simulation.boids.agent;
 
-import javax.vecmath.Vector2d;
-
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.simulation.boids.organization.Boid;
 import org.janusproject.demos.simulation.boids.organization.BoidOrganization;
 import org.janusproject.demos.simulation.boids.util.Population;
@@ -49,15 +48,15 @@ public class BoidAgent extends Agent {
 	private static final long serialVersionUID = -2346639047149740958L;
 	
 	private final Population p;
-	private final Vector2d initialPosition;
-	private final Vector2d initialSpeed;
+	private final Vector2f initialPosition;
+	private final Vector2f initialSpeed;
 
 	/**
 	 * @param p - la population auquel appartient ce boid
 	 * @param initialPosition - sa position initiale dans l'environnement
 	 * @param initialVitesse - sa vitesse initiale
 	 */
-	public BoidAgent(Population p, Vector2d initialPosition, Vector2d initialVitesse) {
+	public BoidAgent(Population p, Vector2f initialPosition, Vector2f initialVitesse) {
 		super(true);
 		this.p = p;
 		this.initialPosition = initialPosition;

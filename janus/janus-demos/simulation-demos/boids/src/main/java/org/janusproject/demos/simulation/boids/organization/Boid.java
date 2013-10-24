@@ -23,14 +23,13 @@ package org.janusproject.demos.simulation.boids.organization;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.vecmath.Vector2d;
-
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.math.MathUtil;
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.simulation.boids.organization.messages.ActionMessage;
 import org.janusproject.demos.simulation.boids.organization.messages.BoidArrivalMessage;
 import org.janusproject.demos.simulation.boids.organization.messages.KillBoidMessage;
 import org.janusproject.demos.simulation.boids.organization.messages.PerceptionMessage;
-import org.janusproject.demos.simulation.boids.util.MathUtil;
 import org.janusproject.demos.simulation.boids.util.PerceivedBoidBody;
 import org.janusproject.demos.simulation.boids.util.Population;
 import org.janusproject.demos.simulation.boids.util.Settings;
@@ -73,19 +72,19 @@ import org.janusproject.kernel.status.StatusFactory;
  * @mavenartifactid $ArtifactId$
  */
 @RoleActivationPrototype(
-		fixedParameters={Population.class, Vector2d.class, Vector2d.class}
+		fixedParameters={Population.class, Vector2f.class, Vector2f.class}
 )
 public class Boid extends Role {
 	
 	/**
 	 * Position of the boid
 	 */
-	private final Vector2d position;
+	private final Vector2f position;
 	
 	/**
 	 * Velocity vector of the boid.
 	 */
-	private final Vector2d orientation;
+	private final Vector2f orientation;
 	
 	/**
 	 * The group inside which the boid is.
@@ -104,8 +103,8 @@ public class Boid extends Role {
 	 */
 	public Boid() {
 		super();
-		this.position     = new Vector2d();
-		this.orientation      = new Vector2d();		
+		this.position     = new Vector2f();
+		this.orientation      = new Vector2f();		
 	}
 	
 	
@@ -117,25 +116,25 @@ public class Boid extends Role {
 	 * @param initialPosition is the initial position of the boid
 	 * @param initialSpeed is the initial speed of the boid
 	 */
-	private void init(Population p, Vector2d initialPosition, Vector2d initialSpeed) {
+	private void init(Population p, Vector2f initialPosition, Vector2f initialSpeed) {
 		this.group = p;
 		
 		// initialisation de la this.position
 		if (initialPosition==null)
 			this.position.set(
-					(Math.random() - 0.5)*Settings.ENVIRONMENT_DEMI_WIDTH, 
-					(Math.random() - 0.5)*Settings.ENVIRONMENT_DEMI_HEIGHT);
+					(float)(Math.random() - 0.5)*Settings.ENVIRONMENT_DEMI_WIDTH, 
+					(float)(Math.random() - 0.5)*Settings.ENVIRONMENT_DEMI_HEIGHT);
 		else
 			this.position.set(initialPosition);
 				
 		// initialisation de la vitesse
 		if (initialSpeed==null)
-			this.orientation.set(Math.random() - 0.5, Math.random() - 0.5	);
+			this.orientation.set((float)(Math.random() - 0.5), (float)(Math.random() - 0.5	));
 		else
 			this.orientation.set(initialSpeed);
 		
 		this.orientation.normalize();
-		this.orientation.scaleAdd(0.25, new Vector2d(0,0.75));
+		this.orientation.scaleAdd(0.25f, new Vector2f(0,0.75));
 		this.orientation.scale(this.group.maxSpeed);
 		
 		this.current = State.PRESENTATION;
@@ -148,7 +147,7 @@ public class Boid extends Role {
 	 */
 	@Override
 	public Status activate(Object... parameters) {
-		init((Population)parameters[0], (Vector2d)parameters[1], (Vector2d)parameters[2]);
+		init((Population)parameters[0], (Vector2f)parameters[1], (Vector2f)parameters[2]);
 		return StatusFactory.ok(this);
 	}
 	
@@ -216,8 +215,8 @@ public class Boid extends Role {
 	 */
 	private void think(Collection<PerceivedBoidBody> perception) {
 		if (perception==null) return;
-		Vector2d force;
-		Vector2d influence = new Vector2d();
+		Vector2f force;
+		Vector2f influence = new Vector2f();
 
 		influence.set(0,0);
 
@@ -273,7 +272,7 @@ public class Boid extends Role {
 		}
 
 		// Mass contribution
-		influence.scale( 1. / this.group.mass );
+		influence.scale( 1.f / this.group.mass );
 
 		//Act: send influence to environment
 		act(influence);
@@ -284,7 +283,7 @@ public class Boid extends Role {
 	 * 
 	 * @param force is the force computed by the boid.
 	 */
-	public void act(Vector2d force) {
+	public void act(Vector2f force) {
 		sendMessage(Environment.class, new ActionMessage(force));
 		print(Locale.getString(Boid.class,
 				"BOID_ACTION", getPlayer(), force)); //$NON-NLS-1$
@@ -301,16 +300,16 @@ public class Boid extends Role {
 	 * otherwise <code>false</code>
 	 */
 	private boolean isVisible(PerceivedBoidBody otherBoid, double distance) {
-		Vector2d tmp;
+		Vector2f tmp;
 		
-		tmp = new Vector2d(otherBoid.getPosition());
+		tmp = new Vector2f(otherBoid.getPosition());
 		tmp.sub(this.position);
 		
 		// si on est trop loin tand-pis.
 		if ( tmp.length() > distance )
 			return false;
 				
-		double angle = MathUtil.signedAngle(this.orientation.x, this.orientation.y, tmp.x, tmp.y);
+		double angle = MathUtil.signedAngle(this.orientation.getX(), this.orientation.getY(), tmp.getX(), tmp.getY());
 		
 		return ( Math.abs(angle) <= this.group.visibleAngle);
 	}
@@ -319,10 +318,10 @@ public class Boid extends Role {
 	 * Replies the force required to separate from the group.
 	 * @return the force required to separate from the group.
 	 */
-	private Vector2d separation(Collection<PerceivedBoidBody> otherBoids) {
-		Vector2d tmp = new Vector2d();
-		Vector2d force = new Vector2d();
-		double   len;
+	private Vector2f separation(Collection<PerceivedBoidBody> otherBoids) {
+		Vector2f tmp = new Vector2f();
+		Vector2f force = new Vector2f();
+		float   len;
 
 		force.set(0,0);
 		for (PerceivedBoidBody otherBoid : otherBoids) {
@@ -333,7 +332,7 @@ public class Boid extends Role {
 				tmp.sub(otherBoid.getPosition());
 				len = tmp.length();
 				// force en 1/r
-				tmp.scale( 1. / (len*len) );
+				tmp.scale( 1.f / (len*len) );
 				force.add(tmp);
 			}
 		}
@@ -344,9 +343,9 @@ public class Boid extends Role {
 	 * Replies the force required to stay in cohesion with the group.
 	 * @return the force required to stay in cohesion with the group.
 	 */
-	private Vector2d cohesion(Collection<PerceivedBoidBody> otherBoids) {
+	private Vector2f cohesion(Collection<PerceivedBoidBody> otherBoids) {
 		int nbTot = 0;
-		Vector2d force = new Vector2d();
+		Vector2f force = new Vector2f();
 		force.set(0,0);
 		for (PerceivedBoidBody otherBoid : otherBoids) {
 			if ((!otherBoid.getAddress().equals(getPlayer()))
@@ -360,7 +359,7 @@ public class Boid extends Role {
 		
 		// compute barycenter...
 		if (nbTot > 0) {
-			force.scale(1. / nbTot);
+			force.scale(1.f / nbTot);
 			force.sub(this.position);
 		}
 		return force;
@@ -370,10 +369,10 @@ public class Boid extends Role {
 	 * Reploes the force required to be aligned on other boids.
 	 * @return the force required to be aligned on other boids.
 	 */
-	private Vector2d alignement(Collection<PerceivedBoidBody> otherBoids) {
+	private Vector2f alignement(Collection<PerceivedBoidBody> otherBoids) {
 		int nbTot = 0;
-		Vector2d tmp = new Vector2d();
-		Vector2d force = new Vector2d();
+		Vector2f tmp = new Vector2f();
+		Vector2f force = new Vector2f();
 		force.set(0,0);
 		
 		for (PerceivedBoidBody otherBoid : otherBoids) {
@@ -383,13 +382,13 @@ public class Boid extends Role {
 				&& (isVisible(otherBoid,this.group.alignmentDistance))) {
 				++nbTot;
 				tmp.set(otherBoid.getOrientation());
-				tmp.scale( 1. / tmp.length() );
+				tmp.scale( 1.f / tmp.length() );
 				force.add(tmp);
 			}
 		}
 		
 		if (nbTot > 0) {
-			force.scale( 1. / nbTot );
+			force.scale( 1.f / nbTot );
 			/*Vector3d pcross = new Vector3d();//FAUX
 			pcross.cross(new Vector3d(vitesse.x,vitesse.y,0),new Vector3d(force.x,force.y,0));
 			pcross.scale(force.length());
@@ -403,10 +402,10 @@ public class Boid extends Role {
 	 * Replies the force to keep repulsed by other boids.
 	 * @return the force to keep repulsed by other boids.
 	 */
-	private Vector2d repulsion(Collection<PerceivedBoidBody> otherBoids) {
-		Vector2d force = new Vector2d();
-		Vector2d tmp= new Vector2d();
-		double   len;
+	private Vector2f repulsion(Collection<PerceivedBoidBody> otherBoids) {
+		Vector2f force = new Vector2f();
+		Vector2f tmp= new Vector2f();
+		float   len;
 		
 		force.set(0,0);
 		for (PerceivedBoidBody otherBoid : otherBoids) {
@@ -416,7 +415,7 @@ public class Boid extends Role {
 					tmp.set(this.position);
 					tmp.sub(otherBoid.getPosition());
 					len = tmp.length();
-					tmp.scale( 1. / (len*len) );
+					tmp.scale( 1.f / (len*len) );
 					force.add(tmp);
 			}
 		}
@@ -428,31 +427,31 @@ public class Boid extends Role {
      * Here obstacles are the borders of the environment.
      * @return the force to avoid collision on obstacles.
      */
-    private Vector2d obstacles() {
-        Vector2d tmp= new Vector2d();
-        Vector2d force= new Vector2d();
+    private Vector2f obstacles() {
+        Vector2f tmp= new Vector2f();
+        Vector2f force= new Vector2f();
         force.set(0,0);
 
-        if (((Settings.ENVIRONMENT_DEMI_WIDTH-this.position.x)<Settings.OBSTACLE_DISTANCE)
-        	&& this.orientation.x>0) {
-            tmp.set(-this.orientation.x/(Settings.ENVIRONMENT_DEMI_WIDTH-this.position.x),0);
+        if (((Settings.ENVIRONMENT_DEMI_WIDTH-this.position.getX())<Settings.OBSTACLE_DISTANCE)
+        	&& this.orientation.getX()>0) {
+            tmp.set(-this.orientation.getX()/(Settings.ENVIRONMENT_DEMI_WIDTH-this.position.getX()),0);
             force.add(tmp);                    
         }
-        if ((this.position.x<-Settings.ENVIRONMENT_DEMI_WIDTH+Settings.OBSTACLE_DISTANCE)
-        	&& this.orientation.x<0) {
-            tmp.set(-this.orientation.x/(Settings.ENVIRONMENT_DEMI_WIDTH+this.position.x),0);
+        if ((this.position.getX()<-Settings.ENVIRONMENT_DEMI_WIDTH+Settings.OBSTACLE_DISTANCE)
+        	&& this.orientation.getX()<0) {
+            tmp.set(-this.orientation.getX()/(Settings.ENVIRONMENT_DEMI_WIDTH+this.position.getX()),0);
             force.add(tmp);                    
         }
 
-        if ((this.position.y>Settings.ENVIRONMENT_DEMI_HEIGHT-Settings.OBSTACLE_DISTANCE)
-        	&& this.orientation.y>0) {
-            tmp.set(0,-this.orientation.y/(Settings.ENVIRONMENT_DEMI_HEIGHT-this.position.y));
+        if ((this.position.getY()>Settings.ENVIRONMENT_DEMI_HEIGHT-Settings.OBSTACLE_DISTANCE)
+        	&& this.orientation.getY()>0) {
+            tmp.set(0,-this.orientation.getY()/(Settings.ENVIRONMENT_DEMI_HEIGHT-this.position.getY()));
             force.add(tmp);                    
         }
     
-        if ((this.position.y<-Settings.ENVIRONMENT_DEMI_HEIGHT+Settings.OBSTACLE_DISTANCE)
-        	&& this.orientation.y<0) {
-            tmp.set(0,-this.orientation.y/(Settings.ENVIRONMENT_DEMI_HEIGHT+this.position.y));
+        if ((this.position.getY()<-Settings.ENVIRONMENT_DEMI_HEIGHT+Settings.OBSTACLE_DISTANCE)
+        	&& this.orientation.getY()<0) {
+            tmp.set(0,-this.orientation.getY()/(Settings.ENVIRONMENT_DEMI_HEIGHT+this.position.getY()));
             force.add(tmp);                    
         }    
 

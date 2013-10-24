@@ -104,13 +104,13 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>vecmath</artifactId>
+			<groupId>org.janus-project.kernel</groupId>
+			<artifactId>kernel</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
-			<artifactId>kernel</artifactId>
+			<groupId>org.arakhne.afc.core</groupId>
+			<artifactId>math</artifactId>
 		</dependency>
 
 		<dependency>

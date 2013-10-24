@@ -37,9 +37,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.vecmath.Vector2d;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.math.MathUtil;
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.vmutil.locale.Locale;
 
 /**
  * Graphic User Interface for the Boid demo.
@@ -106,7 +107,7 @@ public class EnvironmentGUI extends JPanel {
 	 * 
 	 * @return the position of the mouse on the panel.
 	 */
-	public Vector2d getUserPosition() {
+	public Vector2f getUserPosition() {
 		return this.internalPanel.getUserPosition();
 	}
 
@@ -114,7 +115,7 @@ public class EnvironmentGUI extends JPanel {
 	 * 
 	 * @return the motion of the mouse on the panel.
 	 */
-	public Vector2d getUserDirection() {
+	public Vector2f getUserDirection() {
 		return this.internalPanel.getUserDirection();
 	}
 
@@ -209,11 +210,11 @@ public class EnvironmentGUI extends JPanel {
 		 * 
 		 * @return the position of the mouse on the panel.
 		 */
-		public synchronized Vector2d getUserPosition() {
+		public synchronized Vector2f getUserPosition() {
 			Point m = this.mousePosition;
 			Population p = this.selectedPopulation;
 			if (m==null || p==null) return null;
-			return new Vector2d(
+			return new Vector2f(
 					m.x - this.demiWidth,
 					m.y - this.demiHeight);
 		}
@@ -222,13 +223,13 @@ public class EnvironmentGUI extends JPanel {
 		 * 
 		 * @return the motion of the mouse on the panel.
 		 */
-		public synchronized Vector2d getUserDirection() {
+		public synchronized Vector2f getUserDirection() {
 			Point lm = new Point(this.lastMousePosition);
 			Point m = this.mousePosition;
 			Population p = this.selectedPopulation;
 			if (m==null || p==null) return null;
-			Vector2d v = new Vector2d(m.x, m.y);
-			v.sub(new Vector2d(lm.x, lm.y));
+			Vector2f v = new Vector2f(m.x, m.y);
+			v.sub(new Vector2f(lm.x, lm.y));
 			if (v.length()!=0) v.normalize();
 			return v;
 		}
@@ -278,16 +279,16 @@ public class EnvironmentGUI extends JPanel {
 		 * @param direction is the direction of the boid.
 		 * @param groupColor is the color of the group.
 		 */
-		private void paintBoid(Graphics2D g2d, Vector2d position, Vector2d direction, Color groupColor) {
+		private void paintBoid(Graphics2D g2d, Vector2f position, Vector2f direction, Color groupColor) {
 			int posX;
 			int posY;
 			double cos;
 			double sin;
 
-			posX = this.demiWidth + (int)position.x;
-			posY = this.demiHeight + (int)position.y;
+			posX = this.demiWidth + (int)position.getX();
+			posY = this.demiHeight + (int)position.getY();
 			
-			double angle = MathUtil.signedAngle(1, 0, direction.x, direction.y);
+			float angle = MathUtil.signedAngle(1, 0, direction.getX(), direction.getY());
 			
 			cos = Math.cos(angle);
 			sin = Math.sin(angle);

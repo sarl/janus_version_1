@@ -20,8 +20,7 @@
  */
 package org.janusproject.demos.simulation.boids.util;
 
-import javax.vecmath.Vector2d;
-
+import org.arakhne.afc.math.continous.object2d.Vector2f;
 import org.janusproject.kernel.address.AgentAddress;
 
 /**
@@ -37,7 +36,7 @@ public class PerceivedBoidBody {
 	/**
 	 * Boid position
 	 */
-	private final Vector2d position;
+	private final Vector2f position;
 	/**
 	 * Address of the body owner.
 	 */
@@ -45,11 +44,11 @@ public class PerceivedBoidBody {
 	/**
 	 * Speed of the boid.
 	 */
-	private final Vector2d orientation;
+	private final Vector2f orientation;
 	/**
 	 * Boid acceleration
 	 */
-	private final Vector2d acceleration;
+	private final Vector2f acceleration;
 	/**
 	 * Population in which the boid is.
 	 */
@@ -61,11 +60,11 @@ public class PerceivedBoidBody {
 	 * @param iposition
 	 * @param ivitesse
 	 */
-	public PerceivedBoidBody(Population igroupe, AgentAddress iaddress, Vector2d iposition, Vector2d ivitesse) {
-		this.position = new Vector2d(iposition);
+	public PerceivedBoidBody(Population igroupe, AgentAddress iaddress, Vector2f iposition, Vector2f ivitesse) {
+		this.position = new Vector2f(iposition);
 		this.address = iaddress;
-		this.orientation = new Vector2d(ivitesse);
-		this.acceleration = new Vector2d();
+		this.orientation = new Vector2f(ivitesse);
+		this.acceleration = new Vector2f();
 		this.group = igroupe;
 	}
 
@@ -83,7 +82,7 @@ public class PerceivedBoidBody {
 	 * 
 	 * @return the position of this body.
 	 */
-	public Vector2d getPosition() {
+	public Vector2f getPosition() {
 		return this.position;
 	}
 
@@ -92,7 +91,7 @@ public class PerceivedBoidBody {
 	 * 
 	 * @return the orientation of this body.
 	 */
-	public Vector2d getOrientation() {
+	public Vector2f getOrientation() {
 		return this.orientation;
 	}
 
@@ -110,7 +109,7 @@ public class PerceivedBoidBody {
 	 * 
 	 * @return the acceleration of this body.
 	 */
-	public Vector2d getAcceleration() {
+	public Vector2f getAcceleration() {
 		return this.acceleration;
 	}
 
@@ -119,7 +118,7 @@ public class PerceivedBoidBody {
 	 * 
 	 * @param newPosition
 	 */
-	public void setPosition(Vector2d newPosition) {
+	public void setPosition(Vector2f newPosition) {
 		assert(newPosition!=null);
 		this.position.set(newPosition);
 	}
@@ -129,7 +128,7 @@ public class PerceivedBoidBody {
 	 * 
 	 * @param newSpeed
 	 */
-	public void setOrientation(Vector2d newSpeed) {
+	public void setOrientation(Vector2f newSpeed) {
 		assert(newSpeed!=null);
 		this.orientation.set(newSpeed);
 	}
@@ -139,7 +138,7 @@ public class PerceivedBoidBody {
 	 * 
 	 * @param newAcceleration
 	 */
-	public void setAcceleration(Vector2d newAcceleration) {
+	public void setAcceleration(Vector2f newAcceleration) {
 		assert(newAcceleration!=null);
 		this.acceleration.set(newAcceleration);
 	}

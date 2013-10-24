@@ -40,12 +40,12 @@ public class Settings {
      * Distance under which obstacles are taken into account
      * by boids.
      */
-	public  static final double OBSTACLE_DISTANCE  =  20;
+	public  static final float OBSTACLE_DISTANCE  =  20f;
 	
 	/**
      * Adapation factor for obstacles in boids's force computation.
      */
-    public  static final double OBSTACLE_FORCE  =    80.0;
+    public  static final float OBSTACLE_FORCE  =    80.0f;
     
 	/**
 	 * Demi-width of the environment.

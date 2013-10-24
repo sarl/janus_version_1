@@ -20,8 +20,7 @@
  */
 package org.janusproject.demos.simulation.boids.organization.messages;
 
-import javax.vecmath.Vector2d;
-
+import org.arakhne.afc.math.continous.object2d.Vector2f;
 import org.janusproject.demos.simulation.boids.util.Population;
 import org.janusproject.kernel.message.AbstractContentMessage;
 
@@ -39,15 +38,15 @@ public class BoidArrivalMessage extends AbstractContentMessage<Object[]> {
 	private static final long serialVersionUID = 2426090721149754248L;
 	
 	private final Population population; 
-	private final Vector2d initialPosition; 
-	private final Vector2d initialSpeed;
+	private final Vector2f initialPosition; 
+	private final Vector2f initialSpeed;
 	
 	/**
 	 * @param group is the group of the boid.
 	 * @param position is the initial position of the boid when joining the group.
 	 * @param speed is the initial speed of the boid when joining the group.
 	 */
-	public BoidArrivalMessage(Population group, Vector2d position, Vector2d speed) {
+	public BoidArrivalMessage(Population group, Vector2f position, Vector2f speed) {
 		this.population = group;
 		this.initialPosition = position;
 		this.initialSpeed = speed;
@@ -65,7 +64,7 @@ public class BoidArrivalMessage extends AbstractContentMessage<Object[]> {
 	 * 
 	 * @return the initial position for a boid.
 	 */
-	public Vector2d getInitialPosition() {
+	public Vector2f getInitialPosition() {
 		return this.initialPosition;
 	}
 
@@ -73,7 +72,7 @@ public class BoidArrivalMessage extends AbstractContentMessage<Object[]> {
 	 * 
 	 * @return the initial speed for a boid.
 	 */
-	public Vector2d getInitialSpeed() {
+	public Vector2f getInitialSpeed() {
 		return this.initialSpeed;
 	}
 

@@ -36,42 +36,42 @@ public class Population {
 	/**
 	 * Default repulsion force.
 	 */
-    public static final double DEFAULT_REPULSION_FORCE = 5.0;
+    public static final float DEFAULT_REPULSION_FORCE = 5.0f;
 
 	/**
 	 * Default separation force.
 	 */
-    public static final double DEFAULT_SEPARATION_FORCE = 1.0;
+    public static final float DEFAULT_SEPARATION_FORCE = 1.0f;
 
 	/**
 	 * Default cohesion force.
 	 */
-    public static final double DEFAULT_COHESION_FORCE = 0.0001;
+    public static final float DEFAULT_COHESION_FORCE = 0.0001f;
 
 	/**
 	 * Default alignment force.
 	 */
-    public static final double DEFAULT_ALIGNEMENT_FORCE = 1.0;
+    public static final float DEFAULT_ALIGNEMENT_FORCE = 1.0f;
 
 	/**
 	 * Default repulsion distance.
 	 */
-    public static final double DEFAULT_REPULSION_DIST = 100.0;
+    public static final float DEFAULT_REPULSION_DIST = 100.0f;
 
 	/**
 	 * Default separation distance.
 	 */
-    public static final double DEFAULT_SEPARATION_DIST = 10.0;
+    public static final float DEFAULT_SEPARATION_DIST = 10.0f;
 
     /**
 	 * Default cohesion distance.
 	 */
-    public static final double DEFAULT_COHESION_DIST = 100.0;
+    public static final float DEFAULT_COHESION_DIST = 100.0f;
 
 	/**
 	 * Default alignment distance.
 	 */
-    public static final double DEFAULT_ALIGNMENT_DIST = 100.0;
+    public static final float DEFAULT_ALIGNMENT_DIST = 100.0f;
 
 	/**
 	 * Default count of boids.
@@ -84,23 +84,23 @@ public class Population {
     
     /** Max speed for boids in this population.
      */
-    public final double maxSpeed;
+    public final float maxSpeed;
 
     /** Max force for boids in this population.
      */
-    public final double maxForce;
+    public final float maxForce;
 
     /** Field of view of boids in this population.
      */
-    public final double visibleAngle;
+    public final float visibleAngle;
 
     /** Mass of boids in this population.
      */
-    public final double mass;
+    public final float mass;
     
     /** Norm of the acceleration for boids.
      */
-    public final double acceleration;
+    public final float acceleration;
 
     /** Indicates if cohesion may be computed in this population.
      */
@@ -117,28 +117,28 @@ public class Population {
     
     /** Separation force for this group.
      */
-    public final double separationForce;
+    public final float separationForce;
     /** Cohesion force for this group.
      */
-    public final double cohesionForce;
+    public final float cohesionForce;
     /** Alignement force for this group.
      */
-    public final double alignmentForce;
+    public final float alignmentForce;
     /** Repulsion force for this group.
      */
-    public final double repulsionForce;
+    public final float repulsionForce;
     /** Separation distance for this group.
      */
-    public final double separationDistance;
+    public final float separationDistance;
     /** Cohesion distance for this group.
      */
-    public final double cohesionDistance;
+    public final float cohesionDistance;
     /** Alignement distance for this group.
      */
-    public final double alignmentDistance;
+    public final float alignmentDistance;
     /** Repulsion distance for this group.
      */
-    public final double repulsionDistance;
+    public final float repulsionDistance;
     /** Name of the population.
      */
     public final String name;
@@ -152,10 +152,10 @@ public class Population {
     	this.name = name;
 		this.color = col;
 		this.maxSpeed = 2;
-		this.maxForce = 1.7;
-		this.visibleAngle = Math.toRadians(90.);
-		this.mass = 1.0;
-		this.acceleration = 0.85;
+		this.maxForce = 1.7f;
+		this.visibleAngle = (float)Math.toRadians(90.);
+		this.mass = 1.0f;
+		this.acceleration = 0.85f;
 		this.separationForce = DEFAULT_SEPARATION_FORCE;
 		this.cohesionForce = DEFAULT_COHESION_FORCE;
 		this.alignmentForce = DEFAULT_ALIGNEMENT_FORCE;

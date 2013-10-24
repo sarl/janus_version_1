@@ -25,9 +25,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.vecmath.Vector2d;
-
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.simulation.boids.capacity.EnvironmentRefreshCapacity;
 import org.janusproject.demos.simulation.boids.capacity.RetreiveBoidsCapacity;
 import org.janusproject.demos.simulation.boids.organization.messages.ActionMessage;
@@ -172,8 +171,8 @@ public class Environment extends Role {
 	private boolean addBoid(
 			Map<AgentAddress,PerceivedBoidBody> boids,
 			AgentAddress boidAddress,
-			Vector2d initialPosition,
-			Vector2d initialSpeed,
+			Vector2f initialPosition,
+			Vector2f initialSpeed,
 			Population population) {
 		if (!boids.containsKey(boidAddress)) {
 			print(Locale.getString(Environment.class,
@@ -221,7 +220,7 @@ public class Environment extends Role {
 	 * @param force is the force given by a boid.
 	 * @param b is the boid body to move.
 	 */
-	private static void applyForce(Vector2d force, PerceivedBoidBody b) {
+	private static void applyForce(Vector2f force, PerceivedBoidBody b) {
 		// on borne la force appliquee.
 		if (force.length() > b.getGroup().maxForce) {
 			force.normalize();
@@ -232,9 +231,9 @@ public class Environment extends Role {
 		//force.scale( 1. / b.getGroup().mass );
 		
 		// mise a jour de l'acceleration et de la vitesse.
-		Vector2d acceleration = new Vector2d(b.getAcceleration());
+		Vector2f acceleration = new Vector2f(b.getAcceleration());
 		acceleration.add(force);
-		Vector2d orientation = new Vector2d(b.getOrientation());
+		Vector2f orientation = new Vector2f(b.getOrientation());
 		orientation.add(acceleration);
 		
 		// Bounds the orientation
@@ -244,7 +243,7 @@ public class Environment extends Role {
 		}
 		
 		// on met a jour la position
-		Vector2d position = new Vector2d(b.getPosition());
+		Vector2f position = new Vector2f(b.getPosition());
 		position.add(orientation);
 		
 		b.setAcceleration(acceleration);
@@ -262,8 +261,8 @@ public class Environment extends Role {
             double posX;
             double posY;
 
-            posX = b.getPosition().x;
-            posY = b.getPosition().y;
+            posX = b.getPosition().getX();
+            posY = b.getPosition().getY();
             if (Settings.WALL_AVOIDENCE) {
                 if ( posX > Settings.ENVIRONMENT_DEMI_WIDTH )           posX = Settings.ENVIRONMENT_DEMI_WIDTH-0.1;
                 if ( posX < ( -1 * Settings.ENVIRONMENT_DEMI_WIDTH ) )  posX = -Settings.ENVIRONMENT_DEMI_WIDTH+0.1;
@@ -278,7 +277,7 @@ public class Environment extends Role {
                 if ( posY < ( -1 * Settings.ENVIRONMENT_DEMI_HEIGHT ) )  posY += 2 * Settings.ENVIRONMENT_DEMI_HEIGHT;
             }
 
-            b.setPosition(new Vector2d(posX,posY));
+            b.setPosition(new Vector2f(posX,posY));
     }
 	
 	

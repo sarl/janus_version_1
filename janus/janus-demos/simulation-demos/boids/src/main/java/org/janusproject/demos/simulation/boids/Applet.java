@@ -24,15 +24,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JApplet;
-import javax.vecmath.Vector2d;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.simulation.boids.agent.BoidAgent;
 import org.janusproject.demos.simulation.boids.agent.EnvironmentAgent;
 import org.janusproject.demos.simulation.boids.util.Population;
 import org.janusproject.demos.simulation.boids.util.Settings;
-import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.Kernel;
+import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.logger.LoggerUtil;
 
@@ -100,8 +100,8 @@ public class Applet extends JApplet {
 	}
 
 	private static AgentAddress addBoid(Kernel kernel, Population p, String name) {
-		Vector2d initialPosition = new Vector2d((Math.random() - 0.5)*Settings.ENVIRONMENT_DEMI_WIDTH, (Math.random() - 0.5)*Settings.ENVIRONMENT_DEMI_HEIGHT);
-		Vector2d initialSpeed = new Vector2d(Math.random() - 0.5, Math.random() - 0.5);
+		Vector2f initialPosition = new Vector2f((Math.random() - 0.5)*Settings.ENVIRONMENT_DEMI_WIDTH, (Math.random() - 0.5)*Settings.ENVIRONMENT_DEMI_HEIGHT);
+		Vector2f initialSpeed = new Vector2f(Math.random() - 0.5, Math.random() - 0.5);
 		
 		BoidAgent boid = new BoidAgent(p, initialPosition, initialSpeed);
 		

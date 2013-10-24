@@ -20,8 +20,7 @@
  */
 package org.janusproject.demos.simulation.boids.util;
 
-import javax.vecmath.Vector2d;
-
+import org.arakhne.afc.math.continous.object2d.Vector2f;
 import org.janusproject.kernel.address.AgentAddress;
 
 /**
@@ -37,7 +36,7 @@ public class PerceivedShadowBody extends PerceivedBoidBody {
 
 	/** Relative position for the center of the shadow group.
 	 */
-	private final Vector2d groupPosition;
+	private final Vector2f groupPosition;
 	
 	/**
 	 * @param group
@@ -47,7 +46,7 @@ public class PerceivedShadowBody extends PerceivedBoidBody {
 	 * @param groupPosition
 	 */
 	public PerceivedShadowBody(
-			Population group, AgentAddress address, Vector2d globalPosition, Vector2d speed, Vector2d groupPosition) {
+			Population group, AgentAddress address, Vector2f globalPosition, Vector2f speed, Vector2f groupPosition) {
 		super(group, address, globalPosition, speed);
 		this.groupPosition = groupPosition;
 	}
@@ -56,7 +55,7 @@ public class PerceivedShadowBody extends PerceivedBoidBody {
 	 * 
 	 * @return the position from the group center.
 	 */
-	public Vector2d getPositionInShadowGroup() {
+	public Vector2f getPositionInShadowGroup() {
 		return this.groupPosition;
 	}
 	

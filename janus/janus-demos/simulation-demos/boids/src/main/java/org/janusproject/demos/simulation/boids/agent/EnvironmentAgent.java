@@ -29,9 +29,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.vecmath.Vector2d;
-
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.simulation.boids.capacity.EnvironmentRefreshCapacity;
 import org.janusproject.demos.simulation.boids.capacity.RetreiveBoidsCapacity;
 import org.janusproject.demos.simulation.boids.organization.BoidOrganization;
@@ -143,8 +142,8 @@ implements BodyStateProvider {
 	public Status live() {
 		Population pop = this.myGUI.getSelectedPopulation();
 		if (pop!=null) {
-			Vector2d pos = this.myGUI.getUserPosition();
-			Vector2d speed = this.myGUI.getUserDirection();
+			Vector2f pos = this.myGUI.getUserPosition();
+			Vector2f speed = this.myGUI.getUserDirection();
 			if (this.shadowGroup==null)
 				this.shadowGroup = new ShadowGroup(
 						Settings.SHADOW_ENTITY_COUNT,

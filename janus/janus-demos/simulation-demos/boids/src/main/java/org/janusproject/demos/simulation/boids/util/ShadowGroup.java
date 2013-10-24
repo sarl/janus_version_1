@@ -26,8 +26,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-import javax.vecmath.Vector2d;
-
+import org.arakhne.afc.math.continous.object2d.Vector2f;
 import org.janusproject.kernel.address.AgentAddress;
 
 /**
@@ -41,8 +40,8 @@ import org.janusproject.kernel.address.AgentAddress;
 public class ShadowGroup {
 
 	private final Collection<AgentAddress> members;
-	private final Vector2d position = new Vector2d();
-	private final Vector2d orientation = new Vector2d();
+	private final Vector2f position = new Vector2f();
+	private final Vector2f orientation = new Vector2f();
 	
 	/**
 	 * @param groupSize
@@ -53,8 +52,8 @@ public class ShadowGroup {
 	 */
 	public ShadowGroup(
 			int groupSize,
-			Vector2d groupPosition, 
-			Vector2d groupOrientation, 
+			Vector2f groupPosition, 
+			Vector2f groupOrientation, 
 			Map<AgentAddress,PerceivedBoidBody> bodies,
 			Population group) {
 		assert(groupSize>=1);
@@ -64,26 +63,26 @@ public class ShadowGroup {
 		
 		PerceivedShadowBody body;
 		AgentAddress adr;
-		Vector2d boidRelativePosition;
-		Vector2d boidPosition;
+		Vector2f boidRelativePosition;
+		Vector2f boidPosition;
 		Random rnd = new Random();
 		
 		for(int i=0; i<groupSize; ++i) {
 			adr = new ShadowAddress();
 			
-			boidRelativePosition = new Vector2d(
+			boidRelativePosition = new Vector2f(
 					rnd.nextDouble() - rnd.nextDouble(),
 					rnd.nextDouble() - rnd.nextDouble());
 			boidRelativePosition.normalize();
-			boidRelativePosition.scale(rnd.nextDouble() * Settings.SHADOW_GROUP_RADIUS);
-			boidPosition = new Vector2d();
+			boidRelativePosition.scale((float)rnd.nextDouble() * Settings.SHADOW_GROUP_RADIUS);
+			boidPosition = new Vector2f();
 			boidPosition.add(this.position,boidRelativePosition);
 			
 			body = new PerceivedShadowBody(
 					group,
 					adr,
 					boidPosition,
-					new Vector2d(this.orientation),
+					new Vector2f(this.orientation),
 					boidRelativePosition);
 			
 			this.members.add(adr);
@@ -96,14 +95,14 @@ public class ShadowGroup {
 	 * @param groupOrientation
 	 * @param bodies
 	 */
-	public synchronized void setGroupPosition(Vector2d groupPosition, Vector2d groupOrientation, Map<AgentAddress,PerceivedBoidBody> bodies) {
+	public synchronized void setGroupPosition(Vector2f groupPosition, Vector2f groupOrientation, Map<AgentAddress,PerceivedBoidBody> bodies) {
 		PerceivedShadowBody body;
-		Vector2d newPos;
+		Vector2f newPos;
 		for(AgentAddress member : this.members) {
 			body = (PerceivedShadowBody)bodies.get(member);
 			if (body!=null) {
 				body.setOrientation(groupOrientation);
-				newPos = new Vector2d();
+				newPos = new Vector2f();
 				newPos.add(groupPosition, body.getPositionInShadowGroup());
 				body.setPosition(newPos);
 			}

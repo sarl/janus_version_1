@@ -20,8 +20,7 @@
  */
 package org.janusproject.demos.simulation.boids.organization.messages;
 
-import javax.vecmath.Vector2d;
-
+import org.arakhne.afc.math.continous.object2d.Vector2f;
 import org.janusproject.kernel.message.AbstractContentMessage;
 
 /**
@@ -32,23 +31,23 @@ import org.janusproject.kernel.message.AbstractContentMessage;
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-public class ActionMessage extends AbstractContentMessage<Vector2d> {
+public class ActionMessage extends AbstractContentMessage<Vector2f> {
 
 	private static final long serialVersionUID = -8596108743195909605L;
 	
-	private final Vector2d force;
+	private final Vector2f force;
 	
 	/**
 	 * @param iforce is the computed force
 	 */
-	public ActionMessage(Vector2d iforce) {
+	public ActionMessage(Vector2f iforce) {
 		this.force = iforce;
 	}
 
 	/** Replies the force.
 	 * @return the force.
 	 */
-	public Vector2d getForce() {
+	public Vector2f getForce() {
 		return this.force;
 	}
 
@@ -56,7 +55,7 @@ public class ActionMessage extends AbstractContentMessage<Vector2d> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Vector2d getContent() {
+	public Vector2f getContent() {
 		return this.force;
 	}
 }
