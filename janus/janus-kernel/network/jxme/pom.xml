@@ -21,7 +21,7 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.arakhne.afc</groupId>
+				<groupId>org.arakhne.afc.maven</groupId>
 				<artifactId>license-installer</artifactId>
 				<configuration>
 					<thirdPartyLicenses>
