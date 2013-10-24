@@ -9,7 +9,7 @@
 	<parent>
 		<artifactId>janus-kernel</artifactId>
 		<groupId>org.janus-project.kernel</groupId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0</version>
 	</parent>
 
 	<properties>
@@ -17,7 +17,7 @@
 	</properties>
 
 	<artifactId>osgi</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>bundle</packaging>
 	<name>OSGified Janus Kernel</name>
 

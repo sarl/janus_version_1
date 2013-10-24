@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>scriptedagent</artifactId>
 		<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0</version>
 	</parent>
 
 	<artifactId>script</artifactId>

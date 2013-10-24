@@ -6,7 +6,7 @@
 	<groupId>org.janus-project</groupId>
 	<artifactId>janus</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>Janus Project</name>
 	<inceptionYear>2004</inceptionYear>
 	<url>http://www.janus-project.org</url>
@@ -18,8 +18,8 @@
 		<website>http://www.janus-project.org</website><!-- do not remove this 
 			property it is useful in the presentation message of the kernelagent -->
 		<felix.main.version>4.2.1</felix.main.version>
-		<janus.version>1.0-SNAPSHOT</janus.version>
-		<janus.version.osgi>1.0.0-SNAPSHOT</janus.version.osgi>
+		<janus.version>1.0</janus.version>
+		<janus.version.osgi>1.0.0</janus.version.osgi>
 		<janus.plugin.version>0.6</janus.plugin.version>
 		<afc.version>10.0</afc.version>
 		<android.platform>15</android.platform>
@@ -533,7 +533,7 @@
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
 				<artifactId>osgi</artifactId>
-				<version>${janus.version}</version>
+				<version>${janus.version.osgi}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.janus-project.kernel</groupId>
