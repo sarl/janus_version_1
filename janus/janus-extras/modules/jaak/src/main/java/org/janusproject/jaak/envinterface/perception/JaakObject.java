@@ -20,7 +20,7 @@
  */
 package org.janusproject.jaak.envinterface.perception;
 
-import org.janusproject.jaak.math.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 
 /** This class defines an object in the Jaak environment.
  * 

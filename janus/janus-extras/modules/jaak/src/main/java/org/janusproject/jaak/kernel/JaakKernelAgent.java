@@ -20,7 +20,6 @@
  */
 package org.janusproject.jaak.kernel;
 
-import java.awt.Shape;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -30,6 +29,9 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Shape2i;
 import org.janusproject.jaak.envinterface.body.TurtleBodyFactory;
 import org.janusproject.jaak.envinterface.channel.GridStateChannel;
 import org.janusproject.jaak.envinterface.channel.GridStateChannelListener;
@@ -37,18 +39,16 @@ import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
 import org.janusproject.jaak.envinterface.perception.JaakObject;
 import org.janusproject.jaak.environment.model.JaakEnvironment;
 import org.janusproject.jaak.environment.model.JaakEnvironmentListener;
-import org.janusproject.jaak.math.Point2i;
-import org.janusproject.jaak.math.Vector2f;
 import org.janusproject.jaak.spawner.JaakSpawner;
 import org.janusproject.jaak.spawner.JaakWorldSpawner;
+import org.janusproject.kernel.Kernel;
+import org.janusproject.kernel.KernelEvent;
+import org.janusproject.kernel.KernelListener;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Agent;
 import org.janusproject.kernel.agent.AgentActivationPrototype;
 import org.janusproject.kernel.agent.AgentActivator;
-import org.janusproject.kernel.Kernel;
-import org.janusproject.kernel.KernelEvent;
-import org.janusproject.kernel.KernelListener;
 import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.channels.Channel;
 import org.janusproject.kernel.channels.ChannelInteractable;
@@ -564,9 +564,9 @@ class JaakKernelAgent extends Agent implements KernelListener, ChannelInteractab
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Shape[] getSpawningLocations() {
+		public Shape2i[] getSpawningLocations() {
 			JaakSpawner[] spawners = JaakKernelAgent.this.getSpawners();
-			Shape[] shapes = new Shape[spawners.length];
+			Shape2i[] shapes = new Shape2i[spawners.length];
 			for(int i=0; i<spawners.length; i++) {
 				shapes[i] = spawners[i].toShape();
 			}

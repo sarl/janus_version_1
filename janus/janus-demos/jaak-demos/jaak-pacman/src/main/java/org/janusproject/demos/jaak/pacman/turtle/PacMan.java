@@ -22,7 +22,8 @@ package org.janusproject.demos.jaak.pacman.turtle;
 
 import java.util.Set;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.jaak.pacman.PacManGame;
 import org.janusproject.demos.jaak.pacman.channel.Player;
 import org.janusproject.demos.jaak.pacman.channel.PlayerDirection;
@@ -33,7 +34,6 @@ import org.janusproject.jaak.envinterface.body.TurtleBody;
 import org.janusproject.jaak.envinterface.body.TurtleBodyFactory;
 import org.janusproject.jaak.envinterface.frustum.CrossTurtleFrustum;
 import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
-import org.janusproject.jaak.math.Point2i;
 import org.janusproject.jaak.turtle.Turtle;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.agent.AgentActivationPrototype;

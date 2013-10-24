@@ -20,8 +20,8 @@
  */
 package org.janusproject.jaak.turtle;
 
+import org.arakhne.afc.math.continous.object2d.Vector2f;
 import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
-import org.janusproject.jaak.math.Vector2f;
 
 /** Supported method supported by the {@link TurtleBodyCapacityMethodName}.
  * Each member of this enumeration corresponds to a function name

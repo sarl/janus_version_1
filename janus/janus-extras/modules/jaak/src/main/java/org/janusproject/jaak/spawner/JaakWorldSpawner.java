@@ -20,14 +20,14 @@
  */
 package org.janusproject.jaak.spawner;
 
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.lang.ref.WeakReference;
 
+import org.arakhne.afc.math.MathConstants;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Rectangle2i;
+import org.arakhne.afc.math.discrete.object2d.Shape2i;
 import org.janusproject.jaak.envinterface.EnvironmentArea;
 import org.janusproject.jaak.envinterface.body.TurtleBody;
-import org.janusproject.jaak.math.MathUtil;
-import org.janusproject.jaak.math.Point2i;
 import org.janusproject.jaak.turtle.Turtle;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.time.KernelTimeManager;
@@ -81,10 +81,10 @@ public class JaakWorldSpawner extends JaakSpawner {
 	/** {@inheritDoc}
 	 */
 	@Override
-	public Shape toShape() {
+	public Shape2i toShape() {
 		EnvironmentArea area = this.environment.get();
 		assert(area!=null);
-		return new Rectangle(area.getX(), area.getY(), area.getWidth(), area.getHeight());
+		return new Rectangle2i(area.getX(), area.getY(), area.getWidth(), area.getHeight());
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class JaakWorldSpawner extends JaakSpawner {
 	 */
 	@Override
 	protected float computeSpawnedTurtleOrientation(KernelTimeManager timeManager) {
-		return RandomNumber.nextFloat() * MathUtil.TWO_PI;
+		return RandomNumber.nextFloat() * MathConstants.TWO_PI;
 	}
 
 	/**

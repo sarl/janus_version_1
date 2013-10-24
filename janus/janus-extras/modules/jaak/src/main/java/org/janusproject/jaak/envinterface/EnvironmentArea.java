@@ -20,7 +20,7 @@
  */
 package org.janusproject.jaak.envinterface;
 
-import org.janusproject.jaak.math.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 
 /** This interface is for the area covered by the environment.
  * 

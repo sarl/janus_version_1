@@ -22,8 +22,8 @@ package org.janusproject.jaak.envinterface.frustum;
 
 import java.util.Iterator;
 
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.jaak.envinterface.EnvironmentArea;
-import org.janusproject.jaak.math.Point2i;
 
 /** This class defines a frustum for for a turtle which is
  * restricted to a square.

@@ -20,10 +20,10 @@
  */
 package org.janusproject.jaak.envinterface.influence;
 
+import org.arakhne.afc.math.continous.object2d.Vector2f;
 import org.janusproject.jaak.envinterface.body.TurtleBody;
 import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
 import org.janusproject.jaak.envinterface.perception.JaakObject;
-import org.janusproject.jaak.math.Vector2f;
 
 /** This class defines a motion influence.
  * 

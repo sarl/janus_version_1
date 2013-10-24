@@ -26,6 +26,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.jaak.envinterface.body.TurtleBody;
 import org.janusproject.jaak.envinterface.body.TurtleBodyFactory;
 import org.janusproject.jaak.envinterface.influence.MotionInfluenceStatus;
@@ -33,8 +35,6 @@ import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
 import org.janusproject.jaak.envinterface.perception.Perceivable;
 import org.janusproject.jaak.envinterface.perception.PerceivedTurtle;
 import org.janusproject.jaak.envinterface.time.JaakTimeManager;
-import org.janusproject.jaak.math.Point2i;
-import org.janusproject.jaak.math.Vector2f;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Agent;

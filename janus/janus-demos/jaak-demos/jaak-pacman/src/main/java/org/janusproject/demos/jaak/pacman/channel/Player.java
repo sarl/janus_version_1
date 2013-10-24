@@ -20,7 +20,7 @@
  */
 package org.janusproject.demos.jaak.pacman.channel;
 
-import org.janusproject.jaak.math.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.kernel.channels.Channel;
 
 /** Channel to communicate with the pacman.

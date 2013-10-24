@@ -20,12 +20,12 @@
  */
 package org.janusproject.jaak.kernel;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.jaak.envinterface.time.JaakTimeManager;
 import org.janusproject.jaak.environment.model.JaakEnvironment;
 import org.janusproject.jaak.spawner.JaakSpawner;
-import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.Kernel;
+import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Kernels;
 
 /** Utility methods to initialize and manage a Jaak kernel.

@@ -24,6 +24,8 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.arakhne.afc.math.discrete.object2d.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Tuple2iComparator;
 import org.janusproject.demos.jaak.pacman.channel.Player;
 import org.janusproject.demos.jaak.pacman.semantic.PillSemantic;
 import org.janusproject.demos.jaak.pacman.semantic.WallSemantic;
@@ -37,10 +39,8 @@ import org.janusproject.jaak.environment.model.JaakEnvironment;
 import org.janusproject.jaak.environment.solver.ActionApplier;
 import org.janusproject.jaak.kernel.JaakKernel;
 import org.janusproject.jaak.kernel.JaakKernelController;
-import org.janusproject.jaak.math.Point2i;
-import org.janusproject.jaak.math.Tuple2iComparator;
-import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.Kernel;
+import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.util.random.RandomNumber;
 

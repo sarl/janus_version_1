@@ -22,8 +22,8 @@ package org.janusproject.demos.jaak.ants.organization;
 
 import java.util.Collection;
 
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.demos.jaak.ants.environment.Pheromone;
-import org.janusproject.jaak.math.Point2i;
 import org.janusproject.kernel.crio.capacity.Capacity;
 import org.janusproject.kernel.crio.capacity.CapacityPrototype;
 

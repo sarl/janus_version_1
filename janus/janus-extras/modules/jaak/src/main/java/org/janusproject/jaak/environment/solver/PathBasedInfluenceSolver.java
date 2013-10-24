@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.jaak.bresenham.Bresenham;
 import org.janusproject.jaak.envinterface.body.TurtleBody;
 import org.janusproject.jaak.envinterface.influence.Influence;
@@ -38,8 +40,6 @@ import org.janusproject.jaak.environment.GridModel;
 import org.janusproject.jaak.environment.ValidationResult;
 import org.janusproject.jaak.environment.model.AbstractJaakEnvironmentInfluenceSolver;
 import org.janusproject.jaak.environment.model.RealTurtleBody;
-import org.janusproject.jaak.math.Point2i;
-import org.janusproject.jaak.math.Vector2f;
 
 
 /** This class defines a default implementation for influence solver.

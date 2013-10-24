@@ -22,11 +22,11 @@ package org.janusproject.demos.jaak.ants.organization;
 
 import java.util.Collection;
 
+import org.arakhne.afc.math.MathConstants;
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.demos.jaak.ants.environment.Pheromone;
 import org.janusproject.jaak.envinterface.influence.MotionInfluenceStatus;
-import org.janusproject.jaak.math.MathUtil;
-import org.janusproject.jaak.math.Point2i;
-import org.janusproject.jaak.math.Vector2f;
 import org.janusproject.jaak.turtle.TurtleRole;
 import org.janusproject.kernel.crio.capacity.CapacityContext;
 import org.janusproject.kernel.crio.core.HasAllRequiredCapacitiesCondition;
@@ -72,7 +72,7 @@ public abstract class AntRole extends TurtleRole {
 	 */
 	protected void randomMotion() {
 		float dAngle;
-		dAngle = (RandomNumber.nextFloat()-RandomNumber.nextFloat()) * MathUtil.DEMI_PI;
+		dAngle = (RandomNumber.nextFloat()-RandomNumber.nextFloat()) * MathConstants.DEMI_PI;
 		if (dAngle>0) turnLeft(dAngle);
 		else turnRight(-dAngle);
 		moveForward(1);
@@ -82,9 +82,9 @@ public abstract class AntRole extends TurtleRole {
 	 */
 	protected void randomTurnBack() {
 		float dAngle;
-		dAngle = (RandomNumber.nextFloat()-RandomNumber.nextFloat()) * MathUtil.DEMI_PI;
-		if (dAngle>0) turnLeft(MathUtil.DEMI_PI + dAngle);
-		else turnRight(MathUtil.DEMI_PI - dAngle);
+		dAngle = (RandomNumber.nextFloat()-RandomNumber.nextFloat()) * MathConstants.DEMI_PI;
+		if (dAngle>0) turnLeft(MathConstants.DEMI_PI + dAngle);
+		else turnRight(MathConstants.DEMI_PI - dAngle);
 		moveForward(1);
 	}
 

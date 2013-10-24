@@ -20,11 +20,11 @@
  */
 package org.janusproject.demos.jaak.ants.environment;
 
+import org.arakhne.afc.math.MathConstants;
 import org.janusproject.demos.jaak.ants.organization.Ant;
 import org.janusproject.demos.jaak.ants.organization.Forager;
 import org.janusproject.demos.jaak.ants.organization.Patroller;
 import org.janusproject.jaak.envinterface.body.TurtleBody;
-import org.janusproject.jaak.math.MathUtil;
 import org.janusproject.jaak.spawner.JaakPointSpawner;
 import org.janusproject.jaak.turtle.Turtle;
 import org.janusproject.kernel.address.AgentAddress;
@@ -117,7 +117,7 @@ public class AntColonySpawner extends JaakPointSpawner {
 	 */
 	@Override
 	protected float computeSpawnedTurtleOrientation(KernelTimeManager timeManager) {
-		return RandomNumber.nextFloat() * MathUtil.TWO_PI;
+		return RandomNumber.nextFloat() * MathConstants.TWO_PI;
 	}
 
 }

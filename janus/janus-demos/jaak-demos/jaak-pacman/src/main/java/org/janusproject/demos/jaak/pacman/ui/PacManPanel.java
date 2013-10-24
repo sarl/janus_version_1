@@ -34,7 +34,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.jaak.pacman.channel.Player;
 import org.janusproject.demos.jaak.pacman.channel.PlayerDirection;
 import org.janusproject.demos.jaak.pacman.semantic.EvadeGhostSemantic;
@@ -47,7 +48,6 @@ import org.janusproject.demos.jaak.pacman.semantic.WallSemantic;
 import org.janusproject.jaak.envinterface.channel.GridStateChannel;
 import org.janusproject.jaak.envinterface.channel.GridStateChannelListener;
 import org.janusproject.jaak.envinterface.perception.JaakObject;
-import org.janusproject.jaak.math.Point2i;
 
 /**
  * UI for the pacman game.

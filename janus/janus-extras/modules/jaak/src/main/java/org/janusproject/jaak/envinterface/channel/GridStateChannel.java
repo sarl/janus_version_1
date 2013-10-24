@@ -20,13 +20,13 @@
  */
 package org.janusproject.jaak.envinterface.channel;
 
-import java.awt.Shape;
 import java.util.Collection;
 
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Shape2i;
 import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
 import org.janusproject.jaak.envinterface.perception.JaakObject;
-import org.janusproject.jaak.math.Point2i;
-import org.janusproject.jaak.math.Vector2f;
 import org.janusproject.kernel.channels.Channel;
 
 /**
@@ -142,7 +142,7 @@ public interface GridStateChannel extends Channel {
 	 * 
 	 * @return the areas of spawning.
 	 */
-	public Shape[] getSpawningLocations();
+	public Shape2i[] getSpawningLocations();
 
 	/** Replies the number of turtle on the grid.
 	 * 

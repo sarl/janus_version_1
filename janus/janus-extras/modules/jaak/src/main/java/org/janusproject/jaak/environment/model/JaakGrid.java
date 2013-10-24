@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.jaak.envinterface.body.TurtleBody;
 import org.janusproject.jaak.envinterface.endogenous.AutonomousEndogenousProcess;
 import org.janusproject.jaak.envinterface.influence.Influence;
@@ -38,7 +39,6 @@ import org.janusproject.jaak.envinterface.perception.Substance;
 import org.janusproject.jaak.environment.GridModel;
 import org.janusproject.jaak.environment.ValidationResult;
 import org.janusproject.jaak.environment.solver.ActionApplier;
-import org.janusproject.jaak.math.Point2i;
 
 /** This class defines grid for the Jaak environment model.
  * 

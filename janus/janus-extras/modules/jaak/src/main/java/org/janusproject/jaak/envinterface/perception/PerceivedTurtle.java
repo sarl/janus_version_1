@@ -20,9 +20,8 @@
  */
 package org.janusproject.jaak.envinterface.perception;
 
-import org.janusproject.jaak.math.MathUtil;
-import org.janusproject.jaak.math.Point2i;
-import org.janusproject.jaak.math.Vector2f;
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.kernel.address.AgentAddress;
 
 /** This class defines a perceived turtle.
@@ -102,7 +101,7 @@ public class PerceivedTurtle extends AbstractPerceivable {
 	 * @return the current orientation vector of the perceived turtle.
 	 */
 	public Vector2f getHeadingVector() {
-		return MathUtil.toOrientationVector2f(this.angle);
+		return Vector2f.toOrientationVector(this.angle);
 	}
 
 	/**

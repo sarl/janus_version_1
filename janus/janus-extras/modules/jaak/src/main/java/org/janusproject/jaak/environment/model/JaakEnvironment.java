@@ -31,6 +31,8 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.jaak.envinterface.EnvironmentArea;
 import org.janusproject.jaak.envinterface.body.TurtleBody;
 import org.janusproject.jaak.envinterface.body.TurtleBodyFactory;
@@ -46,8 +48,6 @@ import org.janusproject.jaak.environment.endogenousengine.EnvironmentEndogenousE
 import org.janusproject.jaak.environment.solver.ActionApplier;
 import org.janusproject.jaak.environment.solver.InfluenceSolver;
 import org.janusproject.jaak.environment.solver.PathBasedInfluenceSolver;
-import org.janusproject.jaak.math.Point2i;
-import org.janusproject.jaak.math.Vector2f;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.util.multicollection.MultiCollection;
 import org.janusproject.kernel.util.random.RandomNumber;

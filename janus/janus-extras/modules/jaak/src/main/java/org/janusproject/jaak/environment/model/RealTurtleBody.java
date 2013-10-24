@@ -28,6 +28,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.arakhne.afc.math.MathUtil;
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.jaak.envinterface.body.TurtleBody;
 import org.janusproject.jaak.envinterface.frustum.TurtleFrustum;
 import org.janusproject.jaak.envinterface.influence.DropDownInfluence;
@@ -39,9 +42,6 @@ import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
 import org.janusproject.jaak.envinterface.perception.Perceivable;
 import org.janusproject.jaak.envinterface.perception.PerceivedTurtle;
 import org.janusproject.jaak.envinterface.perception.PickedObject;
-import org.janusproject.jaak.math.MathUtil;
-import org.janusproject.jaak.math.Point2i;
-import org.janusproject.jaak.math.Vector2f;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.util.multicollection.MultiCollection;
 
@@ -388,7 +388,7 @@ public final class RealTurtleBody implements TurtleBody, Comparable<RealTurtleBo
 	@Override
 	public synchronized void setHeading(Vector2f direction) {
 		assert(direction!=null);
-		setHeading(MathUtil.toOrientationAngle(direction));
+		setHeading(direction.getOrientationAngle());
 	}
 
 	/**
@@ -433,7 +433,7 @@ public final class RealTurtleBody implements TurtleBody, Comparable<RealTurtleBo
 	@Override
 	public synchronized Vector2f getHeadingVector() {
 		if (this.headingVector==null)
-			this.headingVector = MathUtil.toOrientationVector2f(this.heading);
+			this.headingVector = Vector2f.toOrientationVector(this.heading);
 		return this.headingVector;
 	}
 

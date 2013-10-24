@@ -25,7 +25,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.jaak.ants.environment.AntColony;
 import org.janusproject.demos.jaak.ants.environment.AntColonySpawner;
 import org.janusproject.demos.jaak.ants.environment.Food;
@@ -33,7 +34,6 @@ import org.janusproject.demos.jaak.ants.ui.AntPanel;
 import org.janusproject.jaak.envinterface.channel.GridStateChannel;
 import org.janusproject.jaak.environment.model.JaakEnvironment;
 import org.janusproject.jaak.environment.solver.ActionApplier;
-import org.janusproject.jaak.math.Point2i;
 import org.janusproject.jaak.spawner.JaakSpawner;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Kernels;

@@ -24,8 +24,8 @@ import java.util.BitSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.jaak.envinterface.EnvironmentArea;
-import org.janusproject.jaak.math.Point2i;
 
 /** This class defines a frustum for for a turtle which is
  * a cross in the horizontal and vertical directions.

@@ -22,12 +22,12 @@ package org.janusproject.jaak.turtle;
 
 import java.util.Collection;
 
+import org.arakhne.afc.math.continous.object2d.Vector2f;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.jaak.envinterface.influence.MotionInfluenceStatus;
 import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
 import org.janusproject.jaak.envinterface.perception.Perceivable;
 import org.janusproject.jaak.envinterface.perception.PerceivedTurtle;
-import org.janusproject.jaak.math.Point2i;
-import org.janusproject.jaak.math.Vector2f;
 import org.janusproject.kernel.crio.capacity.Capacity;
 import org.janusproject.kernel.crio.capacity.CapacityPrototype;
 

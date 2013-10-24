@@ -20,8 +20,8 @@
  */
 package org.janusproject.demos.jaak.pacman.channel;
 
-import org.janusproject.jaak.math.Point2i;
-import org.janusproject.jaak.math.Vector2i;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Vector2i;
 import org.janusproject.kernel.util.random.RandomNumber;
 
 /**

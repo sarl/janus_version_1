@@ -29,13 +29,13 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.demos.jaak.ants.AntColonySystem;
 import org.janusproject.demos.jaak.ants.environment.Food;
 import org.janusproject.demos.jaak.ants.environment.Pheromone;
 import org.janusproject.jaak.envinterface.channel.GridStateChannel;
 import org.janusproject.jaak.envinterface.channel.GridStateChannelListener;
 import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
-import org.janusproject.jaak.math.Point2i;
 
 /**
  * Graphic User Interface for the ant demo.

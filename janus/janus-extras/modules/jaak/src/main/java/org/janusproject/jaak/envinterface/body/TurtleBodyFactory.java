@@ -20,8 +20,8 @@
  */
 package org.janusproject.jaak.envinterface.body;
 
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.jaak.envinterface.frustum.TurtleFrustum;
-import org.janusproject.jaak.math.Point2i;
 import org.janusproject.kernel.address.AgentAddress;
 
 /** Factory of bodies for turtles.

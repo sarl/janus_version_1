@@ -23,7 +23,7 @@ package org.janusproject.jaak.envinterface.perception;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.janusproject.jaak.math.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 
 /** This class defines a situated object which has specifical
  * physical properties.

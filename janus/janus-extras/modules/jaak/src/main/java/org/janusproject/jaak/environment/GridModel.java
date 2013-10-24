@@ -20,9 +20,9 @@
  */
 package org.janusproject.jaak.environment;
 
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.jaak.envinterface.body.TurtleBody;
 import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
-import org.janusproject.jaak.math.Point2i;
 
 /** This interface defines a grid for the Jaak environment model.
  * 

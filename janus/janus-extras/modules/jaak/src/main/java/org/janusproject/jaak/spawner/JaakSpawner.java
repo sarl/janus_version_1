@@ -20,16 +20,15 @@
  */
 package org.janusproject.jaak.spawner;
 
-import java.awt.Shape;
-
+import org.arakhne.afc.math.discrete.object2d.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Shape2i;
 import org.janusproject.jaak.envinterface.body.TurtleBody;
 import org.janusproject.jaak.envinterface.body.TurtleBodyFactory;
 import org.janusproject.jaak.envinterface.frustum.TurtleFrustum;
-import org.janusproject.jaak.math.Point2i;
 import org.janusproject.jaak.turtle.Turtle;
 import org.janusproject.jaak.turtle.TurtleBindingChannel;
-import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.Kernel;
+import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.time.KernelTimeManager;
 
@@ -191,7 +190,7 @@ public abstract class JaakSpawner {
 	 * 
 	 * @return a shape.
 	 */
-	public abstract Shape toShape();
+	public abstract Shape2i toShape();
 
 	/** Provide implementation for a body factory dedicated to spawners.
 	 * 

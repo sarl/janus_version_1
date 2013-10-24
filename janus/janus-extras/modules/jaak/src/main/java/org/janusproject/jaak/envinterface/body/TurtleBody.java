@@ -22,13 +22,13 @@ package org.janusproject.jaak.envinterface.body;
 
 import java.util.Collection;
 
+import org.arakhne.afc.math.continous.object2d.Vector2f;
 import org.janusproject.jaak.envinterface.frustum.TurtleFrustum;
 import org.janusproject.jaak.envinterface.influence.MotionInfluenceStatus;
 import org.janusproject.jaak.envinterface.perception.EnvironmentalObject;
 import org.janusproject.jaak.envinterface.perception.JaakObject;
 import org.janusproject.jaak.envinterface.perception.Perceivable;
 import org.janusproject.jaak.envinterface.perception.PerceivedTurtle;
-import org.janusproject.jaak.math.Vector2f;
 import org.janusproject.kernel.address.AgentAddress;
 
 /** This interface defines a body for a turtle.

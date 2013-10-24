@@ -23,7 +23,7 @@ package org.janusproject.jaak.bresenham;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.janusproject.jaak.math.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 
 /** This class provides 2D Bresenham algorithms.
  * <p>

@@ -24,6 +24,7 @@ import java.lang.ref.WeakReference;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.arakhne.afc.math.discrete.object2d.Point2i;
 import org.janusproject.jaak.envinterface.body.TurtleBody;
 import org.janusproject.jaak.envinterface.influence.DropDownInfluence;
 import org.janusproject.jaak.envinterface.influence.EnvironmentalObjectRemovalInfluence;
@@ -37,7 +38,6 @@ import org.janusproject.jaak.envinterface.perception.Substance;
 import org.janusproject.jaak.envinterface.time.JaakTimeManager;
 import org.janusproject.jaak.environment.GridModel;
 import org.janusproject.jaak.environment.ValidationResult;
-import org.janusproject.jaak.math.Point2i;
 
 /** This class defines the methods of a solver of
  * influence conflicts.

@@ -20,10 +20,9 @@
  */
 package org.janusproject.jaak.spawner;
 
-import java.awt.Rectangle;
-import java.awt.Shape;
-
-import org.janusproject.jaak.math.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Point2i;
+import org.arakhne.afc.math.discrete.object2d.Rectangle2i;
+import org.arakhne.afc.math.discrete.object2d.Shape2i;
 
 /** Provide implementation for a turtle spawner on a point.
  * 
@@ -61,8 +60,8 @@ public abstract class JaakPointSpawner extends JaakSpawner {
 	/** {@inheritDoc}
 	 */
 	@Override
-	public Shape toShape() {
-		return new Rectangle(this.position.x(), this.position.y(), 1, 1);
+	public Shape2i toShape() {
+		return new Rectangle2i(this.position.x(), this.position.y(), 1, 1);
 	}
 
 }
