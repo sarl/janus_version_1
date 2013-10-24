@@ -27,7 +27,7 @@ import java.util.List;
 
 import javax.swing.filechooser.FileFilter;
 
-import org.arakhne.vmutil.FileSystem;
+import org.arakhne.afc.vmutil.FileSystem;
 
 
 /**

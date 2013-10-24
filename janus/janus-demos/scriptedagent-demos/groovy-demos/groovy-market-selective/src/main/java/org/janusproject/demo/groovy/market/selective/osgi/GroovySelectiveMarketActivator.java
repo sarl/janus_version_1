@@ -20,7 +20,7 @@ package org.janusproject.demo.groovy.market.selective.osgi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demo.groovy.market.selective.Launcher;
 import org.janusproject.groovyengine.GroovyExecutionContext;
 import org.janusproject.kernel.agent.KernelAgentFactory;

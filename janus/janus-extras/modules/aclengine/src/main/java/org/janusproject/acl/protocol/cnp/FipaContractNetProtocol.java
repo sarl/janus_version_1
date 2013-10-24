@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.acl.ACLAgent;
 import org.janusproject.acl.ACLMessage;
 import org.janusproject.acl.Performative;

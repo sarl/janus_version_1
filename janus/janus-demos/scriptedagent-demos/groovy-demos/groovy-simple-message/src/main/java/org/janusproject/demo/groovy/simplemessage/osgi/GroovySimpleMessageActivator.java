@@ -20,7 +20,7 @@ package org.janusproject.demo.groovy.simplemessage.osgi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demo.groovy.simplemessage.agent.GroovyAgentReceiver;
 import org.janusproject.demo.groovy.simplemessage.agent.GroovyAgentSender;
 import org.janusproject.kernel.address.AgentAddress;

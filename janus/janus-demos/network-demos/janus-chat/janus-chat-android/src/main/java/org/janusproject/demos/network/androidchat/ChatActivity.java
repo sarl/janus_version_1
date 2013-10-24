@@ -25,9 +25,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.arakhne.vmutil.Android;
-import org.arakhne.vmutil.Android.AndroidException;
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.Android;
+import org.arakhne.afc.vmutil.Android.AndroidException;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.network.januschat.ChatUtil;
 import org.janusproject.demos.network.januschat.ChatterListener;
 import org.janusproject.demos.network.januschat.agent.ChatChannel;

@@ -20,9 +20,9 @@
  */
 package org.janusproject.demos.market.selective.purchase;
 
-import org.arakhne.vmutil.locale.Locale;
-import org.janusproject.demos.market.selective.influence.TravelRequestInfluence;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.market.selective.influence.TransfertInfluence;
+import org.janusproject.demos.market.selective.influence.TravelRequestInfluence;
 import org.janusproject.demos.market.selective.message.ReadyToStartMessage;
 import org.janusproject.demos.market.selective.message.TravelContractGroupMessage;
 import org.janusproject.demos.market.selective.message.TravelRequestMessage;

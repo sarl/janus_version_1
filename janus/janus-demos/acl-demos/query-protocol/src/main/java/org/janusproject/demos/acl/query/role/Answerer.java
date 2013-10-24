@@ -23,7 +23,7 @@ package org.janusproject.demos.acl.query.role;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.acl.ACLMessage;
 import org.janusproject.acl.Performative;
 import org.janusproject.acl.protocol.AbstractFipaProtocol;

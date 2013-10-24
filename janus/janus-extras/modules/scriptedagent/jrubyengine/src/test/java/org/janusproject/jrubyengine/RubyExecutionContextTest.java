@@ -28,11 +28,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.script.ScriptException;
 
-import org.arakhne.vmutil.FileSystem;
-import org.arakhne.vmutil.Resources;
-import org.janusproject.scriptedagent.ScriptErrorListener;
-
 import junit.framework.TestCase;
+
+import org.arakhne.afc.vmutil.FileSystem;
+import org.arakhne.afc.vmutil.Resources;
+import org.janusproject.scriptedagent.ScriptErrorListener;
 
 /**
  * @author $Author: sgalland$

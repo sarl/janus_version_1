@@ -22,7 +22,7 @@ package org.janusproject.demos.ecoresolution.ecocube.agent;
 
 import java.util.Set;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.ecoresolution.agent.EcoAgent;
 import org.janusproject.ecoresolution.relation.EcoAttack;
 

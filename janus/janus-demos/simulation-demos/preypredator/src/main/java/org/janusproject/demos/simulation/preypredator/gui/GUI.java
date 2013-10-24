@@ -37,8 +37,8 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Map.Entry;
+import java.util.Queue;
 import java.util.concurrent.Executors;
 
 import javax.swing.Icon;
@@ -48,8 +48,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import org.arakhne.vmutil.Resources;
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.Resources;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.simulation.preypredator.message.MoveDirection;
 import org.janusproject.demos.simulation.preypredator.osgi.PreyPredatorActivator;
 import org.janusproject.kernel.address.AgentAddress;

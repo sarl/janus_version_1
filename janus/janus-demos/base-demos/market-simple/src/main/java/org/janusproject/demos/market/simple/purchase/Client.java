@@ -22,7 +22,7 @@ package org.janusproject.demos.market.simple.purchase;
 
 import java.util.UUID;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.market.simple.contracting.Buyer;
 import org.janusproject.demos.market.simple.influence.ContractTerminationSignal;
 import org.janusproject.demos.market.simple.message.ContractGroupMessage;

@@ -22,7 +22,7 @@ package org.janusproject.demos.market.simple;
 
 import java.util.logging.Level;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.market.simple.agent.BrokerAgent;
 import org.janusproject.demos.market.simple.agent.ClientAgent;
 import org.janusproject.demos.market.simple.agent.ProviderAgent;

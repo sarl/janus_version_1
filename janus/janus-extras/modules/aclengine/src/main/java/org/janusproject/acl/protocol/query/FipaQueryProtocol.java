@@ -20,7 +20,7 @@
  */
 package org.janusproject.acl.protocol.query;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.acl.ACLAgent;
 import org.janusproject.acl.ACLMessage;
 import org.janusproject.acl.Performative;

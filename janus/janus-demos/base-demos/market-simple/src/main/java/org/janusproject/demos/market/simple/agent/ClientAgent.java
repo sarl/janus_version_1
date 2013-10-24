@@ -20,7 +20,7 @@
  */
 package org.janusproject.demos.market.simple.agent;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.market.simple.purchase.Client;
 import org.janusproject.demos.market.simple.purchase.PurchaseOrganization;
 import org.janusproject.kernel.agent.Agent;

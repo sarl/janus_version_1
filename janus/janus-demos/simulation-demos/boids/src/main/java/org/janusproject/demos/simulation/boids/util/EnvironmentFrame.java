@@ -26,7 +26,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.agent.Kernels;
 
 /**

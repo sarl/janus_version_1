@@ -30,8 +30,8 @@ import java.util.Iterator;
 
 import junit.framework.TestCase;
 
-import org.arakhne.vmutil.FileSystem;
-import org.arakhne.vmutil.Resources;
+import org.arakhne.afc.vmutil.FileSystem;
+import org.arakhne.afc.vmutil.Resources;
 
 /**
  * @author $Author: sgalland$

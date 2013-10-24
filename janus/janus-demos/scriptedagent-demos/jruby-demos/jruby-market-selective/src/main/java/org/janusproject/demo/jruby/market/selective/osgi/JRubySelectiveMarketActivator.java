@@ -23,7 +23,7 @@ package org.janusproject.demo.jruby.market.selective.osgi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demo.jruby.market.selective.Launcher;
 import org.janusproject.jrubyengine.RubyExecutionContext;
 import org.janusproject.kernel.agent.KernelAgentFactory;

@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.StringTokenizer;
 import java.util.UUID;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.acl.ACLMessage;
 import org.janusproject.acl.ACLMessageContent;
 import org.janusproject.kernel.address.AgentAddress;

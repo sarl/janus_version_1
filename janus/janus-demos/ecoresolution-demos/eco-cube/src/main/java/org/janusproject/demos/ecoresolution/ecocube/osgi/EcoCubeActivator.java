@@ -23,7 +23,7 @@ package org.janusproject.demos.ecoresolution.ecocube.osgi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.ecoresolution.ecocube.agent.CubeAgent;
 import org.janusproject.demos.ecoresolution.ecocube.agent.CubeEcoProblem;
 import org.janusproject.demos.ecoresolution.ecocube.agent.GroundAgent;

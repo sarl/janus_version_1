@@ -22,7 +22,7 @@ package org.janusproject.scriptedagent.exception;
 
 import java.net.URL;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 
 /**
  * Invalid directory for Jython scripts.

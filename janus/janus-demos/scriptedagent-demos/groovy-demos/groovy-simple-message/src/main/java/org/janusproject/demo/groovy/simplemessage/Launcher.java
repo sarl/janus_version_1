@@ -22,7 +22,7 @@ package org.janusproject.demo.groovy.simplemessage;
 
 import java.net.URL;
 
-import org.arakhne.vmutil.Resources;
+import org.arakhne.afc.vmutil.Resources;
 import org.janusproject.demo.groovy.simplemessage.agent.GroovyAgentReceiver;
 import org.janusproject.demo.groovy.simplemessage.agent.GroovyAgentSender;
 import org.janusproject.kernel.Kernel;

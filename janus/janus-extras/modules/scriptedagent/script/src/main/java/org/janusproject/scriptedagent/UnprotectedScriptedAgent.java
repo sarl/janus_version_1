@@ -29,7 +29,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.arakhne.vmutil.ReflectionUtil;
+import org.arakhne.afc.vmutil.ReflectionUtil;
 
 /**
  * Implementation of a scripted agent that is

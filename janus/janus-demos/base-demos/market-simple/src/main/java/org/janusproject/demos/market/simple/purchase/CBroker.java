@@ -20,7 +20,7 @@
  */
 package org.janusproject.demos.market.simple.purchase;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.market.simple.influence.RequestSignal;
 import org.janusproject.demos.market.simple.influence.TransfertSignal;
 import org.janusproject.demos.market.simple.message.ContractGroupMessage;

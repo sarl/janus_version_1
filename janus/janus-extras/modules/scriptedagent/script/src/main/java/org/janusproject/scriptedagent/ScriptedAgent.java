@@ -34,8 +34,8 @@ import java.util.logging.Logger;
 
 import javax.script.ScriptEngineManager;
 
-import org.arakhne.vmutil.FileSystem;
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.FileSystem;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.agent.Agent;
 import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.status.StatusFactory;

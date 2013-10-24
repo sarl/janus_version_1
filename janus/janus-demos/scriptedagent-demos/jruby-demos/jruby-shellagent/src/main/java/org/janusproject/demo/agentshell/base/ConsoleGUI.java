@@ -44,7 +44,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;

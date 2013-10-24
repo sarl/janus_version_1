@@ -20,7 +20,7 @@
  */
 package org.janusproject.demos.acl.query.role;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.acl.ACLMessage;
 import org.janusproject.acl.protocol.EnumFipaProtocol;
 import org.janusproject.acl.protocol.FipaConversationManager;

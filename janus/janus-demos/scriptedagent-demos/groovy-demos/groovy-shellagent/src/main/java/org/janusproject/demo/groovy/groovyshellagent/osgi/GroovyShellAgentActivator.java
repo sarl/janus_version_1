@@ -22,7 +22,7 @@ package org.janusproject.demo.groovy.groovyshellagent.osgi;
 
 import java.util.logging.Level;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demo.agentshell.base.ConsoleGUI;
 import org.janusproject.demo.groovy.groovyshellagent.agent.GroovyAgentShell;
 import org.janusproject.kernel.address.AgentAddress;

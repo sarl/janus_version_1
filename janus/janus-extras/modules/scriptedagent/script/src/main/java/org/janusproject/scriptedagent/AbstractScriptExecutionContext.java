@@ -37,8 +37,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 
-import org.arakhne.vmutil.FileSystem;
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.FileSystem;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.util.event.ListenerCollection;
 
 /**

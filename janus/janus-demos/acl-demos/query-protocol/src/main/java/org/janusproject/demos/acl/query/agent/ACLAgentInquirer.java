@@ -20,7 +20,7 @@
  */
 package org.janusproject.demos.acl.query.agent;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.acl.ACLAgent;
 import org.janusproject.acl.ACLRepresentation;
 import org.janusproject.acl.encoding.PayloadEncoding;

@@ -24,7 +24,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JApplet;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.simulation.preypredator.activator.PreyPredatorAgentActivator;
 import org.janusproject.demos.simulation.preypredator.agent.Animat;
 import org.janusproject.demos.simulation.preypredator.agent.GroundAgent;

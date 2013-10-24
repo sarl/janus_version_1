@@ -47,8 +47,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import org.arakhne.vmutil.VMCommandLine;
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.VMCommandLine;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.bench.agent.message.BroadcastMessageSendingBench;
 import org.janusproject.kernel.bench.agent.message.HeavyAgentBroadcastMessageSendingBench;
 import org.janusproject.kernel.bench.agent.message.HeavyAgentMessageReceivingBench;
@@ -89,8 +89,8 @@ import org.janusproject.kernel.bench.organization.message.CRIOLightAgentBroadcas
 import org.janusproject.kernel.bench.organization.message.CRIOLightAgentMessageReceiving2Bench;
 import org.janusproject.kernel.bench.organization.message.CRIOLightAgentMessageReceivingBench;
 import org.janusproject.kernel.bench.organization.message.CRIOLightAgentMessageSendingBench;
-import org.janusproject.kernel.bench.organization.message.CRIOMessageReceivingBench;
 import org.janusproject.kernel.bench.organization.message.CRIOMessageReceiving2Bench;
+import org.janusproject.kernel.bench.organization.message.CRIOMessageReceivingBench;
 import org.janusproject.kernel.bench.organization.message.CRIOMessageSendingBench;
 import org.janusproject.kernel.bench.organization.signal.CRIOHeavyAgentSignalSending2Bench;
 import org.janusproject.kernel.bench.organization.signal.CRIOHeavyAgentSignalSending3Bench;

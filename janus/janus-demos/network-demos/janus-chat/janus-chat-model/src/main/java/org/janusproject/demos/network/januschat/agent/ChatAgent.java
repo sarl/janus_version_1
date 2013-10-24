@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.network.januschat.organization.ChatOrganization;
 import org.janusproject.demos.network.januschat.organization.ChatterRole;
 import org.janusproject.demos.network.januschat.organization.ErrorSignal;

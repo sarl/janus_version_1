@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.ecoresolution.message.EcoInitializationDoneMessage;
 import org.janusproject.ecoresolution.message.EcoProblemSolvedMessage;
 import org.janusproject.ecoresolution.message.EcoProblemSolverPresentationMessage;

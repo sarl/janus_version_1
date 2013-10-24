@@ -26,7 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.market.selective.capacity.FindLowestCostProposalCapacity;
 import org.janusproject.demos.market.selective.capacity.FindShortestTimeProposalCapacity;
 import org.janusproject.demos.market.selective.capacity.Proposal;

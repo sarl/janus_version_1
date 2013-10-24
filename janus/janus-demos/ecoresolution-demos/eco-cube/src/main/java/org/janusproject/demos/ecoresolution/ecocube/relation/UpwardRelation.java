@@ -20,7 +20,7 @@
  */
 package org.janusproject.demos.ecoresolution.ecocube.relation;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.ecoresolution.identity.AnyIdentity;
 import org.janusproject.ecoresolution.identity.EcoIdentity;
 import org.janusproject.ecoresolution.relation.AbstractEcoRelation;

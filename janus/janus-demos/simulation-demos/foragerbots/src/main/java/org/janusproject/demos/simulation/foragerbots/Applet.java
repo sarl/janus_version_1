@@ -25,7 +25,7 @@ import java.awt.BorderLayout;
 import javax.swing.JApplet;
 import javax.swing.JScrollPane;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.simulation.foragerbots.agents.ForagerBot;
 import org.janusproject.demos.simulation.foragerbots.agents.Grid;
 import org.janusproject.demos.simulation.foragerbots.ui.EnvironmentPanel;

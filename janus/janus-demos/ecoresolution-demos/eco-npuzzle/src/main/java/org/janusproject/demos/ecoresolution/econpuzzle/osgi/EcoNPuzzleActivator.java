@@ -23,7 +23,7 @@ package org.janusproject.demos.ecoresolution.econpuzzle.osgi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.agent.KernelAgentFactory;
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.mmf.JanusApplication;

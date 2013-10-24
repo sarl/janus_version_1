@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.network.januschat.ChatUtil;
 import org.janusproject.demos.network.januschat.agent.ChatChannel;
 import org.janusproject.kernel.address.AgentAddress;

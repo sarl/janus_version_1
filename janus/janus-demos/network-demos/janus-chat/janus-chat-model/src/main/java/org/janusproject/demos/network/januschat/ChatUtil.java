@@ -20,7 +20,7 @@
  */
 package org.janusproject.demos.network.januschat;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.network.januschat.agent.ChatAgent;
 import org.janusproject.demos.network.januschat.agent.ChatChannel;
 import org.janusproject.kernel.Kernel;

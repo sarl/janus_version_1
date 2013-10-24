@@ -30,7 +30,7 @@ import java.util.NoSuchElementException;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.arakhne.vmutil.FileSystem;
+import org.arakhne.afc.vmutil.FileSystem;
 import org.janusproject.scriptedagent.exception.InvalidDirectoryException;
 
 /**

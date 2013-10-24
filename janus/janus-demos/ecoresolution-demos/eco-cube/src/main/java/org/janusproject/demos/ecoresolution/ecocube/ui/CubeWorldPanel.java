@@ -45,8 +45,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import org.arakhne.vmutil.Resources;
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.Resources;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.ecoresolution.ecocube.agent.AgentType;
 import org.janusproject.demos.ecoresolution.ecocube.agent.CubeEcoChannel;
 import org.janusproject.demos.ecoresolution.ecocube.relation.DownwardRelation;

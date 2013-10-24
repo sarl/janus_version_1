@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.jaak.pacman.PacManGame;
 import org.janusproject.demos.jaak.pacman.channel.PlayerDirection;
 import org.janusproject.demos.jaak.pacman.semantic.EvadeGhostSemantic;

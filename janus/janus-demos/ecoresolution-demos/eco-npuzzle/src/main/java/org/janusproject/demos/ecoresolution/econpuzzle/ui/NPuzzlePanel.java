@@ -43,8 +43,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import org.arakhne.vmutil.Resources;
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.Resources;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.ecoresolution.econpuzzle.agent.channel.EcoPlaceNPuzzleChannel;
 import org.janusproject.demos.ecoresolution.econpuzzle.agent.channel.NPuzzleChannel;
 import org.janusproject.demos.ecoresolution.econpuzzle.relation.Hosting;

@@ -23,7 +23,7 @@ package org.janusproject.demos.base.helloagents.osgi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.base.helloagents.AgentA;
 import org.janusproject.demos.base.helloagents.AgentB;
 import org.janusproject.demos.base.helloagents.Launcher;

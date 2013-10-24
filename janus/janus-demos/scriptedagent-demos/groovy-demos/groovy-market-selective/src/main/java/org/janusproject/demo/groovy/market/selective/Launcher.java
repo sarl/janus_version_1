@@ -22,7 +22,7 @@ package org.janusproject.demo.groovy.market.selective;
 
 import java.net.URL;
 
-import org.arakhne.vmutil.Resources;
+import org.arakhne.afc.vmutil.Resources;
 import org.janusproject.groovyengine.GroovyExecutionContext;
 
 /**

@@ -22,7 +22,7 @@ package org.janusproject.demos.acl.propose;
 
 import java.util.logging.Level;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.acl.propose.agent.ACLProtocolReceiver;
 import org.janusproject.demos.acl.propose.agent.ACLProtocolSender;
 import org.janusproject.kernel.Kernel;

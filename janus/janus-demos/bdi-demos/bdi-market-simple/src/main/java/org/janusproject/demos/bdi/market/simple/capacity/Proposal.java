@@ -20,7 +20,7 @@
  */
 package org.janusproject.demos.bdi.market.simple.capacity;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.address.AgentAddress;
 
 /**

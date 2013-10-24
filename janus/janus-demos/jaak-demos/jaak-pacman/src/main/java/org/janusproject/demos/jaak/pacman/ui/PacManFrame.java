@@ -29,7 +29,7 @@ import java.lang.ref.WeakReference;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.jaak.envinterface.channel.GridStateChannel;
 import org.janusproject.jaak.envinterface.channel.GridStateChannelListener;
 import org.janusproject.kernel.agent.Kernels;

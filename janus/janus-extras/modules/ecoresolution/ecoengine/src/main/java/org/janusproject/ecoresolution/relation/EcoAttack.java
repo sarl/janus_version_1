@@ -23,7 +23,7 @@ package org.janusproject.ecoresolution.relation;
 import java.io.Serializable;
 import java.util.Collection;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.ecoresolution.identity.EcoIdentity;
 
 /** Describes an attack of an eco-entity against another eco-entity

@@ -20,7 +20,7 @@
  */
 package org.janusproject.demos.market.selective.purchase;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.market.selective.contracting.Buyer;
 import org.janusproject.demos.market.selective.influence.ContractTerminationInfluence;
 import org.janusproject.demos.market.selective.message.ReadyToStartMessage;

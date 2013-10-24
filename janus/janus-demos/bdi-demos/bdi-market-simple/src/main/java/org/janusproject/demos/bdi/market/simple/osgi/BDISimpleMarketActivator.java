@@ -23,7 +23,7 @@ package org.janusproject.demos.bdi.market.simple.osgi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.bdi.market.simple.Environment;
 import org.janusproject.demos.bdi.market.simple.agent.BrokerAgent;
 import org.janusproject.demos.bdi.market.simple.agent.ClientAgent;

@@ -35,13 +35,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.simulation.foragerbots.agents.GridListener;
-import org.janusproject.kernel.address.AgentAddress;
-import org.janusproject.kernel.agent.AgentProbe;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.KernelEvent;
 import org.janusproject.kernel.KernelListener;
+import org.janusproject.kernel.address.AgentAddress;
+import org.janusproject.kernel.agent.AgentProbe;
 import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.agent.ProbeManager;
 

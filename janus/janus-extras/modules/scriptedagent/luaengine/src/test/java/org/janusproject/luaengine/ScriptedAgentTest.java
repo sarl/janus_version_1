@@ -23,14 +23,14 @@ package org.janusproject.luaengine;
 import java.io.StringWriter;
 import java.net.URL;
 
-import org.arakhne.vmutil.Resources;
+import junit.framework.TestCase;
+
+import org.arakhne.afc.vmutil.Resources;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.agent.AgentActivationPrototype;
 import org.janusproject.kernel.agent.KernelTestUtil;
 import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.status.Status;
-
-import junit.framework.TestCase;
 
 /**
  * @author $Author: sgalland$

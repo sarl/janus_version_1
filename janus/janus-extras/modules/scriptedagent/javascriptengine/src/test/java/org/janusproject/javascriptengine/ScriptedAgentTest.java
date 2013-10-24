@@ -24,7 +24,7 @@ import java.net.URL;
 
 import junit.framework.TestCase;
 
-import org.arakhne.vmutil.Resources;
+import org.arakhne.afc.vmutil.Resources;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.agent.AgentActivationPrototype;
 import org.janusproject.kernel.agent.Kernels;

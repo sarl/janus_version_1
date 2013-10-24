@@ -29,12 +29,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.LogRecord;
 import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import javax.swing.filechooser.FileFilter;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demo.agentshell.base.AgentShellChannel;
 import org.janusproject.demo.agentshell.base.AgentShellChannel.LogListener;
 import org.janusproject.demo.agentshell.base.AgentShellChannel.ResultListener;

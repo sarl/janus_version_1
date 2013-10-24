@@ -25,7 +25,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.ecoresolution.identity.EcoIdentity;
 import org.janusproject.kernel.Kernel;
 

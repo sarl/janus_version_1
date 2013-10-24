@@ -23,7 +23,7 @@ package org.janusproject.demos.acl.cnp.osgi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.acl.cnp.Launcher;
 import org.janusproject.demos.acl.cnp.agent.ACLCallForProposalReceiver;
 import org.janusproject.demos.acl.cnp.agent.ACLCallForProposalSender;

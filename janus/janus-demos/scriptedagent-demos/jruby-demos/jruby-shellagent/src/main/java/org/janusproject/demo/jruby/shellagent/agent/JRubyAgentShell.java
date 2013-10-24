@@ -33,7 +33,7 @@ import java.util.logging.LogRecord;
 
 import javax.swing.filechooser.FileFilter;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demo.agentshell.base.AgentShellChannel;
 import org.janusproject.demo.agentshell.base.AgentShellChannel.LogListener;
 import org.janusproject.demo.agentshell.base.AgentShellChannel.ResultListener;

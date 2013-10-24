@@ -43,7 +43,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.network.januschat.agent.ChatChannel;
 import org.janusproject.demos.network.januschat.agent.IncomingChatListener;
 import org.janusproject.demos.network.januschat.agent.IncomingPrivateMessageListener;

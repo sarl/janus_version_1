@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.simulation.preypredator.Launcher;
 import org.janusproject.demos.simulation.preypredator.agent.Animat;
 import org.janusproject.demos.simulation.preypredator.agent.GroundAgent;

@@ -22,7 +22,7 @@ package org.janusproject.demo.jruby.simplemessage.agent;
 
 import java.net.URL;
 
-import org.arakhne.vmutil.Resources;
+import org.arakhne.afc.vmutil.Resources;
 import org.janusproject.jrubyengine.RubyAgent;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.status.Status;

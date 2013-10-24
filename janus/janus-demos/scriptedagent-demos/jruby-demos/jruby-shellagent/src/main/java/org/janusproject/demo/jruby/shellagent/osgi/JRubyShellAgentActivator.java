@@ -23,7 +23,7 @@ package org.janusproject.demo.jruby.shellagent.osgi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demo.agentshell.base.ConsoleGUI;
 import org.janusproject.demo.jruby.shellagent.agent.JRubyAgentShell;
 import org.janusproject.kernel.address.AgentAddress;

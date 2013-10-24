@@ -23,7 +23,7 @@ package org.janusproject.demos.simulation.foragerbots;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.simulation.foragerbots.agents.ForagerBot;
 import org.janusproject.demos.simulation.foragerbots.agents.Grid;
 import org.janusproject.demos.simulation.foragerbots.ui.EnvironmentFrame;

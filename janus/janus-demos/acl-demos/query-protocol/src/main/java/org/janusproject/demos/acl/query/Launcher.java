@@ -22,7 +22,7 @@ package org.janusproject.demos.acl.query;
 
 import java.util.logging.Level;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.acl.ACLRepresentation;
 import org.janusproject.acl.Performative;
 import org.janusproject.acl.encoding.PayloadEncoding;

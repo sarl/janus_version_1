@@ -23,7 +23,7 @@ package org.janusproject.demos.acl.propose.role;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.acl.Performative;
 import org.janusproject.acl.protocol.ProtocolResult;
 import org.janusproject.acl.protocol.ProtocolState;

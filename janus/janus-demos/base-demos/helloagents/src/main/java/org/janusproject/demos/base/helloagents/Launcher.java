@@ -1,6 +1,6 @@
 package org.janusproject.demos.base.helloagents;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.agent.Kernels;
 

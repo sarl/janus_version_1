@@ -20,7 +20,7 @@
  */
 package org.janusproject.demos.market.selective.providing;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.market.selective.capacity.Proposal;
 import org.janusproject.demos.market.selective.contracting.ContractingOrganization;
 import org.janusproject.demos.market.selective.contracting.Seller;

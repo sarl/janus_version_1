@@ -22,7 +22,7 @@ package org.janusproject.ecoresolution.identity;
 
 import java.util.UUID;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 
 /** Implementation of EcoRelation participant which stands for
  * none of the instances of EcoEntity. 

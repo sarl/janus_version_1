@@ -38,7 +38,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.demos.network.januschat.ChatUtil;
 import org.janusproject.demos.network.januschat.agent.ChatChannel;
 import org.janusproject.kernel.address.Address;

@@ -29,7 +29,7 @@ import java.net.URL;
 
 import javax.script.ScriptEngineManager;
 
-import org.arakhne.vmutil.ReflectionUtil;
+import org.arakhne.afc.vmutil.ReflectionUtil;
 import org.janusproject.scriptedagent.ScriptedAgent;
 
 import sun.org.mozilla.javascript.Context;
