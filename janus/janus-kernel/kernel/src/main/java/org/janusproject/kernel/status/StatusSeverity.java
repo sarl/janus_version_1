@@ -22,7 +22,7 @@ package org.janusproject.kernel.status;
 
 import java.util.logging.Level;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 
 /**
  * This enum describes the various status severity level 

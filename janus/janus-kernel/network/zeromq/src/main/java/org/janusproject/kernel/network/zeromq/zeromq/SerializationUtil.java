@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.arakhne.util.text.Base64Coder;
+import org.arakhne.afc.text.Base64Coder;
 
 /** Utilities for the serialization of Java objects in Base64.
  * 

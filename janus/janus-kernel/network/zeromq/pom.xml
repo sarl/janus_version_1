@@ -39,8 +39,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.arakhne.afc</groupId>
-			<artifactId>arakhneText</artifactId>
+			<groupId>org.arakhne.afc.core</groupId>
+			<artifactId>text</artifactId>
 		</dependency>
 	</dependencies>
 

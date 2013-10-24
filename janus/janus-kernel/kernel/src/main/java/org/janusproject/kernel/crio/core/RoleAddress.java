@@ -23,7 +23,7 @@ package org.janusproject.kernel.crio.core;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 
-import org.arakhne.vmutil.ClassComparator;
+import org.arakhne.afc.vmutil.ClassComparator;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 

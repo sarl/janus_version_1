@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.KernelEvent;
 import org.janusproject.kernel.KernelEvent.KernelEventType;

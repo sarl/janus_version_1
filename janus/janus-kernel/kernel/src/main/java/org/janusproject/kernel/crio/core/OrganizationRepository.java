@@ -28,7 +28,7 @@ import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.crio.organization.OrganizationFactory;
 import org.janusproject.kernel.crio.organization.OrganizationInstanciationError;
 import org.janusproject.kernel.repository.TreeRepository;

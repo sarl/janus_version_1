@@ -20,7 +20,7 @@
  */
 package org.janusproject.kernel.crio.interaction;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.message.Message;
 import org.janusproject.kernel.message.MessageException;
 

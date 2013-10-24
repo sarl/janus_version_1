@@ -35,9 +35,9 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
 
-import org.arakhne.vmutil.OperatingSystem;
-import org.arakhne.vmutil.Resources;
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.OperatingSystem;
+import org.arakhne.afc.vmutil.Resources;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.time.KernelTimeManager;
 

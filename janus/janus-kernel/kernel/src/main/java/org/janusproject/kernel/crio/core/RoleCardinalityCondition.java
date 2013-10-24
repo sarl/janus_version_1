@@ -23,8 +23,8 @@ package org.janusproject.kernel.crio.core;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.arakhne.vmutil.ClassComparator;
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.ClassComparator;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.condition.ConditionFailure;
 import org.janusproject.kernel.crio.organization.Group;
 

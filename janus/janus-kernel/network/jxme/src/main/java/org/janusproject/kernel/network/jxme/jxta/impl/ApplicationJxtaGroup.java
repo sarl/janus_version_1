@@ -35,7 +35,7 @@ import net.jxta.impl.document.LiteXMLElement;
 import net.jxta.peergroup.PeerGroup;
 import net.jxta.protocol.PeerGroupAdvertisement;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.crio.organization.GroupCondition;
 import org.janusproject.kernel.crio.organization.MembershipService;

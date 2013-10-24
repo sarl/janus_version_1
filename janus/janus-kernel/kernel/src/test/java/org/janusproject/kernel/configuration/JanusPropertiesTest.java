@@ -23,14 +23,14 @@ package org.janusproject.kernel.configuration;
 import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
-import java.util.Map.Entry;
-
-import org.arakhne.vmutil.FileSystem;
-import org.janusproject.kernel.configuration.JanusProperties.PrivilegedContext;
 
 import junit.framework.TestCase;
+
+import org.arakhne.afc.vmutil.FileSystem;
+import org.janusproject.kernel.configuration.JanusProperties.PrivilegedContext;
 
 /**
  * @author $Author: sgalland$

@@ -43,7 +43,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.channels.ChannelInteractable;

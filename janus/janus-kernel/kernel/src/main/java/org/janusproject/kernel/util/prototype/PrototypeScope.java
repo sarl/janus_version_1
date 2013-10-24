@@ -20,7 +20,7 @@
  */
 package org.janusproject.kernel.util.prototype;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 
 /**
  * Exception when a capacity invocation does not

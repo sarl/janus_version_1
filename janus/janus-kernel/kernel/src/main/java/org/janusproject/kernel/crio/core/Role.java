@@ -32,7 +32,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agentmemory.Memory;
 import org.janusproject.kernel.agentmemory.MemoryEvent;

@@ -32,7 +32,7 @@ import net.jxta.platform.NetworkManager;
 import net.jxta.rendezvous.RendezVousService;
 import net.jxta.rendezvous.RendezvousListener;
 
-import org.arakhne.vmutil.FileSystem;
+import org.arakhne.afc.vmutil.FileSystem;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;

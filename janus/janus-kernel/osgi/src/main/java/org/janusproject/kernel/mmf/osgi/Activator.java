@@ -22,11 +22,11 @@ package org.janusproject.kernel.mmf.osgi;
 
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
-import org.janusproject.kernel.mmf.KernelServiceListener;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.mmf.KernelOperation;
 import org.janusproject.kernel.mmf.KernelServiceEvent;
 import org.janusproject.kernel.mmf.KernelServiceEvent.KernelServiceEventType;
+import org.janusproject.kernel.mmf.KernelServiceListener;
 import org.janusproject.kernel.mmf.impl.OSGiKernelService;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;

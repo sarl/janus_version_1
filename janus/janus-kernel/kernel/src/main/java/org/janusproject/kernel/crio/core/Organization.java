@@ -33,7 +33,7 @@ import java.util.TreeSet;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.condition.Condition;
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;

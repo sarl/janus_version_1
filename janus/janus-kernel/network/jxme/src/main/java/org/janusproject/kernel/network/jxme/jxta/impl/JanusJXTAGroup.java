@@ -36,7 +36,7 @@ import net.jxta.protocol.PipeAdvertisement;
 import net.jxta.util.JxtaBiDiPipe;
 import net.jxta.util.JxtaServerPipe;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.message.Message;

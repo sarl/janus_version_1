@@ -33,17 +33,17 @@ import java.util.Date;
 import java.util.EventListener;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.UUID;
-import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.prefs.Preferences;
 
-import org.arakhne.vmutil.FileSystem;
+import org.arakhne.afc.vmutil.FileSystem;
 
 /** This class provides {@link Properties}
  * with support for read-only properties.

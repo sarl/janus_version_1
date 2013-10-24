@@ -20,7 +20,7 @@
  */
 package org.janusproject.kernel.crio.role;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 
 /**
  * Role is not defined in organization.

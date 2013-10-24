@@ -23,7 +23,7 @@ package org.janusproject.kernel.status;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 
 /**
  * A concrete status implementation, suitable either for 

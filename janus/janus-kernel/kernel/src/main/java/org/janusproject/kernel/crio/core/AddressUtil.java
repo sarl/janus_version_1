@@ -23,7 +23,7 @@ package org.janusproject.kernel.crio.core;
 import java.util.StringTokenizer;
 import java.util.UUID;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.address.AgentAddress;
 
 /**

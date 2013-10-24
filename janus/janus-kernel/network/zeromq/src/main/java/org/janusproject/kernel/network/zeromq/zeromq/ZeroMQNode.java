@@ -35,8 +35,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.MACNumber;
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.MACNumber;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.janusproject.kernel.address.AgentAddress;

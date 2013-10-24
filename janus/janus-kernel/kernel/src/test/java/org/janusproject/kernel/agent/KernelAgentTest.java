@@ -26,14 +26,10 @@ import java.util.logging.Level;
 
 import junit.framework.TestCase;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.Kernel;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.address.AgentAddress;
-import org.janusproject.kernel.agent.Agent;
-import org.janusproject.kernel.agent.AgentLifeState;
-import org.janusproject.kernel.agent.KernelAgent;
-import org.janusproject.kernel.agent.Kernels;
 import org.janusproject.kernel.configuration.JanusProperties;
 import org.janusproject.kernel.configuration.JanusProperty;
 import org.janusproject.kernel.crio.core.CRIOContext;
@@ -42,11 +38,11 @@ import org.janusproject.kernel.crio.core.Role;
 import org.janusproject.kernel.crio.core.RoleAddress;
 import org.janusproject.kernel.crio.organization.OrganizationFactory;
 import org.janusproject.kernel.crio.role.RoleFactory;
-import org.janusproject.kernel.status.Status;
 import org.janusproject.kernel.logger.LoggerUtil;
 import org.janusproject.kernel.mailbox.BufferedMailbox;
 import org.janusproject.kernel.mailbox.Mailbox;
 import org.janusproject.kernel.message.Message;
+import org.janusproject.kernel.status.Status;
 
 /**
  * @author $Author: sgalland$

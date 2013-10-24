@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 import org.apache.felix.bundlerepository.RepositoryAdmin;
 import org.apache.felix.bundlerepository.Resolver;
 import org.apache.felix.bundlerepository.Resource;
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.mmf.JanusModule;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;

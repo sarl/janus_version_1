@@ -23,7 +23,7 @@ package org.janusproject.kernel.crio.core;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.condition.AbstractCondition;
 import org.janusproject.kernel.condition.ConditionFailure;
 import org.janusproject.kernel.crio.capacity.Capacity;

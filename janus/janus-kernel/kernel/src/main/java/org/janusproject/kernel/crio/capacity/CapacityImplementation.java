@@ -24,7 +24,7 @@ import java.lang.ref.SoftReference;
 import java.util.Collection;
 import java.util.logging.Logger;
 
-import org.arakhne.vmutil.ReflectionUtil;
+import org.arakhne.afc.vmutil.ReflectionUtil;
 
 /**
  * This class provide the minimal definition of a implementation of capacity.

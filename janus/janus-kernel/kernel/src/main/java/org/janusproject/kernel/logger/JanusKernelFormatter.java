@@ -22,7 +22,7 @@ package org.janusproject.kernel.logger;
 
 import java.util.logging.LogRecord;
 
-import org.arakhne.vmutil.locale.Locale;
+import org.arakhne.afc.vmutil.locale.Locale;
 import org.janusproject.kernel.address.Address;
 import org.janusproject.kernel.time.KernelTimeManager;
 
