@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.janus-project.extras</groupId>
 		<artifactId>ui</artifactId>
-		<version>1.0</version>
+		<version>2.0-SNAPSHOT</version>
 	</parent>
 
 
 	<groupId>org.janus-project.extras.ui</groupId>
 	<artifactId>eclipse</artifactId>
-	<version>1.0.0</version>
+	<version>2.0.0-SNAPSHOT</version>
 	<name>Eclipse UI for Janus</name>
 	<packaging>pom</packaging>
 
