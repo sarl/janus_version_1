@@ -20,8 +20,8 @@
 		<felix.main.version>4.2.1</felix.main.version>
 		<janus.version>2.0-SNAPSHOT</janus.version>
 		<janus.version.osgi>2.0.0-SNAPSHOT</janus.version.osgi>
-		<janus.plugin.version>0.6</janus.plugin.version>
-		<afc.version>10.0</afc.version>
+		<janus.plugin.version>10.0</janus.plugin.version>
+		<afc.version>11.0-SNAPSHOT</afc.version>
 		<android.platform>15</android.platform>
 		<android.sdk.path>/opt/android-sdk</android.sdk.path>
 		<android.emulator.avd>acer500</android.emulator.avd>
