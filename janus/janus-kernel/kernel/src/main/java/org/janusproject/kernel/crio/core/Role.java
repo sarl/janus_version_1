@@ -42,7 +42,9 @@ import org.janusproject.kernel.agentsignal.Signal;
 import org.janusproject.kernel.agentsignal.SignalListener;
 import org.janusproject.kernel.agentsignal.SignalManager;
 import org.janusproject.kernel.agentsignal.SignalPolicy;
+import org.janusproject.kernel.condition.Condition;
 import org.janusproject.kernel.condition.ConditionnedObject;
+import org.janusproject.kernel.condition.TimeCondition;
 import org.janusproject.kernel.crio.capacity.Capacity;
 import org.janusproject.kernel.crio.capacity.CapacityContainer;
 import org.janusproject.kernel.crio.capacity.CapacityContext;
@@ -125,6 +127,10 @@ public abstract class Role extends
 	private BufferedSignalManager signalManager;
 
 	private WeakReference<CRIOContext> crioContext;
+	
+	/** Condition to wake up the role.
+	 */
+	private volatile Condition<?> roleWakeUpCondition = null;
 
 	/**
 	 * Logger for this role.
@@ -2470,6 +2476,113 @@ public abstract class Role extends
 		return buffer.toString();
 	}
 	
+	/** Stop the agent execution until the given timout is reached.
+	 * <p>
+	 * <strong>CAUTION:</strong> this function does never sleep the
+	 * agent when the execution of the agent's life-cycle functions
+	 * ({@link #activate(Object...)}, {@link #live()}, and
+	 * {@link #end()}) are under progression.
+	 * Sleep request is taken into account
+	 * just after {@link #live()} has exited. Sleep function
+	 * may be invoked from {@link #activate(Object...)} and
+	 * {@link #end()} but these functions are outside the
+	 * scope of the sleep feature, ie. sleeping as no effect on
+	 * the invocation of these functions.
+	 * <p>
+	 * This function is available for both heavy and light agents.
+	 * <p>
+	 * In the underground implementation, if the agent is threaded,
+	 * ie. it is an heavy agent, the {@link Thread#sleep(long)} 
+	 * is invoked.
+	 * If the agent is not threaded, ie. it is a 
+	 * light agent, the agent's activator ignore it until the
+	 * timeout is reached.
+	 * <p>
+	 * The timout unit depends on the current time manager.
+	 * 
+	 * @param wakeUpCondition is the condition to wake up
+	 * the agent.
+	 * @return <code>true</code> if the agent will be paused,
+	 * otherwise <code>false</code>
+	 * @see KernelTimeManager
+	 * @see #sleep(Condition)
+	 * @since 2.0
+	 */
+	protected final boolean sleep(TimeCondition wakeUpCondition) {
+		if (wakeUpCondition!=null) {
+			this.roleWakeUpCondition = wakeUpCondition;
+			return true;
+		}
+		return false;
+	}
+
+	/** Stop the agent execution until the given condition is true.
+	 * <p>
+	 * <strong>CAUTION:</strong> this function does never sleep the
+	 * agent when the execution of the agent's life-cycle functions
+	 * ({@link #activate(Object...)}, {@link #live()}, and
+	 * {@link #end()}) are under progression.
+	 * Sleep request is taken into account
+	 * just after {@link #live()} has exited. Sleep function
+	 * may be invoked from {@link #activate(Object...)} and
+	 * {@link #end()} but these functions are outside the
+	 * scope of the sleep feature, ie. sleeping as no effect on
+	 * the invocation of these functions.
+	 * <p>
+	 * This function is available for both heavy and light agents.
+	 * 
+	 * @param wakeUpCondition is the condition to wake up
+	 * the agent.
+	 * @return <code>true</code> if the agent will be paused,
+	 * otherwise <code>false</code>
+	 * @since 2.0
+	 * @see #sleep(TimeCondition)
+	 */
+	protected final boolean sleep(Condition<? extends RolePlayer> wakeUpCondition) {
+		if (wakeUpCondition!=null) {
+			this.roleWakeUpCondition = wakeUpCondition;
+			return true;
+		}
+		return false;
+	}
+
+	/** Test the wake-up condition if present and replies if this role is 
+	 * still sleeping.
+	 * 
+	 * @return <code>true</code> if this role continue to sleep,
+	 * otherwise <code>false</code>
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	boolean wakeUpIfSleeping() {
+		Condition c = this.roleWakeUpCondition;
+		if (c!=null) {
+			if (c instanceof TimeCondition) {
+				CRIOContext kc = getPlayerInstance().getCRIOContext();
+				TimeCondition tc = (TimeCondition)c;
+				if (tc.evaluate(kc.getTimeConditionParameterProvider())) {
+					this.roleWakeUpCondition = null;
+					return false;
+				}
+			}
+			else if (c.evaluate(this)) {
+				this.roleWakeUpCondition = null;
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/** Replies if the role is currently sleeping, ie. it is
+	 * waiting for a particular condition to wake up.
+	 *  
+	 * @return <code>true</code> if the role is sleeping;
+	 * <code>false</code> if not.
+	 */
+	public boolean isSleeping() {
+		return this.roleWakeUpCondition!=null;
+	}
+
 	/**
 	 * Wrapper to player's memory to avoid invalid accesses from role.
 	 * 

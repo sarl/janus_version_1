@@ -81,7 +81,9 @@ extends AbstractActivator<Role> {
 		while (roles.hasNext()) {
 			r = roles.next();
 			try {
-				ms.addStatus(r.proceedPrivateBehaviour());
+				if (!r.wakeUpIfSleeping()) {
+					ms.addStatus(r.proceedPrivateBehaviour());
+				}
 			}
 			catch(AssertionError e) {
 				throw e;
