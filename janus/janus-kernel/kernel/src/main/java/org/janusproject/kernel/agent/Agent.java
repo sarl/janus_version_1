@@ -35,6 +35,7 @@ import org.janusproject.kernel.address.AgentAddress;
 import org.janusproject.kernel.agentsignal.BufferedSignalManager;
 import org.janusproject.kernel.agentsignal.SignalManager;
 import org.janusproject.kernel.condition.AfterTimeCondition;
+import org.janusproject.kernel.condition.Condition;
 import org.janusproject.kernel.condition.TimeCondition;
 import org.janusproject.kernel.configuration.JanusProperty;
 import org.janusproject.kernel.crio.capacity.CapacityContainer;
@@ -132,15 +133,15 @@ implements Activable, Holon, Serializable {
 	 * agent
 	 */
 	private List<GroupAddress> internalOrganizations = null;
-	
+
 	/** Indicates the address of the agent which has created this agent.
 	 */
 	AgentAddress creator = null;
-	
+
 	/** Object that is the current execution resource.
 	 */
 	transient AgentExecutionResource executionResource = null;
-	
+
 	/** Indicates if the agent is currently migrating or changing
 	 * its execution method.
 	 */
@@ -150,20 +151,20 @@ implements Activable, Holon, Serializable {
 	 * is living.
 	 */
 	transient WeakReference<KernelAgent> kernel = null;
-	
+
 	/** Creation date.
 	 */
 	float creationDate = Float.NaN;
-	
+
 	/** Init parameters to pass to <code>activate()</code> 
 	 */
 	Object[] personalInitParameters = null;
-	
+
 	/**
 	 * Indicates the state of this agent.
 	 */
 	private AgentLifeState agentState;
-	
+
 	/**
 	 * The mailbox of this agent
 	 */
@@ -173,11 +174,11 @@ implements Activable, Holon, Serializable {
 	 * The mailbox of this agent
 	 */
 	private MessageTransportService mts;
-	
+
 	/** Condition to wake up the agent.
 	 */
-	private volatile TimeCondition agentWakeUpCondition = null;
-	
+	private volatile Condition<?> agentWakeUpCondition = null;
+
 	/** Indicates if the agent has migrated from a kernel to another one.
 	 */
 	private final boolean hasMigrated = false;
@@ -273,15 +274,15 @@ implements Activable, Holon, Serializable {
 	}
 
 	/**
-     * Causes the current thread to wait until the kernel has terminated
-     * its execution or a thread has invoked {@link Object#notify()}
-     * or {@link Object#notifyAll()} on the instance of this object.
-     * In other words, this function extends the behavior of 
-     * {@link Object#wait()} by adding the termination of the agent
-     * as a critera to wake up.
-     * <p>
-     * In opposite to {@link Object#wait()}, this function does not
-     * requires to explicitly get ownership of this ovject's monitor. 
+	 * Causes the current thread to wait until the kernel has terminated
+	 * its execution or a thread has invoked {@link Object#notify()}
+	 * or {@link Object#notifyAll()} on the instance of this object.
+	 * In other words, this function extends the behavior of 
+	 * {@link Object#wait()} by adding the termination of the agent
+	 * as a critera to wake up.
+	 * <p>
+	 * In opposite to {@link Object#wait()}, this function does not
+	 * requires to explicitly get ownership of this ovject's monitor. 
 	 * 
 	 * @throws InterruptedException
 	 * @since 0.5
@@ -293,15 +294,15 @@ implements Activable, Holon, Serializable {
 	}
 
 	/**
-     * Causes the current thread to wait until the kernel has terminated
-     * its execution or a thread has invoked {@link Object#notify()}
-     * or {@link Object#notifyAll()} on the instance of this object.
-     * In other words, this function extends the behavior of 
-     * {@link Object#wait()} by adding the termination of the kernel
-     * as a critera to wake up.
-     * <p>
-     * In opposite to {@link Object#wait()}, this function does not
-     * requires to explicitly get ownership of this object's monitor. 
+	 * Causes the current thread to wait until the kernel has terminated
+	 * its execution or a thread has invoked {@link Object#notify()}
+	 * or {@link Object#notifyAll()} on the instance of this object.
+	 * In other words, this function extends the behavior of 
+	 * {@link Object#wait()} by adding the termination of the kernel
+	 * as a critera to wake up.
+	 * <p>
+	 * In opposite to {@link Object#wait()}, this function does not
+	 * requires to explicitly get ownership of this object's monitor. 
 	 * 
 	 * @param timeout is the maximal time to wait for the termination in milliseconds.
 	 * @throws InterruptedException
@@ -393,7 +394,7 @@ implements Activable, Holon, Serializable {
 		}
 		return null;
 	}
-	
+
 	/** Change the execution method of this agent, and
 	 * switch to an heavy/threaded method if possible.
 	 * 
@@ -411,7 +412,7 @@ implements Activable, Holon, Serializable {
 		}
 		return false;
 	}
-	
+
 	/** Change the execution method of this agent, and
 	 * switch to an light/nothreaded method if possible.
 	 * 
@@ -429,7 +430,7 @@ implements Activable, Holon, Serializable {
 		}
 		return false;
 	}
-	
+
 	/** Replies if this agent is heavy.
 	 * <p>
 	 * A agent is heavy if it owns its execution resource.
@@ -443,7 +444,7 @@ implements Activable, Holon, Serializable {
 	public final boolean isHeavyAgent() {
 		return this.executionResource!=null;
 	}
-	
+
 	/** Replies if this agent is light.
 	 * <p>
 	 * A agent is light if it does not own any execution resource.
@@ -496,7 +497,7 @@ implements Activable, Holon, Serializable {
 	public synchronized AgentLifeState getState() {
 		return this.agentState;
 	}
-	
+
 	/**
 	 * Replies if the agent has migrated to another Janus kernel.
 	 * 
@@ -515,7 +516,7 @@ implements Activable, Holon, Serializable {
 		assert(state!=null);
 		if (this.agentState!=state) {
 			this.agentState = state;
-			
+
 			AgentAddress adr = getAddress();
 			for(AgentLifeStateListener listener : getEventListeners(AgentLifeStateListener.class)) {
 				listener.agentLifeChanged(adr, this.agentState);
@@ -558,8 +559,8 @@ implements Activable, Holon, Serializable {
 		KernelAgent kh = (this.kernel==null) ? null : this.kernel.get();
 		if (kh==null)
 			return new SingleStatus(StatusSeverity.FATAL,
-				getAddress().toString(),
-				KernelStatusConstants.NO_KERNEL_AGENT);
+					getAddress().toString(),
+					KernelStatusConstants.NO_KERNEL_AGENT);
 		return kh.kill(this, getAddress());
 	}
 
@@ -674,7 +675,7 @@ implements Activable, Holon, Serializable {
 				activator, // activator
 				initParameters); // initialization parameters
 	}
-	
+
 	/** Launch the given agent as a heavy agent.
 	 * 
 	 * @param agent is the agent to initialize and launch
@@ -712,7 +713,7 @@ implements Activable, Holon, Serializable {
 				name, // agent name
 				initParameters); // initialization parameters
 	}
-	
+
 	/**
 	 * Decompose this agent according to the holonic-organizational model.
 	 * 
@@ -823,25 +824,25 @@ implements Activable, Holon, Serializable {
 		else {
 			params = parameters;
 		}
-		
+
 		assert(AgentActivationPrototypeValidator.validateInputParameters(
 				getClass(),
 				params));
 
 		setState(AgentLifeState.BORN);
-		
+
 		Activator<? extends Role> activator = getRoleActivator();
 		assert(activator!=null);
 		activator.setLoggerProvider(this);
 		activator.sync();
 
 		Status s = activate(params);
-		
+
 		if (s==null || s.isSuccess())
 			setState(AgentLifeState.ALIVE);
 		else
 			setState(AgentLifeState.DIED);
-		
+
 		return s;
 	}
 
@@ -900,7 +901,7 @@ implements Activable, Holon, Serializable {
 		assert(activator!=null);
 		return canCommitSuicide() && activator.isUsed() && !activator.hasActivable();
 	}
-	
+
 	/** Run the private behaviour of this agent and invoke {@link #live()}
 	 * 
 	 * @return the status of the behaviour execution.
@@ -913,7 +914,7 @@ implements Activable, Holon, Serializable {
 		if(this.mailbox instanceof BufferedMailbox) {
 			((BufferedMailbox)this.mailbox).synchronizeMessages();
 		}
-		
+
 		SignalManager sm = getSignalManager();
 		if (sm instanceof BufferedSignalManager) {
 			((BufferedSignalManager)sm).sync();
@@ -922,7 +923,7 @@ implements Activable, Holon, Serializable {
 		if (isSelfKillableNow()) {
 			return killMe();
 		}		
-		
+
 		return live();
 	}
 
@@ -932,24 +933,24 @@ implements Activable, Holon, Serializable {
 	 */
 	Status proceedPrivateDestruction() {
 		setState(AgentLifeState.BREAKING_DOWN);
-		
+
 		// Remove capacity results
 		clearCapacityCalls();
 
 		// Force to leave roles
 		leaveAllRoles();
-						
+
 		Activator<? extends Role> activator = getRoleActivator();
 		assert(activator!=null);
 		activator.sync();
-		
+
 		Status s = end();
 
 		setState(AgentLifeState.DIED);
-		
+
 		return s;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -959,7 +960,7 @@ implements Activable, Holon, Serializable {
 		clearListeners();
 		clearMailbox();
 	}
-	
+
 	/** {@inheritDoc}
 	 */
 	@Override
@@ -968,7 +969,7 @@ implements Activable, Holon, Serializable {
 		assert(activator!=null);
 		return activator.end();
 	}
-	
+
 	/** Stop the agent execution until the given timout is reached.
 	 * <p>
 	 * <strong>CAUTION:</strong> this function does never sleep the
@@ -998,6 +999,8 @@ implements Activable, Holon, Serializable {
 	 * @return <code>true</code> if the agent will be paused,
 	 * otherwise <code>false</code>
 	 * @see KernelTimeManager
+	 * @see #sleep(Condition)
+	 * @see #sleep(TimeCondition)
 	 * @since 0.5
 	 */
 	protected final boolean sleep(float timeout) {
@@ -1038,9 +1041,42 @@ implements Activable, Holon, Serializable {
 	 * @return <code>true</code> if the agent will be paused,
 	 * otherwise <code>false</code>
 	 * @see KernelTimeManager
+	 * @see #sleep(float)
+	 * @see #sleep(Condition)
 	 * @since 0.5
 	 */
 	protected final boolean sleep(TimeCondition wakeUpCondition) {
+		if (wakeUpCondition!=null && !(this instanceof KernelAgent)) {
+			this.agentWakeUpCondition = wakeUpCondition;
+			return true;
+		}
+		return false;
+	}
+
+	/** Stop the agent execution until the given condition is true.
+	 * <p>
+	 * <strong>CAUTION:</strong> this function does never sleep the
+	 * agent when the execution of the agent's life-cycle functions
+	 * ({@link #activate(Object...)}, {@link #live()}, and
+	 * {@link #end()}) are under progression.
+	 * Sleep request is taken into account
+	 * just after {@link #live()} has exited. Sleep function
+	 * may be invoked from {@link #activate(Object...)} and
+	 * {@link #end()} but these functions are outside the
+	 * scope of the sleep feature, ie. sleeping as no effect on
+	 * the invocation of these functions.
+	 * <p>
+	 * This function is available for both heavy and light agents.
+	 * 
+	 * @param wakeUpCondition is the condition to wake up
+	 * the agent.
+	 * @return <code>true</code> if the agent will be paused,
+	 * otherwise <code>false</code>
+	 * @since 2.0
+	 * @see #sleep(TimeCondition)
+	 * @see #sleep(float)
+	 */
+	protected final boolean sleep(Condition<? extends RolePlayer> wakeUpCondition) {
 		if (wakeUpCondition!=null && !(this instanceof KernelAgent)) {
 			this.agentWakeUpCondition = wakeUpCondition;
 			return true;
@@ -1054,11 +1090,19 @@ implements Activable, Holon, Serializable {
 	 * @return <code>true</code> if this agent continue to sleep,
 	 * otherwise <code>false</code>
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	boolean wakeUpIfSleeping() {
-		TimeCondition tc = this.agentWakeUpCondition;
-		if (tc!=null) {
-			KernelContext kc = getKernelContext();
-			if (tc.evaluate(kc.getTimeConditionParameterProvider())) {
+		Condition c = this.agentWakeUpCondition;
+		if (c!=null) {
+			if (c instanceof TimeCondition) {
+				KernelContext kc = getKernelContext();
+				TimeCondition tc = (TimeCondition)c;
+				if (tc.evaluate(kc.getTimeConditionParameterProvider())) {
+					this.agentWakeUpCondition = null;
+					return false;
+				}
+			}
+			else if (c.evaluate(this)) {
 				this.agentWakeUpCondition = null;
 				return false;
 			}
@@ -1066,7 +1110,7 @@ implements Activable, Holon, Serializable {
 		}
 		return false;
 	}
-	
+
 	/** Replies if the agent is currently sleeping, ie. it is
 	 * waiting for a particular condition to wake up.
 	 *  
@@ -1076,7 +1120,7 @@ implements Activable, Holon, Serializable {
 	public boolean isSleeping() {
 		return this.agentWakeUpCondition!=null;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1089,7 +1133,7 @@ implements Activable, Holon, Serializable {
 		}
 		return buf.toString();
 	}
-	
+
 	/**
 	 * Clear the content of the mail box if the mail box exists.
 	 * @MESSAGEAPI
@@ -1137,7 +1181,7 @@ implements Activable, Holon, Serializable {
 		}
 		return this.mts;
 	}
-	
+
 	/**
 	 * Replies the first available message in the agent mail box
 	 * and remove it from the mailbox.
@@ -1153,7 +1197,7 @@ implements Activable, Holon, Serializable {
 	protected final Message getMessage() {
 		return getMailbox().removeFirst();
 	}
-	
+
 	/**
 	 * Replies the first available message of the specified type
 	 * in the agent mail box
@@ -1189,7 +1233,7 @@ implements Activable, Holon, Serializable {
 	protected final Message peekMessage() {
 		return getMailbox().getFirst();
 	}
-	
+
 	/**
 	 * Replies the first available message of the given type
 	 * in the agent mail box
@@ -1227,7 +1271,7 @@ implements Activable, Holon, Serializable {
 	protected final Iterable<Message> getMessages() {
 		return getMailbox().iterable(true);
 	}
-	
+
 	/**
 	 * Replies the messages of the specified type
 	 * in the agent mailbox.
@@ -1303,7 +1347,7 @@ implements Activable, Holon, Serializable {
 	protected final boolean hasMessage() {
 		return !getMailbox().isEmpty();
 	}
-	
+
 	/**
 	 * Replies the number of messages in the agent mailbox.
 	 * 
@@ -1549,17 +1593,17 @@ implements Activable, Holon, Serializable {
 	implements Serializable {
 
 		private static final long serialVersionUID = -86884850361971392L;
-		
+
 		private boolean sendFreedBack = true;
 		private boolean forwardFreedBack = true;
 		private boolean broadcastFreedBack = true;
-		
+
 		/**
 		 */
 		protected MessageTransportService() {
 			//
 		}
-		
+
 		/** Replies if the emitting role is receiving the messages sent
 		 * to itself by a <code>sendMessage</code> function.
 		 * 
@@ -1569,7 +1613,7 @@ implements Activable, Holon, Serializable {
 		public boolean isSendMessageFeedBack() {
 			return this.sendFreedBack;
 		}
-			
+
 		/** Set if the emitting role is receiving the messages sent
 		 * to itself by a <code>sendMessage</code> function.
 		 * 
@@ -1589,7 +1633,7 @@ implements Activable, Holon, Serializable {
 		public boolean isForwardMessageFeedBack() {
 			return this.forwardFreedBack;
 		}
-			
+
 		/** Set if the emitting role is receiving the messages sent
 		 * to itself by a <code>forwardMessage</code> function.
 		 * 
@@ -1609,7 +1653,7 @@ implements Activable, Holon, Serializable {
 		public boolean isBroadcastMessageFeedBack() {
 			return this.broadcastFreedBack;
 		}
-			
+
 		/** Set if the emitting role is receiving the messages sent
 		 * by a <code>broadcastMessage</code> function.
 		 * 
@@ -1619,7 +1663,7 @@ implements Activable, Holon, Serializable {
 		public void setBroadcastMessageFeedBack(boolean feedback) {
 			this.broadcastFreedBack = feedback;
 		}
-		
+
 
 		/**
 		 * Send the specified <code>Message</code> to one randomly selected agent.
@@ -1639,9 +1683,9 @@ implements Activable, Holon, Serializable {
 					message, 
 					(agents==null)
 					? null
-					: Arrays.asList(agents), 
-					true,
-					isSendMessageFeedBack());
+							: Arrays.asList(agents), 
+							true,
+							isSendMessageFeedBack());
 		}
 
 		/**
@@ -1707,9 +1751,9 @@ implements Activable, Holon, Serializable {
 					message,
 					(agents==null)
 					? null
-					: Arrays.asList(agents),
-					true,
-					isBroadcastMessageFeedBack());
+							: Arrays.asList(agents),
+							true,
+							isBroadcastMessageFeedBack());
 		}
 
 		/**
@@ -1778,9 +1822,9 @@ implements Activable, Holon, Serializable {
 					message,
 					(agents==null)
 					? null
-					: Arrays.asList(agents),
-					false,
-					isForwardMessageFeedBack());
+							: Arrays.asList(agents),
+							false,
+							isForwardMessageFeedBack());
 		}
 
 		/**
@@ -1826,9 +1870,9 @@ implements Activable, Holon, Serializable {
 					message,
 					(agents==null)
 					? null
-					: Arrays.asList(agents),
-					false,
-					isForwardMessageFeedBack() && isBroadcastMessageFeedBack());
+							: Arrays.asList(agents),
+							false,
+							isForwardMessageFeedBack() && isBroadcastMessageFeedBack());
 		}
 
 		/**
@@ -1856,7 +1900,7 @@ implements Activable, Holon, Serializable {
 		}
 
 	}
-	
+
 	/**
 	 * Iterator on agents which does not reply the kernel agent address.
 	 * 
@@ -1872,7 +1916,7 @@ implements Activable, Holon, Serializable {
 		private final SizedIterator<AgentAddress> iterator;
 		private boolean foundKernel = false;
 		private AgentAddress next;
-		
+
 		/**
 		 * @param kernel
 		 * @param iterator
@@ -1886,7 +1930,7 @@ implements Activable, Holon, Serializable {
 			this.iterator = iterator;
 			searchNext();
 		}
-		
+
 		private void searchNext() {
 			this.next = null;
 			AgentAddress adr;
@@ -1943,7 +1987,7 @@ implements Activable, Holon, Serializable {
 		public void remove() {
 			//
 		}
-		
+
 	}
-	
+
 }
