@@ -226,6 +226,11 @@ extends ActivatorAgent<AgentActivator> {
 		}
 	}
 	
+	@Override
+	protected final boolean isBindableFromAddress() {
+		return false;
+	}
+
 	/** Replies the overlooker on the agent repository.
 	 * 
 	 * @return the overlooker on the agent repository.

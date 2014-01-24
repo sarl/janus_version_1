@@ -110,6 +110,11 @@ class JaakKernelAgent extends Agent implements KernelListener, ChannelInteractab
 			this.defaultSpawner = null;
 		}
 	}
+
+	@Override
+	protected final boolean isBindableFromAddress() {
+		return false;
+	}
 	
 	/** Replies the environment.
 	 * 

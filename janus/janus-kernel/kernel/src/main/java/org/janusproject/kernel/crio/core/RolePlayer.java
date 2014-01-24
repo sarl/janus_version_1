@@ -148,6 +148,16 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 		this.capacities = capacityContainer;
 	}
 	
+	/** Replies if this object can be referenced as the hidden owner of an
+	 * address.
+	 *  
+	 * @return <code>true</code> if bindable.
+	 */
+	@SuppressWarnings("static-method")
+	protected boolean isBindableFromAddress() {
+		return true;
+	}
+	
 	/** Invoked this function when the role player should be disposed from
 	 * the system. This function should not be invoked outside the kernel
 	 * control.

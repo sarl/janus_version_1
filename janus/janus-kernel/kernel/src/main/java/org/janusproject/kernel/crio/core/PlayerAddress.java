@@ -91,7 +91,7 @@ class PlayerAddress extends AgentAddress {
 	 * @param player is the player that is identifier by this address.
 	 */
 	synchronized void bind(RolePlayer player) {
-		if (player==null)
+		if (player==null || !player.isBindableFromAddress())
 			this.player = null;
 		else
 			this.player = new WeakReference<RolePlayer>(player);
