@@ -481,9 +481,6 @@ extends ActivatorAgent<AgentActivator> {
 		
 		this.context.getProbeManager().release(agent);
 		this.context.getAgentRepository().remove(adr);
-		agent.executionResource = null;
-		agent.creator = null;
-		agent.kernel = null;
 
 		boolean isKernel = (agent instanceof KernelAgent);
 		if (isKernel) {
@@ -508,6 +505,9 @@ extends ActivatorAgent<AgentActivator> {
 		
 		// Remove all memory foot print for the agent.
 		agent.dispose();
+		agent.executionResource = null;
+		agent.creator = null;
+		agent.kernel = null;
 
 		getLogger().fine(Locale.getString(
 				KernelAgent.class,
