@@ -470,7 +470,7 @@ public abstract class Role extends
 	 * @GROUPAPI
 	 */
 	final KernelScopeGroup getKernelScopeGroup() {
-		return this.group.get();
+		return this.group==null ? null : this.group.get();
 	}
 
 	/**

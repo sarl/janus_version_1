@@ -1343,10 +1343,14 @@ public abstract class RolePlayer implements CapacityCaller, LoggerProvider {
 	 * @since 1.0
 	 */
 	protected final boolean leaveRole(RoleAddress role) {
-		KernelScopeGroup grp = getCRIOContext().getGroupRepository().get(
-				role.getGroup());
-		if (grp != null) {
-			return grp.leaveRole(this, role.getRole());
+		assert(role!=null);
+		CRIOContext context = getCRIOContext();
+		if (context!=null) {
+			KernelScopeGroup grp = context.getGroupRepository().get(
+					role.getGroup());
+			if (grp != null) {
+				return grp.leaveRole(this, role.getRole());
+			}
 		}
 		return false;
 	}
