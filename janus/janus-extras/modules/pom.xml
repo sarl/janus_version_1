@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>janus-extras</artifactId>
 		<groupId>io.janusproject.v1.extras</groupId>
-		<version>1.1-SNAPSHOT</version>
+		<version>1.1</version>
 		<relativePath>..</relativePath>
 	</parent>
 
