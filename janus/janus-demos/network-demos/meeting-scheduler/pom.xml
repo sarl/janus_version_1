@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.janus-project.demos.network</groupId>
+		<groupId>io.janusproject.v1.demos.network</groupId>
 		<artifactId>network-demos</artifactId>
 		<version>1.1-SNAPSHOT</version>
 	</parent>
@@ -18,7 +18,7 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>org.janus-project.extras.modules.aclengine</groupId>
+			<groupId>io.janusproject.v1.extras.modules.aclengine</groupId>
 			<artifactId>aclengine</artifactId>
 		</dependency>
 

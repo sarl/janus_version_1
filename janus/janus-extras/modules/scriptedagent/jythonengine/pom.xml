@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>scriptedagent</artifactId>
-		<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
+		<groupId>io.janusproject.v1.extras.modules.scriptedagent</groupId>
 		<version>1.1-SNAPSHOT</version>
 	</parent>
 
@@ -47,7 +47,7 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
+			<groupId>io.janusproject.v1.extras.modules.scriptedagent</groupId>
 			<artifactId>script</artifactId>
 		</dependency>
 

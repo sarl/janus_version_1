@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.janus-project.kernel</groupId>
+		<groupId>io.janusproject.v1.kernel</groupId>
 		<artifactId>network</artifactId>
 		<version>1.1-SNAPSHOT</version>
 	</parent>
 
 
 
-	<groupId>org.janus-project.kernel.network</groupId>
+	<groupId>io.janusproject.v1.kernel.network</groupId>
 	<artifactId>zeromq</artifactId>
 	<packaging>jar</packaging>
 	<name>ZeroMQ Extension for Janus</name>
@@ -18,7 +18,7 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>org.janus-project.kernel.network</groupId>
+			<groupId>io.janusproject.v1.kernel.network</groupId>
 			<artifactId>network-base</artifactId>
 		</dependency>
 

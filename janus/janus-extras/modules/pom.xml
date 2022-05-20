@@ -4,13 +4,13 @@
 
 	<parent>
 		<artifactId>janus-extras</artifactId>
-		<groupId>org.janus-project.extras</groupId>
+		<groupId>io.janusproject.v1.extras</groupId>
 		<version>1.1-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
 	<artifactId>modules</artifactId>
-	<groupId>org.janus-project.extras.modules</groupId>
+	<groupId>io.janusproject.v1.extras.modules</groupId>
 	<packaging>pom</packaging>
 	<name>Janus Kernel Extensions</name>
 	

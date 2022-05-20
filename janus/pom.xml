@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.janus-project</groupId>
+	<groupId>io.janusproject.v1</groupId>
 	<artifactId>janus</artifactId>
 	<packaging>pom</packaging>
 	<version>1.1-SNAPSHOT</version>
@@ -21,7 +21,7 @@
 		<janus.version>1.1-SNAPSHOT</janus.version>
 		<janus.version.osgi>1.1.0-SNAPSHOT</janus.version.osgi>
 		<janus.plugin.version>0.6</janus.plugin.version>
-		<afc.version>11.0-SNAPSHOT</afc.version>
+		<afc.version>11.0</afc.version>
 		<android.platform>15</android.platform>
 		<android.sdk.path>/opt/android-sdk</android.sdk.path>
 		<android.emulator.avd>acer500</android.emulator.avd>
@@ -35,9 +35,9 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
-				<module>janus-maven-tools</module>
+				<!--<module>janus-maven-tools</module>
 				<module>janus-benchs</module>
-				<module>janus-demos</module>
+				<module>janus-demos</module>-->
 			</modules>
 		</profile>
 		<profile>
@@ -508,7 +508,7 @@
 				</plugin>
 				<!-- ********** ** JANUS Plugins ** ********** -->
 				<plugin>
-					<groupId>org.janus-project.maven</groupId>
+					<groupId>io.janusproject.v1.maven</groupId>
 					<artifactId>janus-maven-plugin</artifactId>
 					<version>${janus.plugin.version}</version>
 				</plugin>
@@ -526,128 +526,128 @@
 		<dependencies>
 			<!-- ********** ** JANUS KERNEL ** ********** -->
 			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
+				<groupId>io.janusproject.v1.kernel</groupId>
 				<artifactId>kernel</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
+				<groupId>io.janusproject.v1.kernel</groupId>
 				<artifactId>osgi</artifactId>
 				<version>${janus.version.osgi}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.kernel</groupId>
+				<groupId>io.janusproject.v1.kernel</groupId>
 				<artifactId>network</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.kernel.network</groupId>
+				<groupId>io.janusproject.v1.kernel.network</groupId>
 				<artifactId>network-base</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.kernel.network</groupId>
+				<groupId>io.janusproject.v1.kernel.network</groupId>
 				<artifactId>jxse</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.kernel.network</groupId>
+				<groupId>io.janusproject.v1.kernel.network</groupId>
 				<artifactId>jxme</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.kernel.network</groupId>
+				<groupId>io.janusproject.v1.kernel.network</groupId>
 				<artifactId>zeromq</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 
 			<!-- ********** ** JANUS EXTRAS ** ********** -->
 			<dependency>
-				<groupId>org.janus-project.extras.modules.ecoresolution</groupId>
+				<groupId>io.janusproject.v1.extras.modules.ecoresolution</groupId>
 				<artifactId>ecoengine</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.modules.ecoresolution</groupId>
+				<groupId>io.janusproject.v1.extras.modules.ecoresolution</groupId>
 				<artifactId>ecoagent</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.modules.bdiengine</groupId>
+				<groupId>io.janusproject.v1.extras.modules.bdiengine</groupId>
 				<artifactId>bdiengine</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
+				<groupId>io.janusproject.v1.extras.modules.scriptedagent</groupId>
 				<artifactId>script</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
+				<groupId>io.janusproject.v1.extras.modules.scriptedagent</groupId>
 				<artifactId>jrubyengine</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.modules.scriptedagent</groupId>
+				<groupId>io.janusproject.v1.extras.modules.scriptedagent</groupId>
 				<artifactId>groovyengine</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.modules.aclengine</groupId>
+				<groupId>io.janusproject.v1.extras.modules.aclengine</groupId>
 				<artifactId>aclengine</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.modules.jaak</groupId>
+				<groupId>io.janusproject.v1.extras.modules.jaak</groupId>
 				<artifactId>jaak</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 
 			<!-- **** ** JANUS EXTRAS UI ECLIPSE ** **** -->
 			<dependency>
-				<groupId>org.janus-project.extras.ui.eclipse</groupId>
+				<groupId>io.janusproject.v1extras.ui.eclipse</groupId>
 				<artifactId>org.janusproject.extras.ui.eclipse.kernelinformation</artifactId>
 				<version>${janus.version.osgi}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.ui.eclipse</groupId>
+				<groupId>io.janusproject.v1.extras.ui.eclipse</groupId>
 				<artifactId>org.janusproject.extras.ui.eclipse.eclipse-repository</artifactId>
 				<version>${janus.version.osgi}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.ui.eclipse</groupId>
+				<groupId>io.janusproject.v1.extras.ui.eclipse</groupId>
 				<artifactId>org.janusproject.extras.ui.eclipse.target-definition</artifactId>
 				<version>${janus.version.osgi}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.ui.eclipse</groupId>
+				<groupId>io.janusproject.v1.extras.ui.eclipse</groupId>
 				<artifactId>org.janusproject.extras.ui.eclipse.feature</artifactId>
 				<version>${janus.version.osgi}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.ui.eclipse</groupId>
+				<groupId>io.janusproject.v1.extras.ui.eclipse</groupId>
 				<artifactId>org.janusproject.extras.ui.eclipse.janus-bundle</artifactId>
 				<version>${janus.version.osgi}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.ui.eclipse</groupId>
+				<groupId>io.janusproject.v1.extras.ui.eclipse</groupId>
 				<artifactId>org.janusproject.extras.ui.eclipse.base</artifactId>
 				<version>${janus.version.osgi}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.extras.ui.eclipse</groupId>
+				<groupId>io.janusproject.v1.extras.ui.eclipse</groupId>
 				<artifactId>org.janusproject.extras.ui.eclipse.moduletools</artifactId>
 				<version>${janus.version.osgi}</version>
 			</dependency>
 
 			<!-- ********** ** JANUS DEMOS ** ********** -->
 			<dependency>
-				<groupId>org.janus-project.demos.network</groupId>
+				<groupId>io.janusproject.v1.demos.network</groupId>
 				<artifactId>janus-chat-model</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.janus-project.demos.base</groupId>
+				<groupId>io.janusproject.v1.demos.base</groupId>
 				<artifactId>market-selective</artifactId>
 				<version>${janus.version}</version>
 			</dependency>
@@ -892,12 +892,6 @@
 
 	<repositories>
 		<repository>
-			<id>org.janus-project.maven</id>
-			<name>Janus Project Snapshots</name>
-			<url>http://www.janus-project.org/maven/</url>
-		</repository>
-
-		<repository>
 			<id>org.arakhne-maven</id>
 			<name>Arakhnê.org Snapshots</name>
 			<url>http://download.tuxfamily.org/arakhne/maven/</url>
@@ -930,14 +924,6 @@
 			<id>org.arakhne-maven</id>
 			<name>Arakhnê.org Snapshots</name>
 			<url>http://download.tuxfamily.org/arakhne/maven/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>org.janus-project.maven</id>
-			<name>Janus Project Snapshots</name>
-			<url>http://www.janus-project.org/maven/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>

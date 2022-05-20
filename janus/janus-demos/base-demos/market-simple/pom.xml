@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.janus-project.demos.base</groupId>
+		<groupId>io.janusproject.v1.demos.base</groupId>
 		<artifactId>base-demos</artifactId>
 		<version>1.1-SNAPSHOT</version>
 	</parent>
@@ -50,7 +50,7 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.janus-project.maven</groupId>
+				<groupId>io.janusproject.v1.maven</groupId>
 				<artifactId>janus-maven-plugin</artifactId>
 				<configuration>
 					<layout>felix</layout>
@@ -78,12 +78,12 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
+			<groupId>io.janusproject.v1.kernel</groupId>
 			<artifactId>kernel</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.janus-project.kernel</groupId>
+			<groupId>io.janusproject.v1.kernel</groupId>
 			<artifactId>osgi</artifactId>
 		</dependency>
 

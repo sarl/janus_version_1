@@ -1,3 +1,6 @@
+Caution: This version of Janus is no more maintained (since 2014). Please move to the version of Janus that is included into the SARL project (http://www.sarl.io)
+
+
 h1. Janus Multiagent Platform
 
 Janus is a multi-agent platform fully implemented in Java 1.6. Janus enables developers to quickly create web, enterprise and desktop multiagent-based applications. It provides a comprehensive set of features to develop, run, display and monitor multiagent-based applications. Janus-based applications can be distributed across a network. Janus could be used as an agent-oriented platform, an organizational platform, and/or an holonic platform. Indeed Janus is built upon the "CRIO organizational metamodel":http://www.aspecs.org/CRIO in which the concepts of role and organization are first-class entities. It also natively manages the concept of recursive agents and holon.

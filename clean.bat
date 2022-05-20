@@ -22,8 +22,6 @@ goto errorcase
 :step2
 cd %~dp0\janus
 mvn -Dmaven.test.skip=true clean
-cd %~dp0\janus-ui
-mvn -Dmaven.test.skip=true clean
 exit 0
 
 :errorcase

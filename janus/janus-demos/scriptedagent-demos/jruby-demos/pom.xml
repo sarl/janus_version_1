@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.janus-project.demos.scriptedagent</groupId>
+		<groupId>io.janusproject.v1.demos.scriptedagent</groupId>
 		<artifactId>scriptedagent-demos</artifactId>
 		<version>1.1-SNAPSHOT</version>
 	</parent>
 
 	<packaging>pom</packaging>
-	<groupId>org.janus-project.demos.scriptedagent.jruby</groupId>
+	<groupId>io.janusproject.v1.demos.scriptedagent.jruby</groupId>
 	<artifactId>jruby-demos</artifactId>
 	<name>Janus JRuby Scripted Agent Demos</name>
 	

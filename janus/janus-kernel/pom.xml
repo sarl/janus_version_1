@@ -6,12 +6,12 @@
 
 	<parent>
 		<artifactId>janus</artifactId>
-		<groupId>org.janus-project</groupId>
+		<groupId>io.janusproject.v1</groupId>
 		<version>1.1-SNAPSHOT</version>
 	</parent>
 
 	<packaging>pom</packaging>
-	<groupId>org.janus-project.kernel</groupId>
+	<groupId>io.janusproject.v1.kernel</groupId>
 	<artifactId>janus-kernel</artifactId>
 	<name>Janus Kernel and Internal Services</name>
 

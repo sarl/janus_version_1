@@ -2,20 +2,20 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- CAUTION: this module has not the org.janus-project.kernel:janus-kernel 
+	<!-- CAUTION: this module has not the io.janusproject.v1.kernel:janus-kernel 
 		maven module as parent to avoid dependency on it. Indeed if this modules 
-		has org.janus-project.kernel:janus-kernel as parent, assembly in org.janus-project.kernel:janus-kernel 
+		has io.janusproject.v1.kernel:janus-kernel as parent, assembly in io.janusproject.v1.kernel:janus-kernel 
 		is impossible due to the Maven dependency specifications. -->
 	<parent>
 		<artifactId>janus</artifactId>
-		<groupId>org.janus-project</groupId>
+		<groupId>io.janusproject.v1</groupId>
 		<version>1.1-SNAPSHOT</version>
 		<relativePath>../../../pom.xml</relativePath>
 	</parent>
 
 
 
-	<groupId>org.janus-project.kernel.network</groupId>
+	<groupId>io.janusproject.v1.kernel.network</groupId>
 	<artifactId>jxse</artifactId>
 	<packaging>jar</packaging>
 	<name>JXTA-JXSE Extension for Janus</name>
@@ -36,7 +36,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.janus-project.kernel.network</groupId>
+			<groupId>io.janusproject.v1.kernel.network</groupId>
 			<artifactId>network-base</artifactId>
 		</dependency>
 
